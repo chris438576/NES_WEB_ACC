@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NES Limited-@ViewBag.Title </title>
+    @Styles.Render("~/Content/css")
+   
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("css", required: false)
+    <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/color.css" />
+    <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/icon.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("NES Limited", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("作業流程圖", "Index", "Home")</li>
+                    <li>@Html.ActionLink("關於", "About", "Home")</li>
+                    <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            權限設定
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("系統管理-Users", "UsersList", "UserRoleManage")</li>
+                            <li>@Html.ActionLink("系統管理-Roles", "RolesList", "UserRoleManage")</li>
+                            @*<li>@Html.ActionLink("系統管理-Permissions", "PermissionsList", "UserRoleManage")</li>*@
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div id="footer-inner" style="text-align: center; font-size: xx-small">
+                Copyright © 2024 NES Limited Department All Right Reserved. | 聯絡:chris.c@nes-corporation.com
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/easyui/jquery.easyui.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

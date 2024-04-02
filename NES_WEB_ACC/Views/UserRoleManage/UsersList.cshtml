@@ -1,0 +1,476 @@
+﻿
+@{
+    ViewBag.Title = "UsersList";
+}
+@section css {
+    <style>
+        /*#region 控制按鈕*/
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+        /*#endregion*/
+        .tg {
+            border-collapse: collapse;
+            width: 100%;
+            border: 3px solid #000000;
+        }
+
+        .tg-th {
+            background-color: #dae8fc;
+            border: 1px solid #000000;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .tg td {
+            border: 1px solid #000000;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+}
+<h2> 系統權限管理-User</h2>
+<button id="btnInsert" class="easyui-linkbutton" data-options="iconCls:'icon-add'">Insert</button>
+<table id="users-table" class="tg">
+    <tr>
+        <th class="tg-th"> User ID</th>
+        <th class="tg-th"> Username</th>
+        <th class="tg-th"> 部門</th>
+        <th class="tg-th"> 帳號狀態</th>
+        <th class="tg-th"> 已啟用角色</th>
+        <th class="tg-th"> 角色操作</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.EmpNo </td>
+            <td>@user.EmpNameC </td>
+            <td>@user.DeptName </td>
+            <td>
+                @if (user.Status == true)
+                {
+                    <label class="switch">
+                        <input type="checkbox" checked id="@user.EmpNo" class="checkbox-switch">
+                        <span class="slider round"> </span>
+                    </label>
+                }
+                else if (user.Status == false)
+                {
+                    <label class="switch">
+                        <input type="checkbox" unchecked id="@user.EmpNo" class="checkbox-switch">
+                        <span class="slider round"> </span>
+                    </label>
+                }
+                else if (user.Status is null)
+                {
+                    <span>狀態未設定，請聯絡系統管理員。</span>
+                }
+            </td>
+            <td>@user.RoleName </td>
+            <td>
+                @if (user.Status == true)
+                {
+                    <button type="button" class="btn btn-primary" onclick="openEditWindow('@user.EmpId','@user.EmpNo')">編輯</button>
+                }
+                else if (user.Status == false)
+                {
+                    <button type="button" class="btn btn-primary" onclick="openEditWindow('@user.EmpId','@user.EmpNo')" disabled>編輯</button>
+                }
+                else if (user.Status is null)
+                {
+                    <span>狀態未設定，請聯絡系統管理員。</span>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<div id="insertWin" class="easyui-window" title="請選擇使用者帳號" style="width:auto;height:auto;"
+     data-options="modal:true,closed:true">
+    <div class="row">
+        <div class="col-md-4">
+            <label>部門：</label>
+            <select id="insertWinSelect" class="easyui-combobox" labelPosition="top" style="width:60px;"></select>
+        </div>
+        <div class="col-md-4">
+            搜尋
+        </div>
+        <div class="col-md-4">
+            <button id="insertWinSave" class="easyui-linkbutton" data-options="iconCls:'icon-save'">儲存</button>
+        </div>
+    </div>
+    <div class="row" style="padding-left: 10px; padding-right: 10px;">
+        <div class="col-md-5">
+            <table id="dgERPEmp" class="easyui-datagrid" title="ERP員工列表" style="width:100%;height:400px"
+                   data-options="collapsible:true">
+                <thead>
+                    <tr>
+                        <th data-options="field:'EmpId' " hidden>EmpId</th>
+                        <th data-options="field:'EmpNo'">員工編號</th>
+                        <th data-options="field:'EmpNameC'">員工姓名</th>
+                        <th data-options="field:'DeptNo'">部門編號</th>
+                        <th data-options="field:'DeptName'">部門名稱</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="col-md-2">
+            <div class="row" d-flex flex-column align-items-center">
+                <button id="insertWinMoveIn" class="easyui-linkbutton" data-options="iconCls:'icon-arrow-right'"></button>
+            </div>
+            <div class="row" d-flex flex-column align-items-center">
+                <button id="insertWinMoveOut" class="easyui-linkbutton" data-options="iconCls:'icon-arrow-left'"></button>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <table id="dgSYSEmp" class="easyui-datagrid" title="新增員工列表" style="width: 100%; height: 400px"
+                   data-options="collapsible:true">
+                <thead>
+                    <tr>
+                        <th data-options="field:'EmpId'">EmpId</th>
+                        <th data-options="field:'EmpNo'">員工編號</th>
+                        <th data-options="field:'EmpNameC'">員工姓名</th>
+                        <th data-options="field:'DeptNo'">部門編號</th>
+                        <th data-options="field:'DeptName'">部門名稱</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div id="personalEditWin" class="easyui-window" data-options="closed:true">
+    <table id="personalRole-table" class="tg">
+        <tr>
+            <th class="tg-th"> Role</th>
+            <th class="tg-th"> 狀態</th>
+        </tr>
+    </table>
+
+    <div id="p" class="easyui-panel" title="未加入控制角色：" style="width:auto;height:auto;"
+         data-options="iconCls:'icon-save',collapsible:true, collapsed:true">
+        <button id="btnPersonalRoleAdd" class="easyui-linkbutton" data-options="iconCls:'icon-add'">Insert</button>
+        <table id="dgNotControllerRole" class="easyui-datagrid" style="width:100%;height:auto"
+               data-options="collapsible:true">
+            <thead>
+                <tr>
+                    <th data-options="field:'RoleId' " hidden>RoleId</th>
+                    <th data-options="field:'RoleName'">角色名稱</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    var isAction = false;
+    var personalEmpId = '';
+    // 監聽器
+    $(document).ready(function () {
+        // btn事件：開啟匯入視窗、元件初始化
+        $('#btnInsert').click(function () {
+            $('#insertWin').window('open')
+            insertWinSetting();
+        });
+        // btn事件：dg資料列移動
+        $('#insertWinMoveIn').click(function () {
+            var dgFrom = $('#dgERPEmp');
+            var dgTo = $('#dgSYSEmp');
+            dgRowsMoving(dgFrom, dgTo);
+        });
+        // btn事件：dg資料列移動
+        $('#insertWinMoveOut').click(function () {
+            var dgFrom = $('#dgSYSEmp');
+            var dgTo = $('#dgERPEmp');
+            dgRowsMoving(dgFrom, dgTo);
+        });
+        // btn事件：ERPEmp寫入SYS_Users
+        $('#insertWinSave').click(function () {
+            // 獲取 #dgSYSEmp 中的所有行數據
+            var rowsData = $('#dgSYSEmp').datagrid('getRows');
+
+            // 檢查是否有行數據
+            if (rowsData.length > 0) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("InsertToSYS_Users", "UserRoleManage")',
+                    data: { rows: rowsData },  // 將行數據作為 JSON 物件傳遞給後端
+                    success: function (response) {
+                        console.log('儲存成功', response);
+                        alert('儲存成功');
+                        $('#insertWin').window('close');
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error('儲存失敗', error);
+                    }
+                });
+            } else {
+                // 提示用戶沒有數據可儲存
+                alert('沒有要儲存的數據');
+            }
+        });
+
+        // btn事件：新增個人角色控制
+        $('#btnPersonalRoleAdd').click(function () {
+            var empId = personalEmpId;
+            // 獲取 #dgNotControllerRole 中的所有行數據
+            var rowsData = $('#dgNotControllerRole').datagrid('getSelections');
+            // 檢查是否有行數據
+            if (rowsData.length > 0 && empId != '') {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("InsertToLNK_UserRole", "UserRoleManage")',
+                    data: { empId: empId, rows: rowsData },  // 將行數據作為 JSON 物件傳遞給後端
+                    success: function (response) {
+                        console.log('儲存成功', response);
+                        alert('儲存成功');
+                        $('#personalEditWin').window('close');
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error('儲存失敗', error);
+                    }
+                });
+            } else {
+                // 提示用戶沒有數據可儲存
+                alert('沒有要儲存的數據');
+            }
+        });
+    });
+
+    // 使用JavaScript選擇所有具有特定class的checkbox
+    var checkboxes = document.querySelectorAll('#users-table .checkbox-switch');
+
+    // 監聽每個checkbox的change事件
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            // 在這裡處理checkbox狀態改變時的邏輯
+            var isChecked = this.checked;
+            var checkboxId = this.id;
+            //紀錄原先狀態
+            var originalChecked = !isChecked;
+
+            // 在這裡使用checkboxId，可以將其傳送給後端或進行其他操作
+            console.log("Checkbox with ID " + checkboxId + " is checked: " + isChecked);
+            console.log("OriginalChecked: " + originalChecked);
+            //修改資料庫的資料
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateUsersStatus", "UserRoleManage")',
+                data: JSON.stringify({ empNo: checkboxId, isStatus: isChecked }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (message) {
+                    alert('Data Saved: ' + message);
+                },
+                error: function (message) {
+                    checkbox.checked = originalChecked;
+                    alert('Failed: ' + message);
+                }
+            });
+        });
+    });
+
+    $('#personalRole-table').on('change', '.checkbox-switch-personal', function () {
+        var checkbox = $('#personalRole-table').find('input[type="checkbox"]').last();
+        var empId = checkbox.data('empid').substring(2);
+        var roleId = $(this).attr('id');
+        var isChecked = $(this).prop('checked');
+
+        console.log('EmpId: '+empId + '\n\r RoleId: ' + roleId + '\n\r StatusChangeTo: ' + isChecked);
+        updatePersonalRoleStatus(empId, roleId, isChecked);
+    });
+    function updatePersonalRoleStatus(empId, roleId, isChecked) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateUserRoleStatus", "UserRoleManage")',
+            data: JSON.stringify({ empId: empId, roleId: roleId, isStatus: isChecked }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                // 處理成功的回應
+                isAction = true;
+                console.log('角色狀態更新成功');
+            },
+            error: function (error) {
+                // 處理錯誤
+                console.log('角色狀態更新失敗', error.message);
+            }
+        });
+    }
+
+    function insertWinSetting() {
+        // 通过 AJAX 获取数据
+        $.ajax({
+            url: '@Url.Action("GetERPEmpList", "UserRoleManage")',
+            method: 'get',
+            dataType: 'json',
+            success: function (data) {
+                // 将获取的数据加载到 datagrid 中
+                $('#dgERPEmp').datagrid('loadData', data);
+                // 将去重后的 DeptName 列表填充到 easyui-combobox 中
+                $('#insertWinSelect').combobox('loadData', data.DeptNo);
+            },
+            error: function (error) {
+                console.log('AJAX Error:', error);
+            }
+        });
+    }
+
+    function dgRowsMoving(dgFrom, dgTo) {
+        // 獲取 dgERPEmp 選中的所有行
+        var selectedRows = dgFrom.datagrid('getSelections');
+
+        if (selectedRows.length > 0) {
+            // 遍歷所有選中的行，逐一添加到 dgSYSEmp
+            for (var i = 0; i < selectedRows.length; i++) {
+                dgTo.datagrid('appendRow', {
+                    EmpId: selectedRows[i].EmpId,
+                    EmpNo: selectedRows[i].EmpNo,
+                    EmpNameC: selectedRows[i].EmpNameC,
+                    DeptNo: selectedRows[i].DeptNo,
+                    DeptName: selectedRows[i].DeptName
+                });
+
+                // 從 dgERPEmp 中移除選中的行
+                var index = dgFrom.datagrid('getRowIndex', selectedRows[i]);
+                dgFrom.datagrid('deleteRow', index);
+            }
+        } else {
+            // 提示用戶選擇要移動的員工
+            alert('請選擇要移動的員工');
+        }
+    }
+
+    function openEditWindow(empId, empNo) {
+        isAction = false;
+        personalEmpId = empId.substring(2);
+        $.ajax({
+            url: '@Url.Action("GetPersonalRolesList", "UserRoleManage")',  // 替換成你的Controller的路徑
+            type: 'GET',
+            data: { empId: personalEmpId },
+            success: function (data) {
+                // 清空表格內容
+                $('#personalRole-table').empty();
+                // 表格生成
+                if (data && data.length > 0) {
+                    // 動態生成表格頭
+                    var headerRow = '<tr>';
+                    headerRow += '<th class="tg-th">角色</th>';
+                    headerRow += '<th class="tg-th">狀態</th>';
+                    headerRow += '</tr>';
+                    $('#personalRole-table').append(headerRow);
+                    // 動態生成表格內容
+                    $.each(data, function (index, role) {
+                        var row = '<tr>';
+                        row += '<td>' + role.RoleName + '</td>';
+                        row += '<td>';
+                        row += '<label class="switch">';
+                        row += '<input type="checkbox" data-empId="' + empId + '" id="' + role.RoleId + '" class="checkbox-switch-personal" ' + (role.PersnalRoleStatus ? 'checked' : '') + '>';
+                        console.log('Checkbox created with data-empId: ' + empId);
+                        console.log('Checkbox created with PersonalRoleStatus: ' + role.PersonalRoleStatus);
+                        row += '<span class="slider round"></span>';
+                        row += '</label>';
+                        row += '</td>';
+                        row += '</tr>';
+                        $('#personalRole-table').append(row);
+                    });
+                } else {
+                    $('#personalRole-table').html('<tr><td colspan="2">查無資料</td></tr>');
+                    console.log('沒有資料列');
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+        $.ajax({
+            url: '@Url.Action("GetPersonalNotControllerRolesList", "UserRoleManage")',  // 替換成你的Controller的路徑
+            type: 'GET',
+            data: { empId: personalEmpId },
+            success: function (data) {
+                $('#dgNotControllerRole').datagrid('loadData', data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+        // 打開對話框
+        $('#personalEditWin').window({
+            title: '角色編輯 - ' + empNo,
+            width: 400,
+            height: 'auto',
+            closed: false,
+            modal: true,
+            onBeforeClose: function () {
+                if (isAction) {
+                    location.reload();
+                }
+            },
+            onOpen: function () {
+                $(this).window('center');
+            }
+        });
+    }
+</script>

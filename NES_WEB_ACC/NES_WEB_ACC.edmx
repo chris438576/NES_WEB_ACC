@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NES_WEB_ACCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LNK_RolePermissions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" />
+          <Property Name="PermissionId" Type="uniqueidentifier" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreateEmpId" Type="bigint" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateEmpId" Type="bigint" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LNK_UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmpId" Type="bigint" />
+          <Property Name="RoleId" Type="uniqueidentifier" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreateEmpId" Type="bigint" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateEmpId" Type="bigint" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SYS_Permissions">
+          <Key>
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="PermissionId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Action" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDisable" Type="bit" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreateEmpId" Type="bigint" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateEmpId" Type="bigint" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SYS_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreateEmpId" Type="bigint" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateEmpId" Type="bigint" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SYS_Users">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="bigint" Nullable="false" />
+          <Property Name="EmpNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="EmpNameC" Type="nvarchar" MaxLength="60" />
+          <Property Name="DeptNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeptName" Type="nvarchar" MaxLength="60" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreateEmpId" Type="bigint" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateEmpId" Type="bigint" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="NES_WEB_ACCModelStoreContainer">
+          <EntitySet Name="LNK_RolePermissions" EntityType="Self.LNK_RolePermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LNK_UserRole" EntityType="Self.LNK_UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Permissions" EntityType="Self.SYS_Permissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Roles" EntityType="Self.SYS_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Users" EntityType="Self.SYS_Users" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NES_WEB_ACCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LNK_RolePermissions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" />
+          <Property Name="PermissionId" Type="Guid" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreateEmpId" Type="Int64" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateEmpId" Type="Int64" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="LNK_UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="EmpId" Type="Int64" />
+          <Property Name="RoleId" Type="Guid" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreateEmpId" Type="Int64" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateEmpId" Type="Int64" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SYS_Permissions">
+          <Key>
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="PermissionId" Type="Guid" Nullable="false" />
+          <Property Name="PageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDisable" Type="Boolean" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreateEmpId" Type="Int64" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateEmpId" Type="Int64" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SYS_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreateEmpId" Type="Int64" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateEmpId" Type="Int64" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SYS_Users">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int64" Nullable="false" />
+          <Property Name="EmpNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EmpNameC" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="DeptNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeptName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreateEmpId" Type="Int64" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateEmpId" Type="Int64" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="NES_WEB_ACCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LNK_RolePermissions" EntityType="Self.LNK_RolePermissions" />
+          <EntitySet Name="LNK_UserRole" EntityType="Self.LNK_UserRole" />
+          <EntitySet Name="SYS_Permissions" EntityType="Self.SYS_Permissions" />
+          <EntitySet Name="SYS_Roles" EntityType="Self.SYS_Roles" />
+          <EntitySet Name="SYS_Users" EntityType="Self.SYS_Users" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NES_WEB_ACCModelStoreContainer" CdmEntityContainer="NES_WEB_ACCEntities">
+          <EntitySetMapping Name="LNK_RolePermissions">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.LNK_RolePermissions">
+              <MappingFragment StoreEntitySet="LNK_RolePermissions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateEmpId" ColumnName="CreateEmpId" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateEmpId" ColumnName="UpdateEmpId" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LNK_UserRole">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.LNK_UserRole">
+              <MappingFragment StoreEntitySet="LNK_UserRole">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateEmpId" ColumnName="CreateEmpId" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateEmpId" ColumnName="UpdateEmpId" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Permissions">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.SYS_Permissions">
+              <MappingFragment StoreEntitySet="SYS_Permissions">
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="IsDisable" ColumnName="IsDisable" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateEmpId" ColumnName="CreateEmpId" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateEmpId" ColumnName="UpdateEmpId" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Roles">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.SYS_Roles">
+              <MappingFragment StoreEntitySet="SYS_Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateEmpId" ColumnName="CreateEmpId" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateEmpId" ColumnName="UpdateEmpId" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Users">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.SYS_Users">
+              <MappingFragment StoreEntitySet="SYS_Users">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
+                <ScalarProperty Name="EmpNameC" ColumnName="EmpNameC" />
+                <ScalarProperty Name="DeptNo" ColumnName="DeptNo" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateEmpId" ColumnName="CreateEmpId" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateEmpId" ColumnName="UpdateEmpId" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
