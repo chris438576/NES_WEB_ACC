@@ -135,7 +135,14 @@ namespace NES_WEB_ACC.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// View_傳票類別設定
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VoucherCodeSet()
+        {
+            return View();
+        }
         /// <summary>
         /// 工具列介面
         /// </summary>

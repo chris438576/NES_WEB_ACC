@@ -520,8 +520,9 @@
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
-                    { field: 'AccGroupNo', title: '大類編號', width: 70 },
-                    { field: 'AccGroupNameC', title: '大類中文名稱', width: 100 }
+                    { field: 'AccGroupNo', title: '科目大類編號', width: 70 },
+                    { field: 'AccGroupNameC', title: '科目大類中文名稱', width: 100 },
+                    { field: 'AccGroupNameE', title: '科目大類英文名稱', width: 100 }
                 ]],
                 onSelect: function (index, row) {
                     dgNodata(row.Id);
@@ -547,8 +548,9 @@
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
-                    { field: 'AccNoBy', title: '分類編號', width: 70 },
-                    { field: 'AccNoByNameC', title: '分類中文名稱', width: 100 },
+                    { field: 'AccNoBy', title: '科目分類編號', width: 70 },
+                    { field: 'AccNoByNameC', title: '科目分類中文名稱', width: 100 },
+                    { field: 'AccNoByNameE', title: '科目分類英文名稱', width: 100 },
                     { field: 'DCTypeNo', title: '借貸方向', width: 50 },
                     { field: 'DCTypeNameC', title: '借貸名稱', width: 50 },
                     { field: 'AccNoType', title: '科目類別', width: 100 }

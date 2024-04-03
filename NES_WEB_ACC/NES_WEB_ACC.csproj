@@ -153,6 +153,7 @@
     <Compile Include="LNK_UserRole.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modules\CustomAuthorize.cs" />
     <Compile Include="NES_WEB_ACC.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -863,6 +864,7 @@
     <Content Include="Views\AccCode\AccCodeSet.cshtml" />
     <Content Include="Views\Shared\_ToolBarPartial.cshtml" />
     <Content Include="Views\AccCode\AccGroupNoSet.cshtml" />
+    <Content Include="Views\AccCode\VoucherCodeSet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,5 @@
-﻿using NES_WEB_ACC.ViewModels;
+﻿using NES_WEB_ACC.Modules;
+using NES_WEB_ACC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,10 +20,12 @@ namespace NES_WEB_ACC.Controllers
         /// UsersList權限列表-主畫面View
         /// </summary>
         /// <returns></returns>
+        [CustomAuthorize(Roles = "Admin,User")]
         public ActionResult UsersList()
         {
-            if (!IsAction(new string[] { "Admin","User" }))
-                return RedirectToAction("Permissions", "Error");
+            // 20240403停用，測試新版
+            //if (!IsAction(new string[] { "Admin","User" }))
+            //    return RedirectToAction("Permissions", "Error");
 
             List<UsersListViewModel> users = new List<UsersListViewModel>();
             string sqlQuery1 = @"	SELECT 
@@ -394,10 +397,12 @@ namespace NES_WEB_ACC.Controllers
         /// RolesList-權限列表-主畫面View
         /// </summary>
         /// <returns></returns>
+        [CustomAuthorize(Roles = "Admin")]
         public ActionResult RolesList()
         {
-            if (!IsAction(new string[] { "Admin" }))
-                return RedirectToAction("Permissions", "Error");
+            // 20240403停用，測試新版
+            //if (!IsAction(new string[] { "Admin" }))
+            //    return RedirectToAction("Permissions", "Error");
 
             string sql = @"select RoleId, RoleName , Status as 'RoleStatus' from NES_WEB_ACC.dbo.SYS_Roles
                                                 ";
@@ -507,20 +512,24 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, message = $"儲存失敗：{ex.Message}" });
             }
         }
-
-        public bool IsAction(string[] roles)
-        {
-            // 檢查傳入的值是否為空
-            if (roles != null && roles.Length > 0)
-            {
-                // 檢查 Session["RoleList"] 是否存在並且不為空
-                if (HttpContext.Session["RoleList"] is List<string> userRoles && userRoles.Count > 0)
-                {
-                    // 檢查傳入的角色是否有任何一個存在於 Session["RoleList"] 中
-                    return roles.Any(role => userRoles.Contains(role));
-                }
-            }
-            return false;
-        }
+        /// <summary>
+        /// 權限檢查_20240403停用，測試新版
+        /// </summary>
+        /// <param name="roles"></param>
+        /// <returns>回傳bool</returns>
+        //public bool IsAction(string[] roles)
+        //{
+        //    // 檢查傳入的值是否為空
+        //    if (roles != null && roles.Length > 0)
+        //    {
+        //        // 檢查 Session["RoleList"] 是否存在並且不為空
+        //        if (HttpContext.Session["RoleList"] is List<string> userRoles && userRoles.Count > 0)
+        //        {
+        //            // 檢查傳入的角色是否有任何一個存在於 Session["RoleList"] 中
+        //            return roles.Any(role => userRoles.Contains(role));
+        //        }
+        //    }
+        //    return false;
+        //}
     }
 }
