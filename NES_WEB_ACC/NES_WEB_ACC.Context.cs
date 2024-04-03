@@ -30,5 +30,8 @@ namespace NES_WEB_ACC
         public virtual DbSet<SYS_Permissions> SYS_Permissions { get; set; }
         public virtual DbSet<SYS_Roles> SYS_Roles { get; set; }
         public virtual DbSet<SYS_Users> SYS_Users { get; set; }
+        public virtual DbSet<AccCode1> AccCode1 { get; set; }
+        public virtual DbSet<AccCode2> AccCode2 { get; set; }
+        public virtual DbSet<AccTitleNo> AccTitleNo { get; set; }
     }
 }

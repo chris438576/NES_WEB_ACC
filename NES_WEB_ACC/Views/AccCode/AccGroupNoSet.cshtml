@@ -1,0 +1,637 @@
+﻿
+@{
+    ViewBag.Title = "科目類別設定";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    <style>
+        /*#region container style*/
+        #body-container {
+            width: 100%;
+            height: calc(100vh - 120px);
+            background-color: #d0d0d0;
+            margin: 0px;
+            padding: 0px;
+            font-size: 1.0em;
+            overflow-y: auto;
+        }
+
+        .body-layout {
+            height: calc(100vh - 120px);
+            width: 100%;
+        }
+
+        #dgAccGoup {
+            width: 315px;
+            height: calc(100vh - 120px);
+            padding: 0px;
+            background-color: #F2F2F2;
+        }
+
+        #body-content {
+            padding: 0px;
+            margin: 0px;
+            background: white;
+            height: 100%;
+        }
+
+        .modulecontent {
+            height: 100%;
+            width: 99%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /*#endregion*/
+        /*#region Body style*/
+        #content-top {
+            min-width: 500px;
+            width: 99%;
+            min-height: 170px;
+            height: 18% auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        #content-form {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        #content-grid {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border: 0.5px solid #d2d2d2;
+            background-color: #ffffff;
+            overflow-x: auto !important;
+        }
+
+        .header-toolbar {
+            overflow: auto;
+            font-size: 0.9em;
+            padding: 1px 15px 1px 3px;
+            width: 100%;
+            background-color: #cfcfcf;
+            margin: 0;
+            border: 1px solid gray;
+        }
+
+
+        /*#endregion*/
+
+        /*#region easyui style*/
+        .textbox-readonly .textbox-text {
+            background: #EEEEEE;
+        }
+
+        .ischecked-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fdff47;
+            color: black;
+            cursor: default;
+        }
+
+        /*.yellow-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #a2f8f8;
+            color: black;
+            cursor: default;
+        }*/
+
+        .gray-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fa806f;
+            color: black;
+            cursor: default;
+        }
+
+        .close-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #6df757;
+            color: black;
+            cursor: default;
+        }
+
+        .cancel-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #e196fb;
+            color: black;
+            cursor: default;
+        }
+
+        .error-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fdff47;
+            color: black;
+            cursor: default;
+        }
+
+        .datagrid-row-selected div {
+            color: white;
+        }
+
+        .datagrid-row-editing td {
+            color: black;
+        }
+
+        .header-toolbar .easyui-linkbutton {
+            width: 50px;
+            height: 52px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .header-toolbar .linkbtn2 {
+            width: 60px;
+        }
+
+        .header-toolbar .linkbtn3 {
+            width: 95px;
+        }
+
+        .header-toolbar .l-btn-text {
+            font-size: 12px !important;
+            margin-top: 28px !important;
+        }
+
+        .header-toolbar .l-btn-icon {
+            width: 24px !important;
+            height: 24px !important;
+            left: 60% !important;
+        }
+
+        .separatorbar {
+            margin-right: 20px;
+        }
+
+        .tabs-wrap .tabs {
+            width: 99% !important;
+        }
+
+        .switchbtn {
+            text-decoration: none;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: middle;
+            margin: 5px 10px 0px 0px;
+            padding: 3px;
+            cursor: pointer;
+            border: 1px solid #bbb;
+            -moz-border-radius: 5px 5px 5px 5px;
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+            .switchbtn label {
+                margin-left: 3px;
+            }
+
+        .btnliktype .l-btn-text {
+            margin-left: 15px;
+            font-size: 12px !important;
+        }
+        /*#endregion*/
+        /*#region datagrid style*/
+
+        .datagrid-view tr, .datagrid-view td {
+            border: 1px solid black;
+        }
+
+        .datagrid-header-row {
+            background-color: #d2d2d2;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .datagrid-header, .datagrid-td-rownumber {
+            background-color: #fff !important;
+            background: none;
+            background-repeat: no-repeat;
+        }
+
+        #dgAccGoup .datagrid-cell, #dgAccGoup .datagrid-header-row .datagrid-cell span {
+            font-size: 12px !important;
+            font-weight: bold;
+        }
+
+        .datagrid-cell-rownumber {
+            color: black !important;
+        }
+        /*#endregion */
+        /*#region table style*/
+        .container-table {
+            width: 99%;
+            margin: 0px 20px 0px 2px;
+            padding: 0px;
+            table-layout: fixed;
+            word-break: break-all;
+        }
+
+            .container-table .table-header {
+                background-color: #95B3D7;
+                border: solid 1px black;
+            }
+
+            .container-table th, .container-table tr, .container-table tr td {
+                /*border: none;*/
+                border: solid 1px black !important;
+                text-align: center;
+            }
+
+            .container-table th, .container-table tr, .container-table td {
+                height: 32px !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+                .container-table tr td {
+                    font-size: 1.0em;
+                    vertical-align: middle !important;
+                    font-weight: bold;
+                }
+
+            .container-table th {
+                font-size: 1.0em;
+                vertical-align: middle !important;
+            }
+
+        tr td label {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+        /*#endregion*/
+        /*#region row style*/
+        .row-fix {
+            margin-left: 0px !important;
+        }
+
+        .row-filestyle {
+            margin-top: 5px;
+            margin-left: 3px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid black;
+            padding: 3px;
+        }
+
+        .col-fix-1, .col-fix-2, .col-fix-3 {
+            padding: 0px;
+            margin-right: 0px;
+        }
+
+            .col-fix-1 > span {
+                margin-left: 35px;
+            }
+
+            .col-fix-1 input[type="text"], .col-fix-1 .form-control,
+            .col-fix-1 .easyui-combobox,
+            .col-fix-1 .easyui-textbox:not(.col-fix-lg),
+            .col-fix-1 .easyui-datebox, .col-fix-1 .easyui-maskedbox {
+                width: 120px !important;
+            }
+
+
+            .col-fix-2 input[type="text"]:not(.textbox-text), .col-fix-2 .form-control,
+            .col-fix-2 .easyui-combobox, .col-fix-2 .easyui-textbox,
+            .col-fix-2 .easyui-datebox, .col-fix-2 .easyui-maskedbox {
+                width: 110px !important;
+            }
+
+            .col-fix-3 input[type="text"], .col-fix-3 .form-control,
+            .col-fix-3 .easyui-combobox, .col-fix-3 .easyui-textbox,
+            .col-fix-3 .easyui-datebox, .col-fix-3 .easyui-maskedbox {
+                width: 120px !important;
+            }
+
+            .col-fix-1 .col-fix-lg, .col-fix-2 .col-fix-lg, .col-fix-3 .col-fix-lg {
+                width: 300px !important;
+            }
+
+                .col-fix-1 .col-fix-lg input[type="text"], .col-fix-1 .col-fix-lg .easyui-textbox {
+                    width: 300px !important;
+                }
+        /*#endregion*/
+        /*#region dom style*/
+        #reportFrame {
+            height: auto 100%;
+        }
+
+        .dlgtabs {
+            min-height: 80%;
+            max-height: calc(100vh - 100px);
+            border: 0.5px solid #bbbaba;
+        }
+
+        .rowstyle {
+            margin-left: 8px !important;
+            margin-top: 5px;
+            padding-right: 0px;
+        }
+
+        input[type=radio] {
+            margin-right: 5px;
+            padding: 0.5em;
+            -webkit-appearance: none;
+            outline: 0.1em solid black;
+            outline-offset: 0.1em;
+        }
+
+            input[type=radio]:checked {
+                display: inline-block;
+                background-color: #000 !important;
+            }
+
+            input[type=radio]:disabled {
+                background-color: #EEEEEE;
+            }
+
+        /*#endregion*/
+
+        .progress-extended div label, .progress-txtextended div label {
+            width: 100%;
+            text-align: left;
+        }
+
+        .progress-extended .row, .progress-txtextended .row {
+            margin: 10px;
+            padding: 5px;
+            border-bottom: 0.5px solid black;
+        }
+
+            .progress-extended .row .btn, .progress-txtextended .row .btn {
+                margin-right: 15px;
+            }
+
+        .form-viewer {
+            width: 99%;
+            height: 100%;
+        }
+
+        @@media (max-width: 1400px) {
+            #submenu {
+                font-size: 0.9em !important;
+            }
+
+            #body-container {
+                max-height: calc(100vh - 130px);
+                font-size: 0.9em;
+            }
+
+            #content-top {
+                font-size: 0.9em !important;
+                min-height: 155px;
+            }
+
+            #content-grid {
+                min-height: calc(100vh - 300px);
+            }
+
+            .panel-title, .tabs-title {
+                font-size: 0.8em;
+            }
+
+            .panel-header, .tabs, .tabs-wrap, .tabs-selected, .tabs-inner {
+                height: 23px !important;
+                padding: 1px !important;
+            }
+
+            .datagrid-cell {
+                font-size: 0.8em !important;
+            }
+
+            .datagrid-header-row {
+                font-size: 0.8em !important;
+                height: 28px !important;
+            }
+
+            .layout-panel-center .datagrid-row,
+            .layout-panel-center .datagrid-row-editing,
+            .layout-panel-center .datagrid-row-editing td,
+            .layout-panel-center .datagrid-row-editing span,
+            .layout-panel-center .datagrid-row-editing input {
+                height: 35px;
+            }
+
+            .col-fix-1 label, .col-fix-2 label, .col-fix-3 label {
+                font-size: 9px !important;
+            }
+
+            .col-fix-1 span {
+                margin-left: 10px;
+            }
+
+            .col-fix-1 input[type="text"], .col-fix-1 .form-control,
+            .col-fix-1 .easyui-combobox, .col-fix-1 .easyui-textbox,
+            .col-fix-1 .easyui-datebox, .col-fix-1 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 100px !important;
+            }
+
+            .col-fix-2 input[type="text"], .col-fix-2 .form-control,
+            .col-fix-2 .easyui-combobox, .col-fix-2 .easyui-textbox,
+            .col-fix-2 .easyui-datebox, .col-fix-2 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 90px !important;
+            }
+
+            .col-fix-3 input[type="text"], .col-fix-3 .form-control,
+            .col-fix-3 .easyui-combobox, .col-fix-3 .easyui-textbox,
+            .col-fix-3 .easyui-datebox, .col-fix-3 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 100px !important;
+            }
+
+            .col-fix-4 input[type="text"], .col-fix-4 .form-control,
+            .col-fix-4 .easyui-combobox, .col-fix-4 .easyui-textbox,
+            .col-fix-4 .easyui-datebox, .col-fix-4 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 80px !important;
+            }
+
+            .col-fix-1 .col-fix-lg, .col-fix-2 .col-fix-lg, .col-fix-3 .col-fix-lg {
+                width: 200px !important;
+            }
+
+            .textbox-button .l-btn-left {
+                margin: 0px !important;
+                padding-left: 20px;
+                height: 28px;
+                width: 28px;
+            }
+
+                .textbox-button .l-btn-left .l-btn-icon {
+                    margin-top: -8px;
+                    margin-left: 0px !important;
+                }
+
+            .textbox-button .l-btn-text {
+                font-size: 0px !important;
+            }
+
+            .btndeliverychange, .btnmanualclose, .btnstockenter {
+                width: 65px !important;
+                height: 45px !important;
+            }
+
+            .btnreportset {
+                width: 60px !important;
+                height: 45px !important;
+                font-size: 0.7em !important;
+            }
+        }
+    </style>
+}
+
+
+@{ Html.RenderAction("_ToolBarPartial"); }
+
+<div id="body-container">
+    <div class="easyui-layout body-layout">
+        <div data-options="region:'west',collapsible:false" title="會計大類" style="width:50%;">
+            <table id="dgGroup" class="datagrid easyui-subdg" style="width:100%;height:99%;">
+            </table>
+        </div>
+
+        <div data-options="region:'east',collapsible:false" title="會計分類" style="width:50%;">
+            <table id="dgNo" class="datagrid easyui-maindg" style="width:100%;height:99%;">
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        ///-----基本參數-----///
+        //#region 基本參數
+        var controllerurl = '/AccCode', functionurl = "/", actionurl = "";
+        var dgGroup = $('#dgGroup'),   //左側列表_會計大類
+            dgNo = $('#dgNo')       //右側列表_會計分類
+
+        //----初始化----------///
+        $(function () {
+            //左側列表欄位
+            dgGroupSet();
+
+            //右側列表欄位
+            dgNoSet();
+        });
+
+        //#region dg設定與填值
+        //dg會計大類，欄位與功能
+        function dgGroupSet() {
+            dgGroup.datagrid({
+                singleSelect: true,
+                columns: [[
+                    { field: 'Id', title: 'Id', hidden: true },
+                    { field: 'AccGroupNo', title: '大類編號', width: 70 },
+                    { field: 'AccGroupNameC', title: '大類中文名稱', width: 100 }
+                ]],
+                onSelect: function (index, row) {
+                    dgNodata(row.Id);
+                }
+            });
+            dgGroupdata();
+        }
+        //dg會計大類，填值
+        function dgGroupdata() {
+            let url = defaultUrl + controllerurl + functionurl + 'GetAccCode1';
+            doajax("GET", url, null, function (data) {
+                if (data == "C0003") {
+                    $.messager.alert('alert', '無會計大類資料!');
+                    console.log("C0003: Not Found");
+                } else {
+                    dgGroup.datagrid('loadData', data);
+                }
+            });
+        }
+        //dg會計分類，欄位與功能
+        function dgNoSet() {
+            dgNo.datagrid({
+                singleSelect: true,
+                columns: [[
+                    { field: 'Id', title: 'Id', hidden: true },
+                    { field: 'AccNoBy', title: '分類編號', width: 70 },
+                    { field: 'AccNoByNameC', title: '分類中文名稱', width: 100 },
+                    { field: 'DCTypeNo', title: '借貸方向', width: 50 },
+                    { field: 'DCTypeNameC', title: '借貸名稱', width: 50 },
+                    { field: 'AccNoType', title: '科目類別', width: 100 }
+                ]],
+                onSelect: function (index, row) {
+
+                }
+            });
+            dgNodata();
+        }
+        //dg會計分類，填值
+        function dgNodata(docid) {
+            if (docid != null) {
+                let url = defaultUrl + controllerurl + functionurl + 'GetAccCode2?docid=' + docid;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "C0003") {
+                            $.messager.alert('alert', '無會計分類資料!');
+                            console.log("C0003: Not Found");
+                        } else {
+                            dgNo.datagrid('loadData', data);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        }
+        //#endregion
+
+        //#region 按鈕動作
+        function btnClick(type) {
+            switch (type) {
+                //#region dg導覽
+                case 'first':
+                    break;
+                case 'previous':
+                    break;
+                case 'next':
+                    break;
+                case 'last':
+                    break;
+                //#endregion
+                //#region dg資料動作
+                case 'search':
+                    break;
+                case 'add':
+                    break;
+                case 'edit':
+                    break;
+                case 'save':
+                    break;
+                case 'refresh':
+                    break;
+                case 'cancel':
+                    break;
+                case 'delete':
+                    break;
+                //#endregion
+            }
+        }
+        //#endregion
+        // 自定義doajax
+        function doajax(type, url, data, successCallback, errorCallback) {
+            $.ajax({
+                type: type,
+                url: url,
+                data: data,
+                success: function (response) {
+                    if (typeof successCallback === 'function') {
+                        successCallback(response);
+                    }
+                },
+                error: function (xhr, status, errorThrown) {
+                    if (typeof errorCallback === 'function') {
+                        errorCallback(xhr, status, errorThrown);
+                    }
+                }
+            });
+        }
+    </script>
+}

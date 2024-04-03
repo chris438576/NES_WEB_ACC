@@ -6,14 +6,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NES Limited-@ViewBag.Title </title>
     @Styles.Render("~/Content/css")
-   
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("css", required: false)
+
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/bootstrap/easyui.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/color.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/icon.css" />
+    <!--Charisma Bootstrap-->
+    <link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
+    <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />
+    <link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
+    <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        /*變更navbar底色*/
+        .navbar {
+            background-image: linear-gradient(#FC9A58, #F59657 60%, #DE874C)
+        }
 
+        .navbar-default {
+            background-color: #0bf4d8;
+            border-color: #0bf4d8;
+        }
+
+        /*變更navbar底色*/
+
+        /*mousehover class*/
+        .mousehover:hover {
+            background-color: #09bea9 !important;
+            /*背景顏色*/
+            border-radius: 5px !important;
+            /*圓外框*/
+        }
+
+        /*mousehover class*/
+
+        /*登入者 hover*/
+        #user:hover {
+            background-color: #fff81f;
+            /*背景顏色*/
+            color: red;
+            /*文字顏色*/
+        }
+
+        /*登入者 hover*/
+
+        /*預設Button外框*/
+        #user {
+            border-radius: 5px;
+            /*圓外框*/
+        }
+
+        /*預設Button外框*/
+
+        /*基本作業下拉選單(使用CSS套版)*/
+        #dropdownMenu1 {
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+            color: #ffffff;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+        }
+
+            #dropdownMenu1:hover {
+                cursor: pointer;
+            }
+
+        .dropdown-menu > li > a:hover {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #09bea9 !important;
+            /*背景顏色*/
+        }
+
+        .open > a {
+            background-color: #09bea9 !important;
+            /*背景顏色*/
+            border-radius: 5px !important;
+            /*圓外框*/
+        }
+
+        .dropdown-menu > li > a {
+            padding: 5px 20px;
+        }
+
+
+        /*基本作業下拉選單(使用CSS套版)*/
+
+        /*右側測試區-Bar*/
+        /*#alerttip {
+            position: fixed;
+            right: 0;
+            top: 35%;
+            width: 3em;
+            margin-top: -2.5em;
+            margin-left: 3px;
+            padding: 25px;
+            background-color: #f3f41b;
+            list-style-type: none;
+            color: #000000;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 20px 0px 0px 20px;
+        }
+
+            #alerttip li {
+                margin: 0px;
+                padding: 0px;
+            }*/
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -29,8 +132,46 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("作業流程圖", "Index", "Home")</li>
-                    <li>@Html.ActionLink("關於", "About", "Home")</li>
-                    <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            會計設定
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("會計科目設定", "AccCodeSet", "AccCode")</li>
+                            <li>@Html.ActionLink("科目類別設定", "AccGroupNoSet", "AccCode")</li>
+                            <li>@Html.ActionLink("權益類科目設定", "", "")</li>
+                            <li>@Html.ActionLink("傳票類別設定", "", "")</li>
+                            <li>@Html.ActionLink("會計系統基本設定", "", "")</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            傳票作業
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("傳票輸入作業", "", "")</li>
+                            <li>@Html.ActionLink("傳票開帳作業", "", "")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            調整分錄
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            財務報表
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             權限設定
@@ -40,6 +181,24 @@
                             <li>@Html.ActionLink("系統管理-Users", "UsersList", "UserRoleManage")</li>
                             <li>@Html.ActionLink("系統管理-Roles", "RolesList", "UserRoleManage")</li>
                             @*<li>@Html.ActionLink("系統管理-Permissions", "PermissionsList", "UserRoleManage")</li>*@
+                        </ul>
+                    </li>
+                    <li>
+                        <ul class="nav navbar-nav navbar-right float-right text-right pr-3">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-user-circle text-olive" aria-hidden="true"></i>
+                                    <span class="hidden-easy xs">
+                                        @if (Session["EmpNameC"] != null)
+                                        {
+                                            <span class="hidden-easy xs">
+                                                @Session["EmpNameC"]
+                                            </span>
+                                        }
+                                    </span>
+                                </a>
+                            </li>
+                            <li><a href="/logout.aspx"><i class="fa fa-arrow-circle-right text-fuchsia" aria-hidden="true"></i>登出</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -59,6 +218,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/easyui/jquery.easyui.min.js"></script>
+    <script>
+        var defaultUrl = '@HttpContext.Current.Application["GlobalUrl"]';
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

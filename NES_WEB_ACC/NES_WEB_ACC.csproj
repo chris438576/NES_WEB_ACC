@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.1.35\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -125,9 +128,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccCode1.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccCode2.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccTitleNo.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccCodeController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserRoleManageController.cs" />
@@ -191,6 +204,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\easyui\plugins\jquery.calendar" />
+    <Content Include="Scripts\easyui\themes\icons\larg-detail.png" />
     <Content Include="Scripts\easyui\themes\material-teal\images\Thumbs.db" />
     <Content Include="Scripts\easyui\themes\material\images\Thumbs.db" />
     <EntityDeploy Include="NES_WEB_ACC.edmx">
@@ -846,6 +860,9 @@
     <Content Include="Views\UserRoleManage\RolesList.cshtml" />
     <Content Include="Views\Error\Permissions.cshtml" />
     <Content Include="Views\Shared\_AccStatePartial.cshtml" />
+    <Content Include="Views\AccCode\AccCodeSet.cshtml" />
+    <Content Include="Views\Shared\_ToolBarPartial.cshtml" />
+    <Content Include="Views\AccCode\AccGroupNoSet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

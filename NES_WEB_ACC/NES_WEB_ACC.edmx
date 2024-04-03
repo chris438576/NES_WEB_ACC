@@ -4,7 +4,102 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NES_WEB_ACCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NES_WEB_ACCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccCode1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="CompId" Type="bigint" />
+          <Property Name="CompNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CompAbbr" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccGroupNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccGroupNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccGroupNameE" Type="nvarchar" MaxLength="100" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="100" />
+          <Property Name="SourceType" Type="int" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="IsState" Type="bit" />
+          <Property Name="StateDate" Type="smalldatetime" />
+          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsChecked" Type="bit" />
+          <Property Name="CheckDate" Type="smalldatetime" />
+          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="AccCode2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="DocId" Type="bigint" />
+          <Property Name="CompId" Type="bigint" />
+          <Property Name="CompNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CompAbbr" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccNoBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccNoByNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNoByNameE" Type="nvarchar" MaxLength="100" />
+          <Property Name="DCTypeNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="DCTypeNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNoType" Type="nvarchar" MaxLength="100" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="100" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="IsState" Type="bit" />
+          <Property Name="StateDate" Type="smalldatetime" />
+          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsChecked" Type="bit" />
+          <Property Name="CheckDate" Type="smalldatetime" />
+          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="AccTitleNo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="CompId" Type="bigint" />
+          <Property Name="CompNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CompAbbr" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccGroupNoId" Type="bigint" />
+          <Property Name="AccGroupNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccGroupNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccGroupNameE" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNoById" Type="bigint" />
+          <Property Name="AccNoBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccNoByNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNoByNameE" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNameE" Type="nvarchar" MaxLength="200" />
+          <Property Name="DCTypeNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="DCTypeNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccCode" Type="bit" />
+          <Property Name="IsControl" Type="bit" />
+          <Property Name="IsCancel" Type="bit" />
+          <Property Name="IsCash" Type="bit" />
+          <Property Name="IsParty" Type="bit" />
+          <Property Name="IsCurrency" Type="bit" />
+          <Property Name="IsTarget" Type="bit" />
+          <Property Name="IsDept" Type="bit" />
+          <Property Name="IsOffset" Type="bit" />
+          <Property Name="IsProject" Type="bit" />
+          <Property Name="AccNoRemark" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="StatuDate" Type="smalldatetime" />
+          <Property Name="StatusBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="IsState" Type="bit" />
+          <Property Name="StateDate" Type="smalldatetime" />
+          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsChecked" Type="bit" />
+          <Property Name="CheckDate" Type="smalldatetime" />
+          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccSetting" Type="bigint" />
+        </EntityType>
         <EntityType Name="LNK_RolePermissions">
           <Key>
             <PropertyRef Name="Id" />
@@ -83,14 +178,16 @@
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityContainer Name="NES_WEB_ACCModelStoreContainer">
+          <EntitySet Name="AccCode1" EntityType="Self.AccCode1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccCode2" EntityType="Self.AccCode2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccTitleNo" EntityType="Self.AccTitleNo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LNK_RolePermissions" EntityType="Self.LNK_RolePermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LNK_UserRole" EntityType="Self.LNK_UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Permissions" EntityType="Self.SYS_Permissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Roles" EntityType="Self.SYS_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Users" EntityType="Self.SYS_Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NES_WEB_ACCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -177,7 +274,105 @@
           <EntitySet Name="SYS_Permissions" EntityType="Self.SYS_Permissions" />
           <EntitySet Name="SYS_Roles" EntityType="Self.SYS_Roles" />
           <EntitySet Name="SYS_Users" EntityType="Self.SYS_Users" />
+          <EntitySet Name="AccCode1" EntityType="NES_WEB_ACCModel.AccCode1" />
+          <EntitySet Name="AccCode2" EntityType="NES_WEB_ACCModel.AccCode2" />
+          <EntitySet Name="AccTitleNo" EntityType="NES_WEB_ACCModel.AccTitleNo" />
         </EntityContainer>
+        <EntityType Name="AccCode1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="CompId" Type="Int64" />
+          <Property Name="CompNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CompAbbr" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SourceType" Type="Int32" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="IsState" Type="Boolean" />
+          <Property Name="StateDate" Type="DateTime" Precision="0" />
+          <Property Name="StateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsChecked" Type="Boolean" />
+          <Property Name="CheckDate" Type="DateTime" Precision="0" />
+          <Property Name="CheckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AccCode2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="DocId" Type="Int64" />
+          <Property Name="CompId" Type="Int64" />
+          <Property Name="CompNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CompAbbr" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoByNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoByNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DCTypeNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DCTypeNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="IsState" Type="Boolean" />
+          <Property Name="StateDate" Type="DateTime" Precision="0" />
+          <Property Name="StateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsChecked" Type="Boolean" />
+          <Property Name="CheckDate" Type="DateTime" Precision="0" />
+          <Property Name="CheckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AccTitleNo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="CompId" Type="Int64" />
+          <Property Name="CompNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CompAbbr" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNoId" Type="Int64" />
+          <Property Name="AccGroupNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoById" Type="Int64" />
+          <Property Name="AccNoBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoByNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoByNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DCTypeNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DCTypeNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccCode" Type="Boolean" />
+          <Property Name="IsControl" Type="Boolean" />
+          <Property Name="IsCancel" Type="Boolean" />
+          <Property Name="IsCash" Type="Boolean" />
+          <Property Name="IsParty" Type="Boolean" />
+          <Property Name="IsCurrency" Type="Boolean" />
+          <Property Name="IsTarget" Type="Boolean" />
+          <Property Name="IsDept" Type="Boolean" />
+          <Property Name="IsOffset" Type="Boolean" />
+          <Property Name="IsProject" Type="Boolean" />
+          <Property Name="AccNoRemark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="StatuDate" Type="DateTime" Precision="0" />
+          <Property Name="StatusBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="IsState" Type="Boolean" />
+          <Property Name="StateDate" Type="DateTime" Precision="0" />
+          <Property Name="StateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsChecked" Type="Boolean" />
+          <Property Name="CheckDate" Type="DateTime" Precision="0" />
+          <Property Name="CheckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccSetting" Type="Int64" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -263,6 +458,104 @@
                 <ScalarProperty Name="UpdateEmpId" ColumnName="UpdateEmpId" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccCode1">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.AccCode1">
+              <MappingFragment StoreEntitySet="AccCode1">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="StateBy" ColumnName="StateBy" />
+                <ScalarProperty Name="StateDate" ColumnName="StateDate" />
+                <ScalarProperty Name="IsState" ColumnName="IsState" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="SourceType" ColumnName="SourceType" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="AccGroupNameE" ColumnName="AccGroupNameE" />
+                <ScalarProperty Name="AccGroupNameC" ColumnName="AccGroupNameC" />
+                <ScalarProperty Name="AccGroupNo" ColumnName="AccGroupNo" />
+                <ScalarProperty Name="CompAbbr" ColumnName="CompAbbr" />
+                <ScalarProperty Name="CompNo" ColumnName="CompNo" />
+                <ScalarProperty Name="CompId" ColumnName="CompId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccCode2">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.AccCode2">
+              <MappingFragment StoreEntitySet="AccCode2">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="StateBy" ColumnName="StateBy" />
+                <ScalarProperty Name="StateDate" ColumnName="StateDate" />
+                <ScalarProperty Name="IsState" ColumnName="IsState" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="AccNoType" ColumnName="AccNoType" />
+                <ScalarProperty Name="DCTypeNameC" ColumnName="DCTypeNameC" />
+                <ScalarProperty Name="DCTypeNo" ColumnName="DCTypeNo" />
+                <ScalarProperty Name="AccNoByNameE" ColumnName="AccNoByNameE" />
+                <ScalarProperty Name="AccNoByNameC" ColumnName="AccNoByNameC" />
+                <ScalarProperty Name="AccNoBy" ColumnName="AccNoBy" />
+                <ScalarProperty Name="CompAbbr" ColumnName="CompAbbr" />
+                <ScalarProperty Name="CompNo" ColumnName="CompNo" />
+                <ScalarProperty Name="CompId" ColumnName="CompId" />
+                <ScalarProperty Name="DocId" ColumnName="DocId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccTitleNo">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.AccTitleNo">
+              <MappingFragment StoreEntitySet="AccTitleNo">
+                <ScalarProperty Name="AccSetting" ColumnName="AccSetting" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="StateBy" ColumnName="StateBy" />
+                <ScalarProperty Name="StateDate" ColumnName="StateDate" />
+                <ScalarProperty Name="IsState" ColumnName="IsState" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="StatusBy" ColumnName="StatusBy" />
+                <ScalarProperty Name="StatuDate" ColumnName="StatuDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AccNoRemark" ColumnName="AccNoRemark" />
+                <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+                <ScalarProperty Name="IsOffset" ColumnName="IsOffset" />
+                <ScalarProperty Name="IsDept" ColumnName="IsDept" />
+                <ScalarProperty Name="IsTarget" ColumnName="IsTarget" />
+                <ScalarProperty Name="IsCurrency" ColumnName="IsCurrency" />
+                <ScalarProperty Name="IsParty" ColumnName="IsParty" />
+                <ScalarProperty Name="IsCash" ColumnName="IsCash" />
+                <ScalarProperty Name="IsCancel" ColumnName="IsCancel" />
+                <ScalarProperty Name="IsControl" ColumnName="IsControl" />
+                <ScalarProperty Name="AccCode" ColumnName="AccCode" />
+                <ScalarProperty Name="DCTypeNameC" ColumnName="DCTypeNameC" />
+                <ScalarProperty Name="DCTypeNo" ColumnName="DCTypeNo" />
+                <ScalarProperty Name="AccNameE" ColumnName="AccNameE" />
+                <ScalarProperty Name="AccNameC" ColumnName="AccNameC" />
+                <ScalarProperty Name="AccNo" ColumnName="AccNo" />
+                <ScalarProperty Name="AccNoByNameE" ColumnName="AccNoByNameE" />
+                <ScalarProperty Name="AccNoByNameC" ColumnName="AccNoByNameC" />
+                <ScalarProperty Name="AccNoBy" ColumnName="AccNoBy" />
+                <ScalarProperty Name="AccNoById" ColumnName="AccNoById" />
+                <ScalarProperty Name="AccGroupNameE" ColumnName="AccGroupNameE" />
+                <ScalarProperty Name="AccGroupNameC" ColumnName="AccGroupNameC" />
+                <ScalarProperty Name="AccGroupNo" ColumnName="AccGroupNo" />
+                <ScalarProperty Name="AccGroupNoId" ColumnName="AccGroupNoId" />
+                <ScalarProperty Name="CompAbbr" ColumnName="CompAbbr" />
+                <ScalarProperty Name="CompNo" ColumnName="CompNo" />
+                <ScalarProperty Name="CompId" ColumnName="CompId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
