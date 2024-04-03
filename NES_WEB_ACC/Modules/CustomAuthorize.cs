@@ -18,7 +18,7 @@ namespace NES_WEB_ACC.Modules
             else
             {
                 // 如果用戶已驗證，但沒有所需角色，則返回未授權的結果
-                filterContext.Result = new HttpUnauthorizedResult();
+                filterContext.Result = new RedirectResult(string.Format("{0}?ReturnUrl={1}", "/Error/Permissions", filterContext.HttpContext.Request.Url));
             }
         }
 
