@@ -13,17 +13,20 @@ namespace NES_WEB_ACC.Controllers
     {
         public ActionResult Index()
         {
-            // 20240403停用，測試新版
+            //// 20240403停用，測試新版
             //string identityEmpNo = User.Identity.Name;    //正式
             ////string identityEmpNo = "NES1492";       //本機測試
-
             //RoleSetting(identityEmpNo);
 
-            //// 檢查TempData是否包含訊息
-            //if (TempData["Message"] != null)
-            //{
-            //    ViewBag.Message = TempData["Message"].ToString();
-            //}
+            string identityEmpNo = ControllerContext.HttpContext.User.Identity.Name;
+            UserSessionSetting(identityEmpNo);
+
+            // 檢查TempData是否包含訊息
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"].ToString();
+            }
+
 
             return View();
         }
@@ -130,6 +133,58 @@ namespace NES_WEB_ACC.Controllers
         //    TempData["Message"] = "角色Session設定完成。";
         //    return RedirectToAction("Index");
         //}
+
+        public ActionResult UserSessionSetting(string identityEmpNo)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
+
+            // SQL 查詢語句-1：系統中是否有該使用者
+            string sqlQuery1 = @"SELECT 
+                                            SU.EmpId,
+                                            SU.EmpNo,
+                                         SU.EmpNameC,
+                                            SU.Status
+                                        FROM [NES_WEB_ACC].[dbo].[SYS_Users] as SU 
+                                           left join [ESTAERPV2].[dbo].EmployeeInfo as EI on SU.EmpId = EI.Id
+                                        where 1=1
+                                         and SU.Status = 1	--User是否啟用
+                                         and EI.JobType = '在職'  --ERP在職員工
+                                            and SU.EmpNo = @EmpNo";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery1, connection))
+                {
+                    command.Parameters.AddWithValue("@EmpNo", identityEmpNo);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            if (reader.GetBoolean(reader.GetOrdinal("Status")))
+                            {
+                                // 將資料庫資料寫入Session：EmpId、EmpNo、EmpNameC
+                                Session["EmpId"] = reader.GetInt64(reader.GetOrdinal("EmpId"));
+                                Session["EmpNo"] = reader.GetString(reader.GetOrdinal("EmpNo"));
+                                Session["EmpNameC"] = reader.GetString(reader.GetOrdinal("EmpNameC"));
+                                TempData["Message"] = "角色Session設定完成。";
+                                return RedirectToAction("Index");
+                            }
+                            else
+                            {
+                                TempData["Message"] = "您的帳號或已被停用。";
+                                return RedirectToAction("Index");
+                            }
+                        }
+                        else
+                        {
+                            TempData["Message"] = "此系統無您的資料，請聯絡系統管理員。";
+                            return RedirectToAction("Index");
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
 		/// 導覽圖介面

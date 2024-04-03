@@ -20,7 +20,7 @@ namespace NES_WEB_ACC.Controllers
         /// UsersList權限列表-主畫面View
         /// </summary>
         /// <returns></returns>
-        [CustomAuthorize(Roles = "Admin,User")]
+        [CustomAuthorize(Roles = "Admin")]
         public ActionResult UsersList()
         {
             // 20240403停用，測試新版

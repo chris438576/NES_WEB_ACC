@@ -24,19 +24,19 @@ namespace NES_WEB_ACC
         }
         protected void Application_BeginRequest()
         {
-            //本機測試
-            Application["GlobalUrl"] = "";
-            ////正式使用
-            //Application["GlobalUrl"] = @"http://" + HttpContext.Current.Request.Url.Authority + @"/WEB_ACC";
+            ////本機測試
+            //Application["GlobalUrl"] = "";
+            //正式使用
+            Application["GlobalUrl"] = @"http://" + HttpContext.Current.Request.Url.Authority + @"/WEB_ACC";
         }
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            // 測試
-            string username = "NES1492"; // 假設您要模擬的用戶名稱
-            string[] roles = { "User" }; // 假設您要模擬的用戶角色
+            //// 測試
+            //string username = "NES1492"; // 假設您要模擬的用戶名稱
+            //string[] roles = { "User" }; // 假設您要模擬的用戶角色
             ////正式
-            //string username = User.Identity.Name;
-            //string[] roles = RoleSetting(username);
+            string username = User.Identity.Name;            
+            string[] roles = RoleSetting(username);
 
             // 創建一個GenericIdentity對象，表示已驗證的用戶
             GenericIdentity id = new GenericIdentity(username);
@@ -49,58 +49,15 @@ namespace NES_WEB_ACC
         }
 
         /// <summary>
-        /// 登入後只用者權限設定
+        /// 登入後使用者權限設定
         /// </summary>
         /// <param name="identityEmpNo"></param>
         /// <returns></returns>
         public string[] RoleSetting(string identityEmpNo)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
-
-            // SQL 查詢語句-1：系統中是否有該使用者
-            string sqlQuery1 = @"SELECT 
-                                SU.EmpId,
-                                SU.EmpNo,
-                                SU.EmpNameC,
-                                SU.Status
-                            FROM [NES_WEB_ACC].[dbo].[SYS_Users] as SU 
-                                left join [ESTAERPV2].[dbo].EmployeeInfo as EI on SU.EmpId = EI.Id
-                            where 1=1
-                                and SU.Status = 1    --User是否啟用
-                                and EI.JobType = '在職'  --ERP在職員工
-                                and SU.EmpNo = @EmpNo";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(sqlQuery1, connection))
-                {
-                    command.Parameters.AddWithValue("@EmpNo", identityEmpNo);
-                    connection.Open();
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            if (reader.GetBoolean(reader.GetOrdinal("Status")))
-                            {
-                                // 將資料庫資料寫入Session：EmpId、EmpNo、EmpNameC
-                                Session["EmpId"] = reader.GetInt64(reader.GetOrdinal("EmpId"));
-                                Session["EmpNo"] = reader.GetString(reader.GetOrdinal("EmpNo"));
-                                Session["EmpNameC"] = reader.GetString(reader.GetOrdinal("EmpNameC"));
-                            }
-                            else
-                            {                                
-                                return new string[0]; // 返回空陣列
-                            }
-                        }
-                        else
-                        {     return new string[0]; // 返回空陣列
-                        }
-                    }
-                }
-            }
-
-            // SQL 查詢語句-2：該使用者有哪些角色
-            string sqlQuery2 = @"SELECT SU.EmpNo,
+                       
+            string sql = @"SELECT SU.EmpNo,
                                 SU.EmpNameC,    
                                 SR.RoleName    
                             FROM [NES_WEB_ACC].[dbo].[SYS_Users] as SU 
@@ -115,7 +72,7 @@ namespace NES_WEB_ACC
                                 and SU.EmpNo = @EmpNo";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand(sqlQuery2, connection))
+                using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@EmpNo", identityEmpNo);
                     connection.Open();
@@ -132,9 +89,7 @@ namespace NES_WEB_ACC
                         }
 
                         if (roleList.Count > 0)
-                        {                            
-                            // 將資料庫資料寫入Session：Role
-                            Session["RoleList"] = roleList;
+                        {             
                             return roleList.ToArray(); // 返回角色陣列
                         }
                         else
