@@ -204,6 +204,7 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\easyui\datagrid-cellediting.js" />
     <Content Include="Scripts\easyui\plugins\jquery.calendar" />
     <Content Include="Scripts\easyui\themes\icons\larg-detail.png" />
     <Content Include="Scripts\easyui\themes\material-teal\images\Thumbs.db" />
@@ -843,6 +844,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\pdfmake\pdfmake.min.js" />
+    <Content Include="Scripts\pdfmake\vfs_fonts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
