@@ -31,11 +31,11 @@ namespace NES_WEB_ACC
         }
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            // 測試
+            // 本機測試
             string username = "NES1492"; // 假設您要模擬的用戶名稱
             string[] roles = { "Admin" }; // 假設您要模擬的用戶角色
-            ////正式
-            //string username = User.Identity.Name;            
+            //// 正式使用
+            //string username = User.Identity.Name;
             //string[] roles = RoleSetting(username);
 
             // 創建一個GenericIdentity對象，表示已驗證的用戶

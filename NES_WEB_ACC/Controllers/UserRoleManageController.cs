@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace NES_WEB_ACC.Controllers
 {
+    [Authorize]    
     public class UserRoleManageController : Controller
     {
         public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;

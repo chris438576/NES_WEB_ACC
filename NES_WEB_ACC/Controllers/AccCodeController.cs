@@ -9,9 +9,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dapper;
+using NES_WEB_ACC.Modules;
 
 namespace NES_WEB_ACC.Controllers
 {
+    [Authorize]
+    [CustomAuthorize(Roles = "Admin")]
     public class AccCodeController : Controller
     {
         public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
@@ -128,10 +131,18 @@ namespace NES_WEB_ACC.Controllers
             }
         }
         /// <summary>
-        /// View_會計科目設定
+        /// View_科目類別設定
         /// </summary>
         /// <returns></returns>
         public ActionResult AccGroupNoSet()
+        {
+            return View();
+        }
+        /// <summary>
+        /// View_權益科目設定
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EquityCodeSet()
         {
             return View();
         }
@@ -143,6 +154,8 @@ namespace NES_WEB_ACC.Controllers
         {
             return View();
         }
+
+
         /// <summary>
         /// 工具列介面
         /// </summary>
@@ -152,7 +165,7 @@ namespace NES_WEB_ACC.Controllers
             return PartialView();
         }
         /// <summary>
-        /// 角色權限檢查
+        /// 權限檢查_20240403停用，測試新版
         /// </summary>
         /// <param name="roles"></param>
         /// <returns></returns>
