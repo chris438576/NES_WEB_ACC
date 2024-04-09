@@ -14,6 +14,11 @@ namespace NES_WEB_ACC.Controllers
             return View();
         }
 
+        public ActionResult _VoucherTableInfoPartial()
+        {
+            return PartialView();
+        }
+
         /// <summary>
         /// 工具列介面
         /// </summary>

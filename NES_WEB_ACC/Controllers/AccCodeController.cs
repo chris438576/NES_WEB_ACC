@@ -34,13 +34,13 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult GetAccCode1()
         {            
-            string sql = @"select * from NES_WEB_ACC.dbo.AccCode1 where ([CompId] = '150615163202244')";
+            string sql = @"select * from ACC_AccCode1 where ([CompId] = '150615163202244')";
             
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<AccCode1> customerdata = conn.Query<AccCode1>(sql).ToList();
+                    List<ACC_AccCode1> customerdata = conn.Query<ACC_AccCode1>(sql).ToList();
                     if (customerdata.Count > 0)
                     {
                         return Json(customerdata, JsonRequestBehavior.AllowGet);
@@ -70,13 +70,13 @@ namespace NES_WEB_ACC.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("C0001", JsonRequestBehavior.AllowGet);
             }
-            string sql = @"SELECT * FROM [NES_WEB_ACC].[dbo].[AccCode2] where ([CompId] = '150615163202244')　and DocId = @docid";
+            string sql = @"SELECT * FROM ACC_AccCode2 where ([CompId] = '150615163202244')　and DocId = @docid";
             var param = new { docid };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<AccCode2> customerdata = conn.Query<AccCode2>(sql, param).ToList();
+                    List<ACC_AccCode2> customerdata = conn.Query<ACC_AccCode2>(sql, param).ToList();
                     if (customerdata.Count > 0)
                     {
                         return Json(customerdata, JsonRequestBehavior.AllowGet);
@@ -106,13 +106,13 @@ namespace NES_WEB_ACC.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("C0001", JsonRequestBehavior.AllowGet);
             }
-            string sql = @"  select * from [NES_WEB_ACC].[dbo].[AccTitleNo] where ([CompId] = '150615163202244') and AccNoById= @accnobyid order by AccNo";
+            string sql = @"  select * from ACC_AccTitleNo where ([CompId] = '150615163202244') and AccNoById= @accnobyid order by AccNo";
             var param = new { accnobyid };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<AccTitleNo> customerdata = conn.Query<AccTitleNo>(sql, param).ToList();
+                    List<ACC_AccTitleNo> customerdata = conn.Query<ACC_AccTitleNo>(sql, param).ToList();
                     if (customerdata.Count > 0)
                     {
                         return Json(customerdata, JsonRequestBehavior.AllowGet);
@@ -155,13 +155,13 @@ namespace NES_WEB_ACC.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("C0001", JsonRequestBehavior.AllowGet);
             }
-            string sql = @" select * from NES_WEB_ACC.dbo.[EquityInfo] where ([CompId] = '150615163202244') AND ([Type] = @type)";
+            string sql = @" select * from ACC_EquityInfo where ([CompId] = '150615163202244') AND ([Type] = @type)";
             var param = new { type };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<EquityInfo> customerdata = conn.Query<EquityInfo>(sql, param).ToList();
+                    List<ACC_EquityInfo> customerdata = conn.Query<ACC_EquityInfo>(sql, param).ToList();
                     
                     if (customerdata.Count > 0)
                     {
@@ -187,13 +187,13 @@ namespace NES_WEB_ACC.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("C0001", JsonRequestBehavior.AllowGet);
             }
-            string sql = @" SELECT * FROM NES_WEB_ACC.dbo.[EquityItem] where  ([DocId] = @docid)";
+            string sql = @" SELECT * FROM ACC_EquityItem where  ([DocId] = @docid)";
             var param = new { docid };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<EquityItem> customerdata = conn.Query<EquityItem>(sql, param).ToList();
+                    List<ACC_EquityItem> customerdata = conn.Query<ACC_EquityItem>(sql, param).ToList();
                     if (customerdata.Count > 0)
                     {
                         return Json(customerdata, JsonRequestBehavior.AllowGet);
@@ -227,14 +227,14 @@ namespace NES_WEB_ACC.Controllers
             //    Response.StatusCode = (int)HttpStatusCode.BadRequest;
             //    return Json("C0001", JsonRequestBehavior.AllowGet);
             //}
-            string sql = @" select * from NES_WEB_ACC.dbo.[SysDocSubType]　where  ([DocId] = '1019')";
+            string sql = @" select * from ACC_SysDocSubType　where  ([DocId] = '1019')";
             //var param = new { type };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     //List<EquityInfo> customerdata = conn.Query<EquityInfo>(sql, param).ToList();
-                    List<SysDocSubType> customerdata = conn.Query<SysDocSubType>(sql).ToList();
+                    List<ACC_SysDocSubType> customerdata = conn.Query<ACC_SysDocSubType>(sql).ToList();
                     if (customerdata.Count > 0)
                     {
                         return Json(customerdata, JsonRequestBehavior.AllowGet);
@@ -259,13 +259,13 @@ namespace NES_WEB_ACC.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("C0001", JsonRequestBehavior.AllowGet);
             }
-            string sql = @" select * from NES_WEB_ACC.dbo.[VoucherKind]　where  ([CompId] = @compid)　";
+            string sql = @" select * from ACC_VoucherKind　where  ([CompId] = @compid)　";
             var param = new { compid };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<VoucherKind> customerdata = conn.Query<VoucherKind>(sql, param).ToList();                    
+                    List<ACC_VoucherKind> customerdata = conn.Query<ACC_VoucherKind>(sql, param).ToList();                    
                     if (customerdata.Count > 0)
                     {
                         return Json(customerdata, JsonRequestBehavior.AllowGet);

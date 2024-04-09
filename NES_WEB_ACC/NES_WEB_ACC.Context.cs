@@ -30,12 +30,12 @@ namespace NES_WEB_ACC
         public virtual DbSet<SYS_Permissions> SYS_Permissions { get; set; }
         public virtual DbSet<SYS_Roles> SYS_Roles { get; set; }
         public virtual DbSet<SYS_Users> SYS_Users { get; set; }
-        public virtual DbSet<AccCode1> AccCode1 { get; set; }
-        public virtual DbSet<AccCode2> AccCode2 { get; set; }
-        public virtual DbSet<AccTitleNo> AccTitleNo { get; set; }
-        public virtual DbSet<EquityInfo> EquityInfo { get; set; }
-        public virtual DbSet<EquityItem> EquityItem { get; set; }
-        public virtual DbSet<SysDocSubType> SysDocSubType { get; set; }
-        public virtual DbSet<VoucherKind> VoucherKind { get; set; }
+        public virtual DbSet<ACC_AccCode1> ACC_AccCode1 { get; set; }
+        public virtual DbSet<ACC_AccCode2> ACC_AccCode2 { get; set; }
+        public virtual DbSet<ACC_AccTitleNo> ACC_AccTitleNo { get; set; }
+        public virtual DbSet<ACC_EquityInfo> ACC_EquityInfo { get; set; }
+        public virtual DbSet<ACC_EquityItem> ACC_EquityItem { get; set; }
+        public virtual DbSet<ACC_SysDocSubType> ACC_SysDocSubType { get; set; }
+        public virtual DbSet<ACC_VoucherKind> ACC_VoucherKind { get; set; }
     }
 }

@@ -12,20 +12,21 @@ namespace NES_WEB_ACC
     using System;
     using System.Collections.Generic;
     
-    public partial class AccCode2
+    public partial class ACC_VoucherKind
     {
         public long Id { get; set; }
-        public Nullable<long> DocId { get; set; }
         public Nullable<long> CompId { get; set; }
         public string CompNo { get; set; }
         public string CompAbbr { get; set; }
-        public string AccNoBy { get; set; }
-        public string AccNoByNameC { get; set; }
-        public string AccNoByNameE { get; set; }
-        public string DCTypeNo { get; set; }
-        public string DCTypeNameC { get; set; }
-        public string AccNoType { get; set; }
-        public string Remark { get; set; }
+        public Nullable<long> VoucherTypeId { get; set; }
+        public string VoucherType { get; set; }
+        public string VoucherNameC { get; set; }
+        public string VoucherNameE { get; set; }
+        public Nullable<long> AccNoId { get; set; }
+        public string AccNo { get; set; }
+        public string AccNameC { get; set; }
+        public string AccNameE { get; set; }
+        public string DcType { get; set; }
         public Nullable<int> Flag { get; set; }
         public Nullable<bool> IsState { get; set; }
         public Nullable<System.DateTime> StateDate { get; set; }

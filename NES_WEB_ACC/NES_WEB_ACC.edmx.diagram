@@ -4,20 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7484ba71ef794330abf1fc6f9d994afb" Name="Diagram1" ZoomLevel="39">
+      <Diagram DiagramId="7484ba71ef794330abf1fc6f9d994afb" Name="Diagram1" ZoomLevel="85">
         <EntityTypeShape EntityType="NES_WEB_ACCModel.LNK_RolePermissions" Width="1.5" PointX="7" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.LNK_UserRole" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.SYS_Permissions" Width="1.5" PointX="3.75" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.SYS_Roles" Width="1.5" PointX="2.125" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.SYS_Users" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.AccCode1" Width="1.5" PointX="0.5" PointY="9.875" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.AccCode2" Width="1.5" PointX="2.125" PointY="9.875" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.AccTitleNo" Width="1.5" PointX="3.75" PointY="9.875" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.EquityInfo" Width="1.5" PointX="8.625" PointY="0.5" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.EquityItem" Width="1.5" PointX="5.375" PointY="9.875" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.SysDocSubType" Width="1.5" PointX="7" PointY="9.875" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.VoucherKind" Width="1.5" PointX="8.625" PointY="9.875" />
-      </Diagram>
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_AccCode1" Width="1.5" PointX="0.5" PointY="4.75" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_AccCode2" Width="1.5" PointX="2.5" PointY="4.75" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_AccTitleNo" Width="1.5" PointX="4.5" PointY="4.75" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_EquityInfo" Width="1.5" PointX="6.5" PointY="4.75" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_EquityItem" Width="1.5" PointX="8.5" PointY="4.75" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_SysDocSubType" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherKind" Width="1.5" PointX="12.25" PointY="4.75" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

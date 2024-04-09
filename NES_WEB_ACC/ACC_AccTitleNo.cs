@@ -12,11 +12,12 @@ namespace NES_WEB_ACC
     using System;
     using System.Collections.Generic;
     
-    public partial class EquityItem
+    public partial class ACC_AccTitleNo
     {
         public long Id { get; set; }
-        public Nullable<long> DocId { get; set; }
-        public Nullable<int> Type { get; set; }
+        public Nullable<long> CompId { get; set; }
+        public string CompNo { get; set; }
+        public string CompAbbr { get; set; }
         public Nullable<long> AccGroupNoId { get; set; }
         public string AccGroupNo { get; set; }
         public string AccGroupNameC { get; set; }
@@ -25,11 +26,25 @@ namespace NES_WEB_ACC
         public string AccNoBy { get; set; }
         public string AccNoByNameC { get; set; }
         public string AccNoByNameE { get; set; }
-        public string AccNoType { get; set; }
-        public Nullable<long> AccNoId { get; set; }
         public string AccNo { get; set; }
         public string AccNameC { get; set; }
         public string AccNameE { get; set; }
+        public string DCTypeNo { get; set; }
+        public string DCTypeNameC { get; set; }
+        public Nullable<bool> AccCode { get; set; }
+        public Nullable<bool> IsControl { get; set; }
+        public Nullable<bool> IsCancel { get; set; }
+        public Nullable<bool> IsCash { get; set; }
+        public Nullable<bool> IsParty { get; set; }
+        public Nullable<bool> IsCurrency { get; set; }
+        public Nullable<bool> IsTarget { get; set; }
+        public Nullable<bool> IsDept { get; set; }
+        public Nullable<bool> IsOffset { get; set; }
+        public Nullable<bool> IsProject { get; set; }
+        public string AccNoRemark { get; set; }
+        public Nullable<bool> Status { get; set; }
+        public Nullable<System.DateTime> StatuDate { get; set; }
+        public string StatusBy { get; set; }
         public Nullable<int> Flag { get; set; }
         public Nullable<bool> IsState { get; set; }
         public Nullable<System.DateTime> StateDate { get; set; }
@@ -39,5 +54,6 @@ namespace NES_WEB_ACC
         public string CheckBy { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
+        public Nullable<long> AccSetting { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace NES_WEB_ACC
     using System;
     using System.Collections.Generic;
     
-    public partial class SysDocSubType
+    public partial class ACC_SysDocSubType
     {
         public long Id { get; set; }
         public Nullable<long> DocId { get; set; }

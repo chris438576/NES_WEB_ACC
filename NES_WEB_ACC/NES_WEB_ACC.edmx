@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NES_WEB_ACCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AccCode1">
+        <EntityType Name="ACC_AccCode1">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -28,7 +28,7 @@
           <Property Name="CreateDate" Type="smalldatetime" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
         </EntityType>
-        <EntityType Name="AccCode2">
+        <EntityType Name="ACC_AccCode2">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -54,7 +54,7 @@
           <Property Name="CreateDate" Type="smalldatetime" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
         </EntityType>
-        <EntityType Name="AccTitleNo">
+        <EntityType Name="ACC_AccTitleNo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -100,7 +100,7 @@
           <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
           <Property Name="AccSetting" Type="bigint" />
         </EntityType>
-        <EntityType Name="EquityInfo">
+        <EntityType Name="ACC_EquityInfo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -135,7 +135,7 @@
           <Property Name="AccNo2" Type="nvarchar" MaxLength="20" />
           <Property Name="AccNameC2" Type="nvarchar" MaxLength="100" />
         </EntityType>
-        <EntityType Name="EquityItem">
+        <EntityType Name="ACC_EquityItem">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -155,6 +155,68 @@
           <Property Name="AccNo" Type="nvarchar" MaxLength="20" />
           <Property Name="AccNameC" Type="nvarchar" MaxLength="100" />
           <Property Name="AccNameE" Type="nvarchar" MaxLength="200" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="IsState" Type="bit" />
+          <Property Name="StateDate" Type="smalldatetime" />
+          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsChecked" Type="bit" />
+          <Property Name="CheckDate" Type="smalldatetime" />
+          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="ACC_SysDocSubType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="DocId" Type="bigint" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="CodeNameC" Type="nvarchar" MaxLength="60" />
+          <Property Name="CodeNameE" Type="nvarchar" MaxLength="60" />
+          <Property Name="CaptionC" Type="nvarchar" MaxLength="60" />
+          <Property Name="CaptionE" Type="nvarchar" MaxLength="60" />
+          <Property Name="IsoNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="Bpm" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsHistory" Type="bit" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="IsState" Type="bit" />
+          <Property Name="StateDate" Type="smalldatetime" />
+          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsChecked" Type="bit" />
+          <Property Name="CheckDate" Type="smalldatetime" />
+          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsAR" Type="bit" />
+          <Property Name="IsMessage" Type="bit" />
+          <Property Name="IsMail" Type="bit" />
+          <Property Name="IsApp" Type="bit" />
+          <Property Name="IsOther" Type="bit" />
+          <Property Name="WhKind" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProdProperty" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsMessage2" Type="bit" />
+          <Property Name="IsMessage3" Type="bit" />
+          <Property Name="IsMail2" Type="bit" />
+          <Property Name="IsMail3" Type="bit" />
+        </EntityType>
+        <EntityType Name="ACC_VoucherKind">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="CompId" Type="bigint" />
+          <Property Name="CompNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CompAbbr" Type="nvarchar" MaxLength="20" />
+          <Property Name="VoucherTypeId" Type="bigint" />
+          <Property Name="VoucherType" Type="nvarchar" MaxLength="10" />
+          <Property Name="VoucherNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="VoucherNameE" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNoId" Type="bigint" />
+          <Property Name="AccNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNameE" Type="nvarchar" MaxLength="200" />
+          <Property Name="DcType" Type="nvarchar" MaxLength="20" />
           <Property Name="Flag" Type="int" />
           <Property Name="IsState" Type="bit" />
           <Property Name="StateDate" Type="smalldatetime" />
@@ -242,81 +304,19 @@
           <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="SysDocSubType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="DocId" Type="bigint" />
-          <Property Name="Code" Type="nvarchar" MaxLength="10" />
-          <Property Name="CodeNameC" Type="nvarchar" MaxLength="60" />
-          <Property Name="CodeNameE" Type="nvarchar" MaxLength="60" />
-          <Property Name="CaptionC" Type="nvarchar" MaxLength="60" />
-          <Property Name="CaptionE" Type="nvarchar" MaxLength="60" />
-          <Property Name="IsoNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="Bpm" Type="nvarchar" MaxLength="20" />
-          <Property Name="IsHistory" Type="bit" />
-          <Property Name="Flag" Type="int" />
-          <Property Name="IsState" Type="bit" />
-          <Property Name="StateDate" Type="smalldatetime" />
-          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
-          <Property Name="IsChecked" Type="bit" />
-          <Property Name="CheckDate" Type="smalldatetime" />
-          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
-          <Property Name="CreateDate" Type="smalldatetime" />
-          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
-          <Property Name="IsAR" Type="bit" />
-          <Property Name="IsMessage" Type="bit" />
-          <Property Name="IsMail" Type="bit" />
-          <Property Name="IsApp" Type="bit" />
-          <Property Name="IsOther" Type="bit" />
-          <Property Name="WhKind" Type="nvarchar" MaxLength="200" />
-          <Property Name="ProdProperty" Type="nvarchar" MaxLength="200" />
-          <Property Name="IsMessage2" Type="bit" />
-          <Property Name="IsMessage3" Type="bit" />
-          <Property Name="IsMail2" Type="bit" />
-          <Property Name="IsMail3" Type="bit" />
-        </EntityType>
-        <EntityType Name="VoucherKind">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="CompId" Type="bigint" />
-          <Property Name="CompNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CompAbbr" Type="nvarchar" MaxLength="20" />
-          <Property Name="VoucherTypeId" Type="bigint" />
-          <Property Name="VoucherType" Type="nvarchar" MaxLength="10" />
-          <Property Name="VoucherNameC" Type="nvarchar" MaxLength="100" />
-          <Property Name="VoucherNameE" Type="nvarchar" MaxLength="100" />
-          <Property Name="AccNoId" Type="bigint" />
-          <Property Name="AccNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="AccNameC" Type="nvarchar" MaxLength="100" />
-          <Property Name="AccNameE" Type="nvarchar" MaxLength="200" />
-          <Property Name="DcType" Type="nvarchar" MaxLength="20" />
-          <Property Name="Flag" Type="int" />
-          <Property Name="IsState" Type="bit" />
-          <Property Name="StateDate" Type="smalldatetime" />
-          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
-          <Property Name="IsChecked" Type="bit" />
-          <Property Name="CheckDate" Type="smalldatetime" />
-          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
-          <Property Name="CreateDate" Type="smalldatetime" />
-          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
-        </EntityType>
         <EntityContainer Name="NES_WEB_ACCModelStoreContainer">
-          <EntitySet Name="AccCode1" EntityType="Self.AccCode1" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AccCode2" EntityType="Self.AccCode2" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AccTitleNo" EntityType="Self.AccTitleNo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EquityInfo" EntityType="Self.EquityInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EquityItem" EntityType="Self.EquityItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACC_AccCode1" EntityType="Self.ACC_AccCode1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACC_AccCode2" EntityType="Self.ACC_AccCode2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACC_AccTitleNo" EntityType="Self.ACC_AccTitleNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACC_EquityInfo" EntityType="Self.ACC_EquityInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACC_EquityItem" EntityType="Self.ACC_EquityItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACC_SysDocSubType" EntityType="Self.ACC_SysDocSubType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACC_VoucherKind" EntityType="Self.ACC_VoucherKind" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LNK_RolePermissions" EntityType="Self.LNK_RolePermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LNK_UserRole" EntityType="Self.LNK_UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Permissions" EntityType="Self.SYS_Permissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Roles" EntityType="Self.SYS_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Users" EntityType="Self.SYS_Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SysDocSubType" EntityType="Self.SysDocSubType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="VoucherKind" EntityType="Self.VoucherKind" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -405,15 +405,15 @@
           <EntitySet Name="SYS_Permissions" EntityType="Self.SYS_Permissions" />
           <EntitySet Name="SYS_Roles" EntityType="Self.SYS_Roles" />
           <EntitySet Name="SYS_Users" EntityType="Self.SYS_Users" />
-          <EntitySet Name="AccCode1" EntityType="NES_WEB_ACCModel.AccCode1" />
-          <EntitySet Name="AccCode2" EntityType="NES_WEB_ACCModel.AccCode2" />
-          <EntitySet Name="AccTitleNo" EntityType="NES_WEB_ACCModel.AccTitleNo" />
-          <EntitySet Name="EquityInfo" EntityType="NES_WEB_ACCModel.EquityInfo" />
-          <EntitySet Name="EquityItem" EntityType="NES_WEB_ACCModel.EquityItem" />
-          <EntitySet Name="SysDocSubType" EntityType="NES_WEB_ACCModel.SysDocSubType" />
-          <EntitySet Name="VoucherKind" EntityType="NES_WEB_ACCModel.VoucherKind" />
-        </EntityContainer>
-        <EntityType Name="AccCode1">
+          <EntitySet Name="ACC_AccCode1" EntityType="NES_WEB_ACCModel.ACC_AccCode1" />
+          <EntitySet Name="ACC_AccCode2" EntityType="NES_WEB_ACCModel.ACC_AccCode2" />
+          <EntitySet Name="ACC_AccTitleNo" EntityType="NES_WEB_ACCModel.ACC_AccTitleNo" />
+          <EntitySet Name="ACC_EquityInfo" EntityType="NES_WEB_ACCModel.ACC_EquityInfo" />
+          <EntitySet Name="ACC_EquityItem" EntityType="NES_WEB_ACCModel.ACC_EquityItem" />
+          <EntitySet Name="ACC_SysDocSubType" EntityType="NES_WEB_ACCModel.ACC_SysDocSubType" />
+          <EntitySet Name="ACC_VoucherKind" EntityType="NES_WEB_ACCModel.ACC_VoucherKind" />
+          </EntityContainer>
+        <EntityType Name="ACC_AccCode1">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -436,7 +436,7 @@
           <Property Name="CreateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="AccCode2">
+        <EntityType Name="ACC_AccCode2">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -462,7 +462,7 @@
           <Property Name="CreateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="AccTitleNo">
+        <EntityType Name="ACC_AccTitleNo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -508,7 +508,7 @@
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AccSetting" Type="Int64" />
         </EntityType>
-        <EntityType Name="EquityInfo">
+        <EntityType Name="ACC_EquityInfo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -543,7 +543,7 @@
           <Property Name="AccNo2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AccNameC2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="EquityItem">
+        <EntityType Name="ACC_EquityItem">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -573,7 +573,7 @@
           <Property Name="CreateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="SysDocSubType">
+        <EntityType Name="ACC_SysDocSubType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -608,7 +608,7 @@
           <Property Name="IsMail2" Type="Boolean" />
           <Property Name="IsMail3" Type="Boolean" />
         </EntityType>
-        <EntityType Name="VoucherKind">
+        <EntityType Name="ACC_VoucherKind">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -635,7 +635,7 @@
           <Property Name="CreateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -723,9 +723,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AccCode1">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.AccCode1">
-              <MappingFragment StoreEntitySet="AccCode1">
+          <EntitySetMapping Name="ACC_AccCode1">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_AccCode1">
+              <MappingFragment StoreEntitySet="ACC_AccCode1">
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
@@ -747,9 +747,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AccCode2">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.AccCode2">
-              <MappingFragment StoreEntitySet="AccCode2">
+          <EntitySetMapping Name="ACC_AccCode2">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_AccCode2">
+              <MappingFragment StoreEntitySet="ACC_AccCode2">
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
@@ -774,9 +774,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AccTitleNo">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.AccTitleNo">
-              <MappingFragment StoreEntitySet="AccTitleNo">
+          <EntitySetMapping Name="ACC_AccTitleNo">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_AccTitleNo">
+              <MappingFragment StoreEntitySet="ACC_AccTitleNo">
                 <ScalarProperty Name="AccSetting" ColumnName="AccSetting" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -821,9 +821,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EquityInfo">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.EquityInfo">
-              <MappingFragment StoreEntitySet="EquityInfo">
+          <EntitySetMapping Name="ACC_EquityInfo">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_EquityInfo">
+              <MappingFragment StoreEntitySet="ACC_EquityInfo">
                 <ScalarProperty Name="AccNameC2" ColumnName="AccNameC2" />
                 <ScalarProperty Name="AccNo2" ColumnName="AccNo2" />
                 <ScalarProperty Name="AccNo2Id" ColumnName="AccNo2Id" />
@@ -857,9 +857,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EquityItem">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.EquityItem">
-              <MappingFragment StoreEntitySet="EquityItem">
+          <EntitySetMapping Name="ACC_EquityItem">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_EquityItem">
+              <MappingFragment StoreEntitySet="ACC_EquityItem">
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
@@ -888,9 +888,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SysDocSubType">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.SysDocSubType">
-              <MappingFragment StoreEntitySet="SysDocSubType">
+          <EntitySetMapping Name="ACC_SysDocSubType">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_SysDocSubType">
+              <MappingFragment StoreEntitySet="ACC_SysDocSubType">
                 <ScalarProperty Name="IsMail3" ColumnName="IsMail3" />
                 <ScalarProperty Name="IsMail2" ColumnName="IsMail2" />
                 <ScalarProperty Name="IsMessage3" ColumnName="IsMessage3" />
@@ -924,9 +924,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VoucherKind">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.VoucherKind">
-              <MappingFragment StoreEntitySet="VoucherKind">
+          <EntitySetMapping Name="ACC_VoucherKind">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_VoucherKind">
+              <MappingFragment StoreEntitySet="ACC_VoucherKind">
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
@@ -952,7 +952,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

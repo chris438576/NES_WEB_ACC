@@ -369,6 +369,16 @@
             height: 100%;
         }
 
+        /*#region form style*/
+        .formtext {
+            white-space: nowrap;
+            border: 1px solid black;
+        }
+
+        .formimport {
+            border: 1px solid black;
+        }
+        /*#endregion */
         @@media (max-width: 1400px) {
             #submenu {
                 font-size: 0.9em !important;
@@ -486,3 +496,146 @@
 
 @{ Html.RenderAction("_ToolBarPartial"); }
 
+<div id="body-container">
+    <div class="easyui-layout body-layout">
+        <div data-options="region:'west',collapsible:false" title="" style="width:25%;">
+            <table id="dgSub" class="datagrid easyui-subdg" style="width:100%;height:99%;"></table>
+        </div>
+
+        <div data-options="region:'east',collapsible:false" title="" style="width:75%;">
+            <div class="row" style="width:99%;">
+                @{ Html.RenderAction("_VoucherTableInfoPartial"); }
+            </div>
+            <div class="row" style="width:99%;">
+                <div class="easyui-tabs" style="padding: 20px">
+                    <div title="分錄明細" style="overflow: auto;padding:20px; display: none;">
+                        <table id="tabdg1" class="datagrid easyui-maindg" style="width:100%;height:99%;"></table>
+                    </div>
+                    <div title="管理幣分錄" style="overflow:auto;padding:20px;display:none;">
+                        <table id="tabdg2" class="datagrid easyui-maindg" style="width:100%;height:99%;"></table>
+                    </div>
+                    <div title="進階資料" style="overflow: auto; padding: 20px; display: none;">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        ///-----基本參數-----///
+        //#region 基本參數
+        var controllerurl = '/AccCode', functionurl = "/", actionurl = "";
+        var dgSub = $('#dgSub'),        //左側列表
+            dgTab1 = $('#tabdg1'),      //表身頁籤1列表
+            dgTab2 = $('#tabdg2');      //表身頁籤2列表
+
+        //#endregion 
+
+        //#region 初始化
+        //----初始化----------///
+        $(function () {
+            //左側列表欄位  
+            //dgSubSet();
+
+
+        });
+        //#endregion 
+
+        //#region dg設定與填值
+        function dgSubSet() {
+            dgSub.datagrid({
+                singleSelect: true,
+                columns: [[
+                    { field: 'Id', title: 'Id', hidden: true, type: 'string' },
+                    { field: '', title: '傳票日期', width: 70, editor: { type: 'text' } },
+                    { field: '', title: '傳票編號', width: 150, editor: { type: 'text' } },
+                    { field: '', title: '傳票類別', width: 150, editor: { type: 'text' } },
+                    { field: '', title: '負責會計', width: 150, editor: { type: 'text' } },
+                    { field: '', title: '會計姓名', width: 150, editor: { type: 'text' } },
+                    { field: '', title: '傳票摘要', width: 150, editor: { type: 'text' } },
+                    { field: '', title: '公司編號', width: 150, editor: { type: 'text' } },
+                    { field: '', title: '公司簡稱', width: 150, editor: { type: 'text' } }
+                ]],
+                onSelect: function (index, row) {
+                    
+                },
+                onClickRow: function (rowIndex, rowData) {
+                   
+                },
+                // 啟用編輯列功能
+                onEndEdit: function (rowIndex, rowData) {
+                    var ed = $(this).datagrid('getEditor', {
+                        index: index,
+                        field: 'productid'
+                    });
+                    row.productname = $(ed.target).combobox('getText');
+                }
+            });
+        }
+        //#endregion 
+
+        //#region 按鈕與元件，enable set
+
+        //#endregion 
+
+        //#region 按鈕動作
+        function btnClick(type) {
+            switch (type) {
+                //#region dg導覽
+                case 'first':
+                    break;
+                case 'previous':
+                    break;
+                case 'next':
+                    break;
+                case 'last':
+                    break;
+                //#endregion
+                //#region dg資料動作
+                case 'search':
+                    break;
+                case 'add':
+                    break;
+                case 'edit':
+                    break;
+                case 'save':
+                    break;
+                case 'refresh':
+                    break;
+                case 'cancel':
+                    break;
+                case 'delete':
+                    break;
+                //#endregion
+            }
+        }
+        //#endregion               
+
+        //#region 功能函式
+        // 自定義doajax
+        function doajax(type, url, data, successCallback, errorCallback) {
+            $.ajax({
+                type: type,
+                url: url,
+                data: data,
+                success: function (response) {
+                    if (typeof successCallback === 'function') {
+                        successCallback(response);
+                    }
+                },
+                error: function (xhr, status, errorThrown) {
+                    if (typeof errorCallback === 'function') {
+                        errorCallback(xhr, status, errorThrown);
+                    }
+                }
+            });
+        }
+
+        //#endregion
+    </script>
+}
+        
