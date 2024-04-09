@@ -144,6 +144,12 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserRoleManageController.cs" />
+    <Compile Include="EquityInfo.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EquityItem.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -843,6 +849,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\layui\css\layui.css" />
+    <Content Include="Scripts\layui\font\iconfont.svg" />
+    <Content Include="Scripts\layui\layui.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pdfmake\pdfmake.min.js" />
     <Content Include="Scripts\pdfmake\vfs_fonts.js" />
@@ -868,6 +877,11 @@
     <Content Include="Views\Shared\_ToolBarPartial.cshtml" />
     <Content Include="Views\AccCode\AccGroupNoSet.cshtml" />
     <Content Include="Views\AccCode\VoucherCodeSet.cshtml" />
+    <Content Include="Scripts\layui\font\iconfont.eot" />
+    <Content Include="Scripts\layui\font\iconfont.ttf" />
+    <Content Include="Scripts\layui\font\iconfont.woff" />
+    <Content Include="Scripts\layui\font\iconfont.woff2" />
+    <Content Include="Views\AccCode\EquityCodeSet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

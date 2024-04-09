@@ -146,6 +146,68 @@ namespace NES_WEB_ACC.Controllers
         {
             return View();
         }
+        public ActionResult GetEquityInfo(string type)
+        {
+            if (string.IsNullOrEmpty(type))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0001", JsonRequestBehavior.AllowGet);
+            }
+            string sql = @" select * from NES_WEB_ACC.dbo.[EquityInfo] where ([CompId] = '150615163202244') AND ([Type] = @type)";
+            var param = new { type };
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<EquityInfo> customerdata = conn.Query<EquityInfo>(sql, param).ToList();
+                    if (customerdata.Count > 0)
+                    {
+                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0004", JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetEquityItem(string docid)
+        {
+            if (string.IsNullOrEmpty(docid))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0001", JsonRequestBehavior.AllowGet);
+            }
+            string sql = @" SELECT * FROM NES_WEB_ACC.dbo.[EquityItem] where  ([DocId] = @docid)";
+            var param = new { docid };
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<EquityItem> customerdata = conn.Query<EquityItem>(sql, param).ToList();
+                    if (customerdata.Count > 0)
+                    {
+                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0004", JsonRequestBehavior.AllowGet);
+            }
+        }
         /// <summary>
         /// View_傳票類別設定
         /// </summary>

@@ -33,5 +33,7 @@ namespace NES_WEB_ACC
         public virtual DbSet<AccCode1> AccCode1 { get; set; }
         public virtual DbSet<AccCode2> AccCode2 { get; set; }
         public virtual DbSet<AccTitleNo> AccTitleNo { get; set; }
+        public virtual DbSet<EquityInfo> EquityInfo { get; set; }
+        public virtual DbSet<EquityItem> EquityItem { get; set; }
     }
 }

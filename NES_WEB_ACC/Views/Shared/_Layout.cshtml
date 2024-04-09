@@ -8,15 +8,15 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("css", required: false)
-
+    
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/bootstrap/easyui.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/color.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/icon.css" />
     <!--Charisma Bootstrap-->
-    <link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
+    @*<link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
     <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />
     <link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
-    <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />
+    <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />*@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
         /*變更navbar底色*/
@@ -140,7 +140,7 @@
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("會計科目設定", "AccCodeSet", "AccCode")</li>
                             <li>@Html.ActionLink("科目類別設定", "AccGroupNoSet", "AccCode")</li>
-                            <li>@Html.ActionLink("權益類科目設定", "", "")</li>
+                            <li>@Html.ActionLink("權益類科目設定", "EquityCodeSet", "AccCode")</li>
                             <li>@Html.ActionLink("傳票類別設定", "", "")</li>
                             <li>@Html.ActionLink("會計系統基本設定", "", "")</li>
                             <li role="separator" class="divider"></li>
