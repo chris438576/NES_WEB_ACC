@@ -144,6 +144,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserRoleManageController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="EquityInfo.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
@@ -176,6 +177,9 @@
       <DependentUpon>NES_WEB_ACC.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysDocSubType.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
     <Compile Include="SYS_Permissions.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
@@ -188,6 +192,9 @@
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />
     <Compile Include="ViewModels\UsersListViewModel.cs" />
+    <Compile Include="VoucherKind.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -882,6 +889,7 @@
     <Content Include="Scripts\layui\font\iconfont.woff" />
     <Content Include="Scripts\layui\font\iconfont.woff2" />
     <Content Include="Views\AccCode\EquityCodeSet.cshtml" />
+    <Content Include="Views\Voucher\VoucherCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

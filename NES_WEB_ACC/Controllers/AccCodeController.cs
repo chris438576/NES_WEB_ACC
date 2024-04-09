@@ -130,6 +130,7 @@ namespace NES_WEB_ACC.Controllers
                 return Json("C0004", JsonRequestBehavior.AllowGet);
             }
         }
+
         /// <summary>
         /// View_科目類別設定
         /// </summary>
@@ -138,6 +139,7 @@ namespace NES_WEB_ACC.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// View_權益科目設定
         /// </summary>
@@ -160,6 +162,7 @@ namespace NES_WEB_ACC.Controllers
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     List<EquityInfo> customerdata = conn.Query<EquityInfo>(sql, param).ToList();
+                    
                     if (customerdata.Count > 0)
                     {
                         return Json(customerdata, JsonRequestBehavior.AllowGet);
@@ -208,6 +211,7 @@ namespace NES_WEB_ACC.Controllers
                 return Json("C0004", JsonRequestBehavior.AllowGet);
             }
         }
+
         /// <summary>
         /// View_傳票類別設定
         /// </summary>
@@ -216,7 +220,69 @@ namespace NES_WEB_ACC.Controllers
         {
             return View();
         }
-
+        public ActionResult GetSysDocSubType()
+        {
+            //if (string.IsNullOrEmpty(type))
+            //{
+            //    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            //    return Json("C0001", JsonRequestBehavior.AllowGet);
+            //}
+            string sql = @" select * from NES_WEB_ACC.dbo.[SysDocSubType]　where  ([DocId] = '1019')";
+            //var param = new { type };
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    //List<EquityInfo> customerdata = conn.Query<EquityInfo>(sql, param).ToList();
+                    List<SysDocSubType> customerdata = conn.Query<SysDocSubType>(sql).ToList();
+                    if (customerdata.Count > 0)
+                    {
+                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0004", JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetVoucherKind(string compid)
+        {
+            if (string.IsNullOrEmpty(compid))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0001", JsonRequestBehavior.AllowGet);
+            }
+            string sql = @" select * from NES_WEB_ACC.dbo.[VoucherKind]　where  ([CompId] = @compid)　";
+            var param = new { compid };
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<VoucherKind> customerdata = conn.Query<VoucherKind>(sql, param).ToList();                    
+                    if (customerdata.Count > 0)
+                    {
+                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0004", JsonRequestBehavior.AllowGet);
+            }
+        }
 
         /// <summary>
         /// 工具列介面
@@ -226,24 +292,25 @@ namespace NES_WEB_ACC.Controllers
         {
             return PartialView();
         }
+
         /// <summary>
         /// 權限檢查_20240403停用，測試新版
         /// </summary>
         /// <param name="roles"></param>
         /// <returns></returns>
-        public bool IsAction(string[] roles)
-        {
-            // 檢查傳入的值是否為空
-            if (roles != null && roles.Length > 0)
-            {
-                // 檢查 Session["RoleList"] 是否存在並且不為空
-                if (HttpContext.Session["RoleList"] is List<string> userRoles && userRoles.Count > 0)
-                {
-                    // 檢查傳入的角色是否有任何一個存在於 Session["RoleList"] 中
-                    return roles.Any(role => userRoles.Contains(role));
-                }
-            }
-            return false;
-        }
+        //public bool IsAction(string[] roles)
+        //{
+        //    // 檢查傳入的值是否為空
+        //    if (roles != null && roles.Length > 0)
+        //    {
+        //        // 檢查 Session["RoleList"] 是否存在並且不為空
+        //        if (HttpContext.Session["RoleList"] is List<string> userRoles && userRoles.Count > 0)
+        //        {
+        //            // 檢查傳入的角色是否有任何一個存在於 Session["RoleList"] 中
+        //            return roles.Any(role => userRoles.Contains(role));
+        //        }
+        //    }
+        //    return false;
+        //}
     }
 }

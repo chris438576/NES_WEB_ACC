@@ -242,6 +242,68 @@
           <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="SysDocSubType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="DocId" Type="bigint" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="CodeNameC" Type="nvarchar" MaxLength="60" />
+          <Property Name="CodeNameE" Type="nvarchar" MaxLength="60" />
+          <Property Name="CaptionC" Type="nvarchar" MaxLength="60" />
+          <Property Name="CaptionE" Type="nvarchar" MaxLength="60" />
+          <Property Name="IsoNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="Bpm" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsHistory" Type="bit" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="IsState" Type="bit" />
+          <Property Name="StateDate" Type="smalldatetime" />
+          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsChecked" Type="bit" />
+          <Property Name="CheckDate" Type="smalldatetime" />
+          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsAR" Type="bit" />
+          <Property Name="IsMessage" Type="bit" />
+          <Property Name="IsMail" Type="bit" />
+          <Property Name="IsApp" Type="bit" />
+          <Property Name="IsOther" Type="bit" />
+          <Property Name="WhKind" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProdProperty" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsMessage2" Type="bit" />
+          <Property Name="IsMessage3" Type="bit" />
+          <Property Name="IsMail2" Type="bit" />
+          <Property Name="IsMail3" Type="bit" />
+        </EntityType>
+        <EntityType Name="VoucherKind">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="CompId" Type="bigint" />
+          <Property Name="CompNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CompAbbr" Type="nvarchar" MaxLength="20" />
+          <Property Name="VoucherTypeId" Type="bigint" />
+          <Property Name="VoucherType" Type="nvarchar" MaxLength="10" />
+          <Property Name="VoucherNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="VoucherNameE" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNoId" Type="bigint" />
+          <Property Name="AccNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccNameC" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccNameE" Type="nvarchar" MaxLength="200" />
+          <Property Name="DcType" Type="nvarchar" MaxLength="20" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="IsState" Type="bit" />
+          <Property Name="StateDate" Type="smalldatetime" />
+          <Property Name="StateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsChecked" Type="bit" />
+          <Property Name="CheckDate" Type="smalldatetime" />
+          <Property Name="CheckBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <EntityContainer Name="NES_WEB_ACCModelStoreContainer">
           <EntitySet Name="AccCode1" EntityType="Self.AccCode1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccCode2" EntityType="Self.AccCode2" Schema="dbo" store:Type="Tables" />
@@ -253,6 +315,8 @@
           <EntitySet Name="SYS_Permissions" EntityType="Self.SYS_Permissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Roles" EntityType="Self.SYS_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Users" EntityType="Self.SYS_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysDocSubType" EntityType="Self.SysDocSubType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoucherKind" EntityType="Self.VoucherKind" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -346,6 +410,8 @@
           <EntitySet Name="AccTitleNo" EntityType="NES_WEB_ACCModel.AccTitleNo" />
           <EntitySet Name="EquityInfo" EntityType="NES_WEB_ACCModel.EquityInfo" />
           <EntitySet Name="EquityItem" EntityType="NES_WEB_ACCModel.EquityItem" />
+          <EntitySet Name="SysDocSubType" EntityType="NES_WEB_ACCModel.SysDocSubType" />
+          <EntitySet Name="VoucherKind" EntityType="NES_WEB_ACCModel.VoucherKind" />
         </EntityContainer>
         <EntityType Name="AccCode1">
           <Key>
@@ -497,6 +563,68 @@
           <Property Name="AccNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AccNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AccNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="IsState" Type="Boolean" />
+          <Property Name="StateDate" Type="DateTime" Precision="0" />
+          <Property Name="StateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsChecked" Type="Boolean" />
+          <Property Name="CheckDate" Type="DateTime" Precision="0" />
+          <Property Name="CheckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SysDocSubType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="DocId" Type="Int64" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CodeNameC" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="CodeNameE" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="CaptionC" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="CaptionE" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="IsoNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Bpm" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsHistory" Type="Boolean" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="IsState" Type="Boolean" />
+          <Property Name="StateDate" Type="DateTime" Precision="0" />
+          <Property Name="StateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsChecked" Type="Boolean" />
+          <Property Name="CheckDate" Type="DateTime" Precision="0" />
+          <Property Name="CheckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsAR" Type="Boolean" />
+          <Property Name="IsMessage" Type="Boolean" />
+          <Property Name="IsMail" Type="Boolean" />
+          <Property Name="IsApp" Type="Boolean" />
+          <Property Name="IsOther" Type="Boolean" />
+          <Property Name="WhKind" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProdProperty" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsMessage2" Type="Boolean" />
+          <Property Name="IsMessage3" Type="Boolean" />
+          <Property Name="IsMail2" Type="Boolean" />
+          <Property Name="IsMail3" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="VoucherKind">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="CompId" Type="Int64" />
+          <Property Name="CompNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CompAbbr" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherTypeId" Type="Int64" />
+          <Property Name="VoucherType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoId" Type="Int64" />
+          <Property Name="AccNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DcType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Flag" Type="Int32" />
           <Property Name="IsState" Type="Boolean" />
           <Property Name="StateDate" Type="DateTime" Precision="0" />
@@ -756,6 +884,70 @@
                 <ScalarProperty Name="AccGroupNoId" ColumnName="AccGroupNoId" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="DocId" ColumnName="DocId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysDocSubType">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.SysDocSubType">
+              <MappingFragment StoreEntitySet="SysDocSubType">
+                <ScalarProperty Name="IsMail3" ColumnName="IsMail3" />
+                <ScalarProperty Name="IsMail2" ColumnName="IsMail2" />
+                <ScalarProperty Name="IsMessage3" ColumnName="IsMessage3" />
+                <ScalarProperty Name="IsMessage2" ColumnName="IsMessage2" />
+                <ScalarProperty Name="ProdProperty" ColumnName="ProdProperty" />
+                <ScalarProperty Name="WhKind" ColumnName="WhKind" />
+                <ScalarProperty Name="IsOther" ColumnName="IsOther" />
+                <ScalarProperty Name="IsApp" ColumnName="IsApp" />
+                <ScalarProperty Name="IsMail" ColumnName="IsMail" />
+                <ScalarProperty Name="IsMessage" ColumnName="IsMessage" />
+                <ScalarProperty Name="IsAR" ColumnName="IsAR" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="StateBy" ColumnName="StateBy" />
+                <ScalarProperty Name="StateDate" ColumnName="StateDate" />
+                <ScalarProperty Name="IsState" ColumnName="IsState" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="IsHistory" ColumnName="IsHistory" />
+                <ScalarProperty Name="Bpm" ColumnName="Bpm" />
+                <ScalarProperty Name="IsoNo" ColumnName="IsoNo" />
+                <ScalarProperty Name="CaptionE" ColumnName="CaptionE" />
+                <ScalarProperty Name="CaptionC" ColumnName="CaptionC" />
+                <ScalarProperty Name="CodeNameE" ColumnName="CodeNameE" />
+                <ScalarProperty Name="CodeNameC" ColumnName="CodeNameC" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="DocId" ColumnName="DocId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoucherKind">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.VoucherKind">
+              <MappingFragment StoreEntitySet="VoucherKind">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="StateBy" ColumnName="StateBy" />
+                <ScalarProperty Name="StateDate" ColumnName="StateDate" />
+                <ScalarProperty Name="IsState" ColumnName="IsState" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="DcType" ColumnName="DcType" />
+                <ScalarProperty Name="AccNameE" ColumnName="AccNameE" />
+                <ScalarProperty Name="AccNameC" ColumnName="AccNameC" />
+                <ScalarProperty Name="AccNo" ColumnName="AccNo" />
+                <ScalarProperty Name="AccNoId" ColumnName="AccNoId" />
+                <ScalarProperty Name="VoucherNameE" ColumnName="VoucherNameE" />
+                <ScalarProperty Name="VoucherNameC" ColumnName="VoucherNameC" />
+                <ScalarProperty Name="VoucherType" ColumnName="VoucherType" />
+                <ScalarProperty Name="VoucherTypeId" ColumnName="VoucherTypeId" />
+                <ScalarProperty Name="CompAbbr" ColumnName="CompAbbr" />
+                <ScalarProperty Name="CompNo" ColumnName="CompNo" />
+                <ScalarProperty Name="CompId" ColumnName="CompId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -498,7 +498,7 @@
                 </div>
 
                 <div data-options="region:'east',collapsible:false" title="" style="width:50%;">
-                    <table id="tab1dg12" class="datagrid easyui-maindg" style="width:100%;height:99%;">
+                    <table id="tabdg12" class="datagrid easyui-subdg" style="width:100%;height:99%;">
                     </table>
                 </div>
             </div>
@@ -511,7 +511,7 @@
                 </div>
 
                 <div data-options="region:'east',collapsible:false" title="" style="width:50%;">
-                    <table id="tabdg22" class="datagrid easyui-maindg" style="width:100%;height:99%;">
+                    <table id="tabdg22" class="datagrid easyui-subdg" style="width:100%;height:99%;">
                     </table>
                 </div>
             </div>
@@ -534,8 +534,8 @@
         $(function () {
             tabdg11Set();
             tabdg12Set();
-            //tabdg21Set();
-            //tabdg22Set();
+            tabdg21Set();
+            tabdg22Set();
         });
 
         //#endregion
@@ -546,7 +546,7 @@
             tabdg11.datagrid({
                 singleSelect: true,
                 columns: [[
-                    { field: 'Id', title: 'Id', hidden: false },
+                    { field: 'Id', title: 'Id', hidden: true, type: 'string'  },
                     { field: 'AccNo', title: '權益類科目編號', width: 70, editor: { type: 'text' } },
                     { field: 'AccNameC', title: '權益類科目名稱', width: 150, editor: { type: 'text' } },
                     { field: 'AccGroupNameE', title: '計算期間', width: 150, editor: { type: 'text' } },
@@ -557,21 +557,7 @@
                     tabdg12data(row.Id);
                 },
                 onClickRow: function (rowIndex, rowData) {
-                    // 將 dgGroup 的背景顏色設為黃色
-                    tabdg11.datagrid('getPanel').css({
-                        'border-color': 'yellow',
-                        'border-width': '5px', 
-                        'border-style': 'solid' 
-                    });
-                    // 將其他 DataGrid 的背景顏色設為白色
-                    $('.datagrid.easyui-maindg').not('#tabdg11').each(function () {
-                        $(this).datagrid('getPanel').css({
-                            'border-color': 'white',
-                            'border-width': '0px', 
-                            'border-style': 'solid' 
-                        });
-                    });
-                    
+                    focusDgSet(tabdg11);                    
                     focusdg = 'tabdg11';
                 },
                 // 啟用編輯列功能
@@ -589,8 +575,10 @@
         function tabdg11data() {
             let url = defaultUrl + controllerurl + functionurl + 'GetEquityInfo?type=2';
             doajax("GET", url, null, function (data) {
+                console.log(data)
                 if (data == "C0003") {
                     $.messager.alert('alert', '無權益類資料!');
+                    tabdg11.datagrid('loadData', '');
                     console.log("C0003: Not Found");
                 } else {                    
                     tabdg11.datagrid('loadData', data);
@@ -603,34 +591,30 @@
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
-                    { field: 'AccNoType', title: '會計科目類別', width: 70 }                    
+                    { field: 'AccNoType', title: '會計科目類別', width: 200 }                    
                 ]],
                 onSelect: function (index, row) {
 
                 },
                 onClickRow: function (rowIndex, rowData) {
-                    // 將 dgGroup 的背景顏色設為黃色
-                    tabdg12.datagrid('getPanel').css({
-                        'border-color': 'yellow',
-                        'border-width': '5px',
-                        'border-style': 'solid'
-                    });
-                    // 將其他 DataGrid 的背景顏色設為白色
-                    $('.datagrid.easyui-maindg').not('#tabdg12').each(function () {
-                        $(this).datagrid('getPanel').css({
-                            'border-color': 'white',
-                            'border-width': '0px', // 设置边框宽度为2像素，你可以根据需要调整宽度值
-                            'border-style': 'solid' // 设置边框样式为实线
-                        });
-                    });
+                    focusDgSet(tabdg12);
                     focusdg = 'tabdg12';
                 },
+                // 啟用編輯列功能
+                onEndEdit: function (rowIndex, rowData) {
+                    var ed = $(this).datagrid('getEditor', {
+                        index: index,
+                        field: 'productid'
+                    });
+                    row.productname = $(ed.target).combobox('getText');
+                }
             });
             tabdg12data();
         }
         //tab_1 dg_2，填值
         function tabdg12data(docid) {
             if (docid != null) {
+                
                 let url = defaultUrl + controllerurl + functionurl + 'GetEquityItem?docid=' + docid;
                 $.ajax({
                     type: "GET",
@@ -639,9 +623,105 @@
                     success: function (data) {
                         if (data == "C0003") {
                             $.messager.alert('alert', '無科目類別資料!');
+                            tabdg12.datagrid('loadData', '');
                             console.log("C0003: Not Found");
                         } else {
-                            dgNo.datagrid('loadData', data);
+                            tabdg12.datagrid('loadData', data);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        }
+
+        //tab_2 dg_1，欄位與功能
+        function tabdg21Set() {
+            tabdg21.datagrid({
+                singleSelect: true,
+                columns: [[
+                    { field: 'Id', title: 'Id', hidden: true, type: 'string' },
+                    { field: 'AccNo', title: '權益類科目編號', width: 70, editor: { type: 'text' } },
+                    { field: 'AccNameC', title: '權益類科目名稱', width: 150, editor: { type: 'text' } },
+                    { field: 'AccGroupNameE', title: '計算期間', width: 150, editor: { type: 'text' } },
+                    { field: 'AccNo2', title: '年結結轉科目編號', width: 150, editor: { type: 'text' } },
+                    { field: 'AccNameC2', title: '年結結轉科目名稱', width: 150, editor: { type: 'text' } }
+                ]],
+                onSelect: function (index, row) {
+                    tabdg22data(row.Id);
+                },
+                onClickRow: function (rowIndex, rowData) {
+                    focusDgSet(tabdg21);
+                    focusdg = 'tabdg21';
+                },
+                // 啟用編輯列功能
+                onEndEdit: function (rowIndex, rowData) {
+                    var ed = $(this).datagrid('getEditor', {
+                        index: index,
+                        field: 'productid'
+                    });
+                    row.productname = $(ed.target).combobox('getText');
+                }
+            });
+            tabdg21data();
+        }
+        //tab_2 dg_1，填值
+        function tabdg21data() {
+            let url = defaultUrl + controllerurl + functionurl + 'GetEquityInfo?type=1';
+            doajax("GET", url, null, function (data) {
+                console.log(data)
+                if (data == "C0003") {
+                    $.messager.alert('alert', '無權益類資料!');
+                    tabdg21.datagrid('loadData', '');
+                    console.log("C0003: Not Found");
+                } else {
+                    tabdg21.datagrid('loadData', data);
+                }
+            });
+        }
+        //tab_1 dg_2，欄位與功能
+        function tabdg22Set() {
+            tabdg22.datagrid({
+                singleSelect: true,
+                columns: [[
+                    { field: 'Id', title: 'Id', hidden: true },
+                    { field: 'AccNoType', title: '會計科目類別', width: 200 }
+                ]],
+                onSelect: function (index, row) {
+
+                },
+                onClickRow: function (rowIndex, rowData) {
+                    focusDgSet(tabdg22);
+                    focusdg = 'tabdg22';
+                },
+                // 啟用編輯列功能
+                onEndEdit: function (rowIndex, rowData) {
+                    var ed = $(this).datagrid('getEditor', {
+                        index: index,
+                        field: 'productid'
+                    });
+                    row.productname = $(ed.target).combobox('getText');
+                }
+            });
+            tabdg22data();
+        }
+        //tab_2 dg_2，填值
+        function tabdg22data(docid) {
+            if (docid != null) {
+
+                let url = defaultUrl + controllerurl + functionurl + 'GetEquityItem?docid=' + docid;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "C0003") {
+                            $.messager.alert('alert', '無科目類別資料!');
+                            tabdg22.datagrid('loadData', '');
+                            console.log("C0003: Not Found");
+                        } else {
+                            tabdg22.datagrid('loadData', data);
                         }
                     },
                     error: function (xhr, status, error) {
@@ -672,6 +752,23 @@
             });
         }
 
+        function focusDgSet(datagrid) {
+            // 設置選定的數據表格的背景顏色為黃色，其他數據表格的背景顏色為白色
+            datagrid.datagrid('getPanel').css({
+                'border-color': 'yellow',
+                'border-width': '5px',
+                'border-style': 'solid'
+            });
+                       
+            $('.easyui-subdg').not(datagrid).each(function () {                
+                $(this).datagrid('getPanel').css({
+                    'border-color': 'white',
+                    'border-width': '0px',
+                    'border-style': 'solid'
+                });
+                
+            });
+        }
 
         //#endregion
     </script>
