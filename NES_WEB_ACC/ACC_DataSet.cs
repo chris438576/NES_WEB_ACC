@@ -12,26 +12,18 @@ namespace NES_WEB_ACC
     using System;
     using System.Collections.Generic;
     
-    public partial class ACC_EquityInfo
+    public partial class ACC_DataSet
     {
         public long Id { get; set; }
-        public Nullable<long> CompId { get; set; }
-        public string CompNo { get; set; }
-        public string CompAbbr { get; set; }
-        public Nullable<int> Type { get; set; }
-        public Nullable<long> AccGroupNoId { get; set; }
-        public string AccGroupNo { get; set; }
-        public string AccGroupNameC { get; set; }
-        public string AccGroupNameE { get; set; }
-        public Nullable<long> AccNoById { get; set; }
-        public string AccNoBy { get; set; }
-        public string AccNoByNameC { get; set; }
-        public string AccNoByNameE { get; set; }
-        public string AccNoType { get; set; }
-        public Nullable<long> AccNoId { get; set; }
-        public string AccNo { get; set; }
-        public string AccNameC { get; set; }
-        public Nullable<int> Formula { get; set; }
+        public string GroupNo { get; set; }
+        public string GroupName { get; set; }
+        public string Type { get; set; }
+        public string ItemNo { get; set; }
+        public string ItemNameC { get; set; }
+        public string ItemNameE { get; set; }
+        public string Value1 { get; set; }
+        public Nullable<decimal> Value2 { get; set; }
+        public Nullable<int> Length { get; set; }
         public Nullable<int> Flag { get; set; }
         public Nullable<bool> IsState { get; set; }
         public Nullable<System.DateTime> StateDate { get; set; }
@@ -41,8 +33,5 @@ namespace NES_WEB_ACC
         public string CheckBy { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
-        public Nullable<long> AccNo2Id { get; set; }
-        public string AccNo2 { get; set; }
-        public string AccNameC2 { get; set; }
     }
 }

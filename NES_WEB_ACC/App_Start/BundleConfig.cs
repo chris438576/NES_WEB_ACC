@@ -22,6 +22,12 @@ namespace NES_WEB_ACC
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/easyui").Include(
+                      "~/Scripts/easyui/jquery.easyui.min.js",
+                      "~/Scripts/toolbarplugin.js",
+                      "~/Scripts/layour-resize.js"
+                      ));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

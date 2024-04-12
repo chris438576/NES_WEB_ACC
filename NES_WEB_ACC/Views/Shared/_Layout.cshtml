@@ -5,28 +5,27 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NES Limited-@ViewBag.Title </title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")         
     @RenderSection("css", required: false)
-    
+
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/bootstrap/easyui.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/color.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/icon.css" />
     <!--Charisma Bootstrap-->
     @*<link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
-    <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />
-    <link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
-    <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />*@
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />
+        <link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
+        <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />*@
+
     <style>
         /*變更navbar底色*/
-        .navbar {            
+        .navbar {
             background-image: linear-gradient(#FC9A58, #F59657 60%, #DE874C);
         }
 
         .navbar-default {
             background-color: #0bf4d8;
-            border-color: #0bf4d8;            
+            border-color: #0bf4d8;
         }
 
         /*變更navbar底色*/
@@ -154,7 +153,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("傳票輸入作業", "", "")</li>
+                            <li>@Html.ActionLink("傳票輸入作業", "VoucherCreate", "Voucher")</li>
                             <li>@Html.ActionLink("傳票開帳作業", "", "")</li>
                         </ul>
                     </li>
@@ -219,7 +218,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="~/Scripts/easyui/jquery.easyui.min.js"></script>
+    @Scripts.Render("~/bundles/easyui")
     <script>
         var defaultUrl = '@HttpContext.Current.Application["GlobalUrl"]';
     </script>

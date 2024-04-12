@@ -561,8 +561,8 @@
         }
         // 左側dg，填值
         function dgTypedata() {
-            let url = defaultUrl + controllerurl + functionurl + 'GetSysDocSubType';
-            doajax("GET", url, null, function (data) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetSysDocSubType';
+            doajax("GET", actionurl, null, function (data) {
                 if (data == "C0003") {
                     $.messager.alert('alert', '無會計大類資料!');
                     console.log("C0003: Not Found");
@@ -609,21 +609,14 @@
         // 右側dg，填值
         function dgVoucherdata(docid) {
             if (docid != null) {
-                let url = defaultUrl + controllerurl + functionurl + 'GetVoucherKind?compid=' + docid ;
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data == "C0003") {
-                            $.messager.alert('alert', '無會計分類資料!');
-                            console.log("C0003: Not Found");
-                        } else {
-                            dgVoucher.datagrid('loadData', data);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
+                actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherKind?compid=' + docid ;                
+                doajax("GET", actionurl, null, function (data) {
+                    if (data == "C0003") {
+                        $.messager.alert('alert', '無會計分類資料!');
+                        dgVoucher.datagrid('loadData', '');
+                        console.log("C0003: Not Found");
+                    } else {
+                        dgVoucher.datagrid('loadData', data);
                     }
                 });
             }

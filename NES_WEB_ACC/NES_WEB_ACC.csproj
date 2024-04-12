@@ -137,6 +137,9 @@
     <Compile Include="ACC_AccTitleNo.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ACC_DataSet.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ACC_EquityInfo.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
@@ -144,6 +147,9 @@
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
     <Compile Include="ACC_SysDocSubType.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ACC_VoucherInfo.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
     <Compile Include="ACC_VoucherKind.cs">
@@ -195,6 +201,7 @@
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />
     <Compile Include="ViewModels\UsersListViewModel.cs" />
+    <Compile Include="ViewModels\VoucherCreateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -856,12 +863,14 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\layour-resize.js" />
     <Content Include="Scripts\layui\css\layui.css" />
     <Content Include="Scripts\layui\font\iconfont.svg" />
     <Content Include="Scripts\layui\layui.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pdfmake\pdfmake.min.js" />
     <Content Include="Scripts\pdfmake\vfs_fonts.js" />
+    <Content Include="Scripts\toolbarplugin.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -547,10 +547,11 @@
         }
         //dg會計大類，填值
         function dgGroupdata() {
-            let url = defaultUrl + controllerurl + functionurl + 'GetAccCode1';
-            doajax("GET", url, null, function (data) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode1';
+            doajax("GET", actionurl, null, function (data) {
                 if (data == "C0003") {
                     $.messager.alert('alert', '無會計大類資料!');
+                    dgGroup.datagrid('loadData', '');
                     console.log("C0003: Not Found");
                 } else {
                     dgGroup.datagrid('loadData', data);
@@ -578,21 +579,14 @@
         //dg會計分類，填值
         function dgNodata(docid) {           
             if (docid != null) {
-                let url = defaultUrl + controllerurl + functionurl + 'GetAccCode2?docid=' + docid;
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data == "C0003") {
-                            $.messager.alert('alert', '無會計分類資料!');
-                            console.log("C0003: Not Found");
-                        } else {
-                            dgNo.datagrid('loadData', data);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
+                actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode2?docid=' + docid;                
+                doajax("GET", actionurl, null, function (data) {
+                    if (data == "C0003") {
+                        $.messager.alert('alert', '無會計分類資料!');
+                        dgNo.datagrid('loadData', '');
+                        console.log("C0003: Not Found");
+                    } else {
+                        dgNo.datagrid('loadData', data);
                     }
                 });
             }           
@@ -624,26 +618,18 @@
         }
         function dgNamedata(accnobyid) {
             if (accnobyid != null) {
-                let url = defaultUrl + controllerurl + functionurl + 'GetAccTitleNo?accnobyid=' + accnobyid;
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data == "C0003") {
-                            $.messager.alert('alert', '無會計科目資料!');
-                            console.log("C0003: Not Found");
-                        } else {
-                            dgName.datagrid('loadData', data);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
+                actionurl = defaultUrl + controllerurl + functionurl + 'GetAccTitleNo?accnobyid=' + accnobyid;                
+                doajax("GET", actionurl, null, function (data) {
+                    if (data == "C0003") {
+                        $.messager.alert('alert', '無會計科目資料!');
+                        dgName.datagrid('loadData', '');
+                        console.log("C0003: Not Found");
+                    } else {
+                        dgName.datagrid('loadData', data);
                     }
                 });
-            } else {
-                dgName.datagrid('loadData', '');
-            }
+
+            } 
         }
         //#endregion
 

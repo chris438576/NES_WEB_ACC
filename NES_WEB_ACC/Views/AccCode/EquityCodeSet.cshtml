@@ -573,8 +573,8 @@
         }
         //tab_1 dg_1，填值
         function tabdg11data() {
-            let url = defaultUrl + controllerurl + functionurl + 'GetEquityInfo?type=2';
-            doajax("GET", url, null, function (data) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetEquityInfo?type=2';
+            doajax("GET", actionurl, null, function (data) {
                 console.log(data)
                 if (data == "C0003") {
                     $.messager.alert('alert', '無權益類資料!');
@@ -615,22 +615,15 @@
         function tabdg12data(docid) {
             if (docid != null) {
                 
-                let url = defaultUrl + controllerurl + functionurl + 'GetEquityItem?docid=' + docid;
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data == "C0003") {
-                            $.messager.alert('alert', '無科目類別資料!');
-                            tabdg12.datagrid('loadData', '');
-                            console.log("C0003: Not Found");
-                        } else {
-                            tabdg12.datagrid('loadData', data);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
+                actionurl = defaultUrl + controllerurl + functionurl + 'GetEquityItem?docid=' + docid;               
+                doajax("GET", actionurl, null, function (data) {
+                    console.log(data)
+                    if (data == "C0003") {
+                        $.messager.alert('alert', '無科目類別資料!');
+                        tabdg12.datagrid('loadData', '');
+                        console.log("C0003: Not Found");
+                    } else {
+                        tabdg12.datagrid('loadData', data);
                     }
                 });
             }
@@ -668,8 +661,8 @@
         }
         //tab_2 dg_1，填值
         function tabdg21data() {
-            let url = defaultUrl + controllerurl + functionurl + 'GetEquityInfo?type=1';
-            doajax("GET", url, null, function (data) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetEquityInfo?type=1';
+            doajax("GET", actionurl, null, function (data) {
                 console.log(data)
                 if (data == "C0003") {
                     $.messager.alert('alert', '無權益類資料!');
@@ -710,22 +703,15 @@
         function tabdg22data(docid) {
             if (docid != null) {
 
-                let url = defaultUrl + controllerurl + functionurl + 'GetEquityItem?docid=' + docid;
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data == "C0003") {
-                            $.messager.alert('alert', '無科目類別資料!');
-                            tabdg22.datagrid('loadData', '');
-                            console.log("C0003: Not Found");
-                        } else {
-                            tabdg22.datagrid('loadData', data);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
+                actionurl = defaultUrl + controllerurl + functionurl + 'GetEquityItem?docid=' + docid;                
+                doajax("GET", actionurl, null, function (data) {
+                    console.log(data)
+                    if (data == "C0003") {
+                        $.messager.alert('alert', '無科目類別資料!');
+                        tabdg22.datagrid('loadData', '');
+                        console.log("C0003: Not Found");
+                    } else {
+                        tabdg22.datagrid('loadData', data);
                     }
                 });
             }

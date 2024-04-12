@@ -525,25 +525,26 @@
 </div>
 
 @section Scripts {
+
     <script>
         ///-----基本參數-----///
         //#region 基本參數
-        var controllerurl = '/AccCode', functionurl = "/", actionurl = "";
+        var controllerurl = '/Voucher', functionurl = "/", actionurl = "";
         var dgSub = $('#dgSub'),        //左側列表
             dgTab1 = $('#tabdg1'),      //表身頁籤1列表
             dgTab2 = $('#tabdg2');      //表身頁籤2列表
 
-        //#endregion 
+        //#endregion
 
         //#region 初始化
         //----初始化----------///
         $(function () {
-            //左側列表欄位  
-            //dgSubSet();
+            //左側列表欄位
+            dgSubSet();
 
 
         });
-        //#endregion 
+        //#endregion
 
         //#region dg設定與填值
         function dgSubSet() {
@@ -551,36 +552,58 @@
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true, type: 'string' },
-                    { field: '', title: '傳票日期', width: 70, editor: { type: 'text' } },
-                    { field: '', title: '傳票編號', width: 150, editor: { type: 'text' } },
-                    { field: '', title: '傳票類別', width: 150, editor: { type: 'text' } },
-                    { field: '', title: '負責會計', width: 150, editor: { type: 'text' } },
-                    { field: '', title: '會計姓名', width: 150, editor: { type: 'text' } },
-                    { field: '', title: '傳票摘要', width: 150, editor: { type: 'text' } },
-                    { field: '', title: '公司編號', width: 150, editor: { type: 'text' } },
-                    { field: '', title: '公司簡稱', width: 150, editor: { type: 'text' } }
+                    { field: 'Flag', title: '旗', hidden: true },
+                    { field: 'BillDate', title: '傳票日期', width: 70, editor: { type: 'text' } },
+                    { field: 'BillNo', title: '傳票編號', width: 150, editor: { type: 'text' } },
+                    { field: 'VoucherNameC', title: '傳票類別', width: 150, editor: { type: 'text' } },
+                    { field: 'EmpNo', title: '負責會計', width: 150, editor: { type: 'text' } },
+                    { field: 'EmpNameC', title: '會計姓名', width: 150, editor: { type: 'text' } },
+                    { field: 'Remark', title: '傳票摘要', width: 150, editor: { type: 'text' } },
+                    { field: 'CompNo', title: '公司編號', width: 150, editor: { type: 'text' } },
+                    { field: 'CompAbbr', title: '公司簡稱', width: 150, editor: { type: 'text' } }
                 ]],
                 onSelect: function (index, row) {
-                    
+                    tableHeadData(row);
+                    //dgTab1Data(row.Id);
                 },
                 onClickRow: function (rowIndex, rowData) {
-                   
-                },
-                // 啟用編輯列功能
-                onEndEdit: function (rowIndex, rowData) {
-                    var ed = $(this).datagrid('getEditor', {
-                        index: index,
-                        field: 'productid'
-                    });
-                    row.productname = $(ed.target).combobox('getText');
+
+                }
+            });
+            dgSubData()
+        }
+        function dgSubData() {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo';
+            doajax("GET", actionurl, null, function (data) {
+                if (data == "C0003") {
+                    $.messager.alert('alert', '讀取無資料!');
+                    dgSub.datagrid('loadData', '');
+                    console.log("C0003: Not Found");
+                } else {
+                    if (Array.isArray(data)) {
+                        // 遍歷數據並格式化日期
+                        data.forEach(function (item) {
+                            if (item.BillDate) {
+                                item.BillDate = formatDate(item.BillDate); // 使用formatDate函數格式化日期
+                            }
+                        });
+                    }
+                    dgSub.datagrid('loadData', data);
                 }
             });
         }
-        //#endregion 
+        function dgTab1Set() {
+
+        }
+        function dgTab1Data(docid) {
+
+        }
+        //#endregion
+
 
         //#region 按鈕與元件，enable set
 
-        //#endregion 
+        //#endregion
 
         //#region 按鈕動作
         function btnClick(type) {
@@ -613,7 +636,7 @@
                 //#endregion
             }
         }
-        //#endregion               
+        //#endregion
 
         //#region 功能函式
         // 自定義doajax
@@ -634,8 +657,43 @@
                 }
             });
         }
+        // 日期轉換
+        function formatDate(dateString) {
+            const regex = /\/Date\((\d+)\)\//;
+            const match = dateString.match(regex);
+            const timestamp = match ? parseInt(match[1], 10) : 0;
+            const date = new Date(timestamp);
 
-        //#endregion
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            const day = ('0' + date.getDate()).slice(-2);
+
+            return `${year}/${month}/${day}`;
+        }
+
+
+        // 表頭填值
+        function tableHeadData(row) {
+            
+            $('.colBillDate').textbox('setValue', row.BillDate);            
+            $('.colDocSubType').textbox('setValue',row.DocSubType);
+            $('.colDocSubTypeName').textbox('setValue', row.DocSubTypeName);
+            $('.colCompNo').textbox('setValue', row.CompNo);
+            $('.colCompAbbr').textbox('setValue', row.CompAbbr);
+            $('.colVoucherType').textbox('setValue', row.VoucherType);
+            $('.colVoucherNameC').textbox('setValue', row.VoucherNameC);
+            $('.colEmpNo').textbox('setValue', row.EmpNo);
+            $('.colEmpNameC').textbox('setValue', row.EmpNameC);
+            $('.colDeptNo').textbox('setValue', row.DeptNo);
+            $('.colDeptName').textbox('setValue', row.DeptName);
+            $('.colBillNo').textbox('setValue', row.BillNo);
+            $('.colCurrencyNo').textbox('setValue', row.CurrencyNo);
+            /* $('.colCurrencyTw1').textbox('setValue',row.VoucherNameC);*/
+            $('.colRate1').textbox('setValue', row.Rate1);
+            /* $('.colCurrencyTw2').textbox('setValue',row.VoucherNameC);*/
+            $('.colRate2').textbox('setValue', row.Rate2);
+            $('.colTargetNo').textbox('setValue', row.TargetNo);
+        }
+                //#endregion
     </script>
 }
-        

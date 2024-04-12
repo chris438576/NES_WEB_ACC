@@ -561,8 +561,8 @@
         }
         //dg會計大類，填值
         function dgGroupdata() {
-            let url = defaultUrl + controllerurl + functionurl + 'GetAccCode1';
-            doajax("GET", url, null, function (data) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode1';
+            doajax("GET", actionurl, null, function (data) {
                 if (data == "C0003") {
                     $.messager.alert('alert', '無會計大類資料!');
                     console.log("C0003: Not Found");
@@ -608,10 +608,10 @@
         //dg會計分類，填值
         function dgNodata(docid) {
             if (docid != null) {
-                let url = defaultUrl + controllerurl + functionurl + 'GetAccCode2?docid=' + docid;
+                actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode2?docid=' + docid;
                 $.ajax({
                     type: "GET",
-                    url: url,
+                    url: actionurl,
                     dataType: "json",
                     success: function (data) {
                         if (data == "C0003") {
