@@ -19,6 +19,7 @@
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherKind" Width="1.5" PointX="12.25" PointY="4.75" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_DataSet" Width="1.5" PointX="0.75" PointY="15.375" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherInfo" Width="1.5" PointX="2.5" PointY="15.375" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherDetail" Width="1.5" PointX="4.25" PointY="15.375" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

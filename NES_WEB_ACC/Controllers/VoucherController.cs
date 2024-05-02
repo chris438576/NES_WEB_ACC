@@ -108,37 +108,37 @@ namespace NES_WEB_ACC.Controllers
                 return Json("C0004", JsonRequestBehavior.AllowGet);
             }
         }
-        //public ActionResult GetTableInfo(string docid)
-        //{
-        //    if (string.IsNullOrEmpty(docid))
-        //    {
-        //        Response.StatusCode = (int)HttpStatusCode.BadRequest;
-        //        return Json("C0001", JsonRequestBehavior.AllowGet);
-        //    }
-        //    string sql = @" ";
-        //    var param = new { docid };
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(connectionString))
-        //        {
-        //            List<> customerdata = conn.Query<>(sql, param).ToList();
-        //            if (customerdata.Count > 0)
-        //            {
-        //                return Json(customerdata, JsonRequestBehavior.AllowGet);
-        //            }
-        //            else
-        //            {
-        //                Response.StatusCode = (int)HttpStatusCode.OK;
-        //                return Json("C0003", JsonRequestBehavior.AllowGet);
-        //            }
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        Response.StatusCode = (int)HttpStatusCode.BadRequest;
-        //        return Json("C0004", JsonRequestBehavior.AllowGet);
-        //    }
-        //}
+        public ActionResult GetVoucherItem1(string docid)
+        {
+            if (string.IsNullOrEmpty(docid))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0001", JsonRequestBehavior.AllowGet);
+            }
+            string sql = @"select * from ACC_VoucherDetail where DocId = @docid";
+            var param = new { docid };
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<ACC_VoucherDetail> customerdata = conn.Query<ACC_VoucherDetail>(sql, param).ToList();
+                    if (customerdata.Count > 0)
+                    {
+                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0004", JsonRequestBehavior.AllowGet);
+            }
+        }
 
         /// <summary>
         /// 部分檢視_表頭欄位

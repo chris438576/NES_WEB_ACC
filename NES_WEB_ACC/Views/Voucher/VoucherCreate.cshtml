@@ -8,7 +8,7 @@
         /*#region container style*/
         #body-container {
             width: 100%;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 185px);
             background-color: #d0d0d0;
             margin: 0px;
             padding: 0px;
@@ -17,7 +17,7 @@
         }
 
         .body-layout {
-            height: calc(100vh - 120px);
+            height: calc(100vh - 185px);
             width: 100%;
         }
 
@@ -77,7 +77,9 @@
             margin: 0;
             border: 1px solid gray;
         }
-
+        #content-tabs {
+            padding-bottom: 10px;
+        }
 
         /*#endregion*/
 
@@ -195,10 +197,11 @@
             border: 1px solid black;
         }
 
-        .datagrid-header-row {
+        .datagrid-header-row td {
             background-color: #d2d2d2;
             color: #333;
             font-weight: bold;
+            border: 1px solid black !important;
         }
 
         .datagrid-header, .datagrid-td-rownumber {
@@ -206,14 +209,21 @@
             background: none;
             background-repeat: no-repeat;
         }
-
-        #dgAccGoup .datagrid-cell, #dgAccGoup .datagrid-header-row .datagrid-cell span {
-            font-size: 12px !important;
-            font-weight: bold;
-        }
+                
 
         .datagrid-cell-rownumber {
             color: black !important;
+        }
+        
+        .datagrid-row .datagrid-cell {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+
+        .subtd {
+            margin: 0px !important;
+            padding: 1px !important;
+            border: 1px solid black !important;
         }
         /*#endregion */
         /*#region table style*/
@@ -491,6 +501,8 @@
                 font-size: 0.7em !important;
             }
         }
+
+       
     </style>
 }
 
@@ -498,31 +510,31 @@
 
 <div id="body-container">
     <div class="easyui-layout body-layout">
-        <div data-options="region:'west',collapsible:false" title="" style="width:25%;">
-            <table id="dgSub" class="datagrid easyui-subdg" style="width:100%;height:99%;"></table>
+        <div data-options="region:'west',collapsible:false" title="" style="width:25%;height:100%;">
+            <table id="maindg" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>
         </div>
 
-        <div data-options="region:'east',collapsible:false" title="" style="width:75%;">
-            <div class="row" style="width:99%;">
+        <div data-options="region:'east',collapsible:false" title="" style="width: 75%; height: 100%;">
+            <div class="row" style="width: 99%;height:21%; margin: 2px;">
                 @{ Html.RenderAction("_VoucherTableInfoPartial"); }
-            </div>
-            <div class="row" style="width:99%;">
-                <div class="easyui-tabs" style="padding: 20px">
-                    <div title="分錄明細" style="overflow: auto;padding:20px; display: none;">
-                        <table id="tabdg1" class="datagrid easyui-maindg" style="width:100%;height:99%;"></table>
+            </div>   
+            <div class="row" style="width: 99%; height: 77%; margin: 2px;">
+                <div id="content-tabs" class="easyui-tabs" style="width:100%;height:100%;">
+                    <div title="分錄明細" style="padding:2px;display:none;">
+                        <table id="itemdg1" class="datagrid easyui-itemdg" style="width: 100%; height: 100%; margin: 5px;"></table>
                     </div>
                     <div title="管理幣分錄" style="overflow:auto;padding:20px;display:none;">
-                        <table id="tabdg2" class="datagrid easyui-maindg" style="width:100%;height:99%;"></table>
+                        <table id="itemdg2" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
                     </div>
                     <div title="進階資料" style="overflow: auto; padding: 20px; display: none;">
 
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+
 
 @section Scripts {
 
@@ -530,9 +542,9 @@
         ///-----基本參數-----///
         //#region 基本參數
         var controllerurl = '/Voucher', functionurl = "/", actionurl = "";
-        var dgSub = $('#dgSub'),        //左側列表
-            dgTab1 = $('#tabdg1'),      //表身頁籤1列表
-            dgTab2 = $('#tabdg2');      //表身頁籤2列表
+        var maindg = $('#maindg'),        //左側列表
+            itemdg1 = $('#itemdg1'),      //表身頁籤1列表
+            itemdg2 = $('#itemdg2');      //表身頁籤2列表
 
         //#endregion
 
@@ -540,44 +552,45 @@
         //----初始化----------///
         $(function () {
             //左側列表欄位
-            dgSubSet();
+            maindgSet();
 
-
+            itemdg1Set();
         });
         //#endregion
 
         //#region dg設定與填值
-        function dgSubSet() {
-            dgSub.datagrid({
+        function maindgSet() {
+            maindg.datagrid({
                 singleSelect: true,
+                striped:true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true, type: 'string' },
                     { field: 'Flag', title: '旗', hidden: true },
-                    { field: 'BillDate', title: '傳票日期', width: 70, editor: { type: 'text' } },
-                    { field: 'BillNo', title: '傳票編號', width: 150, editor: { type: 'text' } },
-                    { field: 'VoucherNameC', title: '傳票類別', width: 150, editor: { type: 'text' } },
-                    { field: 'EmpNo', title: '負責會計', width: 150, editor: { type: 'text' } },
-                    { field: 'EmpNameC', title: '會計姓名', width: 150, editor: { type: 'text' } },
-                    { field: 'Remark', title: '傳票摘要', width: 150, editor: { type: 'text' } },
-                    { field: 'CompNo', title: '公司編號', width: 150, editor: { type: 'text' } },
-                    { field: 'CompAbbr', title: '公司簡稱', width: 150, editor: { type: 'text' } }
+                    { field: 'BillDate', title: '傳票日期', width: 70, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' }  },
+                    { field: 'BillNo', title: '傳票編號', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'VoucherNameC', title: '傳票類別', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' }},
+                    { field: 'EmpNo', title: '負責會計', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' }},
+                    { field: 'EmpNameC', title: '會計姓名', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'Remark', title: '傳票摘要', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' }},
+                    { field: 'CompNo', title: '公司編號', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' }},
+                    { field: 'CompAbbr', title: '公司簡稱', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' }  }
                 ]],
                 onSelect: function (index, row) {
                     tableHeadData(row);
-                    //dgTab1Data(row.Id);
+                    itemdg1Data(row.Id);
                 },
                 onClickRow: function (rowIndex, rowData) {
 
                 }
             });
-            dgSubData()
+            maindgData()
         }
-        function dgSubData() {
+        function maindgData() {
             actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo';
             doajax("GET", actionurl, null, function (data) {
                 if (data == "C0003") {
                     $.messager.alert('alert', '讀取無資料!');
-                    dgSub.datagrid('loadData', '');
+                    maindg.datagrid('loadData', '');
                     console.log("C0003: Not Found");
                 } else {
                     if (Array.isArray(data)) {
@@ -588,15 +601,40 @@
                             }
                         });
                     }
-                    dgSub.datagrid('loadData', data);
+                    maindg.datagrid('loadData', data);
                 }
             });
         }
-        function dgTab1Set() {
-
+        function itemdg1Set() {
+            itemdg1.datagrid({
+                singleSelect: true,
+                striped: true,
+                editors:true,
+                columns: [
+                    [
+                        { field: 'Id', title: 'Id', hidden: true, type: 'string', rowspan: 2, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                        { field: 'Linage', title: '行號', type: 'string', rowspan: 2, styler: function (value, row, index) { return 'border:1px solid black;' }  },
+                        { field: 'AccNameC', title: '科目名稱', type: 'string' },
+                        { field: 'DCTypeNo', title: '借貸方向', type: 'string' }
+                    ],
+                    [
+                        { field: 'Remark', title: '摘要說明', type: 'string', formatter: format1, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                        { field: 'DCTypeNameC', title: '借貸名稱', type: 'string', formatter: format2, styler: function (value, row, index) { return 'border:1px solid black;' } }
+                    ]
+                ]
+            });
         }
-        function dgTab1Data(docid) {
-
+        function itemdg1Data(docid) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherItem1?docid='+ docid;
+            doajax("GET", actionurl, null, function (data) {
+                if (data == "C0003") {
+                    $.messager.alert('alert', '讀取無資料!');
+                    itemdg1.datagrid('loadData', '');
+                    console.log("C0003: Not Found");
+                } else {                    
+                    itemdg1.datagrid('loadData', data);
+                }
+            });
         }
         //#endregion
 
@@ -657,6 +695,7 @@
                 }
             });
         }
+
         // 日期轉換
         function formatDate(dateString) {
             const regex = /\/Date\((\d+)\)\//;
@@ -670,7 +709,6 @@
 
             return `${year}/${month}/${day}`;
         }
-
 
         // 表頭填值
         function tableHeadData(row) {
@@ -694,6 +732,15 @@
             $('.colRate2').textbox('setValue', row.Rate2);
             $('.colTargetNo').textbox('setValue', row.TargetNo);
         }
-                //#endregion
+
+        // 多表頭Function
+        function format1(value, row, index) {
+            return '<div class="subtd">' + row.AccNameC + '</div><div class="subtd">' + row.Remark + '</div>';
+        }
+        function format2(value, row, index) {
+            return '<div class="subtd">' + row.DCTypeNo + '</div><div class="subtd">' + row.DCTypeNameC + '</div>';
+        }
+        
+        //#endregion
     </script>
 }

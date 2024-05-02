@@ -149,6 +149,9 @@
     <Compile Include="ACC_SysDocSubType.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ACC_VoucherDetail.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ACC_VoucherInfo.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
