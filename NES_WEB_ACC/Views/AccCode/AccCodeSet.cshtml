@@ -61,6 +61,9 @@
             /*#endregion*/
 
             /*#region datagrid style*/
+            .datagrid {
+                border: 2px solid white; /* 默認顏色 */
+            }
             .datagrid-header-row td {
                 background-color: #d2d2d2;
                 color: #333;
@@ -77,11 +80,13 @@
             }
             .datagrid-row .datagrid-cell {
                 margin: 0px !important;
-                padding: 0px !important;
+                padding: 0px !important;                
             }
-            .datagrid {
-                border: 2px solid white; /* 默認顏色 */
+            .datagrid-row td { 
+                border: 1px solid black !important;
             }
+            
+
             /*#endregion */
         </style>
     }
@@ -693,7 +698,7 @@
                 ]],
                 rowStyler: function (index, row) {
                     if (row.Status == 1) {
-                        return 'background-color: #f2f2f2;'; // 背景顏色設為灰色
+                        return 'background-color: #f2f2f2 !important ;'; // 背景顏色設為灰色
                     }
                 },
                 onSelect: function (index, row) {
