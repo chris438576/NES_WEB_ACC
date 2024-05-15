@@ -142,8 +142,10 @@ namespace NES_WEB_ACC.Controllers
             string sqlQuery1 = @"SELECT 
                                             SU.EmpId,
                                             SU.EmpNo,
-                                         SU.EmpNameC,
-                                            SU.Status
+                                            SU.EmpNameC,
+                                            SU.Status,
+                                            EI.DeptNo,
+                                            EI.DeptName
                                         FROM [NES_WEB_ACC].[dbo].[SYS_Users] as SU 
                                            left join [ESTAERPV2].[dbo].EmployeeInfo as EI on SU.EmpId = EI.Id
                                         where 1=1
@@ -167,6 +169,8 @@ namespace NES_WEB_ACC.Controllers
                                 Session["EmpId"] = reader.GetInt64(reader.GetOrdinal("EmpId"));
                                 Session["EmpNo"] = reader.GetString(reader.GetOrdinal("EmpNo"));
                                 Session["EmpNameC"] = reader.GetString(reader.GetOrdinal("EmpNameC"));
+                                Session["DeptNo"] = reader.GetString(reader.GetOrdinal("DeptNo"));
+                                Session["DeptName"] = reader.GetString(reader.GetOrdinal("DeptName"));
                                 TempData["Message"] = "角色Session設定完成。";
                                 return RedirectToAction("Index");
                             }

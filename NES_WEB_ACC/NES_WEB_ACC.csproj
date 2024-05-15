@@ -233,6 +233,10 @@
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />
     <Compile Include="ViewModels\UsersListViewModel.cs" />
+    <Compile Include="ViewModels\VoucherCreateEditTargetNo1ViewModel.cs" />
+    <Compile Include="ViewModels\VoucherCreateEditTargetNo2ViewModel.cs" />
+    <Compile Include="ViewModels\VoucherCreateEditTargetNo3ViewModel.cs" />
+    <Compile Include="ViewModels\VoucherCreateEditTargetNo4ViewModel.cs" />
     <Compile Include="ViewModels\VoucherCreateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +262,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\easyui\datagrid-cellediting.js" />
+    <Content Include="Scripts\easyui\jquery.edatagrid.js" />
     <Content Include="Scripts\easyui\plugins\jquery.calendar" />
     <Content Include="Scripts\easyui\themes\icons\larg-detail.png" />
     <Content Include="Scripts\easyui\themes\material-teal\images\Thumbs.db" />
@@ -946,6 +951,8 @@
     <Content Include="Views\AccCode\EquityCodeSet.cshtml" />
     <Content Include="Views\Voucher\VoucherCreate.cshtml" />
     <Content Include="Views\Shared\_VoucherTableInfoPartial.cshtml" />
+    <Content Include="Views\Voucher\TESTVIEW.cshtml" />
+    <Content Include="Views\Shared\_VoucherDCShowPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
