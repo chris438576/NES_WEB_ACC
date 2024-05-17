@@ -1,8 +1,3 @@
-/**
- * DataGrid Filter for jQuery EasyUI
- * version: 1.0.2
- */
-
 (function($){
 	function getPluginName(target){
 		if ($(target).data('treegrid')){
@@ -282,7 +277,7 @@
 				if (input.data('textbox')){
 					input = input.textbox('textbox');
 				}
-				input.off('.filter').on('keydown.filter', function(e){
+				input.unbind('.filter').bind('keydown.filter', function(e){
 					var t = $(this);
 					if (this.timer){
 						clearTimeout(this.timer);
@@ -298,9 +293,6 @@
 				function _doFilter(){
 					var rule = $(target)[name]('getFilterRule', field);
 					var value = input.val();
-					if (filterOpts.options.prompt && filterOpts.options.prompt==value){
-						value = '';
-					}
 					if (value != ''){
 						if ((rule && rule.value!=value) || !rule){
 							var op = rule ? rule.op : (filterOpts ? filterOpts.defaultFilterOperator||opts.defaultFilterOperator : opts.defaultFilterOperator);
@@ -647,7 +639,6 @@
 				rows: state.filterSource.rows,
 				footer: state.filterSource.footer||[]
 			});
-			data.filterRows = data.rows;
 		}
 		if (opts.pagination && opts.clientPaging){
 			var dg = $(target);
@@ -820,7 +811,7 @@
 			var d = opts.oldLoadFilter.call(this, data, parentId);
 			return myLoadFilter.call(this, d, parentId);
 		};
-		state.dc.view2.children('.datagrid-header').off('.filter').on('focusin.filter', function(e){
+		state.dc.view2.children('.datagrid-header').unbind('.filter').bind('focusin.filter', function(e){
 			var header = $(this);
 			setTimeout(function(){
 				state.dc.body2._scrollLeft(header._scrollLeft());
@@ -987,7 +978,7 @@
 			});
 
 			btn[0].menu = menu;
-			btn.on('click', {menu:menu}, function(e){
+			btn.bind('click', {menu:menu}, function(e){
 				$(this.menu).menu('show');
 				return false;
 			});

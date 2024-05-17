@@ -1,4 +1,7 @@
 ﻿using Dapper;
+using Microsoft.Reporting.WebForms;
+using NES_WEB_ACC.Report;
+using NES_WEB_ACC.Report.RDLC;
 using NES_WEB_ACC.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,6 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+
 
 namespace NES_WEB_ACC.Controllers
 {
@@ -208,6 +212,11 @@ namespace NES_WEB_ACC.Controllers
 
             return Json(targetTypes, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 編輯_表身資訊_對象編號
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public ActionResult GetEditTableCode4(string type)
         {
             if (string.IsNullOrEmpty(type))
@@ -295,6 +304,101 @@ namespace NES_WEB_ACC.Controllers
                 return Json("C0004", JsonRequestBehavior.AllowGet);
             }
         }
+        /// <summary>
+        /// 編輯_表身資訊_成本中心
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetEditTableCode5()
+        {
+            string sql = @"
+              SELECT 
+                 CAST(T1.DocId AS VARCHAR(20)) AS DocId, CAST(T1.Id AS VARCHAR(20)) AS Id,T1.DeptNo ,T1.DeptNameC ,T1.DeptNameE ,T1.CostLevel
+                 FROM ESTAERPV2.dbo.CompanyDept AS T1 
+                 WHERE  1=1 and DocId = '150615163202244'
+                                and DocId in (select CompId from ESTAERPV2.dbo.UserComp where DocId = 5118025658776861062)
+                                and Id in (-1,150615180215382,150615180246474,150615180336289,150615180351569,150615180413894,150615180435147,150615180501009,150615180526337,150616100815608,150616100859069,150616100933569,150616101312619,150616104415125,150616105520376,150616105631046,150616105654696,150616105757566,150616105833717,150616105913867,160818175502176,4619767610192552604,4701615448641564065,4763770088711818952,4865408518691831955,4879809568801835176,4932464689311258781,4960905404041071669,5053810030989480689,5585776709352846340)
+            
+                 ORDER BY DeptNo
+            ";
+            //var param = new { docid };
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<VoucherCreateEditAccDeptViewModel> customerdata = conn.Query<VoucherCreateEditAccDeptViewModel>(sql).ToList();
+                    if (customerdata.Count > 0)
+                    {
+                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0004", JsonRequestBehavior.AllowGet);
+            }
+        }
+        /// <summary>
+        /// 編輯_表身資訊_支付部門
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetEditTableCode6()
+        {
+            string sql = @"
+                 SELECT 
+                    CAST(T1.DocId AS VARCHAR(20)) AS DocId ,CAST(T1.Id AS VARCHAR(20)) AS Id ,T1.DeptNo ,T1.TargetNameC ,T1.TargetNameE ,T1.DeptNameC ,T1.DeptNameE
+                 FROM  ESTAERPV2.dbo.CompanyDept AS T1 
+                 WHERE  1 = 1  and T1.DocId = 150615163202244 
+                 ORDER BY  T1.DeptNo
+            ";
+            //var param = new { docid };
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<VoucherCreateEditPayDeptViewModel> customerdata = conn.Query<VoucherCreateEditPayDeptViewModel>(sql).ToList();
+                    if (customerdata.Count > 0)
+                    {
+                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.OK;
+                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0004", JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetEditTableCode7() {
+            var docSubTypes = new List<object>
+            {
+                new { id = "1", ActivityType = "營業活動" },
+                new { id = "2", ActivityType = "投資活動" },
+                new { id = "3", ActivityType = "融資活動" },
+                new { id = "4", ActivityType = "匯率變動" },
+                new { id = "5", ActivityType = "所的稅" },
+                new { id = "6", ActivityType = "停業單位" },
+                new { id = "7", ActivityType = "權益" },
+
+            };
+
+            return Json(docSubTypes, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 新增_表頭資訊_單據類別
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetAddInfoCode()
         {
             var docSubTypes = new List<object>
@@ -306,6 +410,10 @@ namespace NES_WEB_ACC.Controllers
 
             return Json(docSubTypes, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 新增_表頭資訊_公司編號
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetAddInfoCode2()
         {
             var companies = new List<object>
@@ -318,6 +426,10 @@ namespace NES_WEB_ACC.Controllers
 
             return Json(companies, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 新增_表頭資訊_傳票類別
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetAddInfoCode3()
         {
             var voucherTypes = new List<object>
@@ -326,6 +438,10 @@ namespace NES_WEB_ACC.Controllers
             };
             return Json(voucherTypes, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 新增_表頭資訊_交易幣別
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetAddInfoCode4()
         {          
             var currencies = new List<object>
@@ -350,6 +466,14 @@ namespace NES_WEB_ACC.Controllers
             return PartialView();
         }
         /// <summary>
+        /// 部分檢視_表頭欄位_進階資料
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _VoucherTableAdvPartial()
+        {
+            return PartialView();
+        }
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
@@ -366,10 +490,36 @@ namespace NES_WEB_ACC.Controllers
             return PartialView();
         }
 
-
         public ActionResult TESTVIEW()
         {
+            ReportView();
             return View();
         }
+        public ActionResult ReportView()
+        {            
+            // 報表資料設定_SQL查詢
+            string sql = @"select CompNo,CompAbbr,AccGroupNo,AccGroupNameC 
+                        from NES_WEB_ACC.dbo.ACC_AccCode1 where CompId = '150615163202244'
+            ";
+            List<ACC_AccCode1> infodata = new List<ACC_AccCode1>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                infodata = conn.Query<ACC_AccCode1>(sql).ToList();
+            }
+
+            // 報表參數設定
+            var reportParameters = new List<ReportParameter>
+            {
+                new ReportParameter("ReportMaker", "Chris")
+            };
+
+            // Session設定，給ReportViewer使用
+            Session["ReportPath"] = Server.MapPath("~/Report/RDLC/AccCodeReport.rdlc");
+            Session["ReportDataSource"] = new ReportDataSource("AccCodeRdlc", infodata);
+            Session["ReportParameters"] = reportParameters;
+
+            // 導向ReportViewer.aspx
+            return Redirect("~/Report/ReportViewer.aspx");
+        }       
     }
 }

@@ -1,7 +1,7 @@
 /**
- * EasyUI for jQuery 1.9.0
+ * EasyUI for jQuery 1.10.19
  * 
- * Copyright (c) 2009-2019 www.jeasyui.com. All rights reserved.
+ * Copyright (c) 2009-2024 www.jeasyui.com. All rights reserved.
  *
  * Licensed under the freeware license: http://www.jeasyui.com/license_freeware.php
  * To use it on other terms please contact us: info@jeasyui.com
@@ -153,7 +153,7 @@
 			// width += 40;
 			width = width ? width+40 : '';
 		}
-		var autoHeight = menu.outerHeight();
+		var autoHeight = Math.round(menu.outerHeight());
 		if (isNaN(parseInt(height))){
 			height = autoHeight;
 			if (menu.hasClass('menu-top') && opts.alignTo){
@@ -381,8 +381,31 @@
 		}
 	}
 	
-	function findItem(target, param){
-		var result = null;
+	// function findItem(target, param){
+	// 	var result = null;
+	// 	var fn = $.isFunction(param) ? param : function(item){
+	// 		for(var p in param){
+	// 			if (item[p] != param[p]){
+	// 				return false;;
+	// 			}
+	// 		}
+	// 		return true;
+	// 	}
+	// 	function find(menu){
+	// 		menu.children('div.menu-item').each(function(){
+	// 			var opts = $(this).data('menuitem').options;
+	// 			if (fn.call(target, opts) == true){
+	// 				result = $(target).menu('getItem', this);
+	// 			} else if (this.submenu && !result){
+	// 				find(this.submenu);
+	// 			}
+	// 		});
+	// 	}
+	// 	find($(target));
+	// 	return result;
+	// }
+
+	function findItems(target, param){
 		var fn = $.isFunction(param) ? param : function(item){
 			for(var p in param){
 				if (item[p] != param[p]){
@@ -391,18 +414,32 @@
 			}
 			return true;
 		}
-		function find(menu){
+		var result = [];
+		navItems(target, function(item){
+			if (fn.call(target, item) == true){
+				result.push(item);
+			}
+		});
+		return result;
+	}
+
+	function navItems(target, cb){
+		var done = false;
+		function nav(menu){
 			menu.children('div.menu-item').each(function(){
-				var opts = $(this).data('menuitem').options;
-				if (fn.call(target, opts) == true){
-					result = $(target).menu('getItem', this);
-				} else if (this.submenu && !result){
-					find(this.submenu);
+				if (done){
+					return;
+				}
+				var item = $(target).menu('getItem', this);
+				if (cb.call(target, item) == false){
+					done = true;
+				}
+				if (this.submenu && !done){
+					nav(this.submenu);
 				}
 			});
 		}
-		find($(target));
-		return result;
+		nav($(target));
 	}
 	
 	function setDisabled(target, itemEl, disabled){
@@ -416,6 +453,19 @@
 			} else {
 				t.removeClass('menu-item-disabled');
 				t[0].onclick = opts.onclick;
+			}
+		}
+	}
+
+	function appendItems(target, items, parent){
+		for(var i=0; i<items.length; i++){
+			var param = $.extend({}, items[i], {parent:parent});
+			if (param.children && param.children.length){
+				param.id = param.id || ('menu_id_'+($.fn.menu.defaults.zIndex++));
+				appendItem(target, param);
+				appendItems(target, param.children, $('#'+param.id)[0]);
+			} else {
+				appendItem(target, param);
 			}
 		}
 	}
@@ -506,6 +556,14 @@
 				hideAll(this);
 			});
 		},
+		clear: function(jq){
+			return jq.each(function(){
+				var target = this;
+				$(target).children('.menu-item,.menu-sep').each(function(){
+					removeItem(target, this);
+				});
+			});
+		},
 		destroy: function(jq){
 			return jq.each(function(){
 				destroyMenu(this);
@@ -560,13 +618,27 @@
 			});
 		},
 		findItem: function(jq, text){
+			var result = jq.menu('findItems', text);
+			return result.length ? result[0] : null;
+		},
+		findItems: function(jq, text){
 			if (typeof text == 'string'){
-				return findItem(jq[0], function(item){
+				return findItems(jq[0], function(item){
 					return $('<div>'+item.text+'</div>').text() == text;
 				});
 			} else {
-				return findItem(jq[0], text);
+				return findItems(jq[0], text);
 			}
+		},
+		navItems: function(jq, cb){
+			return jq.each(function(){
+				navItems(this, cb);
+			});
+		},
+		appendItems: function(jq, items){
+			return jq.each(function(){
+				appendItems(this, items);
+			});
 		},
 		/**
 		 * append menu item, the param contains following properties:

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ReportDataSet" targetNamespace="http://tempuri.org/ReportDataSet.xsd" xmlns:mstns="http://tempuri.org/ReportDataSet.xsd" xmlns="http://tempuri.org/ReportDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ReportDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ReportDataSet" msprop:Generator_UserDSName="ReportDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AccCodeReport" msprop:Generator_TableClassName="AccCodeReportDataTable" msprop:Generator_TableVarName="tableAccCodeReport" msprop:Generator_TablePropName="AccCodeReport" msprop:Generator_RowDeletingName="AccCodeReportRowDeleting" msprop:Generator_RowChangingName="AccCodeReportRowChanging" msprop:Generator_RowEvHandlerName="AccCodeReportRowChangeEventHandler" msprop:Generator_RowDeletedName="AccCodeReportRowDeleted" msprop:Generator_UserTableName="AccCodeReport" msprop:Generator_RowChangedName="AccCodeReportRowChanged" msprop:Generator_RowEvArgName="AccCodeReportRowChangeEvent" msprop:Generator_RowClassName="AccCodeReportRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CompNo" msprop:Generator_ColumnVarNameInTable="columnCompNo" msprop:Generator_ColumnPropNameInRow="CompNo" msprop:Generator_ColumnPropNameInTable="CompNoColumn" msprop:Generator_UserColumnName="CompNo" type="xs:string" minOccurs="0" />
+              <xs:element name="CompAbbr" msprop:Generator_ColumnVarNameInTable="columnCompAbbr" msprop:Generator_ColumnPropNameInRow="CompAbbr" msprop:Generator_ColumnPropNameInTable="CompAbbrColumn" msprop:Generator_UserColumnName="CompAbbr" type="xs:string" minOccurs="0" />
+              <xs:element name="AccGroupNo" msprop:Generator_ColumnVarNameInTable="columnAccGroupNo" msprop:Generator_ColumnPropNameInRow="AccGroupNo" msprop:Generator_ColumnPropNameInTable="AccGroupNoColumn" msprop:Generator_UserColumnName="AccGroupNo" type="xs:string" minOccurs="0" />
+              <xs:element name="AccGroupNameC" msprop:Generator_ColumnVarNameInTable="columnAccGroupNameC" msprop:Generator_ColumnPropNameInRow="AccGroupNameC" msprop:Generator_ColumnPropNameInTable="AccGroupNameCColumn" msprop:Generator_UserColumnName="AccGroupNameC" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

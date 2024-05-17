@@ -26,7 +26,7 @@ namespace NES_WEB_ACC
         {
             //本機測試
             Application["GlobalUrl"] = "";
-            //正式使用
+            ////正式使用
             //Application["GlobalUrl"] = @"http://" + HttpContext.Current.Request.Url.Authority + @"/WEB_ACC";
         }
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
