@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -99,6 +101,22 @@ namespace NES_WEB_ACC
                     }
                 }
             }
+        }
+        /// <summary>
+        /// ¦h»y¨t
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void Application_AcquireRequestState(Object sender, EventArgs e)
+        {
+            HttpContext context = HttpContext.Current;
+            var languageSession = "en";
+            if (context != null && context.Session != null)
+            {
+                languageSession = context.Session["lang"] != null ? context.Session["lang"].ToString() : "en";
+            }
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(languageSession);
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageSession);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "傳票輸入作業";
+    ViewBag.Title = @Resources.Content.VoucherCreate;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
@@ -582,7 +582,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg1insert')">選入</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg1exit')">離開</a>
     </div>
-    <table id="dlgdg1" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>
+    <table id="dlgdg1" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>  
 </div>
 @*dialog_[編輯]摘要說明*@
 <div id="dlgEditRemark" class="easyui-dialog" data-options="modal:true,closed:true">
@@ -673,6 +673,16 @@
         var actioncode = 'view';
 
         //#endregion
+        //----多語系設定-----///
+        let maindglang = { BillDate: '@Resources.Content.BillDate',
+            BillNo: '@Resources.Content.BillNo',
+            VoucherNameC: '@Resources.Content.VoucherNameC',
+            EmpNo: '@Resources.Content.EmpNo',
+            EmpNameC: '@Resources.Content.EmpNameC',
+            Remark: '@Resources.Content.Remark',
+            CompNo: '@Resources.Content.CompNo',
+            CompAbbr: '@Resources.Content.CompAbbr'
+        };
 
         //#region 初始化
         //----初始化----------///
@@ -694,14 +704,14 @@
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true, type: 'string' },
                     { field: 'Flag', title: '旗', hidden: true },
-                    { field: 'BillDate', title: '傳票日期', width: 70, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'BillNo', title: '傳票編號', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'VoucherNameC', title: '傳票類別', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'EmpNo', title: '負責會計', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'EmpNameC', title: '會計姓名', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'Remark', title: '傳票摘要', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'CompNo', title: '公司編號', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'CompAbbr', title: '公司簡稱', width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } }
+                    { field: 'BillDate', title: maindglang.BillDate, width: 70, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'BillNo', title: maindglang.BillNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'VoucherNameC', title: maindglang.VoucherNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'EmpNo', title: maindglang.EmpNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'EmpNameC', title: maindglang.EmpNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'Remark', title: maindglang.Remark, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'CompNo', title: maindglang.CompNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } }
                 ]],
                 onSelect: function (index, row) {
                     maindgIndex = index;
@@ -783,7 +793,7 @@
                                     idField: 'TargetType',
                                     textField: 'TargetTypeName',
                                     mode: 'remote',
-                                    url: '/Voucher/GetEditTableCode2',  // 指向後端的控制器方法
+                                    url: defaultUrl + controllerurl + functionurl +'GetEditTableCode2',  // 指向後端的控制器方法
                                     columns: [[
                                         { field: 'TargetType', title: '編號', width: 97 },
                                         { field: 'TargetTypeName', title: '名稱', width: 97 }
@@ -835,7 +845,7 @@
                                 type: 'combobox',
                                 options: {
                                     panelWidth: 200,
-                                    url: '/Voucher/GetEditTableCode7',
+                                    url: defaultUrl + controllerurl + functionurl +'GetEditTableCode7',
                                     valueField: 'ActivityType',
                                     textField: 'ActivityType',
                                     mode: 'remote',
@@ -863,7 +873,7 @@
                         // 如果上一行正在編輯，結束它的編輯狀態
                         if (itemdg1Index !== undefined && itemdg1Index !== index) {
                             itemdg1.datagrid('endEdit', itemdg1Index);
-                        }                        
+                        }
                     }
                 },
                 onAfterEdit: function (index, row, changes) {
@@ -874,13 +884,6 @@
                         itemdg1.datagrid('refreshRow', index);
                         // 重置當前的編輯行索引
                         itemdg1Index = undefined;
-                        //計算金額
-                        let money = row.Money;
-                        let rate1 = row.Rate1;
-                        let money1 = row.Money1;
-                        if (money * rate1 !== money1) {
-                            alert('交易金額與記帳金額不相等');
-                        }
                         //計算借貸平衡
                         voucherDC();
                     }
@@ -1260,25 +1263,178 @@
                     $('.colMoney').textbox('setValue', '');
                     break;
                 case 'edit':
-                    actioncode = 'edit';
+                    console.log(maindgIndex);
+                    var select = maindg.datagrid('getSelected');
+                    if (select != null) {
+                        actioncode = 'edit';
+                    } else {
+                        alert("請選擇傳票進行編輯");
+                    }
+
+
+
                     break;
                 case 'save':
                     let maindata = [];
                     let infodata = [];
                     let data = [];
+                    let dosave ;
+                    let maindatadg, infodatadg;
+
                     if (actioncode === 'add') {
-                        
-                        data = [
-                            { 'maindata': maindata },
-                            { 'infodata': infodata}
-                        ]
+                        dosave = addFormCheck();
+                        if (dosave) {
+                            maindata.push({
+                                'BillDate': $('.fomBillDate').textbox('getValue'),
+                                'DocSubType': $('.fomDocSubType').textbox('getValue'),
+                                'DocSubTypeName': $('.fomDocSubTypeName').textbox('getValue'),
+                                'CompNo': $('.fomCompNo').textbox('getValue'),
+                                'CompAbbr': $('.fomCompAbbr').textbox('getValue'),
+                                'VoucherType': $('.fomVoucherType').textbox('getValue'),
+                                'VoucherNameC': $('.fomVoucherNameC').textbox('getValue'),
+                                'EmpNo': $('.fomEmpNo').textbox('getValue'),
+                                'EmpNameC': $('.fomEmpNameC').textbox('getValue'),
+                                'DeptNo': $('.fomDeptNo').textbox('getValue'),
+                                'DeptName': $('.fomDeptName').textbox('getValue'),
+                                'BillNo': $('.fomBillNo').textbox('getValue'),
+                                'CurrencyNo': $('.fomCurrencyNo').textbox('getValue'),
+                                'CurrencyTw1': $('.fomCurrencyTw1').textbox('getValue'),
+                                'Rate1': $('.fomRate1').textbox('getValue'),
+                                'CurrencyTw2': $('.fomCurrencyTw2').textbox('getValue'),
+                                'Rate2': $('.fomRate2').textbox('getValue'),
+                                'TargetNo': $('.fomTargetNo').textbox('getValue'),
+                            });
+
+                            infodatadg = itemdg1.datagrid('getRows')
+                            infodata = infodatadg.map(function (row) {
+                                return {
+                                    'Id': row.Id,
+                                    'Linage': row.Linage,
+                                    'AccNo': row.AccNo,
+                                    'AccNameC': row.AccNameC,
+                                    'DCTypeNo': row.DCTypeNo,
+                                    'DCTypeNameC': row.DCTypeNameC,
+                                    'CurrencyNo': row.CurrencyNo,
+                                    'CurrencyNoNote': row.CurrencyNoNote,
+                                    'Rate1': row.Rate1,
+                                    'Money': row.Money,
+                                    'Money1': row.Money1,
+                                    'TargetId': row.TargetId,
+                                    'TargetType': row.TargetType,
+                                    'TargetNo': row.TargetNo,
+                                    'TargetAbbr': row.TargetAbbr,
+                                    'AccProfitId': row.AccProfitId,
+                                    'AccProfitNo': row.AccProfitNo,
+                                    'AccProfitName': row.AccProfitName,
+                                    'AccDeptId': row.AccDeptId,
+                                    'AccDeptNo': row.AccDeptNo,
+                                    'AccDeptName': row.AccDeptName,
+                                    'PayDeptId': row.PayDeptId,
+                                    'PayDeptNo': row.PayDeptNo,
+                                    'PayDeptName': row.PayDeptName,
+                                    'CheckType': row.CheckType,
+                                    'CheckId': row.CheckId,
+                                    'CheckNo': row.CheckNo,
+                                    'OffsetNo': row.OffsetNo,
+                                    'SourceDocId': row.SourceDocId,
+                                    'SourceSeqId': row.SourceSeqId,
+                                    'SourceDocSubTypeName': row.SourceDocSubTypeName,
+                                    'SourceNo': row.SourceNo,
+                                    'InitialProjectId': row.InitialProjectId,
+                                    'InitialDocSubType': row.InitialDocSubType,
+                                    'InitialDocId': row.InitialDocId,
+                                    'InitialDocSubTypeName': row.InitialDocSubTypeName,
+                                    'InitialNo': row.InitialNo,
+                                    'ActivityType': row.ActivityType,
+                                    'Remark': row.Remark,
+                                    'CaseBillNo': row.CaseBillNo,
+                                };
+                            });
+
+                            data = [
+                                { 'maindata': maindata },
+                                { 'infodata': infodata }
+                            ]
+                            console.table(data);
+                            alert(data);
+                        } else {
+                            alert('請檢查欄位是否輸入!')
+                        }
                     }
                     if (actioncode === 'edit') {
+                        maindatadg = maindg.datagrid('getRow')[maindgIndex]
+                        maindata.push({
+                            'BillDate': maindatadg.BillDate,
+                            'DocSubType': maindatadg.DocSubType,
+                            'DocSubTypeName': maindatadg.DocSubTypeName,
+                            'CompNo': maindatadg.CompNo,
+                            'CompAbbr': maindatadg.CompAbbr,
+                            'VoucherType': maindatadg.VoucherType,
+                            'VoucherNameC': maindatadg.VoucherNameC,
+                            'EmpNo': maindatadg.EmpNo,
+                            'EmpNameC': maindatadg.EmpNameC,
+                            'DeptNo': maindatadg.DeptNo,
+                            'DeptName': maindatadg.DeptName,
+                            'BillNo': maindatadg.BillNo,
+                            'CurrencyNo': maindatadg.CurrencyNo,
+                            'CurrencyTw1': maindatadg.CurrencyTw1,
+                            'Rate1': maindatadg.Rate1,
+                            'CurrencyTw2': maindatadg.CurrencyTw2,
+                            'Rate2': maindatadg.Rate2,
+                            'TargetNo': maindatadg.TargetNo,
+                        });
+                        infodatadg = itemdg1.datagrid('getRows')
+                        infodata = infodatadg.map(function (row) {
+                            return {
+                                'Id': row.Id,
+                                'Linage': row.Linage,
+                                'AccNo': row.AccNo,
+                                'AccNameC': row.AccNameC,
+                                'DCTypeNo': row.DCTypeNo,
+                                'DCTypeNameC': row.DCTypeNameC,
+                                'CurrencyNo': row.CurrencyNo,
+                                'CurrencyNoNote': row.CurrencyNoNote,
+                                'Rate1': row.Rate1,
+                                'Money': row.Money,
+                                'Money1': row.Money1,
+                                'TargetId': row.TargetId,
+                                'TargetType': row.TargetType,
+                                'TargetNo': row.TargetNo,
+                                'TargetAbbr': row.TargetAbbr,
+                                'AccProfitId': row.AccProfitId,
+                                'AccProfitNo': row.AccProfitNo,
+                                'AccProfitName': row.AccProfitName,
+                                'AccDeptId': row.AccDeptId,
+                                'AccDeptNo': row.AccDeptNo,
+                                'AccDeptName': row.AccDeptName,
+                                'PayDeptId': row.PayDeptId,
+                                'PayDeptNo': row.PayDeptNo,
+                                'PayDeptName': row.PayDeptName,
+                                'CheckType': row.CheckType,
+                                'CheckId': row.CheckId,
+                                'CheckNo': row.CheckNo,
+                                'OffsetNo': row.OffsetNo,
+                                'SourceDocId': row.SourceDocId,
+                                'SourceSeqId': row.SourceSeqId,
+                                'SourceDocSubTypeName': row.SourceDocSubTypeName,
+                                'SourceNo': row.SourceNo,
+                                'InitialProjectId': row.InitialProjectId,
+                                'InitialDocSubType': row.InitialDocSubType,
+                                'InitialDocId': row.InitialDocId,
+                                'InitialDocSubTypeName': row.InitialDocSubTypeName,
+                                'InitialNo': row.InitialNo,
+                                'ActivityType': row.ActivityType,
+                                'Remark': row.Remark,
+                                'CaseBillNo': row.CaseBillNo,
+                            };
+                        });
 
                         data = [
                             { 'maindata': maindata },
                             { 'infodata': infodata }
                         ]
+                        console.table(data);
+                        alert(data);
                     }
                     actioncode = 'view';
 
@@ -1290,16 +1446,17 @@
                         //這裡還沒完成
                     }
                     if (actioncode === 'add') {
-                        //addForm欄位清空
-                        $('#addForm .easyui-datebox').datebox('clear');
-                        $('#addForm .easyui-combogrid').combogrid('clear');
-                        $('#addForm .easyui-textbox').textbox('clear');
-                        //表身清空
-                        itemdg1.datagrid('loadData', { total: 0, rows: [] });
-                        infotabs.tabs('select', 0);//表頭表單切換
-                        advtabs.tabs('select', 0);//進階資訊切換
-                        maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
+                      //
                     }
+                    //addForm欄位清空
+                    $('#addForm .easyui-datebox').datebox('clear');
+                    $('#addForm .easyui-combogrid').combogrid('clear');
+                    $('#addForm .easyui-textbox').textbox('clear');
+                    //表身清空
+                    itemdg1.datagrid('loadData', { total: 0, rows: [] });
+                    infotabs.tabs('select', 0);//表頭表單切換
+                    advtabs.tabs('select', 0);//進階資訊切換
+                    maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
                     actioncode = 'view';
                     break;
                 case 'delete':
@@ -1550,11 +1707,33 @@
             $('.colMoney').textbox('setValue', balance);
         }
 
+        // addForm必填欄位
+        function addFormCheck() {
+            var form = document.getElementById('addForm');
+            var inputs = form.querySelectorAll('[required]');
+            var valid = true;
+
+            inputs.forEach(function (input) {
+                if (!input.value) {
+                    valid = false;
+                    input.classList.add('error'); // Optional: Add a class to highlight the empty fields
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            if (!valid) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         // 右鍵功能
         function menuHandler(item) {
             switch (item.name) {
                 case 'add':
-                    var rowCount = itemdg1.datagrid('getRows').length;                   
+                    var rowCount = itemdg1.datagrid('getRows').length;
                     // 先檢查 itemdg1 是否被正確初始化
                     if (!itemdg1) {
                         console.error('itemdg1 is not initialized');
@@ -1981,7 +2160,8 @@
                     itemdg1.datagrid('updateRow', {
                         index: itemdg1Index,
                         row: {
-                            Money: remarkValue
+                            Money: remarkValue,
+                            Money1: remarkValue
                         }
                     });
                     $('#moneyBox').textbox('setValue', '')

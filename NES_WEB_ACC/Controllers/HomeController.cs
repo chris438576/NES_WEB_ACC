@@ -198,5 +198,16 @@ namespace NES_WEB_ACC.Controllers
         {
             return PartialView();
         }
+
+        /// <summary>
+        /// 多語系
+        /// </summary>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+        public ActionResult ChangeLanguage(string lang)
+        {
+            Session["lang"] = lang;
+            return RedirectToAction("Index", "Home", new { language = lang });
+        }
     }
 }

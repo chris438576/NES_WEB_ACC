@@ -179,6 +179,21 @@
     <Compile Include="ACC_VoucherKind.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Content.zh-TW.designer.cs">
+      <DependentUpon>Content.zh-TW.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="App_GlobalResources\Content.es-MX.designer.cs">
+      <DependentUpon>Content.es-MX.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="App_GlobalResources\Content.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Content.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -996,6 +1011,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Report\RDLC\AccCodeReport.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Content.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Content.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Content.es-MX.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Content.es-MX.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Content.zh-TW.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Content.zh-TW.designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

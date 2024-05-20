@@ -128,59 +128,112 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("作業流程圖", "Index", "Home")</li>
-                    <li class="dropdown">
+                    <li>@*作業流程圖*@
+                        <a href="@Url.Action("Index", "Home")">
+                            @Resources.Content.FlowChart
+                        </a>
+                    </li>
+                    <li class="dropdown">@*會計設定圖*@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            會計設定
+                            @Resources.Content.AccSet
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("會計科目設定", "AccCodeSet", "AccCode")</li>
-                            <li>@Html.ActionLink("科目類別設定", "AccGroupNoSet", "AccCode")</li>
-                            <li>@Html.ActionLink("權益類科目設定", "EquityCodeSet", "AccCode")</li>
-                            <li>@Html.ActionLink("傳票類別設定", "VoucherCodeSet", "AccCode")</li>
-                            <li>@Html.ActionLink("會計系統基本設定", "", "")</li>
+                            <li>@*會計科目設定*@                               
+                                <a href="@Url.Action("AccCodeSet", "AccCode")">
+                                    @Resources.Content.AccCodeSet
+                                </a>
+                            </li>
+                            <li>@*科目類別設定*@
+                                <a href="@Url.Action("AccGroupNoSet", "AccCode")">
+                                    @Resources.Content.AccGroupNoSet
+                                </a>
+                            </li>
+                            <li>@*權益科目類別設定*@                       
+                                <a href="@Url.Action("EquityCodeSet", "AccCode")">
+                                    @Resources.Content.EquityCodeSet
+                                </a>
+                            </li>
+                            <li>@*傳票類別設定*@ 
+                                <a href="@Url.Action("VoucherCodeSet", "AccCode")">
+                                    @Resources.Content.VoucherCodeSet
+                                </a>
+                            </li>
+                            <li>@*會計系統基本設定*@ 
+                                <a href="@Url.Action("", "")">
+                                    @Resources.Content.AccSysCodeSet
+                                </a>
+                            </li>
                             <li role="separator" class="divider"></li>
-                            <li>@Html.ActionLink("會計項目一覽表", "", "")</li>
+                            <li>@*會計項目一覽表*@
+                                <a href="@Url.Action("", "")">
+                                    @Resources.Content.AccReport
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            傳票作業
+                    <li class="dropdown">@*傳票作業*@
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">                            
+                            @Resources.Content.VoucherOperation
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("傳票輸入作業", "VoucherCreate", "Voucher")</li>
-                            <li>@Html.ActionLink("傳票開帳作業", "TESTVIEW", "Voucher")</li>
-                            <li role="separator" class="divider"></li>                            
+                            <li>@*傳票輸入作業*@                                
+                                <a href="@Url.Action("VoucherCreate", "Voucher")">
+                                    @Resources.Content.VoucherCreate
+                                </a>
+                            </li>
+                            
+                            <li role="separator" class="divider"></li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            調整分錄
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            財務報表
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">                           
+                            @Resources.Content.AJE
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            權限設定
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">                     
+                            @Resources.Content.FinanceReport
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("系統管理-Users", "UsersList", "UserRoleManage")</li>
-                            <li>@Html.ActionLink("系統管理-Roles", "RolesList", "UserRoleManage")</li>
-                            @*<li>@Html.ActionLink("系統管理-Permissions", "PermissionsList", "UserRoleManage")</li>*@
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <label id="lblPermissionSetting">@Resources.Content.lblPermissionSetting</label>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @*<li>@Html.ActionLink("Resources.Content.SystemManagementUsers", "UsersList", "UserRoleManage")</li>
+                            <li>@Html.ActionLink("Resources.Content.SystemManagementRoles", "RolesList", "UserRoleManage")</li>*@
+
+                            <li>
+                                <a href="@Url.Action("UsersList", "UserRoleManage")">
+                                    @Resources.Content.SystemManagementUsers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("RolesList", "UserRoleManage")">
+                                    @Resources.Content.SystemManagementRoles
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <label id="lblMenuLanguage">@Resources.Content.lblMenuLanguage</label>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="~/Home/ChangeLanguage?lang=en">English</a></li>
+                            <li><a href="~/Home/ChangeLanguage?lang=zh-TW">繁體中文</a></li>
+                            <li><a href="~/Home/ChangeLanguage?lang=es-MX">Español</a></li>
                         </ul>
                     </li>
                     <li>
