@@ -108,16 +108,16 @@
 @{ Html.RenderAction("_ToolBarPartial"); }
 
 <div id="body-container">
-    <div class="easyui-tabs">
+    <div id="tabs" class="easyui-tabs">
         <div title="保留盈餘" style="padding:10px">
             <div class="easyui-layout body-layout">
                 <div data-options="region:'west',collapsible:false" title="" style="width:50%;">
-                    <table id="tabdg11" class="datagrid easyui-subdg" style="width:100%;height:99%;">
+                    <table id="maindg" class="datagrid easyui-maindg" style="width:100%;height:99%;">
                     </table>
                 </div>
 
                 <div data-options="region:'east',collapsible:false" title="" style="width:50%;">
-                    <table id="tabdg12" class="datagrid easyui-subdg" style="width:100%;height:99%;">
+                    <table id="itemdg" class="datagrid easyui-itemdg" style="width:100%;height:99%;">
                     </table>
                 </div>
             </div>
@@ -125,12 +125,12 @@
         <div title="其他綜合損益" style="padding:10px">
             <div class="easyui-layout body-layout">
                 <div data-options="region:'west',collapsible:false" title="" style="width:50%;">
-                    <table id="tabdg21" class="datagrid easyui-subdg" style="width:100%;height:99%;">
+                    <table id="maindg1" class="datagrid easyui-maindg" style="width:100%;height:99%;">
                     </table>
                 </div>
 
                 <div data-options="region:'east',collapsible:false" title="" style="width:50%;">
-                    <table id="tabdg22" class="datagrid easyui-subdg" style="width:100%;height:99%;">
+                    <table id="itemdg1" class="datagrid easyui-itemdg" style="width:100%;height:99%;">
                     </table>
                 </div>
             </div>
@@ -143,26 +143,39 @@
         ///-----基本參數-----///
         //#region 基本參數
         var controllerurl = '/AccCode', functionurl = "/", actionurl = "";
-        var tabdg11 = $('#tabdg11'),
-            tabdg12 = $('#tabdg12'),
-            tabdg21 = $('#tabdg21'),
-            tabdg22 = $('#tabdg22')
+        var maindg = $('#maindg'),
+            itemdg = $('#itemdg'),
+            maindg1 = $('#maindg1'),
+            itemdg1 = $('#itemdg1');
+        var focusdg = '';
 
         ///----初始化----------///
         //#region 初始化
         $(function () {
-            tabdg11Set();
-            tabdg12Set();
-            tabdg21Set();
-            tabdg22Set();
+            maindgSet();
+            itemdgSet();
+            maindg1Set();
+            itemdg1Set();
+            $('#tabs').tabs({
+                onSelect: function (title, index) {
+                    if (index === 0) {
+                        maindgdata();
+                    } else if (index === 1) {
+                        maindg1data();
+                    }
+                },
+                onLoad: function () {
+                    maindgdata();
+                }
+            });
         });
 
         //#endregion
 
         //#region dg設定與填值
-        //tab_1 dg_1，欄位與功能
-        function tabdg11Set() {
-            tabdg11.datagrid({
+        // 保留盈餘maindg，欄位與功能
+        function maindgSet() {
+            maindg.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true, type: 'string' },
@@ -173,11 +186,11 @@
                     { field: 'AccNameC2', title: '年結結轉科目名稱', width: 150, editor: { type: 'text' } }
                 ]],
                 onSelect: function (index, row) {
-                    tabdg12data(row.Id);
+                    itemdgdata(row.Id);
                 },
                 onClickRow: function (rowIndex, rowData) {
-                    focusDgSet(tabdg11);
-                    focusdg = 'tabdg11';
+                    focusDgSet(maindg);
+                    focusdg = 'maindg';
                 },
                 // 啟用編輯列功能
                 onEndEdit: function (rowIndex, rowData) {
@@ -187,26 +200,24 @@
                     });
                     row.productname = $(ed.target).combobox('getText');
                 }
-            });
-            tabdg11data();
+            });           
         }
-        //tab_1 dg_1，填值
-        function tabdg11data() {
+        // 保留盈餘maindg，填值
+        function maindgdata() {
             actionurl = defaultUrl + controllerurl + functionurl + 'GetEquityInfo?type=2';
             doajax("GET", actionurl, null, function (data) {
-                console.log(data)
                 if (data == "C0003") {
                     $.messager.alert('alert', '無權益類資料!');
-                    tabdg11.datagrid('loadData', '');
+                    maindg.datagrid('loadData', '');
                     console.log("C0003: Not Found");
                 } else {
-                    tabdg11.datagrid('loadData', data);
+                    maindg.datagrid('loadData', data);
                 }
             });
         }
-        //tab_1 dg_2，欄位與功能
-        function tabdg12Set() {
-            tabdg12.datagrid({
+        // 保留盈餘itemdg，欄位與功能
+        function itemdgSet() {
+            itemdg.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
@@ -216,8 +227,8 @@
 
                 },
                 onClickRow: function (rowIndex, rowData) {
-                    focusDgSet(tabdg12);
-                    focusdg = 'tabdg12';
+                    focusDgSet(itemdg);
+                    focusdg = 'itemdg';
                 },
                 // 啟用編輯列功能
                 onEndEdit: function (rowIndex, rowData) {
@@ -228,10 +239,9 @@
                     row.productname = $(ed.target).combobox('getText');
                 }
             });
-            tabdg12data();
         }
-        //tab_1 dg_2，填值
-        function tabdg12data(docid) {
+        // 保留盈餘itemdg，填值
+        function itemdgdata(docid) {
             if (docid != null) {
 
                 actionurl = defaultUrl + controllerurl + functionurl + 'GetEquityItem?docid=' + docid;
@@ -239,18 +249,18 @@
                     console.log(data)
                     if (data == "C0003") {
                         $.messager.alert('alert', '無科目類別資料!');
-                        tabdg12.datagrid('loadData', '');
+                        itemdg.datagrid('loadData', '');
                         console.log("C0003: Not Found");
                     } else {
-                        tabdg12.datagrid('loadData', data);
+                        itemdg.datagrid('loadData', data);
                     }
                 });
             }
         }
 
-        //tab_2 dg_1，欄位與功能
-        function tabdg21Set() {
-            tabdg21.datagrid({
+        // 其他綜合損益maindg1，欄位與功能
+        function maindg1Set() {
+            maindg1.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true, type: 'string' },
@@ -261,11 +271,11 @@
                     { field: 'AccNameC2', title: '年結結轉科目名稱', width: 150, editor: { type: 'text' } }
                 ]],
                 onSelect: function (index, row) {
-                    tabdg22data(row.Id);
+                    itemdg1data(row.Id);
                 },
                 onClickRow: function (rowIndex, rowData) {
-                    focusDgSet(tabdg21);
-                    focusdg = 'tabdg21';
+                    focusDgSet(maindg1);
+                    focusdg = 'maindg1';
                 },
                 // 啟用編輯列功能
                 onEndEdit: function (rowIndex, rowData) {
@@ -276,25 +286,24 @@
                     row.productname = $(ed.target).combobox('getText');
                 }
             });
-            tabdg21data();
         }
-        //tab_2 dg_1，填值
-        function tabdg21data() {
+        // 其他綜合損益maindg1，填值
+        function maindg1data() {
             actionurl = defaultUrl + controllerurl + functionurl + 'GetEquityInfo?type=1';
             doajax("GET", actionurl, null, function (data) {
                 console.log(data)
                 if (data == "C0003") {
                     $.messager.alert('alert', '無權益類資料!');
-                    tabdg21.datagrid('loadData', '');
+                    maindg1.datagrid('loadData', '');
                     console.log("C0003: Not Found");
                 } else {
-                    tabdg21.datagrid('loadData', data);
+                    maindg1.datagrid('loadData', data);
                 }
             });
         }
-        //tab_1 dg_2，欄位與功能
-        function tabdg22Set() {
-            tabdg22.datagrid({
+        // 其他綜合損益itemdg1，欄位與功能
+        function itemdg1Set() {
+            itemdg1.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
@@ -304,8 +313,8 @@
 
                 },
                 onClickRow: function (rowIndex, rowData) {
-                    focusDgSet(tabdg22);
-                    focusdg = 'tabdg22';
+                    focusDgSet(itemdg1);
+                    focusdg = 'itemdg1';
                 },
                 // 啟用編輯列功能
                 onEndEdit: function (rowIndex, rowData) {
@@ -316,21 +325,19 @@
                     row.productname = $(ed.target).combobox('getText');
                 }
             });
-            tabdg22data();
         }
-        //tab_2 dg_2，填值
-        function tabdg22data(docid) {
+        // 其他綜合損益itemdg1，填值
+        function itemdg1data(docid) {
             if (docid != null) {
-
                 actionurl = defaultUrl + controllerurl + functionurl + 'GetEquityItem?docid=' + docid;
                 doajax("GET", actionurl, null, function (data) {
                     console.log(data)
                     if (data == "C0003") {
                         $.messager.alert('alert', '無科目類別資料!');
-                        tabdg22.datagrid('loadData', '');
+                        itemdg1.datagrid('loadData', '');
                         console.log("C0003: Not Found");
                     } else {
-                        tabdg22.datagrid('loadData', data);
+                        itemdg1.datagrid('loadData', data);
                     }
                 });
             }

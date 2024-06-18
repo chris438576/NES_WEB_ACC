@@ -291,26 +291,6 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult _ToolBarPartial()
         {
             return PartialView();
-        }
-
-        /// <summary>
-        /// 權限檢查_20240403停用，測試新版
-        /// </summary>
-        /// <param name="roles"></param>
-        /// <returns></returns>
-        //public bool IsAction(string[] roles)
-        //{
-        //    // 檢查傳入的值是否為空
-        //    if (roles != null && roles.Length > 0)
-        //    {
-        //        // 檢查 Session["RoleList"] 是否存在並且不為空
-        //        if (HttpContext.Session["RoleList"] is List<string> userRoles && userRoles.Count > 0)
-        //        {
-        //            // 檢查傳入的角色是否有任何一個存在於 Session["RoleList"] 中
-        //            return roles.Any(role => userRoles.Contains(role));
-        //        }
-        //    }
-        //    return false;
-        //}
+        }                
     }
 }

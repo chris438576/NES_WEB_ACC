@@ -196,6 +196,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Instrument 的當地語系化字串。
+        /// </summary>
+        public static string Instrument {
+            get {
+                return ResourceManager.GetString("Instrument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Language 的當地語系化字串。
         /// </summary>
         public static string lblMenuLanguage {

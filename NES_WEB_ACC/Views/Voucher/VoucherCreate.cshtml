@@ -623,7 +623,20 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3insert')">選入</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
     </div>
-    <table id="dlgdg3" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
+    <div id="infotabs" class="easyui-tabs" style="width:100%;">
+        <div title="廠商">
+            <table id="dlgdg30" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
+        </div>
+        <div title="客戶">
+            <table id="dlgdg31" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
+        </div>
+        <div title="員工">
+            <table id="dlgdg32" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
+        </div>
+        <div title="營行">
+            <table id="dlgdg33" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
+        </div>       
+    </div>
 </div>
 @*dialog_[編輯]會計部門編號*@
 @*dialog_[編輯]成本中心編號_dlgdg4*@
@@ -661,19 +674,19 @@
             itemdg2 = $('#itemdg2');      //表身頁籤2列表
         var dlgdg1 = $('#dlgdg1'),        //Dlg列表-會計科目
             dlgdg2 = $('#dlgdg2'),        //Dlg列表-交易幣別
-            dlgdg3 = $('#dlgdg3'),        //Dlg列表-對象編號
+            dlgdg30 = $('#dlgdg30'), dlgdg31 = $('#dlgdg31'), dlgdg32 = $('#dlgdg32'), dlgdg33 = $('#dlgdg33')        //Dlg列表-對象編號
             dlgdg4 = $('#dlgdg4'),        //Dlg列表-成本中心
             dlgdg5 = $('#dlgdg5');        //Dlg列表-支付部門
         var infotabs = $('#infotabs'),  //右側表頭頁籤
             itmetabs = $('#content-tabs'),//右側表身頁籤
             advtabs = $('#advtabs'); //右側表身頁籤3_進階資料
-        var maindgIndex,
+        var maindgIndex = -1,
             itemdg1Index,
             itemdg2Index;
         var actioncode = 'view';
 
         //#endregion
-        //----多語系設定-----///
+        //#region 多語系
         let maindglang = { BillDate: '@Resources.Content.BillDate',
             BillNo: '@Resources.Content.BillNo',
             VoucherNameC: '@Resources.Content.VoucherNameC',
@@ -683,16 +696,31 @@
             CompNo: '@Resources.Content.CompNo',
             CompAbbr: '@Resources.Content.CompAbbr'
         };
+        //#endregion
 
+        //#region 資料暫存
+        let obj = [];
+        //#endregion
         //#region 初始化
         //----初始化----------///
         $(function () {
             //左側列表欄位
             maindgSet();
-
+            //右側側列表欄位_分錄明細
             itemdg1Set();
-
+            //右側側列表欄位_管理幣分錄
             itemdg2Set();
+            //編輯_科目編號
+            dlgdg1Set();
+            //編輯_幣別
+            dlgdg2Set();
+            ////編輯_目標逼號
+            dlgdg30Set(); dlgdg31Set(); dlgdg32Set(); dlgdg33Set();
+            //編輯_成本中心
+            dlgdg4Set();
+            //編輯_支付部門
+            dlgdg5Set();
+            
         });
         //#endregion
 
@@ -716,13 +744,14 @@
                 onSelect: function (index, row) {
                     maindgIndex = index;
                     tableHeadData(row);
-                    itemdg1Data(row.Id);
+                    itemdg1Data(row.Id);                  
                 },
                 onClickRow: function (rowIndex, rowData) {
 
                 }
             });
-            maindgData()
+            maindgData();
+           
         }
         function maindgData() {
             actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo';
@@ -854,17 +883,17 @@
                         },
                     ],
                     [
-                        { field: 'Remark', title: '摘要說明', type: 'string', formatter: format1 },
-                        { field: 'DCTypeNameC', title: '借貸名稱', type: 'string', formatter: format2 },
-                        { field: 'CurrencyNoNote', title: '記帳幣別', type: 'string', formatter: format3 },
-                        { field: 'Money1', title: '記帳金額', hidden: false, type: 'number', formatter: format4 },
-                        { field: 'TargetAbbr', title: '對象名稱', hidden: false, type: 'string', formatter: format5 },
-                        { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string', formatter: format6 },
-                        { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string', formatter: format7 },
-                        { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string', formatter: format8 },
-                        { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string', formatter: format9 },
-                        { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string', formatter: format10 },
-                        { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string', formatter: format11 },
+                        { field: 'Remark', title: '摘要說明', type: 'string', formatter: format1 }, //format1
+                        { field: 'DCTypeNameC', title: '借貸名稱', type: 'string', formatter: format2 },//format2
+                        { field: 'CurrencyNoNote', title: '記帳幣別', type: 'string', formatter: format3 },//format3
+                        { field: 'Money1', title: '記帳金額', hidden: false, type: 'number', formatter: format4 },//format4
+                        { field: 'TargetAbbr', title: '對象名稱', hidden: false, type: 'string', formatter: format5 },//format5
+                        { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string', formatter: format6 },//format6
+                        { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string', formatter: format7 },//format7
+                        { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string', formatter: format8 },//format8
+                        { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string', formatter: format9 },//format9
+                        { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string', formatter: format10 },//format10
+                        { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string', formatter: format11 },//format11
                     ]
                 ],
                 onBeforeEdit: function (index, row) {
@@ -939,13 +968,6 @@
         }
         function dlgdg1Set() {
             try {
-                if (dlgdg1.data('datagrid')) {
-                    // 移除 datagrid 的 DOM 元素
-                    dlgdg1.parent().html('<table id="dlgdg1" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>');
-                    // 重新獲取新的 datagrid 元素
-                    dlgdg1 = $('#dlgdg1');
-                }
-
                 // 配置 datagrid
                 dlgdg1.datagrid({
                     singleSelect: true,
@@ -1145,12 +1167,6 @@
         }
         function dlgdg4Set() {
             try {
-                if (dlgdg4.data('datagrid')) {
-                    // 移除 datagrid 的 DOM 元素
-                    dlgdg4.parent().html('<table id="dlgdg4" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>');
-                    // 重新獲取新的 datagrid 元素
-                    dlgdg4 = $('#dlgdg4');
-                }
 
                 // 配置datagrid
                 dlgdg4.datagrid({
@@ -1187,13 +1203,7 @@
         }
         function dlgdg5Set() {
             try {
-                if (dlgdg5.data('datagrid')) {
-                    // 移除 datagrid 的 DOM 元素
-                    dlgdg5.parent().html('<table id="dlgdg5" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>');
-                    // 重新獲取新的 datagrid 元素
-                    dlgdg5 = $('#dlgdg5');
-                }
-
+               
                 // 配置datagrid
                 dlgdg5.datagrid({
                     singleSelect: true,
@@ -1225,6 +1235,17 @@
                     console.log("C0003: Not Found");
                 } else {
                     dlgdg5.datagrid('loadData', data);
+                }
+            });
+        }
+        function dgData(targetDg, actionUrl) {
+            doajax("GET", actionUrl, null, function (data) {
+                if (data == "C0003") {
+                    $.messager.alert('alert', '讀取無資料!');
+                    targetDg.datagrid('loadData', '');
+                    console.log("C0003: Not Found");
+                } else {                    
+                    targetDg.datagrid('loadData', data);
                 }
             });
         }
@@ -1351,12 +1372,28 @@
                                 };
                             });
 
-                            data = [
-                                { 'maindata': maindata },
-                                { 'infodata': infodata }
-                            ]
+                            data = {
+                                Maindata: maindata ,
+                                Infodata: infodata 
+                            };
                             console.table(data);
-                            alert(data);
+                            
+                            actionurl = defaultUrl + controllerurl + functionurl + 'PostInsertData';
+                            $.ajax({
+                                type: "POST",
+                                url: actionurl,
+                                data: JSON.stringify(data),
+                                contentType: "application/json",
+                                dataType: "json",
+                                success: function (response) {
+                                    alert('資料已成功儲存!');
+                                    console.log(response);
+                                },
+                                error: function (xhr, status, errorThrown) {
+                                    alert('儲存資料時發生錯誤!');
+                                    console.error(status, errorThrown);
+                                }
+                            });
                         } else {
                             alert('請檢查欄位是否輸入!')
                         }
@@ -1429,10 +1466,10 @@
                             };
                         });
 
-                        data = [
-                            { 'maindata': maindata },
-                            { 'infodata': infodata }
-                        ]
+                        data = {
+                            Maindata: maindata,
+                            Infodata: infodata
+                        };
                         console.table(data);
                         alert(data);
                     }
@@ -2029,7 +2066,6 @@
 
         //#region 彈跳視窗
         function dlgEditAccNo() {
-            dlgdg1Set();
             dlgdg1Data();
             let winheight = $(window).height();
             let winwidth = $(window).width();
@@ -2070,8 +2106,7 @@
             $('#dlgEditCurrencyNo').dialog({ height: 200, width: 80, title: '交易幣別' });
             $('#dlgEditCurrencyNo').dialog('open').dialog('center');
         }
-        function dlgEditAccDept() {
-            dlgdg4Set();
+        function dlgEditAccDept() {            
             dlgdg4Data();
             let winheight = $(window).height();
             let winwidth = $(window).width();
@@ -2079,7 +2114,7 @@
             $('#dlgEditAccDept').dialog('open').dialog('center');
         }
         function dlgEditPayDept() {
-            dlgdg5Set();
+            
             dlgdg5Data();
             let winheight = $(window).height();
             let winwidth = $(window).width();

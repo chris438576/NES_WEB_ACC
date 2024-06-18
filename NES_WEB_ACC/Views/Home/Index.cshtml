@@ -1,9 +1,122 @@
 ﻿@{
-    ViewBag.Title = "操作流程圖";
+    ViewBag.Title = @Resources.Content.Instrument;
 }
 
-<div class="box-contain">
-    <div class="box-body">
-        @{ Html.RenderAction("_AccStatePartial"); }
+
+@section css {
+    <style>
+        .container-page {
+            width: 100%;
+            height: 100%;
+            padding-left: 20px;
+            padding-left: -20px;
+            margin: 0px;
+            border: 0px;
+        }
+
+            .container-page .indexpagerow1 {
+                width: 98%;
+                height: 28%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center; /* 使子元素垂直置中，可以根據需要調整 */
+            }
+
+            .container-page indexpagerow2 {
+                width: 98%;
+                height: 68%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center; /* 使子元素垂直置中，可以根據需要調整 */
+            }
+
+        .card {
+            margin: 5px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .card h2 {
+                font-size: 36px;
+                margin: 10px 0;
+            }
+
+            .card.card1 {
+                background-color: #AEE5D8;
+            }
+
+            .card.card2 {
+                background-color: #E7E5E5;
+            }
+
+            .card.card3 {
+                background-color: #E5D0E3;
+            }
+
+            .card.card4 {
+                background-color: #E0B0D5;                
+            }
+        .card2 {
+            margin: 5px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+}
+
+<div class="container-page">
+    <div class="row indexpagerow1">
+        <div class="col-md-3 card card1">
+            <p>總筆數：</p>
+            <h2>9999</h2>
+        </div>
+        <div class="col-md-3 card card2">
+            <p>完成度：</p>
+            <h2>99.99%</h2>
+        </div>
+        <div class="col-md-3 card card3">
+            <p>總金額：</p>
+            <h2>$ 9,999</h2>
+        </div>
+        <div class="col-md-3 card card4">
+            <p>關帳日期：</p>
+            <h2>2024/12/31</h2>
+        </div>
     </div>
+    <div class="row indexpagerow2">
+        <div class="row card2">
+            <div id="myChart" style="width: 600px;height:400px;"></div>
+        </div>
+    </div>
+
 </div>
+@section Scripts {
+    <script>
+        var myChart = echarts.init(document.getElementById('myChart'));
+        var option = {
+            title: {
+                text: '圖表'
+            },
+            tooltip: {},
+            legend: {
+                data: ['產量']
+            },
+            xAxis: {
+                data: ["機台1", "機台2", "機台3", "機台4", "機台5", "機台6"]
+            },
+            yAxis: {},
+            series: [{
+                name: '產量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+
+        myChart.setOption(option);
+    </script>
+
+}

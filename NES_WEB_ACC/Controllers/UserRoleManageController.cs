@@ -23,11 +23,7 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         [CustomAuthorize(Roles = "Admin")]
         public ActionResult UsersList()
-        {
-            // 20240403停用，測試新版
-            //if (!IsAction(new string[] { "Admin","User" }))
-            //    return RedirectToAction("Permissions", "Error");
-
+        {       
             List<UsersListViewModel> users = new List<UsersListViewModel>();
             string sqlQuery1 = @"	SELECT 
                                             SU.[EmpId],
@@ -76,12 +72,8 @@ namespace NES_WEB_ACC.Controllers
         [HttpGet]
         public ActionResult GetPersonalRolesList(string empId)
         {
-            // 檢查使用者角色權限
-            if (true)
-            //if (IsAction("UserRoleManage", "UsersList"))
-            {
-                List<PersonalRolesListViewModel> users = new List<PersonalRolesListViewModel>();
-                string sqlQuery1 = @"	 select SU.EmpNo,SU.EmpNameC,SR.RoleName,L1.Status as 'PersnalRoleStatus'
+            List<PersonalRolesListViewModel> users = new List<PersonalRolesListViewModel>();
+            string sqlQuery1 = @"	 select SU.EmpNo,SU.EmpNameC,SR.RoleName,L1.Status as 'PersnalRoleStatus'
                                                 ,L1.EmpId,L1.RoleId
                                           from [NES_WEB_ACC].[dbo].[SYS_Users] as SU
 	                                        left join [NES_WEB_ACC].[dbo].LNK_UserRole as L1 on SU.[EmpId] = L1.[EmpId]
@@ -91,34 +83,28 @@ namespace NES_WEB_ACC.Controllers
 	                                        and SR.Status = 1
 	                                        and L1.EmpId = @empId
                                           ";
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    // Execute the SQL query and retrieve data
-                    SqlCommand command = new SqlCommand(sqlQuery1, connection);
-                    command.Parameters.AddWithValue("@empId", empId);
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    dataAdapter.Fill(dataTable);
-
-                    users = dataTable.AsEnumerable().Select(row => new PersonalRolesListViewModel
-                    {
-                        EmpId = row.Field<Int64>("EmpId"),
-                        EmpNo = row.Field<string>("EmpNo"),
-                        EmpNameC = row.Field<string>("EmpNameC"),
-                        RoleId = row.Field<Guid>("RoleId").ToString(),
-                        RoleName = row.Field<string>("RoleName"),
-                        PersnalRoleStatus = row.Field<Boolean>("PersnalRoleStatus")
-                    }).ToList();
-                }
-                return Json(users, JsonRequestBehavior.AllowGet);
-            }
-            else
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                // 使用者沒有足夠權限，可以導向一個錯誤頁面或執行其他適當的處理
-                //return RedirectToAction("AccessDenied", "Error"); // 假設有一個 AccessDenied 的 Action 在 ErrorController 中
+                connection.Open();
+
+                // Execute the SQL query and retrieve data
+                SqlCommand command = new SqlCommand(sqlQuery1, connection);
+                command.Parameters.AddWithValue("@empId", empId);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
+
+                users = dataTable.AsEnumerable().Select(row => new PersonalRolesListViewModel
+                {
+                    EmpId = row.Field<Int64>("EmpId"),
+                    EmpNo = row.Field<string>("EmpNo"),
+                    EmpNameC = row.Field<string>("EmpNameC"),
+                    RoleId = row.Field<Guid>("RoleId").ToString(),
+                    RoleName = row.Field<string>("RoleName"),
+                    PersnalRoleStatus = row.Field<Boolean>("PersnalRoleStatus")
+                }).ToList();
             }
+            return Json(users, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// UsersList權限列表-Show[個人編輯]_未已加入控制角色
@@ -128,12 +114,8 @@ namespace NES_WEB_ACC.Controllers
         [HttpGet]
         public ActionResult GetPersonalNotControllerRolesList(string empId)
         {
-            // 檢查使用者角色權限
-            if (true)
-            //if (IsAction("UserRoleManage", "UsersList"))
-            {
-                List<SYS_Roles> users = new List<SYS_Roles>();
-                string sqlQuery1 = @"--使用者(未停用)尚未加入控制角色且該角色未被停用
+            List<SYS_Roles> users = new List<SYS_Roles>();
+            string sqlQuery1 = @"--使用者(未停用)尚未加入控制角色且該角色未被停用
 	                                    select RoleId,RoleName from SYS_Roles
 	                                    where NOT EXISTS (
 			                                        Select 1
@@ -147,30 +129,24 @@ namespace NES_WEB_ACC.Controllers
 			                                        )
 			                                    and Status =1
                                           ";
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    // Execute the SQL query and retrieve data
-                    SqlCommand command = new SqlCommand(sqlQuery1, connection);
-                    command.Parameters.AddWithValue("@empId", empId);
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    dataAdapter.Fill(dataTable);
-
-                    users = dataTable.AsEnumerable().Select(row => new SYS_Roles
-                    {
-                        RoleId = row.Field<Guid>("RoleId"),
-                        RoleName = row.Field<string>("RoleName")
-                    }).ToList();
-                }
-                return Json(users, JsonRequestBehavior.AllowGet);
-            }
-            else
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                // 使用者沒有足夠權限，可以導向一個錯誤頁面或執行其他適當的處理
-                //return RedirectToAction("AccessDenied", "Error"); // 假設有一個 AccessDenied 的 Action 在 ErrorController 中
+                connection.Open();
+
+                // Execute the SQL query and retrieve data
+                SqlCommand command = new SqlCommand(sqlQuery1, connection);
+                command.Parameters.AddWithValue("@empId", empId);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
+
+                users = dataTable.AsEnumerable().Select(row => new SYS_Roles
+                {
+                    RoleId = row.Field<Guid>("RoleId"),
+                    RoleName = row.Field<string>("RoleName")
+                }).ToList();
             }
+            return Json(users, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// UsersList權限列表-Show[User匯入]_ERP在職員工
@@ -180,15 +156,16 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult GetERPEmpList()
         {
             // SQL 查詢語句：ERP員工資料表(扣除系統已有員工)
+            // 20240618修改_員工資料來源，參照NES_WEB
             string sqlQuery1 = @"SELECT [Id] as EmpId
                                       ,[EmpNo]
                                       ,[EmpNameC]
                                       ,[DeptNo]
                                       ,[DeptName]
-                                  FROM [ESTAERPV2].[dbo].[EmployeeInfo]
+                                  FROM NES_WEB.dbo.NES_EmployeeInfo
                                   where 1=1
-	                                and CompId = '150615163202244'
-	                                and JobType = '在職'
+	                                --and CompId = '150615163202244'
+	                                and IsStatus = 0  --在職
 	                                and [Id]　not in　(select EmpId from [NES_WEB_ACC].[dbo].SYS_Users)";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -259,9 +236,6 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult UpdateUserRoleStatus(string empId, string roleId, bool isStatus)
         {
-            //檢查權限
-            //IsAction(); ---未完成
-
             if (Guid.TryParse(roleId, out var roleIdGuid))
             {
                 // 在這裡使用 roleIdGuid
@@ -300,8 +274,6 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult InsertToSYS_Users(List<SYS_Users> rows)
         {
-            //檢查權限
-            //IsAction();
             try
             {
                 if (rows != null && rows.Any())
@@ -350,8 +322,6 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult InsertToLNK_UserRole(string empId, List<LNK_UserRole> rows)
         {
-            //檢查權限
-            //IsAction();
             try
             {
                 if (rows != null && rows.Any() && empId != "")
@@ -401,10 +371,6 @@ namespace NES_WEB_ACC.Controllers
         [CustomAuthorize(Roles = "Admin")]
         public ActionResult RolesList()
         {
-            // 20240403停用，測試新版
-            //if (!IsAction(new string[] { "Admin" }))
-            //    return RedirectToAction("Permissions", "Error");
-
             string sql = @"select RoleId, RoleName , Status as 'RoleStatus' from NES_WEB_ACC.dbo.SYS_Roles
                                                 ";
             List<RolesListViewModel> rolesList = new List<RolesListViewModel>();
@@ -438,8 +404,6 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult UpdateRolesStatus(string roleId, bool isStatus)
         {
-            //檢查權限
-            //IsAction(); ---未完成
             Guid roleIdGuid;
             if (Guid.TryParse(roleId, out roleIdGuid))
             {
@@ -480,8 +444,6 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult InsertToSYS_Roles(string roleName)
         {
-            //檢查權限
-            //IsAction(); ---未完成
             try
             {
                 // 檢查資料庫中是否已存在相同的 RoleName
@@ -513,24 +475,5 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, message = $"儲存失敗：{ex.Message}" });
             }
         }
-        /// <summary>
-        /// 權限檢查_20240403停用，測試新版
-        /// </summary>
-        /// <param name="roles"></param>
-        /// <returns>回傳bool</returns>
-        //public bool IsAction(string[] roles)
-        //{
-        //    // 檢查傳入的值是否為空
-        //    if (roles != null && roles.Length > 0)
-        //    {
-        //        // 檢查 Session["RoleList"] 是否存在並且不為空
-        //        if (HttpContext.Session["RoleList"] is List<string> userRoles && userRoles.Count > 0)
-        //        {
-        //            // 檢查傳入的角色是否有任何一個存在於 Session["RoleList"] 中
-        //            return roles.Any(role => userRoles.Contains(role));
-        //        }
-        //    }
-        //    return false;
-        //}
     }
 }

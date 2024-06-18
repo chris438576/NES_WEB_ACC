@@ -22,7 +22,7 @@ namespace NES_WEB_ACC
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+            this.AcquireRequestState += new EventHandler(Application_AcquireRequestState);
         }
         protected void Application_BeginRequest()
         {
@@ -63,12 +63,12 @@ namespace NES_WEB_ACC
                                 SU.EmpNameC,    
                                 SR.RoleName    
                             FROM [NES_WEB_ACC].[dbo].[SYS_Users] as SU 
-                                left join [ESTAERPV2].[dbo].EmployeeInfo as EI on SU.EmpId = EI.Id
+                                left join [NES_WEB].[dbo].NES_EmployeeInfo as EI on SU.EmpId = EI.Id
                                 left join [NES_WEB_ACC].[dbo].LNK_UserRole as L1 on SU.[EmpId] = L1.[EmpId]
                                 left join [NES_WEB_ACC].[dbo].SYS_Roles as SR on L1.[RoleId] = SR.[RoleId]                                     
                             where 1=1
                                 and SU.Status = 1    --User是否啟用
-                                and EI.JobType = '在職'
+                                and EI.IsStatus = 0  --在職
                                 and L1.Status = 1    --User對應Role是否啟用
                                 and SR.Status = 1    --Role是否啟用 
                                 and SU.EmpNo = @EmpNo";

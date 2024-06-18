@@ -3,6 +3,7 @@ using Microsoft.Reporting.WebForms;
 using NES_WEB_ACC.Report;
 using NES_WEB_ACC.Report.RDLC;
 using NES_WEB_ACC.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,6 +11,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 
 namespace NES_WEB_ACC.Controllers
@@ -455,7 +457,46 @@ namespace NES_WEB_ACC.Controllers
             };
             return Json(currencies, JsonRequestBehavior.AllowGet);
         }
-     
+        //[HttpPost]
+        //public ActionResult PostInsertData(string data)
+        //{
+        //    try
+        //    {
+        //        // 解析 JSON 字符串
+        //        var jsonData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(data);
+
+        //        // 提取 maindata 和 infodata
+        //        var maindata = jsonData.FirstOrDefault(d => d.ContainsKey("maindata"))?["maindata"];
+        //        var infodata = jsonData.FirstOrDefault(d => d.ContainsKey("infodata"))?["infodata"];
+
+
+        //        return Json(new { success = true, message = "資料已成功儲存." }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch
+        //    {
+        //        Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        //        return Json(new { success = false, message = "資料處理時發生錯誤." }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+        [HttpPost]
+        public ActionResult PostInsertData(VoucherDataViewModel data)
+        {
+            if (data == null)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0001", JsonRequestBehavior.AllowGet);
+            }
+            try
+            {             
+
+                return Json(new { success = true, message = "資料已成功儲存." }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { success = false, message = "資料處理時發生錯誤." }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         /// <summary>
         /// 部分檢視_表頭欄位
@@ -491,35 +532,18 @@ namespace NES_WEB_ACC.Controllers
         }
 
         public ActionResult TESTVIEW()
-        {
-            ReportView();
+        {            
             return View();
         }
-        public ActionResult ReportView()
-        {            
-            // 報表資料設定_SQL查詢
-            string sql = @"select CompNo,CompAbbr,AccGroupNo,AccGroupNameC 
-                        from NES_WEB_ACC.dbo.ACC_AccCode1 where CompId = '150615163202244'
-            ";
-            List<ACC_AccCode1> infodata = new List<ACC_AccCode1>();
-            using (SqlConnection conn = new SqlConnection(connectionString))
+        public ActionResult MyAction(VoucherDataViewModel data)
+        {
+            if (ModelState.IsValid)
             {
-                infodata = conn.Query<ACC_AccCode1>(sql).ToList();
+                return Json(new { success = true, message = "Data received successfully.", data = data });
             }
 
-            // 報表參數設定
-            var reportParameters = new List<ReportParameter>
-            {
-                new ReportParameter("ReportMaker", "Chris")
-            };
+            return Json(new { success = false, message = "Invalid data." });
+        }
 
-            // Session設定，給ReportViewer使用
-            Session["ReportPath"] = Server.MapPath("~/Report/RDLC/AccCodeReport.rdlc");
-            Session["ReportDataSource"] = new ReportDataSource("AccCodeRdlc", infodata);
-            Session["ReportParameters"] = reportParameters;
-
-            // 導向ReportViewer.aspx
-            return Redirect("~/Report/ReportViewer.aspx");
-        }       
     }
 }

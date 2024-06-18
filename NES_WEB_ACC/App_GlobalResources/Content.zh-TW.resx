@@ -213,4 +213,7 @@
     <value>傳票作業</value>
     <comment>_Layouyt:[傳票作業]</comment>
   </data>
+  <data name="Instrument" xml:space="preserve">
+    <value>儀錶板</value>
+  </data>
 </root>

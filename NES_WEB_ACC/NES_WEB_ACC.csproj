@@ -200,6 +200,7 @@
     <Compile Include="Controllers\AccCodeController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportViewController.cs" />
     <Compile Include="Controllers\UserRoleManageController.cs" />
     <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Global.asax.cs">
@@ -250,6 +251,7 @@
     <Compile Include="SYS_Users.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\VoucherDataViewModel.cs" />
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />
     <Compile Include="ViewModels\UsersListViewModel.cs" />
@@ -287,7 +289,35 @@
     <Content Include="Scripts\easyui\datagrid-filter.js" />
     <Content Include="Scripts\easyui\jquery.edatagrid.js" />
     <Content Include="Scripts\easyui\plugins\jquery.calendar" />
+    <Content Include="Scripts\easyui\themes\icons\copy.png" />
     <Content Include="Scripts\easyui\themes\icons\larg-detail.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-add.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-cancel.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-close.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-copy.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-delete.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-delete2.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-edit.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-first.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-invalid.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-last.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-leave.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-lock.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-next.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-previous.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-redo.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-refresh.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-reject.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-report.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-save.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-select.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-unclose.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-undo.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-uninvalid.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-unlock.png" />
+    <Content Include="Scripts\easyui\themes\icons\large-view.png" />
+    <Content Include="Scripts\easyui\themes\icons\next.png" />
+    <Content Include="Scripts\easyui\themes\icons\previous.png" />
     <Content Include="Scripts\easyui\themes\material-teal\images\Thumbs.db" />
     <Content Include="Scripts\easyui\themes\material\images\Thumbs.db" />
     <EntityDeploy Include="NES_WEB_ACC.edmx">
@@ -308,6 +338,14 @@
     <Content Include="Report\RDLC\ReportDataSet.xss">
       <DependentUpon>ReportDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Scripts\echart\echarts.common.js.map" />
+    <Content Include="Scripts\echart\echarts.esm.js.map" />
+    <Content Include="Scripts\echart\echarts.esm.mjs.map" />
+    <Content Include="Scripts\echart\echarts.js.map" />
+    <Content Include="Scripts\echart\echarts.simple.js.map" />
+    <Content Include="Scripts\echart\extension\bmap.js.map" />
+    <Content Include="Scripts\echart\extension\dataTool.js.map" />
+    <Content Include="Scripts\echart\package.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\easyui\changelog.txt" />
     <Content Include="Scripts\easyui\easyloader.js" />
@@ -926,6 +964,20 @@
     <Content Include="Scripts\easyui\themes\mobile.css" />
     <Content Include="Scripts\easyui\themes\react.css" />
     <Content Include="Scripts\easyui\themes\vue.css" />
+    <Content Include="Scripts\echart\echarts.common.js" />
+    <Content Include="Scripts\echart\echarts.common.min.js" />
+    <Content Include="Scripts\echart\echarts.esm.js" />
+    <Content Include="Scripts\echart\echarts.esm.min.js" />
+    <Content Include="Scripts\echart\echarts.esm.min.mjs" />
+    <Content Include="Scripts\echart\echarts.esm.mjs" />
+    <Content Include="Scripts\echart\echarts.js" />
+    <Content Include="Scripts\echart\echarts.min.js" />
+    <Content Include="Scripts\echart\echarts.simple.js" />
+    <Content Include="Scripts\echart\echarts.simple.min.js" />
+    <Content Include="Scripts\echart\extension\bmap.js" />
+    <Content Include="Scripts\echart\extension\bmap.min.js" />
+    <Content Include="Scripts\echart\extension\dataTool.js" />
+    <Content Include="Scripts\echart\extension\dataTool.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -988,6 +1040,7 @@
     <Content Include="Views\Voucher\TESTVIEW.cshtml" />
     <Content Include="Views\Shared\_VoucherDCShowPartial.cshtml" />
     <Content Include="Views\Shared\_VoucherTableAdvPartial.cshtml" />
+    <Content Include="Views\ReportView\AccReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1016,18 +1069,21 @@
     <Content Include="App_GlobalResources\Content.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Content.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Content.es-MX.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Content.es-MX.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Content.zh-TW.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Content.zh-TW.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <PropertyGroup>

@@ -213,4 +213,7 @@
     <value>Voucher Operation-mx</value>
     <comment>_Layouyt:[傳票作業]</comment>
   </data>
+  <data name="Instrument" xml:space="preserve">
+    <value>Instrument-mx</value>
+  </data>
 </root>

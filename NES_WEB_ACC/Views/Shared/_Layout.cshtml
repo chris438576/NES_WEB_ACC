@@ -11,185 +11,261 @@
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/bootstrap/easyui.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/color.css" />
     <link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/icon.css" />
-    
-
-    <!--Charisma Bootstrap-->
-    @*<link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
-        <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />
-        <link rel="stylesheet" href="~/lib/Charisma/css/bootstrap-cerulean.min.css" />
-        <link rel="stylesheet" href="~/lib/Charisma/css/charisma-app.css" />*@
+    <script src="~/Scripts/echart/echarts.js"></script>
 
     <style>
         /*整體網頁滿版*/
-        .container {
-            width: 96vw;
-            margin: 0 auto;
+        body {
+            margin: 0;
             padding: 0;
         }
-        /*變更navbar底色*/
-        .navbar {
-            background-image: linear-gradient(#FC9A58, #F59657 60%, #DE874C);
+
+        .container {
+            width: 100vw;
+            height: 98vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container .top-content {
+            height: 50px;
+            margin: 0;
+            padding: 0;
         }
 
         .navbar-default {
-            background-color: #0bf4d8;
-            border-color: #0bf4d8;
+            background-color: #7BE0AD; /* 設定背景色 */
+            color: #000000; /* 文字顏色 */
+            margin: 0;
+            padding: 0;
+        }
+        .container-fluid {
+            display: flex;
+            align-items: center;
+        }
+        /* 設定每個div的寬度 */
+        .nav1 {
+            width: 10%; /* 例如20%的寬度 */
         }
 
-        /*變更navbar底色*/
-
-        /*mousehover class*/
-        .mousehover:hover {
-            background-color: #09bea9 !important;
-            /*背景顏色*/
-            border-radius: 5px !important;
-            /*圓外框*/
+        .nav2 {
+            width: 70%; /* 例如60%的寬度 */
         }
 
-        /*mousehover class*/
-
-        /*登入者 hover*/
-        #user:hover {
-            background-color: #fff81f;
-            /*背景顏色*/
-            color: red;
-            /*文字顏色*/
+        .nav3 {
+            width: 20%; /* 例如20%的寬度 */
+        }
+        /* 導航條文字和項目的基本風格 */
+        .navbar-nav > a,
+        .navbar-nav > li > a {
+            color: #000000; /* 文字顏色 */
+            padding: 5px;
         }
 
-        /*登入者 hover*/
-
-        /*預設Button外框*/
-        #user {
-            border-radius: 5px;
-            /*圓外框*/
+        /* 鼠標懸停在項目上時的樣式 */
+        .navbar-nav > li:hover > a,
+        .navbar-nav > li.dropdown.open > a {
+            background-color: #E7E5E5; /* 滑鼠移至項目上的背景色 */
+            color: #000000; /* 滑鼠移至時的文字顏色 */
         }
 
-        /*基本作業下拉選單(使用CSS套版)*/
-        #dropdownMenu1 {
-            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-            color: #ffffff;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            position: relative;
-            display: block;
-            padding: 10px 15px;
+        /* 下拉選單的背景顏色 */
+        .navbar-nav .dropdown-menu {
+            background-color: #AEE5D8; /* 下拉選單的背景色 */
         }
 
-            #dropdownMenu1:hover {
-                cursor: pointer;
+            /* 下拉選單中的連結樣式 */
+            .navbar-nav .dropdown-menu li a {
+                color: #000000; /* 下拉選單文字顏色 */
             }
 
-        .dropdown-menu > li > a:hover {
-            text-decoration: none;
-            color: #ffffff;
-            background-color: #09bea9 !important;
-            /*背景顏色*/
+                /* 鼠標懸停在下拉選單項目上時 */
+                .navbar-nav .dropdown-menu li a:hover {
+                    background-color: #E7E5E5; /* 滑鼠移至下拉選單項目上的背景色 */
+                    color: #000000; /* 滑鼠移至下拉選單項目上的文字顏色 */
+                }
+
+
+        .container .body-content {
+            height: calc(100vh - 80px);
+            margin: 0;
+            padding: 0;
         }
 
-        .open > a {
-            background-color: #09bea9 !important;
-            /*背景顏色*/
-            border-radius: 5px !important;
-            /*圓外框*/
-        }
-
-        .dropdown-menu > li > a {
-            padding: 5px 20px;
-        }
-
-
-        footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            /* 設定頁腳的高度 */
+        .container .footer-content {
             height: 20px;
-            /* 頁腳的其他樣式 */
+            margin: 0;
+            padding: 0;
         }
 
-        hr {
-            margin-top: 5px; /* 减小上边距 */
-            margin-bottom: 0px; /* 减小下边距 */
-            border-top: 1px solid #000000; /* 调整边框的大小，这里是设置为1px并保持原有的颜色 */
+        /* 按鈕設計 */
+        .btn-34,
+        .btn-34 *,
+        .btn-34 :after,
+        .btn-34 :before,
+        .btn-34:after,
+        .btn-34:before {
+            border: 0 solid;
+            box-sizing: border-box;
+            padding: 0;
         }
+
+        .btn-34 {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-appearance: button;
+            background-color: #E0B0D5;
+            background-image: none;
+            color: #000000;
+            cursor: pointer;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            font-size: 100%;
+            font-weight: 900;
+            line-height: 1.5;
+            margin: 0;
+            padding-left: 50px;
+            padding-right: 50px;
+            text-transform: uppercase;
+        }
+
+            .btn-34:disabled {
+                cursor: default;
+            }
+
+            .btn-34:-moz-focusring {
+                outline: auto;
+            }
+
+            .btn-34 svg {
+                display: block;
+                vertical-align: middle;
+            }
+
+            .btn-34 [hidden] {
+                display: none;
+            }
+
+        .btn-34 {
+            border-radius: 99rem;
+            border-width: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+            .btn-34:hover {
+                background-color: #E5D0E3;
+                transform: scale(1.1);
+            }
+
+            .btn-34 span {
+                font-weight: 900;
+                mix-blend-mode: difference;
+            }
+
+            .btn-34:before {
+                aspect-ratio: 1;
+                background: #E5D0E3;
+                border-radius: 50%;
+                content: "";
+                left: 50%;
+                position: absolute;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.2s;
+                width: 0;
+            }
+
+            .btn-34:hover:before {
+                width: 100%;
+            }
     </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("NES Limited", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@*作業流程圖*@
-                        <a href="@Url.Action("Index", "Home")">
-                            @Resources.Content.FlowChart
+    <div class="container">
+        <div class="rwo top-content">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header  nav1">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("NES Limited", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse nav2">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                    @*儀錶板*@
+                                <a href="@Url.Action("Index", "Home")">
+                                    @Resources.Content.Instrument
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                @*會計設定圖*@
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @Resources.Content.AccSet
+                                    <span class="caret"></span>
+                                 </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                @*會計科目設定*@
+                            <a href="@Url.Action("AccCodeSet", "AccCode")">
+                                @Resources.Content.AccCodeSet
+                            </a>
+                        </li>
+                        <li>
+                            @*科目類別設定*@
+                        <a href="@Url.Action("AccGroupNoSet", "AccCode")">
+                            @Resources.Content.AccGroupNoSet
                         </a>
                     </li>
-                    <li class="dropdown">@*會計設定圖*@
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            @Resources.Content.AccSet
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>@*會計科目設定*@                               
-                                <a href="@Url.Action("AccCodeSet", "AccCode")">
-                                    @Resources.Content.AccCodeSet
-                                </a>
-                            </li>
-                            <li>@*科目類別設定*@
-                                <a href="@Url.Action("AccGroupNoSet", "AccCode")">
-                                    @Resources.Content.AccGroupNoSet
-                                </a>
-                            </li>
-                            <li>@*權益科目類別設定*@                       
-                                <a href="@Url.Action("EquityCodeSet", "AccCode")">
-                                    @Resources.Content.EquityCodeSet
-                                </a>
-                            </li>
-                            <li>@*傳票類別設定*@ 
-                                <a href="@Url.Action("VoucherCodeSet", "AccCode")">
-                                    @Resources.Content.VoucherCodeSet
-                                </a>
-                            </li>
-                            <li>@*會計系統基本設定*@ 
-                                <a href="@Url.Action("", "")">
-                                    @Resources.Content.AccSysCodeSet
-                                </a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>@*會計項目一覽表*@
-                                <a href="@Url.Action("", "")">
-                                    @Resources.Content.AccReport
-                                </a>
-                            </li>
-                        </ul>
+                    <li>
+                        @*權益科目類別設定*@
+                    <a href="@Url.Action("EquityCodeSet", "AccCode")">
+                        @Resources.Content.EquityCodeSet
+                    </a>
+                    </li>
+                    <li>
+                        @*傳票類別設定*@
+                    <a href="@Url.Action("VoucherCodeSet", "AccCode")">
+                        @Resources.Content.VoucherCodeSet
+                    </a>
+                    </li>
+                    <li>
+                        @*會計系統基本設定*@
+                    <a href="@Url.Action("", "")">
+                        @Resources.Content.AccSysCodeSet
+                    </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        @*會計項目一覽表*@
+                    <a href="@Url.Action("", "")">
+                        @Resources.Content.AccReport
+                    </a>
+                    </li>
+                    </ul>
                     </li>
 
-                    <li class="dropdown">@*傳票作業*@
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">                            
-                            @Resources.Content.VoucherOperation
-                            <span class="caret"></span>
+                    <li class="dropdown">
+                        @*傳票作業*@
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        @Resources.Content.VoucherOperation
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @*傳票輸入作業*@
+                        <a href="@Url.Action("VoucherCreate", "Voucher")">
+                            @Resources.Content.VoucherCreate
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>@*傳票輸入作業*@                                
-                                <a href="@Url.Action("VoucherCreate", "Voucher")">
-                                    @Resources.Content.VoucherCreate
-                                </a>
-                            </li>
-                            
-                            <li role="separator" class="divider"></li>
-                        </ul>
+                    </li>
+
+                    <li role="separator" class="divider"></li>
+                    </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">                           
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             @Resources.Content.AJE
                             <span class="caret"></span>
                         </a>
@@ -197,7 +273,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">                     
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             @Resources.Content.FinanceReport
                             <span class="caret"></span>
                         </a>
@@ -210,9 +286,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            @*<li>@Html.ActionLink("Resources.Content.SystemManagementUsers", "UsersList", "UserRoleManage")</li>
-                            <li>@Html.ActionLink("Resources.Content.SystemManagementRoles", "RolesList", "UserRoleManage")</li>*@
-
+                       
                             <li>
                                 <a href="@Url.Action("UsersList", "UserRoleManage")">
                                     @Resources.Content.SystemManagementUsers
@@ -236,37 +310,42 @@
                             <li><a href="~/Home/ChangeLanguage?lang=es-MX">Español</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <ul class="nav navbar-nav navbar-right float-right text-right pr-3">
+                        
+                    </ul>
+                    </div>
+                    <div class="navbar-collapse collapse nav3">
+                        <ul class="nav navbar-nav">
                             <li>
-                                <a id="user" href="#">
-                                    <i class="fa fa-user-circle text-olive" aria-hidden="true"></i>
-                                    <span class="hidden-easy xs">
+                                <a id="user" href="#" class="btn-34">
+                                    <span class="">
                                         @if (Session["EmpNameC"] != null)
                                         {
-                                            <span class="hidden-easy xs">
+                                            <span class="marquee hidden-easy xs">
                                                 @Session["EmpNameC"]
                                             </span>
                                         }
                                     </span>
                                 </a>
+
                             </li>
-                            <li><a href="/logout.aspx"><i class="fa fa-arrow-circle-right text-fuchsia" aria-hidden="true"></i>登出</a></li>
+                            <li>
+                                <a href="/logout.aspx" class="btn-34">登出</a>
+                            </li>
                         </ul>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </div>
+            </nav>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()      
-        <footer>
-            <hr />
+        <div class="rwo body-content">
+            @RenderBody()
+        </div>
+        <div class="rwo footer-content">
             <div id="footer-inner" style="text-align: center; font-size: xx-small">
                 Copyright © 2024 NES Limited Department All Right Reserved. | 聯絡:chris.c@nes-corporation.com
             </div>
-        </footer>
+        </div>
     </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
