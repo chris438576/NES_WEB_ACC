@@ -25,6 +25,7 @@ namespace NES_WEB_ACC.Controllers
         {
             return View();
         }
+     
         public ActionResult GetVoucherInfo()
         {
             string sql = @"
@@ -396,7 +397,6 @@ namespace NES_WEB_ACC.Controllers
 
             return Json(docSubTypes, JsonRequestBehavior.AllowGet);
         }
-
         /// <summary>
         /// 新增_表頭資訊_單據類別
         /// </summary>
@@ -456,30 +456,14 @@ namespace NES_WEB_ACC.Controllers
                 new { CurrencyNo = "EUR", Rate1 = "31.16500" }
             };
             return Json(currencies, JsonRequestBehavior.AllowGet);
-        }
-        //[HttpPost]
-        //public ActionResult PostInsertData(string data)
-        //{
-        //    try
-        //    {
-        //        // 解析 JSON 字符串
-        //        var jsonData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(data);
-
-        //        // 提取 maindata 和 infodata
-        //        var maindata = jsonData.FirstOrDefault(d => d.ContainsKey("maindata"))?["maindata"];
-        //        var infodata = jsonData.FirstOrDefault(d => d.ContainsKey("infodata"))?["infodata"];
-
-
-        //        return Json(new { success = true, message = "資料已成功儲存." }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch
-        //    {
-        //        Response.StatusCode = (int)HttpStatusCode.BadRequest;
-        //        return Json(new { success = false, message = "資料處理時發生錯誤." }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
+        }       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult PostInsertData(VoucherDataViewModel data)
+        public ActionResult PostAddData(VoucherDataViewModel data)
         {
             if (data == null)
             {
@@ -488,6 +472,24 @@ namespace NES_WEB_ACC.Controllers
             }
             try
             {             
+
+                return Json(new { success = true, message = "資料已成功儲存." }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { success = false, message = "資料處理時發生錯誤." }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult PostEditData(VoucherDataViewModel data) {
+            if (data == null)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("C0001", JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
 
                 return Json(new { success = true, message = "資料已成功儲存." }, JsonRequestBehavior.AllowGet);
             }
@@ -529,21 +531,6 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult _ToolBarPartial()
         {
             return PartialView();
-        }
-
-        public ActionResult TESTVIEW()
-        {            
-            return View();
-        }
-        public ActionResult MyAction(VoucherDataViewModel data)
-        {
-            if (ModelState.IsValid)
-            {
-                return Json(new { success = true, message = "Data received successfully.", data = data });
-            }
-
-            return Json(new { success = false, message = "Invalid data." });
-        }
-
+        }      
     }
 }
