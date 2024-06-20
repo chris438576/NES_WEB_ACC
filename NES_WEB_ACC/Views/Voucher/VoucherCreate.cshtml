@@ -589,21 +589,19 @@
     <input id="remarkBox" class="easyui-textbox" prompt="Remark..." style="width:300px">
 </div>
 @*dialog_[編輯]借貸方向*@
-<div id="dlgEditDCType" class="easyui-dialog" data-options="modal:true,closed:true">
-    <form id="dc">
-        <table style="width:100%;">
-            <tr>
-                <td style="width:50%">
-                    <label class="radio-label">借:</label>
-                    <input class="easyui-radiobutton" name="DCTpye" value="D" id="dctpyeD">
-                </td>
-                <td style="width:50%">
-                    <label class="radio-label">貸:</label>
-                    <input class="easyui-radiobutton" name="DCTpye" value="C" id="dctpyeC">
-                </td>
-            </tr>
-        </table>
-    </form>
+<div id="dlgEditDCType" class="easyui-dialog" data-options="modal:true,closed:true">    
+    <table style="width:100%;">
+        <tr>
+            <td style="width:50%">
+                <label class="radio-label">借:</label>
+                <input class="easyui-radiobutton" name="DCTpye" value="D" id="dctpyeD">
+            </td>
+            <td style="width:50%">
+                <label class="radio-label">貸:</label>
+                <input class="easyui-radiobutton" name="DCTpye" value="C" id="dctpyeC">
+            </td>
+        </tr>
+    </table>    
 </div>
 @*dialog_[編輯]交易幣別_dlgdg2*@
 <div id="dlgEditCurrencyNo" class="easyui-dialog" data-options="modal:true,closed:true">
@@ -624,28 +622,28 @@
         <div title="廠商">
             <div id="toolbar30">
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg30insert')">選入</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg30exit')">離開</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
             </div>
             <table id="dlgdg30" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
         </div>
         <div title="客戶">    
             <div id="toolbar31">
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg31insert')">選入</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg31exit')">離開</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
             </div>
             <table id="dlgdg31" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
         </div>
         <div title="員工">
             <div id="toolbar32">
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg32insert')">選入</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg32exit')">離開</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
             </div>
             <table id="dlgdg32" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
         </div>
         <div title="銀行">
             <div id="toolbar33">
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg33insert')">選入</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg33exit')">離開</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
             </div>
             <table id="dlgdg33" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
         </div>       
@@ -704,7 +702,8 @@
 
         //#endregion
         //#region 多語系
-        var maindglang = { BillDate: '@Resources.Content.BillDate',
+        var maindglang = {
+            BillDate: '@Resources.Content.BillDate',
             BillNo: '@Resources.Content.BillNo',
             VoucherNameC: '@Resources.Content.VoucherNameC',
             EmpNo: '@Resources.Content.EmpNo',
@@ -713,8 +712,10 @@
             CompNo: '@Resources.Content.CompNo',
             CompAbbr: '@Resources.Content.CompAbbr'
         };
-        //#endregion
+        var itemdglang = {
 
+        };
+        //#endregion
         //#region 資料暫存
         var objAccNo = { name: 'AccNo', data: null };
         var objCurrencyNo = { name: 'CurrencyNo', data: null };
@@ -724,31 +725,27 @@
         var objTargetNo2 = { name: 'TargetNo2', data: null };
         var objTargetNo3 = { name: 'TargetNo3', data: null };
         var objPayDept = { name: 'PayDept', data: null };
+        var objTargetType = { name: 'TargetType', data: null };
         //#endregion
+
         //#region 初始化
-        //----初始化----------///
         $(function () {
-            //左側列表欄位
-            maindgSet();
-            //右側側列表欄位_分錄明細
-            itemdg1Set();
-            //右側側列表欄位_管理幣分錄
-            itemdg2Set();
-            //編輯_科目編號
-            dlgdg1Set();
-            //編輯_幣別
-            dlgdg2Set();
-            //編輯_目標編號
-            dlgdg3Set();
-            //編輯_成本中心
-            dlgdg4Set();
-            //編輯_支付部門
-            dlgdg5Set();
+            ///-----dg欄位設定-----///            
+            maindgSet();    //左側列表欄位           
+            itemdg1Set();    //右側側列表欄位_分錄明細            
+            itemdg2Set();   //右側側列表欄位_管理幣分錄            
+            dlgdg1Set();    //編輯_科目編號           
+            dlgdg2Set();     //編輯_幣別            
+            dlgdg3Set();    //編輯_目標編號            
+            dlgdg4Set();    //編輯_成本中心            
+            dlgdg5Set();    //編輯_支付部門
+            ///-----按鈕狀態-----///  
             btnEnableSet('view');
         });
         //#endregion
 
         //#region dg設定與填值
+        ///----- 頁面dg -----///
         function maindgSet() {
             maindg.datagrid({
                 singleSelect: true,
@@ -846,7 +843,13 @@
                                     idField: 'TargetType',
                                     textField: 'TargetTypeName',
                                     mode: 'remote',
-                                    url: defaultUrl + controllerurl + functionurl +'GetEditTableCode2',  // 指向後端的控制器方法
+                                    loader: function (param, success, error) {
+                                        objdata({ name: 'TargetType' }, 'read', function (objtype) {
+                                            if (objtype.data) {
+                                                success(objtype.data);
+                                            } 
+                                        });
+                                    },
                                     columns: [[
                                         { field: 'TargetType', title: '編號', width: 97 },
                                         { field: 'TargetTypeName', title: '名稱', width: 97 }
@@ -991,7 +994,7 @@
         function itemdg2Data() {
 
         }
-        ///--- dlg ---///
+        ///----- dlg_dg -----///
         function dlgdg1Set() {
             try {
                 // 配置 datagrid
@@ -1009,17 +1012,17 @@
                     toolbar: '#toolbar1',
                     fitColumns: true,
                     onLoadSuccess: function (data) {
-                        console.log('加载成功', data);
+                        console.log('加载成功dlgdg1', data);
                         try {
                             $(this).datagrid('enableFilter');
                         } catch (error) {
-                            console.error('启用过滤器时出错:', error);
+                            console.error('dlgdg1启用过滤器时出错:', error);
                         }
                     }
                 });
 
             } catch (error) {
-                console.error('初始化 datagrid 时出错:', error);
+                console.error('dlgdg1初始化 datagrid 时出错:', error);
             }
 
         }     
@@ -1076,11 +1079,11 @@
                 toolbar: '#toolbar30',
                 fitColumns: true,
                 onLoadSuccess: function (data) {
-                    console.log('加载成功', data);
+                    console.log('dlgdg30加载成功', data);
                     try {
                         $(this).datagrid('enableFilter');
                     } catch (error) {
-                        console.error('启用过滤器时出错:', error);
+                        console.error('dlgdg30启用过滤器时出错:', error);
                     }
                 }
             });
@@ -1110,11 +1113,11 @@
                 toolbar: '#toolbar31',
                 fitColumns: true,
                 onLoadSuccess: function (data) {
-                    console.log('加载成功', data);
+                    console.log('dlgdg31加载成功', data);
                     try {
                         $(this).datagrid('enableFilter');
                     } catch (error) {
-                        console.error('启用过滤器时出错:', error);
+                        console.error('dlgdg31启用过滤器时出错:', error);
                     }
                 }
             });
@@ -1135,11 +1138,11 @@
                 toolbar: '#toolbar32',
                 fitColumns: true,
                 onLoadSuccess: function (data) {
-                    console.log('加载成功', data);
+                    console.log('dlgdg32加载成功', data);
                     try {
                         $(this).datagrid('enableFilter');
                     } catch (error) {
-                        console.error('启用过滤器时出错:', error);
+                        console.error('dlgdg32启用过滤器时出错:', error);
                     }
                 }
             });
@@ -1159,11 +1162,11 @@
                 toolbar: '#toolbar33',
                 fitColumns: true,
                 onLoadSuccess: function (data) {
-                    console.log('加载成功', data);
+                    console.log('dlgdg33加载成功', data);
                     try {
                         $(this).datagrid('enableFilter');
                     } catch (error) {
-                        console.error('启用过滤器时出错:', error);
+                        console.error('dlgdg33启用过滤器时出错:', error);
                     }
                 }
             });
@@ -1378,16 +1381,17 @@
                                     contentType: "application/json",
                                     dataType: "json",
                                     success: function (response) {
-                                        alert('資料已成功儲存!');
+                                        $.messager.alert('alert', '資料已成功儲存!');                                      
                                         console.log(response);
                                     },
                                     error: function (xhr, status, errorThrown) {
-                                        alert('儲存資料時發生錯誤!');
+                                        $.messager.alert('alert', '儲存資料時發生錯誤!');                                      
                                         console.error(status, errorThrown);
                                     }
                                 });
                             } else {
-                                alert('請檢查欄位是否輸入或借貸平衡!')
+                                $.messager.alert('alert', '請檢查欄位是否輸入或借貸平衡!');
+                             
                             }
                         }
                         if (actioncode === 'edit') {
@@ -1471,18 +1475,18 @@
                                     contentType: "application/json",
                                     dataType: "json",
                                     success: function (response) {
-                                        alert('資料已成功儲存!');
+                                        $.messager.alert('alert', '資料已成功儲存!');                                       
                                         console.log(response);
                                     },
                                     error: function (xhr, status, errorThrown) {
-                                        alert('儲存資料時發生錯誤!');
+                                        $.messager.alert('alert', '儲存資料時發生錯誤!');                                        
                                         console.error(status, errorThrown);
                                     }
                                 });
                             }                          
                         }
                     } else {
-                        alert('操作碼錯誤!');
+                        $.messager.alert('alert', '操作碼錯誤');
                     }                   
                     actioncode = 'view';
                     btnEnableSet(actioncode);
@@ -1564,8 +1568,8 @@
                 case 'dlgdg1exit':
                     $('#dlgEditAccNo').dialog('close');
                     break;
-                case 'dlgdg3insert':
-                    var selectedRow = dlgdg3.datagrid('getSelected');
+                case 'dlgdg30insert':
+                    var selectedRow = dlgdg30.datagrid('getSelected');
                     if (!selectedRow) {
                         $.messager.alert('提示', '請選擇資料填入！');
                         return;
@@ -1573,53 +1577,75 @@
                     if (itemdg1Index === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
+                    }                  
+                    itemdg1.datagrid('updateRow', {
+                        index: itemdg1Index,
+                        row: {
+                            TargetNo: selectedRow.PartnerNo,
+                            TargetAbbr: selectedRow.PartnerAbbr,
+                        }
+                    });
+                    $('#dlgEditTargetNo').dialog('close');
+                    break;
+                case 'dlgdg31insert':
+                    var selectedRow = dlgdg31.datagrid('getSelected');
+                    if (!selectedRow) {
+                        $.messager.alert('提示', '請選擇資料填入！');
+                        return;
                     }
-                    let editTargetType = itemdg1.datagrid('getRows')[itemdg1Index].TargetType;
-                    switch (String(editTargetType)) {
-                        case '15':
-                            itemdg1.datagrid('updateRow', {
-                                index: itemdg1Index,
-                                row: {
-                                    TargetNo: selectedRow.PartnerNo,
-                                    TargetAbbr: selectedRow.PartnerAbbr,
-                                }
-                            });
-                            $('#dlgEditTargetNo').dialog('close');
-                            break;
-                        case '14':
-                            itemdg1.datagrid('updateRow', {
-                                index: itemdg1Index,
-                                row: {
-                                    TargetNo: selectedRow.PartnerNo,
-                                    TargetAbbr: selectedRow.PartnerAbbr,
-                                }
-                            });
-                            $('#dlgEditTargetNo').dialog('close');
-                            break;
-                        case '12':
-                            itemdg1.datagrid('updateRow', {
-                                index: itemdg1Index,
-                                row: {
-                                    TargetNo: selectedRow.EmpNo,
-                                    TargetAbbr: selectedRow.EmpNameC,
-                                }
-                            });
-                            $('#dlgEditTargetNo').dialog('close');
-                            break;
-                        case '65':
-                            itemdg1.datagrid('updateRow', {
-                                index: itemdg1Index,
-                                row: {
-                                    TargetNo: selectedRow.Code,
-                                    TargetAbbr: selectedRow.field,
-                                }
-                            });
-                            $('#dlgEditTargetNo').dialog('close');
-                            break;
-                        default:
-                            $('#dlgEditTargetNo').dialog('close');
-                            break;
+                    if (itemdg1Index === -1) {
+                        $.messager.alert('提示', '请先选择需要编辑的行！');
+                        return;
+
                     }
+                    itemdg1.datagrid('updateRow', {
+                        index: itemdg1Index,
+                        row: {
+                            TargetNo: selectedRow.PartnerNo,
+                            TargetAbbr: selectedRow.PartnerAbbr,
+                        }
+                    });
+                    $('#dlgEditTargetNo').dialog('close');
+                    break;
+                case 'dlgdg32insert':
+                    var selectedRow = dlgdg32.datagrid('getSelected');
+                    if (!selectedRow) {
+                        $.messager.alert('提示', '請選擇資料填入！');
+                        return;
+                    }
+                    if (itemdg1Index === -1) {
+                        $.messager.alert('提示', '请先选择需要编辑的行！');
+                        return;
+
+                    }
+                    itemdg1.datagrid('updateRow', {
+                        index: itemdg1Index,
+                        row: {
+                            TargetNo: selectedRow.EmpNo,
+                            TargetAbbr: selectedRow.EmpNameC,
+                        }
+                    });
+                    $('#dlgEditTargetNo').dialog('close');
+                    break;                   
+                case 'dlgdg33insert':
+                    var selectedRow = dlgdg33.datagrid('getSelected');
+                    if (!selectedRow) {
+                        $.messager.alert('提示', '請選擇資料填入！');
+                        return;
+                    }
+                    if (itemdg1Index === -1) {
+                        $.messager.alert('提示', '请先选择需要编辑的行！');
+                        return;
+
+                    }
+                    itemdg1.datagrid('updateRow', {
+                        index: itemdg1Index,
+                        row: {
+                            TargetNo: selectedRow.Code,
+                            TargetAbbr: selectedRow.field,
+                        }
+                    });
+                    $('#dlgEditTargetNo').dialog('close');
                     break;
                 case 'dlgdg3exit':
                     $('#dlgEditTargetNo').dialog('close');
@@ -1984,7 +2010,7 @@
                     break;
                 case 'addReverse':
                     if (itemdg1Index == null || itemdg1Index < 0) {
-                        alert('請先選擇一個行進行操作');
+                        $.messager.alert('alert', '請先選擇一行進行操作');                        
                         return;
                     }
                     currentRow = itemdg1.datagrid('getRows')[itemdg1Index];
@@ -1996,7 +2022,7 @@
                         reverseDCTypeNo = 'D';
                         reverseDCTypeName = '借';
                     } else {
-                        alert('當前行的借貸方向不正確');
+                        $.messager.alert('alert', '當前行的借貸方向不正確');                       
                         return;
                     }
                     rowCount = itemdg1.datagrid('getRows').length;
@@ -2060,7 +2086,7 @@
                             });
                         }
                     } else {
-                        alert('未選擇任何行刪除');
+                        $.messager.alert('alert', '未選擇任何行刪除');                       
                     }
                     break;               
                 default:
@@ -2260,6 +2286,27 @@
                             doajax("GET", actionurl, null, function (data) {
                                 if (data == "C0003") {
                                     $.messager.alert('alert', '讀取物件[PayDept]無資料!');
+                                    objtype.data = null;
+                                    console.log("C0003: Not Found");
+                                } else {
+                                    objtype.data = data;
+                                }
+                                if (callback) callback(objtype);
+                            });
+                        }
+                    }
+                    break;
+                case 'TargetType':
+                    if (action === 'clear') {
+                        objtype.data = null;
+                    } else if (action === 'read') {
+                        if (objtype.data != null) {
+                            if (callback) callback(objtype);
+                        } else {
+                            actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode2';
+                            doajax("GET", actionurl, null, function (data) {
+                                if (data == "C0003") {
+                                    $.messager.alert('alert', '讀取物件[TargetType]無資料!');
                                     objtype.data = null;
                                     console.log("C0003: Not Found");
                                 } else {
@@ -2503,8 +2550,7 @@
             $('#dlgEditDCType').dialog('open').dialog('center');
         }
         function dlgEditTarget() {
-            let editTargetType = itemdg1.datagrid('getRows')[itemdg1Index].TargetType;
-            console.log(editTargetType);
+            let editTargetType = itemdg1.datagrid('getRows')[itemdg1Index].TargetType;            
             switch (editTargetType) {
                 case '15':                   
                     objdata(objTargetNo0, 'read', function (data) {

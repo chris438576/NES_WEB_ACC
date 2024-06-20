@@ -115,48 +115,61 @@
         ///-----基本參數-----///
         //#region 基本參數
         var controllerurl = '/AccCode', functionurl = "/", actionurl = "";
-        var maindg = $('#maindg'),   //左側列表_會計大類
-            itemdg = $('#itemdg'),       //中間列表_會計分類
-            subdg = $('#subdg');   //右側列表_會計科目
-        var maindgrowid,
-            maindgindex,
-            itemdgrowid,
-            itemdgindex,
-            subdgrowid,
-            subdgindex,
-            editrow;
+        var maindg = $('#maindg'),itemdg = $('#itemdg'),subdg = $('#subdg');   
+        var focusdg = { datagrid: null, dgindex: null }, prefocusdg = null;
+        var actioncode = 'view';
+        //#endregion
+        //#region 多語系
+        var maindglang = {
+            AccGroupNo: '@Resources.Content.AccGroupNo',
+            AccGroupNameC: '@Resources.Content.AccGroupNameC',
+        };
+        var itemdglang = {
+            AccNoBy:'@Resources.Content.AccNoBy',
+            AccNoByNameC:'@Resources.Content.AccNoByNameC',
+            DCTypeNo:'@Resources.Content.DCTypeNo',
+            DCTypeNameC:'@Resources.Content.DCTypeNameC',
+            AccNoType:'@Resources.Content.AccNoType',
+        };
+        var subdglang = {
+            AccNo:'@Resources.Content.AccNo',
+            AccNameC:'@Resources.Content.AccNameC',
+            DCTypeNo:'@Resources.Content.DCTypeNo',
+            DCTypeNameC:'@Resources.Content.DCTypeNameC',
+            AccCode:'@Resources.Content.AccCode',
+            IsControl:'@Resources.Content.IsControl',
+        };
+        //#endregion
+        //#region 資料暫存
+        var obj = { name: 'objname', data: null };
+        //#endregion
         //----初始化----------///
+
         $(function () {
-            //左側列表欄位
-            maindgSet();
-
-            //中間列表欄位
-            itemdgSet();
-
-            //右側列表欄位
-            subdgSet();
-
-
+            subdgSet();  //右側列表欄位
+            itemdgSet();    //中間列表欄位
+            maindgSet();    //左側列表欄位
+            maindgdata();
         });
 
         //#region dg設定與填值
-        //dg會計大類，欄位與功能
         function maindgSet() {
             maindg.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
-                    { field: 'AccGroupNo', title: '大類編號', width: 70 },
-                    { field: 'AccGroupNameC', title: '大類中文名稱', width: 100 }
+                    { field: 'AccGroupNo', title: maindglang.AccGroupNo, width: 70 },
+                    { field: 'AccGroupNameC', title: maindglang.AccGroupNameC, width: 100 }
                 ]],
                 onSelect: function (index, row) {
+                    focusDgSet(maindg);
+                    focusdg.datagrid = maindg;
+                    focusdg.dgindex = index;
                     itemdgdata(row.Id);
-                    subdgdata();                 
+                    subdg.datagrid('loadData', '');
                 }
             });
-            maindgdata();
         }
-        //dg會計大類，填值
         function maindgdata() {
             actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode1';
             doajax("GET", actionurl, null, function (data) {
@@ -169,25 +182,25 @@
                 }
             });
         }
-        //dg會計分類，欄位與功能
         function itemdgSet() {
             itemdg.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
-                    { field: 'AccNoBy', title: '分類編號', width: 70 },
-                    { field: 'AccNoByNameC', title: '分類中文名稱', width: 100 },
-                    { field: 'DCTypeNo', title: '借貸方向', width: 50 },
-                    { field: 'DCTypeNameC', title: '借貸名稱', width: 50 },
-                    { field: 'AccNoType', title: '科目類別', width: 100 }
+                    { field: 'AccNoBy', title: itemdglang.AccNoBy, width: 70 },
+                    { field: 'AccNoByNameC', title: itemdglang.AccNoByNameC, width: 100 },
+                    { field: 'DCTypeNo', title: itemdglang.DCTypeNo, width: 50 },
+                    { field: 'DCTypeNameC', title: itemdglang.DCTypeNameC, width: 50 },
+                    { field: 'AccNoType', title: itemdglang.AccNoType, width: 100 }
                 ]],
                 onSelect: function (index, row) {
+                    focusDgSet(itemdg);
+                    focusdg.datagrid = itemdg;
+                    focusdg.dgindex = index;
                     subdgdata(row.Id);
                 }
             });
-            itemdgdata();
         }
-        //dg會計分類，填值
         function itemdgdata(docid) {
             if (docid != null) {
                 actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode2?docid=' + docid;
@@ -200,20 +213,19 @@
                         itemdg.datagrid('loadData', data);
                     }
                 });
-            }           
+            }
         }
-        //dg會計科目，欄位設定與填值
         function subdgSet() {
             subdg.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
-                    { field: 'AccNo', title: '會計科目', width: 100 },
-                    { field: 'AccNameC', title: '科目中文名稱', width: 100 },
-                    { field: 'DCTypeNo', title: '借貸方向', width: 100 },
-                    { field: 'DCTypeNameC', title: '借貸名稱', width: 100 },
-                    { field: 'AccCode', title: '會計項目', width: 100, formatter: formatCheckbox },
-                    { field: 'IsControl', title: '統治科目', width: 100, formatter: formatCheckbox },
+                    { field: 'AccNo', title: subdglang.AccNo, width: 100 },
+                    { field: 'AccNameC', title: subdglang.AccNameC, width: 100 },
+                    { field: 'DCTypeNo', title: subdglang.DCTypeNo, width: 100 },
+                    { field: 'DCTypeNameC', title: subdglang.DCTypeNameC, width: 100 },
+                    { field: 'AccCode', title: subdglang.AccCode, width: 100, formatter: formatCheckbox },
+                    { field: 'IsControl', title: subdglang.IsControl, width: 100, formatter: formatCheckbox },
                     { field: 'Status', title: '狀態', hidden: true }
                 ]],
                 rowStyler: function (index, row) {
@@ -222,10 +234,11 @@
                     }
                 },
                 onSelect: function (index, row) {
-
+                    focusDgSet(subdg);
+                    focusdg.datagrid = subdg;
+                    focusdg.dgindex = index;
                 }
             });
-            subdgdata();
         }
         function subdgdata(accnobyid) {
             if (accnobyid != null) {
@@ -248,25 +261,71 @@
 
         //#region 按鈕動作
         function btnClick(type) {
+            if (!focusdg.datagrid) {
+                console.warn("No datagrid is currently focused.");
+                return;
+            }
+            let dodg = focusdg.datagrid;
+            let doindex = focusdg.dgindex;
             switch (type) {
-                //#region dg導覽
+                //#region toolbar_focusdg導覽&搜尋
                 case 'first':
+                    dodg.datagrid('selectRow', 0);
                     break;
                 case 'previous':
+                    row = dodg.datagrid('getSelected');
+                    if (row) {
+                        nowindex = dodg.datagrid('getRowIndex', row);
+                    } else if (doindex >= 0) {
+                        nowindex = doindex;
+                    } else {
+                        let rows = dodg.datagrid('getRows');
+                        if (rows) {
+                            nowindex = 0;
+                        }
+                    }
+                    dodg.datagrid('selectRow', nowindex - 1);
                     break;
                 case 'next':
+                    row = dodg.datagrid('getSelected');
+                    if (row) {
+                        nowindex = dodg.datagrid('getRowIndex', row);
+                    } else if (doindex >= 0) {
+                        nowindex = doindex;
+                    } else {
+                        let rows = dodg.datagrid('getRows');
+                        if (rows) {
+                            nowindex = -1;
+                        }
+                    }
+                    dodg.datagrid('selectRow', nowindex + 1);
                     break;
                 case 'last':
+                    row = dodg.datagrid('getRows');
+                    if (row) {
+                        index = row.length;
+                    }
+                    dodg.datagrid('selectRow', index - 1);
+                    break;
+                case 'search':
                     break;
                 //#endregion
-                //#region dg資料動作
+                //#region focusdg資料動作
                 case 'search':
                     break;
                 case 'add':
+                    actioncode = 'add';
+
                     break;
                 case 'edit':
+                    actioncode = 'edit';
                     break;
                 case 'save':
+                    if (actioncode === 'edit' || actioncode === 'add') {
+
+                    } else {
+                        $.messager.alert('alert', '操作碼錯誤' );                        
+                    }
                     break;
                 case 'refresh':
                     break;
@@ -279,7 +338,7 @@
         }
         //#endregion
 
-
+        //#region 功能函式
         // 自定義doajax
         function doajax(type, url, data, successCallback, errorCallback) {
             $.ajax({
@@ -303,5 +362,26 @@
         function formatCheckbox(value, row, index) {
             return '<input type="checkbox" ' + (value ? 'checked' : '') + ' disabled>';
         }
+
+        // dg鎖定外框效果
+        function focusDgSet(datagrid) {
+            if (prefocusdg) {
+                prefocusdg.datagrid('getPanel').css({
+                    'border-color': 'white',
+                    'border-width': '0px',
+                    'border-style': 'solid'
+                });
+            }
+            // 設置選定的數據表格的背景顏色為黃色，其他數據表格的背景顏色為白色
+            datagrid.datagrid('getPanel').css({
+                'border-color': 'yellow',
+                'border-width': '5px',
+                'border-style': 'solid'
+            });
+
+            prefocusdg = datagrid;
+        }
+
+        //#endregion
     </script>
 }

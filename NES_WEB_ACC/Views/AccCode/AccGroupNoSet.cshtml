@@ -109,12 +109,12 @@
 <div id="body-container">
     <div class="easyui-layout body-layout">
         <div data-options="region:'west',collapsible:false" title="會計大類" style="width:50%;">
-            <table id="dgGroup" class="datagrid easyui-subdg" style="width:100%;height:99%;">
+            <table id="dgGroup" class="datagrid easyui-maindg" style="width:100%;height:99%;">
             </table>
         </div>
 
         <div data-options="region:'east',collapsible:false" title="會計分類" style="width:50%;">
-            <table id="dgNo" class="datagrid easyui-maindg" style="width:100%;height:99%;">
+            <table id="dgNo" class="datagrid easyui-itemdg" style="width:100%;height:99%;">
             </table>
         </div>
     </div>
@@ -127,72 +127,66 @@
         ///-----基本參數-----///
         //#region 基本參數
         var controllerurl = '/AccCode', functionurl = "/", actionurl = "";
-        var dgGroup = $('#dgGroup'),   //左側列表_會計大類
-            dgNo = $('#dgNo'),      //右側列表_會計分類
-            focusdg = null;
-
-
+        var maindg = $('#dgGroup'), itemdg = $('#dgNo');
+        var focusdg = { datagrid: null, dgindex: null }, prefocusdg = null;
+        var actioncode = 'view';
+        //#endregion
+        //#region 多語系
+        var maindglang = {
+            AccGroupNo: '@Resources.Content.AccGroupNo',
+            AccGroupNameC: '@Resources.Content.AccGroupNameC',
+            AccGroupNameE: '@Resources.Content.AccGroupNameE',
+        };
+        //#endregion
+        //#region 資料暫存
+        var obj = { name: 'objname', data: null };
+        //#endregion
         ///----初始化----------///
         //#region 初始化
         $(function () {
-            //左側列表欄位
-            dgGroupSet();
-
-            //右側列表欄位
-            dgNoSet();
-
+            itemdgSet();
+            maindgSet();
+            maindgData();
         });
         //#endregion
 
         //#region dg設定與填值
         //dg會計大類，欄位與功能
-        function dgGroupSet() {
-            dgGroup.datagrid({
+        function maindgSet() {
+            maindg.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
-                    { field: 'AccGroupNo', title: '科目大類編號', width: 70, editor: { type: 'text' } },
-                    { field: 'AccGroupNameC', title: '科目大類中文名稱', width: 150, editor: { type: 'text' } },
-                    { field: 'AccGroupNameE', title: '科目大類英文名稱', width: 150, editor: { type: 'text' } }
+                    { field: 'AccGroupNo', title: maindglang.AccGroupNo, width: 70, editor: { type: 'text' } },
+                    { field: 'AccGroupNameC', title: maindglang.AccGroupNameC, width: 150, editor: { type: 'text' } },
+                    { field: 'AccGroupNameE', title: maindglang.AccGroupNameE, width: 150, editor: { type: 'text' } }
                 ]],
                 onSelect: function (index, row) {
-                    dgNodata(row.Id);
+                    focusDgSet(maindg);
+                    focusdg.datagrid = maindg;
+                    focusdg.dgindex = index;
+                    itemdgData(row.Id);
                 },
-                onClickRow: function (rowIndex, rowData) {
-                    // 將 dgGroup 的背景顏色設為黃色
-                    dgGroup.datagrid('getPanel').css({
-                        'border-color': 'yellow',
-                        'border-width': '5px', // 设置边框宽度为2像素，你可以根据需要调整宽度值
-                        'border-style': 'solid' // 设置边框样式为实线
-                    });
-                    // 將其他 DataGrid 的背景顏色設為白色
-                    dgNo.datagrid('getPanel').css({
-                        'border-color': 'white',
-                        'border-width': '0px', // 设置边框宽度为2像素，你可以根据需要调整宽度值
-                        'border-style': 'solid' // 设置边框样式为实线
-                    });
-                    focusdg = 'dgGroup';
-                },
-                // 啟用編輯列功能
                 editing: true
             });
-            dgGroupdata();
+
         }
         //dg會計大類，填值
-        function dgGroupdata() {
+        function maindgData() {
             actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode1';
             doajax("GET", actionurl, null, function (data) {
                 if (data == "C0003") {
                     $.messager.alert('alert', '無會計大類資料!');
+                    maindg.datagrid('loadData', '');
                     console.log("C0003: Not Found");
                 } else {
-                    dgGroup.datagrid('loadData', data);
+                    maindg.datagrid('loadData', data);
                 }
             });
         }
         //dg會計分類，欄位與功能
-        function dgNoSet() {
-            dgNo.datagrid({
+        function itemdgSet() {
+            itemdg.datagrid({
                 singleSelect: true,
                 columns: [[
                     { field: 'Id', title: 'Id', hidden: true },
@@ -204,28 +198,14 @@
                     { field: 'AccNoType', title: '科目類別', width: 100 }
                 ]],
                 onSelect: function (index, row) {
-
-                },
-                onClickRow: function (rowIndex, rowData) {
-                    // 將 dgGroup 的背景顏色設為黃色
-                    dgGroup.datagrid('getPanel').css({
-                        'border-color': 'white',
-                        'border-width': '0px', // 设置边框宽度为2像素，你可以根据需要调整宽度值
-                        'border-style': 'solid' // 设置边框样式为实线
-                    });
-                    // 將其他 DataGrid 的背景顏色設為白色
-                    dgNo.datagrid('getPanel').css({
-                        'border-color': 'yellow',
-                        'border-width': '5px', // 设置边框宽度为2像素，你可以根据需要调整宽度值
-                        'border-style': 'solid' // 设置边框样式为实线
-                    });
-                    focusdg = 'dgNo';
-                },
+                    focusDgSet(itemdg);
+                    focusdg.datagrid = itemdg;
+                    focusdg.dgindex = index;
+                }
             });
-            dgNodata();
         }
         //dg會計分類，填值
-        function dgNodata(docid) {
+        function itemdgData(docid) {
             if (docid != null) {
                 actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode2?docid=' + docid;
                 $.ajax({
@@ -235,9 +215,10 @@
                     success: function (data) {
                         if (data == "C0003") {
                             $.messager.alert('alert', '無會計分類資料!');
+                            itemdg.datagrid('loadData', '');
                             console.log("C0003: Not Found");
                         } else {
-                            dgNo.datagrid('loadData', data);
+                            itemdg.datagrid('loadData', data);
                         }
                     },
                     error: function (xhr, status, error) {
@@ -250,25 +231,71 @@
 
         //#region 按鈕動作
         function btnClick(type) {
+            if (!focusdg.datagrid) {
+                console.warn("No datagrid is currently focused.");
+                return;
+            }
+            let dodg = focusdg.datagrid;
+            let doindex = focusdg.dgindex;
             switch (type) {
-                //#region dg導覽
+                //#region toolbar_focusdg導覽&搜尋
                 case 'first':
+                    dodg.datagrid('selectRow', 0);
                     break;
                 case 'previous':
+                    row = dodg.datagrid('getSelected');
+                    if (row) {
+                        nowindex = dodg.datagrid('getRowIndex', row);
+                    } else if (doindex >= 0) {
+                        nowindex = doindex;
+                    } else {
+                        let rows = dodg.datagrid('getRows');
+                        if (rows) {
+                            nowindex = 0;
+                        }
+                    }
+                    dodg.datagrid('selectRow', nowindex - 1);
                     break;
                 case 'next':
+                    row = dodg.datagrid('getSelected');
+                    if (row) {
+                        nowindex = dodg.datagrid('getRowIndex', row);
+                    } else if (doindex >= 0) {
+                        nowindex = doindex;
+                    } else {
+                        let rows = dodg.datagrid('getRows');
+                        if (rows) {
+                            nowindex = -1;
+                        }
+                    }
+                    dodg.datagrid('selectRow', nowindex + 1);
                     break;
                 case 'last':
+                    row = dodg.datagrid('getRows');
+                    if (row) {
+                        index = row.length;
+                    }
+                    dodg.datagrid('selectRow', index - 1);
+                    break;
+                case 'search':
                     break;
                 //#endregion
-                //#region dg資料動作
+                //#region focusdg資料動作
                 case 'search':
                     break;
                 case 'add':
+                    actioncode = 'add';
+
                     break;
                 case 'edit':
+                    actioncode = 'edit';
                     break;
                 case 'save':
+                    if (actioncode === 'edit' || actioncode === 'add') {
+
+                    } else {
+                        $.messager.alert('alert', '操作碼錯誤');
+                    }
                     break;
                 case 'refresh':
                     break;
@@ -301,7 +328,25 @@
             });
         }
 
+        // dg鎖定外框效果
+        function focusDgSet(datagrid) {
+            if (prefocusdg) {
+                prefocusdg.datagrid('getPanel').css({
+                    'border-color': 'white',
+                    'border-width': '0px',
+                    'border-style': 'solid'
+                });
+            }
+            // 設置選定的數據表格的背景顏色為黃色，其他數據表格的背景顏色為白色
+            datagrid.datagrid('getPanel').css({
+                'border-color': 'yellow',
+                'border-width': '5px',
+                'border-style': 'solid'
+            });
 
-            //#endregion
+            prefocusdg = datagrid;
+        }
+
+        //#endregion
     </script>
 }

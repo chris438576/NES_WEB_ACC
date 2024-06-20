@@ -61,6 +61,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Acc Code 的當地語系化字串。
+        /// </summary>
+        public static string AccCode {
+            get {
+                return ResourceManager.GetString("AccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 AccCodeSet 的當地語系化字串。
         /// </summary>
         public static string AccCodeSet {
@@ -70,11 +79,83 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Acc Group Name 的當地語系化字串。
+        /// </summary>
+        public static string AccGroupNameC {
+            get {
+                return ResourceManager.GetString("AccGroupNameC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Acc Group NameE 的當地語系化字串。
+        /// </summary>
+        public static string AccGroupNameE {
+            get {
+                return ResourceManager.GetString("AccGroupNameE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Acc Group No 的當地語系化字串。
+        /// </summary>
+        public static string AccGroupNo {
+            get {
+                return ResourceManager.GetString("AccGroupNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 AccGroupNoSet 的當地語系化字串。
         /// </summary>
         public static string AccGroupNoSet {
             get {
                 return ResourceManager.GetString("AccGroupNoSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Acc Name 的當地語系化字串。
+        /// </summary>
+        public static string AccNameC {
+            get {
+                return ResourceManager.GetString("AccNameC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Acc No 的當地語系化字串。
+        /// </summary>
+        public static string AccNo {
+            get {
+                return ResourceManager.GetString("AccNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Acc No By 的當地語系化字串。
+        /// </summary>
+        public static string AccNoBy {
+            get {
+                return ResourceManager.GetString("AccNoBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Acc No By Name 的當地語系化字串。
+        /// </summary>
+        public static string AccNoByNameC {
+            get {
+                return ResourceManager.GetString("AccNoByNameC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Acc No Type 的當地語系化字串。
+        /// </summary>
+        public static string AccNoType {
+            get {
+                return ResourceManager.GetString("AccNoType", resourceCulture);
             }
         }
         
@@ -151,6 +232,24 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 DC Type Name 的當地語系化字串。
+        /// </summary>
+        public static string DCTypeNameC {
+            get {
+                return ResourceManager.GetString("DCTypeNameC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 DC Type No 的當地語系化字串。
+        /// </summary>
+        public static string DCTypeNo {
+            get {
+                return ResourceManager.GetString("DCTypeNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 EmpNameC 的當地語系化字串。
         /// </summary>
         public static string EmpNameC {
@@ -201,6 +300,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string Instrument {
             get {
                 return ResourceManager.GetString("Instrument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Is Control 的當地語系化字串。
+        /// </summary>
+        public static string IsControl {
+            get {
+                return ResourceManager.GetString("IsControl", resourceCulture);
             }
         }
         

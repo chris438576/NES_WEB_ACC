@@ -216,4 +216,40 @@
   <data name="Instrument" xml:space="preserve">
     <value>Instrument-mx</value>
   </data>
+  <data name="AccGroupNo" xml:space="preserve">
+    <value>Acc Group No</value>
+  </data>
+  <data name="AccGroupNameC" xml:space="preserve">
+    <value>Acc Group Name</value>
+  </data>
+  <data name="AccNoBy" xml:space="preserve">
+    <value>Acc No By</value>
+  </data>
+  <data name="AccNoByNameC" xml:space="preserve">
+    <value>Acc No By Name</value>
+  </data>
+  <data name="DCTypeNo" xml:space="preserve">
+    <value>DC Type No</value>
+  </data>
+  <data name="DCTypeNameC" xml:space="preserve">
+    <value>DC Type Name</value>
+  </data>
+  <data name="AccNoType" xml:space="preserve">
+    <value>Acc No Type</value>
+  </data>
+  <data name="AccNo" xml:space="preserve">
+    <value>Acc No</value>
+  </data>
+  <data name="AccNameC" xml:space="preserve">
+    <value>Acc Name</value>
+  </data>
+  <data name="IsControl" xml:space="preserve">
+    <value>Is Control</value>
+  </data>
+  <data name="AccCode" xml:space="preserve">
+    <value>Acc Code</value>
+  </data>
+  <data name="AccGroupNameE" xml:space="preserve">
+    <value>Acc Group NameE</value>
+  </data>
 </root>

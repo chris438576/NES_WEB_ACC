@@ -143,12 +143,19 @@
         ///-----基本參數-----///
         //#region 基本參數
         var controllerurl = '/AccCode', functionurl = "/", actionurl = "";
-        var maindg = $('#maindg'),
-            itemdg = $('#itemdg'),
-            maindg1 = $('#maindg1'),
-            itemdg1 = $('#itemdg1');
-        var focusdg = '';
-
+        var maindg = $('#maindg'),itemdg = $('#itemdg'),
+            maindg1 = $('#maindg1'),itemdg1 = $('#itemdg1');
+        var focusdg = { datagrid: null, dgindex: null }, prefocusdg = null;
+        var actioncode = 'view';
+        //#endregion
+        //#region 多語系
+         var maindglang = {
+           
+        };
+        //#endregion
+        //#region 資料暫存
+        var obj = { name: 'objname', data: null };
+        //#endregion
         ///----初始化----------///
         //#region 初始化
         $(function () {
@@ -200,7 +207,7 @@
                     });
                     row.productname = $(ed.target).combobox('getText');
                 }
-            });           
+            });
         }
         // 保留盈餘maindg，填值
         function maindgdata() {
@@ -382,7 +389,7 @@
             });
         }
 
-            //#endregion
+        //#endregion
     </script>
 
 }

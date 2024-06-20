@@ -216,4 +216,40 @@
   <data name="Instrument" xml:space="preserve">
     <value>儀錶板</value>
   </data>
+  <data name="AccGroupNo" xml:space="preserve">
+    <value>大類編號</value>
+  </data>
+  <data name="AccGroupNameC" xml:space="preserve">
+    <value>大類名稱</value>
+  </data>
+  <data name="AccNoBy" xml:space="preserve">
+    <value>分類編號</value>
+  </data>
+  <data name="AccNoByNameC" xml:space="preserve">
+    <value>分類名稱</value>
+  </data>
+  <data name="DCTypeNo" xml:space="preserve">
+    <value>借貸方向</value>
+  </data>
+  <data name="DCTypeNameC" xml:space="preserve">
+    <value>借貸名稱</value>
+  </data>
+  <data name="AccNoType" xml:space="preserve">
+    <value>科目類別</value>
+  </data>
+  <data name="AccNo" xml:space="preserve">
+    <value>會計科目</value>
+  </data>
+  <data name="AccNameC" xml:space="preserve">
+    <value>會科名稱</value>
+  </data>
+  <data name="AccCode" xml:space="preserve">
+    <value>會計項目</value>
+  </data>
+  <data name="IsControl" xml:space="preserve">
+    <value>統治科目</value>
+  </data>
+  <data name="AccGroupNameE" xml:space="preserve">
+    <value>科目大類英文名稱</value>
+  </data>
 </root>
