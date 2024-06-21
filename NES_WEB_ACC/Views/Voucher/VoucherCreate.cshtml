@@ -670,9 +670,9 @@
 <div id="mm" class="easyui-menu" data-options="onClick:menuHandler" style="width:130px;">
     <div data-options="name:'add',iconCls:'icon-add'">新增</div>
     <div data-options="name:'remove',iconCls:'icon-remove'">移除</div>
-    <div class="menu-sep"></div>
+    @*<div class="menu-sep"></div>
     <div data-options="name:'addD'">新增_借</div>
-    <div data-options="name:'addC'">新增_貸</div>
+    <div data-options="name:'addC'">新增_貸</div>*@
     <div class="menu-sep"></div>
     <div data-options="name:'adds',iconCls:'icon-reload'">新增...</div>
 </div>
@@ -1292,202 +1292,218 @@
                         alert("請選擇傳票進行編輯");
                     }
                     break;
-                case 'save':
-                    let maindata = []; //表頭
+                case 'save':                   
+                    let maindata ; //表頭
                     let infodata = []; //表身
                     let data = [];
                     let dosave ; //檢查是否能存
                     let maindatadg, infodatadg;
-                    if (actioncode === 'edit' || actioncode === 'add') {
-                        if (actioncode === 'add') {
-                            dosave = saveCheck(actioncode);
-                            if (dosave) {
-                                maindata.push({
-                                    'BillDate': $('.fomBillDate').textbox('getValue'),
-                                    'DocSubType': $('.fomDocSubType').textbox('getValue'),
-                                    'DocSubTypeName': $('.fomDocSubTypeName').textbox('getValue'),
-                                    'CompNo': $('.fomCompNo').textbox('getValue'),
-                                    'CompAbbr': $('.fomCompAbbr').textbox('getValue'),
-                                    'VoucherType': $('.fomVoucherType').textbox('getValue'),
-                                    'VoucherNameC': $('.fomVoucherNameC').textbox('getValue'),
-                                    'EmpNo': $('.fomEmpNo').textbox('getValue'),
-                                    'EmpNameC': $('.fomEmpNameC').textbox('getValue'),
-                                    'DeptNo': $('.fomDeptNo').textbox('getValue'),
-                                    'DeptName': $('.fomDeptName').textbox('getValue'),
-                                    'BillNo': $('.fomBillNo').textbox('getValue'),
-                                    'CurrencyNo': $('.fomCurrencyNo').textbox('getValue'),
-                                    'CurrencyTw1': $('.fomCurrencyTw1').textbox('getValue'),
-                                    'Rate1': $('.fomRate1').textbox('getValue'),
-                                    'CurrencyTw2': $('.fomCurrencyTw2').textbox('getValue'),
-                                    'Rate2': $('.fomRate2').textbox('getValue'),
-                                    'TargetNo': $('.fomTargetNo').textbox('getValue'),
-                                });
+                        
+                    if (actioncode === 'add') {                     
+                        dosave = saveCheck(actioncode);
+                        if (dosave) {
+                            maindata = {
+                                'BillDate': $('.fomBillDate').textbox('getValue'),
+                                'DocSubType': $('.fomDocSubType').textbox('getValue'),
+                                'DocSubTypeName': $('.fomDocSubTypeName').textbox('getValue'),
+                                'CompNo': $('.fomCompNo').textbox('getValue'),
+                                'CompAbbr': $('.fomCompAbbr').textbox('getValue'),
+                                'VoucherType': $('.fomVoucherType').textbox('getValue'),
+                                'VoucherNameC': $('.fomVoucherNameC').textbox('getValue'),
+                                'EmpNo': $('.fomEmpNo').textbox('getValue'),
+                                'EmpNameC': $('.fomEmpNameC').textbox('getValue'),
+                                'DeptNo': $('.fomDeptNo').textbox('getValue'),
+                                'DeptName': $('.fomDeptName').textbox('getValue'),
+                                'BillNo': $('.fomBillNo').textbox('getValue'),
+                                'CurrencyNo': $('.fomCurrencyNo').textbox('getValue'),
+                                'CurrencyTw1': $('.fomCurrencyTw1').textbox('getValue'),
+                                'Rate1': $('.fomRate1').textbox('getValue'),
+                                'CurrencyTw2': $('.fomCurrencyTw2').textbox('getValue'),
+                                'Rate2': $('.fomRate2').textbox('getValue'),
+                                'TargetNo': $('.fomTargetNo').textbox('getValue')
+                            };
 
-                                infodatadg = itemdg1.datagrid('getRows')
-                                infodata = infodatadg.map(function (row) {
-                                    return {
-                                        'Id': row.Id,
-                                        'Linage': row.Linage,
-                                        'AccNo': row.AccNo,
-                                        'AccNameC': row.AccNameC,
-                                        'DCTypeNo': row.DCTypeNo,
-                                        'DCTypeNameC': row.DCTypeNameC,
-                                        'CurrencyNo': row.CurrencyNo,
-                                        'CurrencyNoNote': row.CurrencyNoNote,
-                                        'Rate1': row.Rate1,
-                                        'Money': row.Money,
-                                        'Money1': row.Money1,
-                                        'TargetId': row.TargetId,
-                                        'TargetType': row.TargetType,
-                                        'TargetNo': row.TargetNo,
-                                        'TargetAbbr': row.TargetAbbr,
-                                        'AccProfitId': row.AccProfitId,
-                                        'AccProfitNo': row.AccProfitNo,
-                                        'AccProfitName': row.AccProfitName,
-                                        'AccDeptId': row.AccDeptId,
-                                        'AccDeptNo': row.AccDeptNo,
-                                        'AccDeptName': row.AccDeptName,
-                                        'PayDeptId': row.PayDeptId,
-                                        'PayDeptNo': row.PayDeptNo,
-                                        'PayDeptName': row.PayDeptName,
-                                        'CheckType': row.CheckType,
-                                        'CheckId': row.CheckId,
-                                        'CheckNo': row.CheckNo,
-                                        'OffsetNo': row.OffsetNo,
-                                        'SourceDocId': row.SourceDocId,
-                                        'SourceSeqId': row.SourceSeqId,
-                                        'SourceDocSubTypeName': row.SourceDocSubTypeName,
-                                        'SourceNo': row.SourceNo,
-                                        'InitialProjectId': row.InitialProjectId,
-                                        'InitialDocSubType': row.InitialDocSubType,
-                                        'InitialDocId': row.InitialDocId,
-                                        'InitialDocSubTypeName': row.InitialDocSubTypeName,
-                                        'InitialNo': row.InitialNo,
-                                        'ActivityType': row.ActivityType,
-                                        'Remark': row.Remark,
-                                        'CaseBillNo': row.CaseBillNo,
-                                    };
-                                });
-
-                                data = {
-                                    Maindata: maindata,
-                                    Infodata: infodata
-                                };        
-                                actionurl = defaultUrl + controllerurl + functionurl + 'PostAddData';
-                                $.ajax({
-                                    type: "POST",
-                                    url: actionurl,
-                                    data: JSON.stringify(data),
-                                    contentType: "application/json",
-                                    dataType: "json",
-                                    success: function (response) {
-                                        $.messager.alert('alert', '資料已成功儲存!');                                      
-                                        console.log(response);
-                                    },
-                                    error: function (xhr, status, errorThrown) {
-                                        $.messager.alert('alert', '儲存資料時發生錯誤!');                                      
-                                        console.error(status, errorThrown);
-                                    }
-                                });
-                            } else {
-                                $.messager.alert('alert', '請檢查欄位是否輸入或借貸平衡!');
-                             
-                            }
-                        }
-                        if (actioncode === 'edit') {
-                            dosave = saveCheck(actioncode);
-                            if (dosave) {
-                                maindatadg = maindg.datagrid('getRow')[maindgIndex]
-                                maindata.push({
-                                    'BillDate': maindatadg.BillDate,
-                                    'DocSubType': maindatadg.DocSubType,
-                                    'DocSubTypeName': maindatadg.DocSubTypeName,
-                                    'CompNo': maindatadg.CompNo,
-                                    'CompAbbr': maindatadg.CompAbbr,
-                                    'VoucherType': maindatadg.VoucherType,
-                                    'VoucherNameC': maindatadg.VoucherNameC,
-                                    'EmpNo': maindatadg.EmpNo,
-                                    'EmpNameC': maindatadg.EmpNameC,
-                                    'DeptNo': maindatadg.DeptNo,
-                                    'DeptName': maindatadg.DeptName,
-                                    'BillNo': maindatadg.BillNo,
-                                    'CurrencyNo': maindatadg.CurrencyNo,
-                                    'CurrencyTw1': maindatadg.CurrencyTw1,
-                                    'Rate1': maindatadg.Rate1,
-                                    'CurrencyTw2': maindatadg.CurrencyTw2,
-                                    'Rate2': maindatadg.Rate2,
-                                    'TargetNo': maindatadg.TargetNo,
-                                });
-                                infodatadg = itemdg1.datagrid('getRows')
-                                infodata = infodatadg.map(function (row) {
-                                    return {
-                                        'Id': row.Id,
-                                        'Linage': row.Linage,
-                                        'AccNo': row.AccNo,
-                                        'AccNameC': row.AccNameC,
-                                        'DCTypeNo': row.DCTypeNo,
-                                        'DCTypeNameC': row.DCTypeNameC,
-                                        'CurrencyNo': row.CurrencyNo,
-                                        'CurrencyNoNote': row.CurrencyNoNote,
-                                        'Rate1': row.Rate1,
-                                        'Money': row.Money,
-                                        'Money1': row.Money1,
-                                        'TargetId': row.TargetId,
-                                        'TargetType': row.TargetType,
-                                        'TargetNo': row.TargetNo,
-                                        'TargetAbbr': row.TargetAbbr,
-                                        'AccProfitId': row.AccProfitId,
-                                        'AccProfitNo': row.AccProfitNo,
-                                        'AccProfitName': row.AccProfitName,
-                                        'AccDeptId': row.AccDeptId,
-                                        'AccDeptNo': row.AccDeptNo,
-                                        'AccDeptName': row.AccDeptName,
-                                        'PayDeptId': row.PayDeptId,
-                                        'PayDeptNo': row.PayDeptNo,
-                                        'PayDeptName': row.PayDeptName,
-                                        'CheckType': row.CheckType,
-                                        'CheckId': row.CheckId,
-                                        'CheckNo': row.CheckNo,
-                                        'OffsetNo': row.OffsetNo,
-                                        'SourceDocId': row.SourceDocId,
-                                        'SourceSeqId': row.SourceSeqId,
-                                        'SourceDocSubTypeName': row.SourceDocSubTypeName,
-                                        'SourceNo': row.SourceNo,
-                                        'InitialProjectId': row.InitialProjectId,
-                                        'InitialDocSubType': row.InitialDocSubType,
-                                        'InitialDocId': row.InitialDocId,
-                                        'InitialDocSubTypeName': row.InitialDocSubTypeName,
-                                        'InitialNo': row.InitialNo,
-                                        'ActivityType': row.ActivityType,
-                                        'Remark': row.Remark,
-                                        'CaseBillNo': row.CaseBillNo,
-                                    };
-                                });
-                                data = {
-                                    Maindata: maindata,
-                                    Infodata: infodata
+                            infodatadg = itemdg1.datagrid('getRows')
+                            infodata = infodatadg.map(function (row) {
+                                return {
+                                    'Id': row.Id,
+                                    'Linage': row.Linage,
+                                    'AccNo': row.AccNo,
+                                    'AccNameC': row.AccNameC,
+                                    'DCTypeNo': row.DCTypeNo,
+                                    'DCTypeNameC': row.DCTypeNameC,
+                                    'CurrencyNo': row.CurrencyNo,
+                                    'CurrencyNoNote': row.CurrencyNoNote,
+                                    'Rate1': row.Rate1,
+                                    'Money': row.Money,
+                                    'Money1': row.Money1,
+                                    'TargetId': row.TargetId,
+                                    'TargetType': row.TargetType,
+                                    'TargetNo': row.TargetNo,
+                                    'TargetAbbr': row.TargetAbbr,
+                                    'AccProfitId': row.AccProfitId,
+                                    'AccProfitNo': row.AccProfitNo,
+                                    'AccProfitName': row.AccProfitName,
+                                    'AccDeptId': row.AccDeptId,
+                                    'AccDeptNo': row.AccDeptNo,
+                                    'AccDeptName': row.AccDeptName,
+                                    'PayDeptId': row.PayDeptId,
+                                    'PayDeptNo': row.PayDeptNo,
+                                    'PayDeptName': row.PayDeptName,
+                                    'CheckType': row.CheckType,
+                                    'CheckId': row.CheckId,
+                                    'CheckNo': row.CheckNo,
+                                    'OffsetNo': row.OffsetNo,
+                                    'SourceDocId': row.SourceDocId,
+                                    'SourceSeqId': row.SourceSeqId,
+                                    'SourceDocSubTypeName': row.SourceDocSubTypeName,
+                                    'SourceNo': row.SourceNo,
+                                    'InitialProjectId': row.InitialProjectId,
+                                    'InitialDocSubType': row.InitialDocSubType,
+                                    'InitialDocId': row.InitialDocId,
+                                    'InitialDocSubTypeName': row.InitialDocSubTypeName,
+                                    'InitialNo': row.InitialNo,
+                                    'ActivityType': row.ActivityType,
+                                    'Remark': row.Remark,
+                                    'CaseBillNo': row.CaseBillNo,
                                 };
-                                actionurl = defaultUrl + controllerurl + functionurl + 'PostEditData';
-                                $.ajax({
-                                    type: "POST",
-                                    url: actionurl,
-                                    data: JSON.stringify(data),
-                                    contentType: "application/json",
-                                    dataType: "json",
-                                    success: function (response) {
-                                        $.messager.alert('alert', '資料已成功儲存!');                                       
-                                        console.log(response);
-                                    },
-                                    error: function (xhr, status, errorThrown) {
-                                        $.messager.alert('alert', '儲存資料時發生錯誤!');                                        
-                                        console.error(status, errorThrown);
-                                    }
-                                });
-                            }                          
+                            });
+
+                            data = {
+                                Maindata: maindata,
+                                Infodata: infodata
+                            };
+                            console.table(data);
+                            actionurl = defaultUrl + controllerurl + functionurl + 'PostAddData';
+                            $.ajax({
+                                type: "POST",
+                                url: actionurl,
+                                data: JSON.stringify(data),
+                                contentType: "application/json",
+                                dataType: "json",
+                                success: function (response) {
+                                    $.messager.alert('alert', '資料已成功儲存!');                                      
+                                    console.log(response);
+                                },
+                                error: function (xhr, status, errorThrown) {
+                                    $.messager.alert('alert', '儲存資料時發生錯誤!');                                      
+                                    console.error(status, errorThrown);
+                                }
+                            });
+                        } else {
+                            $.messager.alert('alert', '請檢查欄位是否輸入或借貸平衡!');                             
+                        }
+                    } else if (actioncode === 'edit') {                       
+                        dosave = saveCheck(actioncode);                       
+                        if (dosave) {                           
+                            maindatadg = maindg.datagrid('getRows')[maindgIndex]                           
+                            maindata = {
+                                'BillDate': maindatadg.BillDate,
+                                'DocSubType': maindatadg.DocSubType,
+                                'DocSubTypeName': maindatadg.DocSubTypeName,
+                                'CompNo': maindatadg.CompNo,
+                                'CompAbbr': maindatadg.CompAbbr,
+                                'VoucherType': maindatadg.VoucherType,
+                                'VoucherNameC': maindatadg.VoucherNameC,
+                                'EmpNo': maindatadg.EmpNo,
+                                'EmpNameC': maindatadg.EmpNameC,
+                                'DeptNo': maindatadg.DeptNo,
+                                'DeptNamC': maindatadg.DeptName,
+                                'BillNo': maindatadg.BillNo,
+                                'CurrencyNo': maindatadg.CurrencyNo,
+                                'CurrencyTw1': maindatadg.CurrencyTw1,
+                                'Rate1': maindatadg.Rate1,
+                                'CurrencyTw2': maindatadg.CurrencyTw2,
+                                'Rate2': maindatadg.Rate2,
+                                'TargetNo': maindatadg.TargetNo,
+                            };
+                            infodatadg = itemdg1.datagrid('getRows')
+                            infodata = infodatadg.map(function (row) {
+                                return {
+                                    'Id': row.Id,
+                                    'Linage': row.Linage,
+                                    'AccNo': row.AccNo,
+                                    'AccNameC': row.AccNameC,
+                                    'DCTypeNo': row.DCTypeNo,
+                                    'DCTypeNameC': row.DCTypeNameC,
+                                    'CurrencyNo': row.CurrencyNo,
+                                    'CurrencyNoNote': row.CurrencyNoNote,
+                                    'Rate1': row.Rate1,
+                                    'Money': row.Money,
+                                    'Money1': row.Money1,
+                                    'TargetId': row.TargetId,
+                                    'TargetType': row.TargetType,
+                                    'TargetNo': row.TargetNo,
+                                    'TargetAbbr': row.TargetAbbr,
+                                    'AccProfitId': row.AccProfitId,
+                                    'AccProfitNo': row.AccProfitNo,
+                                    'AccProfitName': row.AccProfitName,
+                                    'AccDeptId': row.AccDeptId,
+                                    'AccDeptNo': row.AccDeptNo,
+                                    'AccDeptName': row.AccDeptName,
+                                    'PayDeptId': row.PayDeptId,
+                                    'PayDeptNo': row.PayDeptNo,
+                                    'PayDeptName': row.PayDeptName,
+                                    'CheckType': row.CheckType,
+                                    'CheckId': row.CheckId,
+                                    'CheckNo': row.CheckNo,
+                                    'OffsetNo': row.OffsetNo,
+                                    'SourceDocId': row.SourceDocId,
+                                    'SourceSeqId': row.SourceSeqId,
+                                    'SourceDocSubTypeName': row.SourceDocSubTypeName,
+                                    'SourceNo': row.SourceNo,
+                                    'InitialProjectId': row.InitialProjectId,
+                                    'InitialDocSubType': row.InitialDocSubType,
+                                    'InitialDocId': row.InitialDocId,
+                                    'InitialDocSubTypeName': row.InitialDocSubTypeName,
+                                    'InitialNo': row.InitialNo,
+                                    'ActivityType': row.ActivityType,
+                                    'Remark': row.Remark,
+                                    'CaseBillNo': row.CaseBillNo,
+                                };
+                            });
+                            data = {
+                                Maindata: maindata,
+                                Infodata: infodata
+                            };
+                            console.log(data);
+                            // 檢查JSON大小
+                            let jsonString = JSON.stringify(data);
+                            let jsonSize = new Blob([jsonString]).size;
+                            console.log("JSON Size: " + jsonSize + " bytes");
+
+                            // 檢查JSON大小是否超過限制，這裡假設限制為4096 KB (4 MB)
+                            if (jsonSize > 4096 * 1024) {
+                                $.messager.alert('alert', '資料太大，無法儲存!');
+                                return;
+                            }
+
+
+                            actionurl = defaultUrl + controllerurl + functionurl + 'PostEditData';
+                            $.ajax({
+                                type: "POST",
+                                url: actionurl,
+                                data: JSON.stringify(data),
+                                contentType: "application/json",
+                                dataType: "json",
+                                success: function (response) {
+                                    $.messager.alert('alert', '資料已成功儲存!');
+                                    console.log(response);
+                                },
+                                error: function (xhr, status, errorThrown) {
+                                    $.messager.alert('alert', '儲存資料時發生錯誤!');                                   
+                                    console.error("Status: " + status);
+                                    console.error("Error: " + errorThrown);
+                                    console.error("Response: " + xhr.responseText);
+                                }
+                            });
+                        } else {
+                            $.messager.alert('alert', '請檢查欄位是否輸入或借貸平衡!');
                         }
                     } else {
                         $.messager.alert('alert', '操作碼錯誤');
-                    }                   
+                    }
+                                      
                     actioncode = 'view';
                     btnEnableSet(actioncode);
 
@@ -1527,7 +1543,21 @@
                     }
 
                     // 更新 itemdg1 中的编辑行
-                    if (actioncode === 'edit') {
+                    //if (actioncode === 'edit') {
+                    //    itemdg1.datagrid('updateRow', {
+                    //        index: itemdg1Index,
+                    //        row: {
+                    //            AccNo: selectedRow.AccNo,
+                    //            AccNameC: selectedRow.AccNameC,
+                    //            AccNoBy: selectedRow.AccNoBy,
+                    //            AccNoByNameC: selectedRow.AccNoByNameC,
+                    //            AccGroupNo: selectedRow.AccGroupNo,
+                    //            AccGroupNameC: selectedRow.AccGroupNameC,
+                    //            Remark: '.',
+                    //        }
+                    //    });
+                    //}
+                    if (actioncode === 'add' || actioncode === 'edit') {
                         itemdg1.datagrid('updateRow', {
                             index: itemdg1Index,
                             row: {
@@ -1538,22 +1568,8 @@
                                 AccGroupNo: selectedRow.AccGroupNo,
                                 AccGroupNameC: selectedRow.AccGroupNameC,
                                 Remark: '.',
-                            }
-                        });
-                    }
-                    if (actioncode === 'add') {
-                        itemdg1.datagrid('updateRow', {
-                            index: itemdg1Index,
-                            row: {
-                                AccNo: selectedRow.AccNo,
-                                AccNameC: selectedRow.AccNameC,
-                                AccNoBy: selectedRow.AccNoBy,
-                                AccNoByNameC: selectedRow.AccNoByNameC,
-                                AccGroupNo: selectedRow.AccGroupNo,
-                                AccGroupNameC: selectedRow.AccGroupNameC,
-                                Remark: '.',
-                                DCTypeNo: 'D',
-                                DCTypeNameC: '借',
+                                DCTypeNo: selectedRow.DCTypeNo,
+                                DCTypeNameC: selectedRow.DCTypeNameC,
                                 CurrencyNo: 'NT$',
                                 CurrencyNoNote: 'NT$',
                                 Money: '0',
@@ -1841,11 +1857,11 @@
 
             // check2
             voucherDC();         
-            let dcbalance = $('.colMoney').textbox('getValue');
-            if (dcbalance === 0) {
+            let dcbalance = $('.colMoney').textbox('getValue');           
+            if (dcbalance == 0) {
                 check2 = true;
             }
-
+          
             // return
             if (check1 && check2 ) {
                 return true;

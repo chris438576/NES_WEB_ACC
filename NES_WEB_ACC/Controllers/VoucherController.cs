@@ -130,7 +130,69 @@ namespace NES_WEB_ACC.Controllers
                     List<ACC_VoucherDetail> customerdata = conn.Query<ACC_VoucherDetail>(sql, param).ToList();
                     if (customerdata.Count > 0)
                     {
-                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                        var formatData = customerdata.Select(item => new {
+                            Id = item.Id.ToString(), // 將Id轉換為字符串
+                            DocId = item.DocId,
+                            Linage = item.Linage,
+                            AccNoId = item.AccNoId,
+                            AccNo = item.AccNo,
+                            AccNameC = item.AccNameC,
+                            AccNameE = item.AccNameE,
+                            Remark = item.Remark,
+                            DCTypeNo = item.DCTypeNo,
+                            DCTypeNameC = item.DCTypeNameC,
+                            CurrencyNo = item.CurrencyNo,
+                            Rate1 = item.Rate1,
+                            Rate2 = item.Rate2,
+                            Money = item.Money,
+                            Money1 = item.Money1,
+                            Money2 = item.Money2,
+                            AccProfitId = item.AccProfitId,
+                            AccProfitNo = item.AccProfitNo,
+                            AccProfitName = item.AccProfitName,
+                            AccDeptId = item.AccDeptId,
+                            AccDeptNo = item.AccDeptNo,
+                            AccDeptName = item.AccDeptName,
+                            PayDeptId = item.PayDeptId,
+                            PayDeptNo = item.PayDeptNo,
+                            PayDeptName = item.PayDeptName,
+                            TargetType = item.TargetType,
+                            TargetId = item.TargetId,
+                            TargetNo = item.TargetNo,
+                            TargetAbbr = item.TargetAbbr,
+                            OffsetNo = item.OffsetNo,
+                            CaseBillId = item.CaseBillId,
+                            CaseBillNo = item.CaseBillNo,
+                            SourceProjectId = item.SourceProjectId,
+                            SourceDocSubType = item.SourceDocSubType,
+                            SourceDocSubTypeName = item.SourceDocSubTypeName,
+                            SourceDocId = item.SourceDocId,
+                            SourceSeqId = item.SourceSeqId,
+                            SourceNo = item.SourceNo,
+                            InitialProjectId = item.InitialProjectId,
+                            InitialDocSubType = item.InitialDocSubType,
+                            InitialDocSubTypeName = item.InitialDocSubTypeName,
+                            InitialDocId = item.InitialDocId,
+                            InitialNo = item.InitialNo,
+                            CheckType = item.CheckType,
+                            CheckId = item.CheckId,
+                            CheckNo = item.CheckNo,
+                            EventType = item.EventType,
+                            ActivityType = item.ActivityType,
+                            IsParty = item.IsParty,
+                            BillAddType = item.BillAddType,
+                            Flag = item.Flag,
+                            IsState = item.IsState,
+                            StateDate = item.StateDate,
+                            StateBy = item.StateBy,
+                            IsChecked = item.IsChecked,
+                            CheckDate = item.CheckDate,
+                            CheckBy = item.CheckBy,
+                            CreateDate = item.CreateDate,
+                            CreateBy = item.CreateBy,
+                            ShowPage = item.ShowPage
+                        }).ToList();
+                        return Json(formatData, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -152,7 +214,7 @@ namespace NES_WEB_ACC.Controllers
             //    Response.StatusCode = (int)HttpStatusCode.BadRequest;
             //    return Json("C0001", JsonRequestBehavior.AllowGet);
             //}
-            string sql = @"select AccNo,AccNameC,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC from NES_WEB_ACC.dbo.ACC_AccTitleNo where CompId = '150615163202244' 
+            string sql = @"select AccNo,AccNameC,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  from NES_WEB_ACC.dbo.ACC_AccTitleNo where CompId = '150615163202244' 
             ";
             //var param = new { docid };
             try
