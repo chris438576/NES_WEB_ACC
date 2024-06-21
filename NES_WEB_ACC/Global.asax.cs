@@ -26,19 +26,19 @@ namespace NES_WEB_ACC
         }
         protected void Application_BeginRequest()
         {
-            ////本機測試
-            //Application["GlobalUrl"] = "";
-            //正式使用
-            Application["GlobalUrl"] = @"http://" + HttpContext.Current.Request.Url.Authority + @"/WEB_ACC";
+            //本機測試
+            Application["GlobalUrl"] = "";
+            ////正式使用
+            //Application["GlobalUrl"] = @"http://" + HttpContext.Current.Request.Url.Authority + @"/WEB_ACC";
         }
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            //// 本機測試
-            //string username = "NES1492"; // 假設您要模擬的用戶名稱
-            //string[] roles = { "Admin" }; // 假設您要模擬的用戶角色
-            // 正式使用
-            string username = User.Identity.Name;
-            string[] roles = RoleSetting(username);
+            // 本機測試
+            string username = "NES1492"; // 假設您要模擬的用戶名稱
+            string[] roles = { "Admin" }; // 假設您要模擬的用戶角色
+            //// 正式使用
+            //string username = User.Identity.Name;
+            //string[] roles = RoleSetting(username);
 
             // 創建一個GenericIdentity對象，表示已驗證的用戶
             GenericIdentity id = new GenericIdentity(username);

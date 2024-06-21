@@ -762,13 +762,31 @@
                     { field: 'CompNo', title: maindglang.CompNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } }
                 ]],
-                onSelect: function (index, row) {
-                    maindgIndex = index;
-                    tableHeadData(row);
-                    itemdg1Data(row.Id);                  
+                onSelect: function (index, row) {                 
+                    if (actioncode === 'add' || actioncode === 'edit') {
+                        if (maindgIndex !== index) {
+                            $.messager.confirm('確認', '資料尚未儲存，是否離開?', function (r) {
+                                if (r) {
+                                    maindgIndex = index; // 更新目前行索引
+                                    actioncode = 'view'; // 更新行為模式
+                                    btnEnableSet(actioncode); // 更新按鈕狀態
+                                    tableHeadData(row); // 更新表頭資料
+                                    itemdg1Data(row.Id); // 更新相關資料表
+                                    maindg.datagrid('selectRow', index); // 選擇新行
+                                } else {
+                                    maindg.datagrid('unselectRow', index);
+                                    maindg.datagrid('selectRow', maindgIndex); // 重新選擇原來的行
+                                }
+                            });
+                        }
+                    } else {
+                        maindgIndex = index;
+                        tableHeadData(row);
+                        itemdg1Data(row.Id);
+                    }                   
                 },
-                onClickRow: function (rowIndex, rowData) {
-
+                onClickRow: function (index, row) {
+                   
                 }
             });
             maindgData();
@@ -1368,6 +1386,10 @@
                                     'CaseBillNo': row.CaseBillNo,
                                 };
                             });
+                            // 檢查JSON大小
+                            let jsonString = JSON.stringify(data);
+                            let jsonSize = new Blob([jsonString]).size;
+                            console.log("JSON Size: " + jsonSize + " bytes");
 
                             data = {
                                 Maindata: maindata,
@@ -1408,7 +1430,7 @@
                                 'EmpNo': maindatadg.EmpNo,
                                 'EmpNameC': maindatadg.EmpNameC,
                                 'DeptNo': maindatadg.DeptNo,
-                                'DeptNamC': maindatadg.DeptName,
+                                'DeptNam': maindatadg.DeptName,
                                 'BillNo': maindatadg.BillNo,
                                 'CurrencyNo': maindatadg.CurrencyNo,
                                 'CurrencyTw1': maindatadg.CurrencyTw1,
@@ -1465,20 +1487,12 @@
                             data = {
                                 Maindata: maindata,
                                 Infodata: infodata
-                            };
-                            console.log(data);
+                            };                            
                             // 檢查JSON大小
                             let jsonString = JSON.stringify(data);
                             let jsonSize = new Blob([jsonString]).size;
                             console.log("JSON Size: " + jsonSize + " bytes");
-
-                            // 檢查JSON大小是否超過限制，這裡假設限制為4096 KB (4 MB)
-                            if (jsonSize > 4096 * 1024) {
-                                $.messager.alert('alert', '資料太大，無法儲存!');
-                                return;
-                            }
-
-
+                            console.log(JSON.stringify(data));
                             actionurl = defaultUrl + controllerurl + functionurl + 'PostEditData';
                             $.ajax({
                                 type: "POST",
@@ -1510,18 +1524,37 @@
                     break;
                 case 'refresh':
                     break;
-                case 'cancel':                    
-                    //addForm欄位清空
-                    $('#addForm .easyui-datebox').datebox('clear');
-                    $('#addForm .easyui-combogrid').combogrid('clear');
-                    $('#addForm .easyui-textbox').textbox('clear');
-                    //表身清空
-                    itemdg1.datagrid('loadData', { total: 0, rows: [] });
-                    infotabs.tabs('select', 0);//表頭表單切換
-                    advtabs.tabs('select', 0);//進階資訊切換
-                    maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
-                    actioncode = 'view';
-                    btnEnableSet(actioncode);
+                case 'cancel':
+                    if (actioncode == 'add') {
+                        $.messager.confirm('確認', '是否要取消?', function (r) {
+                            if (r) {
+                                //addForm欄位清空
+                                $('#addForm .easyui-datebox').datebox('clear');
+                                $('#addForm .easyui-combogrid').combogrid('clear');
+                                $('#addForm .easyui-textbox').textbox('clear');
+                                //表身清空
+                                itemdg1.datagrid('loadData', { total: 0, rows: [] });
+                                infotabs.tabs('select', 0);//表頭表單切換
+                                advtabs.tabs('select', 0);//進階資訊切換
+                                maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
+                                actioncode = 'view';
+                                btnEnableSet(actioncode);
+                            } else {                               
+                                return;
+                            }
+                        });
+                    } else if (actioncode == 'edit') {
+                        $.messager.confirm('確認', '是否要取消?', function (r) {
+                            if (r) {
+                                maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
+                                actioncode = 'view';
+                                btnEnableSet(actioncode);
+                            } else {                              
+                                return;
+                            }
+                        });
+                    }
+                   
                     break;
                 case 'delete':
                     break;
@@ -1757,7 +1790,7 @@
                     $('#btnCancel').linkbutton('disable');
                     $('#btnDelete').linkbutton('disable');
             }
-        }
+        }     
         //#endregion
 
         //#region 功能函式
