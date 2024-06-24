@@ -385,6 +385,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Voucher Open 的當地語系化字串。
+        /// </summary>
+        public static string VoucherOpen {
+            get {
+                return ResourceManager.GetString("VoucherOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Voucher Operation 的當地語系化字串。
         /// </summary>
         public static string VoucherOperation {

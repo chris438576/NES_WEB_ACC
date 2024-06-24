@@ -256,12 +256,17 @@
                     <ul class="dropdown-menu">
                         <li>
                             @*傳票輸入作業*@
-                        <a href="@Url.Action("VoucherCreate", "Voucher")">
-                            @Resources.Content.VoucherCreate
-                        </a>
-                    </li>
-
-                    <li role="separator" class="divider"></li>
+                            <a href="@Url.Action("VoucherCreate", "Voucher")">
+                                @Resources.Content.VoucherCreate
+                            </a>
+                        </li>
+                        <li>
+                            @*傳票開帳作業*@
+                            <a href="@Url.Action("VoucherOpen", "Voucher")">
+                                @Resources.Content.VoucherOpen
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
                     </ul>
                     </li>
                     <li class="dropdown">

@@ -562,6 +562,11 @@ namespace NES_WEB_ACC.Controllers
             }
         }
 
+        public ActionResult VoucherOpen()
+        {
+            return View();
+        }
+
         /// <summary>
         /// 部分檢視_表頭欄位
         /// </summary>

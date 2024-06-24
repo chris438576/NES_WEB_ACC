@@ -252,4 +252,7 @@
   <data name="AccGroupNameE" xml:space="preserve">
     <value>科目大類英文名稱</value>
   </data>
+  <data name="VoucherOpen" xml:space="preserve">
+    <value>傳票開帳作業</value>
+  </data>
 </root>

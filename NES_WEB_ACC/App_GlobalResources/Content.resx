@@ -252,4 +252,7 @@
   <data name="AccGroupNameE" xml:space="preserve">
     <value>Acc Group NameE</value>
   </data>
+  <data name="VoucherOpen" xml:space="preserve">
+    <value>Voucher Open</value>
+  </data>
 </root>
