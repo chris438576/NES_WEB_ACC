@@ -14,7 +14,7 @@ namespace NES_WEB_ACC
     
     public partial class ACC_VoucherInfo
     {
-        public string Id { get; set; }
+        public long Id { get; set; }
         public Nullable<long> CompId { get; set; }
         public string CompNo { get; set; }
         public string CompAbbr { get; set; }

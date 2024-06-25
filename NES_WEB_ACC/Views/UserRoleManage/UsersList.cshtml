@@ -65,6 +65,8 @@
                 border-radius: 50%;
             }
         /*#endregion*/
+
+        /*#region View_Table*/
         .tg {
             border-collapse: collapse;
             width: 100%;
@@ -83,6 +85,11 @@
             padding: 8px;
             text-align: left;
         }
+        /*#endregion*/
+
+        /*#region Insert_layout*/
+
+        /*#endregion*/
     </style>
 }
 <h2> 系統權限管理-User</h2>
@@ -143,25 +150,20 @@
 
 <div id="insertWin" class="easyui-window" title="請選擇使用者帳號" style="width:auto;height:auto;"
      data-options="modal:true,closed:true">
-    <div class="row">
-        <div class="col-md-4">
-            <label>部門：</label>
-            <select id="insertWinSelect" class="easyui-combobox" labelPosition="top" style="width:60px;"></select>
-        </div>
-        <div class="col-md-4">
-            搜尋
+    <div class="row rowtool">
+        <div class="col-md-8">         
         </div>
         <div class="col-md-4">
             <button id="insertWinSave" class="easyui-linkbutton" data-options="iconCls:'icon-save'">儲存</button>
         </div>
     </div>
-    <div class="row" style="padding-left: 10px; padding-right: 10px;">
+    <div class="row rowmain" style="padding-left: 10px; padding-right: 10px;">
         <div class="col-md-5">
-            <table id="dgERPEmp" class="easyui-datagrid" title="ERP員工列表" style="width:100%;height:400px"
+            <table id="dgNESEmp" class="easyui-datagrid" title="NES_WEB員工表" style="width:100%;height:400px"
                    data-options="collapsible:true">
                 <thead>
                     <tr>
-                        <th data-options="field:'EmpId' " hidden>EmpId</th>
+                        <th data-options="field:'EmpId'" hidden>EmpId</th>
                         <th data-options="field:'EmpNo'">員工編號</th>
                         <th data-options="field:'EmpNameC'">員工姓名</th>
                         <th data-options="field:'DeptNo'">部門編號</th>
@@ -183,7 +185,7 @@
                    data-options="collapsible:true">
                 <thead>
                     <tr>
-                        <th data-options="field:'EmpId'">EmpId</th>
+                        <th data-options="field:'EmpId'" hidden>EmpId</th>
                         <th data-options="field:'EmpNo'">員工編號</th>
                         <th data-options="field:'EmpNameC'">員工姓名</th>
                         <th data-options="field:'DeptNo'">部門編號</th>
@@ -221,8 +223,9 @@
     </div>
 </div>
 
-
-<script>
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/easyui/datagrid-filter.js"></script>
+    <script>
     var isAction = false;
     var personalEmpId = '';
     // 監聽器
@@ -234,14 +237,14 @@
         });
         // btn事件：dg資料列移動
         $('#insertWinMoveIn').click(function () {
-            var dgFrom = $('#dgERPEmp');
+            var dgFrom = $('#dgNESEmp');
             var dgTo = $('#dgSYSEmp');
             dgRowsMoving(dgFrom, dgTo);
         });
         // btn事件：dg資料列移動
         $('#insertWinMoveOut').click(function () {
             var dgFrom = $('#dgSYSEmp');
-            var dgTo = $('#dgERPEmp');
+            var dgTo = $('#dgNESEmp');
             dgRowsMoving(dgFrom, dgTo);
         });
         // btn事件：ERPEmp寫入SYS_Users
@@ -256,10 +259,15 @@
                     url: '@Url.Action("InsertToSYS_Users", "UserRoleManage")',
                     data: { rows: rowsData },  // 將行數據作為 JSON 物件傳遞給後端
                     success: function (response) {
-                        console.log('儲存成功', response);
-                        alert('儲存成功');
-                        $('#insertWin').window('close');
-                        location.reload();
+                        if (response.success == true) {
+                            console.log('儲存成功', response);
+                            alert('儲存成功');
+                            $('#insertWin').window('close');
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                        
                     },
                     error: function (error) {
                         console.error('儲存失敗', error);
@@ -361,16 +369,15 @@
     }
 
     function insertWinSetting() {
-        // 通过 AJAX 获取数据
+    // 通过 AJAX 获取数据
         $.ajax({
             url: '@Url.Action("GetERPEmpList", "UserRoleManage")',
             method: 'get',
             dataType: 'json',
             success: function (data) {
                 // 将获取的数据加载到 datagrid 中
-                $('#dgERPEmp').datagrid('loadData', data);
-                // 将去重后的 DeptName 列表填充到 easyui-combobox 中
-                $('#insertWinSelect').combobox('loadData', data.DeptNo);
+                $('#dgNESEmp').datagrid('loadData', data);
+                $('#dgNESEmp').datagrid('enableFilter');   
             },
             error: function (error) {
                 console.log('AJAX Error:', error);
@@ -379,7 +386,7 @@
     }
 
     function dgRowsMoving(dgFrom, dgTo) {
-        // 獲取 dgERPEmp 選中的所有行
+        // 獲取 dgNESEmp 選中的所有行
         var selectedRows = dgFrom.datagrid('getSelections');
 
         if (selectedRows.length > 0) {
@@ -393,7 +400,7 @@
                     DeptName: selectedRows[i].DeptName
                 });
 
-                // 從 dgERPEmp 中移除選中的行
+                // 從 dgNESEmp 中移除選中的行
                 var index = dgFrom.datagrid('getRowIndex', selectedRows[i]);
                 dgFrom.datagrid('deleteRow', index);
             }
@@ -473,4 +480,5 @@
             }
         });
     }
-</script>
+    </script>
+}
