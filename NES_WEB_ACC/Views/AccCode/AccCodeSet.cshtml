@@ -171,7 +171,7 @@
             });
         }
         function maindgdata() {
-            actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode1';
+           actionurl = defaultUrl + controllerurl + functionurl + 'GetAccCode1';            
             doajax("GET", actionurl, null, function (data) {
                 if (data == "C0003") {
                     $.messager.alert('alert', '無會計大類資料!');

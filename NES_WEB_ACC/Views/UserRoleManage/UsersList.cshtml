@@ -149,18 +149,10 @@
 </table>
 
 <div id="insertWin" class="easyui-window" title="請選擇使用者帳號" style="width:auto;height:auto;"
-     data-options="modal:true,closed:true">
-    <div class="row rowtool">
-        <div class="col-md-8">         
-        </div>
-        <div class="col-md-4">
-            <button id="insertWinSave" class="easyui-linkbutton" data-options="iconCls:'icon-save'">儲存</button>
-        </div>
-    </div>
-    <div class="row rowmain" style="padding-left: 10px; padding-right: 10px;">
+     data-options="modal:true,closed:true">   
+    <div class="row" style="padding-left: 10px; padding-right: 10px;">
         <div class="col-md-5">
-            <table id="dgNESEmp" class="easyui-datagrid" title="NES_WEB員工表" style="width:100%;height:400px"
-                   data-options="collapsible:true">
+            <table id="dgNESEmp" class="easyui-datagrid" title="NES_WEB員工表" style="width:100%;height:400px">
                 <thead>
                     <tr>
                         <th data-options="field:'EmpId'" hidden>EmpId</th>
@@ -179,10 +171,12 @@
             <div class="row" d-flex flex-column align-items-center">
                 <button id="insertWinMoveOut" class="easyui-linkbutton" data-options="iconCls:'icon-arrow-left'"></button>
             </div>
+            <div>
+                <button id="insertWinSave" class="easyui-linkbutton" data-options="iconCls:'icon-save'">儲存</button>
+            </div>
         </div>
         <div class="col-md-5">
-            <table id="dgSYSEmp" class="easyui-datagrid" title="新增員工列表" style="width: 100%; height: 400px"
-                   data-options="collapsible:true">
+            <table id="dgSYSEmp" class="easyui-datagrid" title="新增員工列表" style="width: 100%; height: 400px">
                 <thead>
                     <tr>
                         <th data-options="field:'EmpId'" hidden>EmpId</th>

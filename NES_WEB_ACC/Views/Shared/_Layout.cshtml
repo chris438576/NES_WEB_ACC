@@ -195,7 +195,7 @@
                     <div class="navbar-collapse collapse nav2">
                         <ul class="nav navbar-nav">
                             <li>
-                                    @*儀錶板*@
+                                @*儀錶板*@
                                 <a href="@Url.Action("Index", "Home")">
                                     @Resources.Content.Instrument
                                 </a>
@@ -205,118 +205,118 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     @Resources.Content.AccSet
                                     <span class="caret"></span>
-                                 </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                @*會計科目設定*@
-                            <a href="@Url.Action("AccCodeSet", "AccCode")">
-                                @Resources.Content.AccCodeSet
-                            </a>
-                        </li>
-                        <li>
-                            @*科目類別設定*@
-                        <a href="@Url.Action("AccGroupNoSet", "AccCode")">
-                            @Resources.Content.AccGroupNoSet
-                        </a>
-                    </li>
-                    <li>
-                        @*權益科目類別設定*@
-                    <a href="@Url.Action("EquityCodeSet", "AccCode")">
-                        @Resources.Content.EquityCodeSet
-                    </a>
-                    </li>
-                    <li>
-                        @*傳票類別設定*@
-                    <a href="@Url.Action("VoucherCodeSet", "AccCode")">
-                        @Resources.Content.VoucherCodeSet
-                    </a>
-                    </li>
-                    <li>
-                        @*會計系統基本設定*@
-                    <a href="@Url.Action("", "")">
-                        @Resources.Content.AccSysCodeSet
-                    </a>
-                    </li>
-                    <li role="separator" class="divider"></li>
-                    <li>
-                        @*會計項目一覽表*@
-                    <a href="@Url.Action("", "")">
-                        @Resources.Content.AccReport
-                    </a>
-                    </li>
-                    </ul>
-                    </li>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        @*會計科目設定*@
+                                        <a href="@Url.Action("AccCodeSet", "AccCode")">
+                                            @Resources.Content.AccCodeSet
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @*科目類別設定*@
+                                        <a href="@Url.Action("AccGroupNoSet", "AccCode")">
+                                            @Resources.Content.AccGroupNoSet
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @*權益科目類別設定*@
+                                        <a href="@Url.Action("EquityCodeSet", "AccCode")">
+                                            @Resources.Content.EquityCodeSet
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @*傳票類別設定*@
+                                        <a href="@Url.Action("VoucherCodeSet", "AccCode")">
+                                            @Resources.Content.VoucherCodeSet
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @*會計系統基本設定*@
+                                        <a href="@Url.Action("", "")">
+                                            @Resources.Content.AccSysCodeSet
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        @*會計項目一覽表*@
+                                        <a href="@Url.Action("", "")">
+                                            @Resources.Content.AccReport
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                    <li class="dropdown">
-                        @*傳票作業*@
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        @Resources.Content.VoucherOperation
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            @*傳票輸入作業*@
-                            <a href="@Url.Action("VoucherCreate", "Voucher")">
-                                @Resources.Content.VoucherCreate
-                            </a>
-                        </li>
-                        <li>
-                            @*傳票開帳作業*@
-                            <a href="@Url.Action("VoucherOpen", "Voucher")">
-                                @Resources.Content.VoucherOpen
-                            </a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                    </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            @Resources.Content.AJE
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            @Resources.Content.FinanceReport
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <label id="lblPermissionSetting">@Resources.Content.lblPermissionSetting</label>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                       
-                            <li>
-                                <a href="@Url.Action("UsersList", "UserRoleManage")">
-                                    @Resources.Content.SystemManagementUsers
+                            <li class="dropdown">
+                                @*傳票作業*@
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @Resources.Content.VoucherOperation
+                                    <span class="caret"></span>
                                 </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        @*傳票輸入作業*@
+                                        <a href="@Url.Action("VoucherCreate", "Voucher")">
+                                            @Resources.Content.VoucherCreate
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @*傳票開帳作業*@
+                                        <a href="@Url.Action("VoucherOpen", "Voucher")">
+                                            @Resources.Content.VoucherOpen
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                </ul>
                             </li>
-                            <li>
-                                <a href="@Url.Action("RolesList", "UserRoleManage")">
-                                    @Resources.Content.SystemManagementRoles
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @Resources.Content.AJE
+                                    <span class="caret"></span>
                                 </a>
+                                <ul class="dropdown-menu">
+                                </ul>
                             </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @Resources.Content.FinanceReport
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <label id="lblPermissionSetting">@Resources.Content.lblPermissionSetting</label>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+
+                                    <li>
+                                        <a href="@Url.Action("UsersList", "UserRoleManage")">
+                                            @Resources.Content.SystemManagementUsers
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("RolesList", "UserRoleManage")">
+                                            @Resources.Content.SystemManagementRoles
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <label id="lblMenuLanguage">@Resources.Content.lblMenuLanguage</label>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="~/Home/ChangeLanguage?lang=en">English</a></li>
+                                    <li><a href="~/Home/ChangeLanguage?lang=zh-TW">繁體中文</a></li>
+                                    <li><a href="~/Home/ChangeLanguage?lang=es-MX">Español</a></li>
+                                </ul>
+                            </li>
+
                         </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <label id="lblMenuLanguage">@Resources.Content.lblMenuLanguage</label>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="~/Home/ChangeLanguage?lang=en">English</a></li>
-                            <li><a href="~/Home/ChangeLanguage?lang=zh-TW">繁體中文</a></li>
-                            <li><a href="~/Home/ChangeLanguage?lang=es-MX">Español</a></li>
-                        </ul>
-                    </li>
-                        
-                    </ul>
                     </div>
                     <div class="navbar-collapse collapse nav3">
                         <ul class="nav navbar-nav">
@@ -349,14 +349,56 @@
                 Copyright © 2024 NES Limited Department All Right Reserved. | 聯絡:chris.c@nes-corporation.com
             </div>
         </div>
+        <div id="timeout" class="easyui-dialog" style="width:720px;height:180px;" title="提示" data-options="closed:true,modal:true,border:'thin'">
+            <h2 style="margin:20px;padding:20px;">注意，您已太久沒動作，1分鐘後將被系統登出!!</h2>
+        </div>
+        <div id="test-tip"></div>
     </div>
 
-
+    <script>
+        var defaultUrl = '@HttpContext.Current.Application["GlobalUrl"]';
+        var timoutWarning = 300000;//5分鐘提醒
+        var timoutNow = 360000;//6分鐘強制登出
+        var logoutUrl = "@Url.Content("~/Home/TimeOut")";
+        var warningTimer;
+        var timeoutTimer;
+        var testalerttip ='<div id="alerttip" style="position:fixed;left:0;top:0;width:220px;height:45px;margin:0px;padding:4px 0px 0px 30px;background-color:#f3f41b;color:#000000;font-size:2em;font-weight:bold;border-radius:0px 20px 20px 0px;">這是測試版</div>';
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/easyui")
     <script>
-        var defaultUrl = '@HttpContext.Current.Application["GlobalUrl"]';
+        window.onload = function () {
+            StartTimers();
+            //onmousemove or onclick
+            $('body').click(function () {
+                ResetTimers();
+            });
+            let a = '@HttpContext.Current.Request.Url.Host';
+            if (a != '192.168.50.8') {
+                $('#test-tip').html(testalerttip);
+            }
+        };
+        // Start timers.
+        function StartTimers() {
+            warningTimer = setTimeout("IdleWarning()", timoutWarning);
+            timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+        }
+        // Reset timers.
+        function ResetTimers() {
+            clearTimeout(warningTimer);
+            clearTimeout(timeoutTimer);
+            StartTimers();
+            $("#timeout").dialog('close');
+        }
+        // Show idle timeout warning dialog.
+        function IdleWarning() {
+            $("#timeout").dialog('open').dialog('center');
+        }
+        // Logout the user.
+        function IdleTimeout() {
+            window.location = logoutUrl;
+        }
     </script>
     @RenderSection("scripts", required: false)
 </body>

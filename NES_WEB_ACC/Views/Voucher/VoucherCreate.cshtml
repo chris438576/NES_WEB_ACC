@@ -751,7 +751,7 @@
                 singleSelect: true,
                 striped: true,
                 columns: [[
-                    { field: 'Id', title: 'Id', hidden: true, type: 'string' },
+                    { field: 'Id', title: 'Id', hidden: true, type: 'number' },
                     { field: 'Flag', title: '旗', hidden: true },
                     { field: 'BillDate', title: maindglang.BillDate, width: 70, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'BillNo', title: maindglang.BillNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
@@ -793,7 +793,7 @@
            
         }
         function maindgData() {
-            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo';
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo';            
             doajax("GET", actionurl, null, function (data) {
                 if (data == "C0003") {
                     $.messager.alert('alert', '讀取無資料!');
@@ -818,7 +818,7 @@
                 striped: true,
                 columns: [
                     [
-                        { field: 'Id', title: 'Id', hidden: true, type: 'string', rowspan: 2 },
+                        { field: 'Id', title: 'Id', hidden: true, type: 'number', rowspan: 2 },
                         { field: 'Linage', title: '行號', hidden: false, type: 'string', rowspan: 2 },
                         {
                             field: 'AccNo', title: '科目編號', hidden: false, type: 'string', rowspan: 2,
@@ -1075,7 +1075,7 @@
                 singleSelect: true,
                 striped: true,
                 columns: [[
-                    { field: 'Id', title: 'Id', width: 0, hidden: true },
+                    { field: 'Id', title: 'Id', width: 0, hidden: true, type: 'number'},
                     { field: 'PartnerNo', title: '廠商編號', width: 100, hidden: false },
                     { field: 'PartnerAbbr', title: '廠商簡稱', width: 100, hidden: false },
                     { field: 'PartnerName', title: '廠商名稱', width: 100, hidden: false },
@@ -1109,7 +1109,7 @@
                 singleSelect: true,
                 striped: true,
                 columns: [[
-                    { field: 'Id', title: 'Id', width: 100, hidden: true },
+                    { field: 'Id', title: 'Id', width: 100, hidden: true, type: 'number'},
                     { field: 'PartnerNo', title: '客戶編號', width: 100, hidden: false },
                     { field: 'PartnerAbbr', title: '客戶簡稱', width: 100, hidden: false },
                     { field: 'PartnerName', title: '客戶名稱', width: 100, hidden: false },
@@ -1143,7 +1143,7 @@
                 singleSelect: true,
                 striped: true,
                 columns: [[
-                    { field: 'Id', title: 'Id', width: 100, hidden: true },
+                    { field: 'Id', title: 'Id', width: 100, hidden: true, type: 'number' },
                     { field: 'DeptId', title: 'DeptId', width: 100, hidden: true },
                     { field: 'EmpNo', title: '員工編號', width: 100, hidden: false },
                     { field: 'EmpNameC', title: '中文名稱', width: 100, hidden: false },
@@ -1168,7 +1168,7 @@
                 singleSelect: true,
                 striped: true,
                 columns: [[
-                    { field: 'Id', title: 'Id', width: 100, hidden: true },
+                    { field: 'Id', title: 'Id', width: 100, hidden: true, type: 'number'},
                     { field: 'Code', title: '銀行代碼', width: 100, hidden: false },
                     { field: 'BankCode', title: '銀行行號', width: 100, hidden: false },
                     { field: 'BankAbbr', title: '銀行簡稱', width: 100, hidden: false },
@@ -1198,7 +1198,7 @@
                     striped: true,
                     columns: [[
                         { field: 'DocId', title: 'DocId', type: 'string', hidden: true },
-                        { field: 'Id', title: 'Id', type: 'string', hidden: true },
+                        { field: 'Id', title: 'Id', type: 'number', hidden: true },
                         { field: 'DeptNo', title: '成本中心編號', type: 'string', hidden: false },
                         { field: 'DeptNameC', title: '成本中心中文', type: 'string', hidden: false },
                         { field: 'DeptNameE', title: '成本中心英文', type: 'string', hidden: false },
@@ -1222,7 +1222,7 @@
                     striped: true,
                     columns: [[
                         { field: 'DocId', title: 'DocId', type: 'string', hidden: true },
-                        { field: 'Id', title: 'Id', type: 'string', hidden: true },
+                        { field: 'Id', title: 'Id', type: 'number', hidden: true },
                         { field: 'DeptNo', title: '部門編號', type: 'string', hidden: false },
                         { field: 'TargetNameC', title: '中心中文名', type: 'string', hidden: false },
                         { field: 'TargetNameE', title: '中心英文名', type: 'string', hidden: false },

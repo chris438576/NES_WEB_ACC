@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace NES_WEB_ACC.Controllers
 {
@@ -80,6 +81,16 @@ namespace NES_WEB_ACC.Controllers
                     }
                 }
             }
+        }
+
+        public ActionResult TimeOut()
+        {
+            //清除登入資訊
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            string url = @"http://" + Request.Url.Authority + @"/NES_Login.aspx";
+            //Response.Redirect(url);
+            return RedirectPermanent(url);
         }
 
         /// <summary>

@@ -1037,7 +1037,6 @@
     <Content Include="Views\AccCode\EquityCodeSet.cshtml" />
     <Content Include="Views\Voucher\VoucherCreate.cshtml" />
     <Content Include="Views\Shared\_VoucherTableInfoPartial.cshtml" />
-    <Content Include="Views\Voucher\TESTVIEW.cshtml" />
     <Content Include="Views\Shared\_VoucherDCShowPartial.cshtml" />
     <Content Include="Views\Shared\_VoucherTableAdvPartial.cshtml" />
     <Content Include="Views\ReportView\AccReport.cshtml" />

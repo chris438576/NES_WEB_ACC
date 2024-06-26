@@ -183,83 +183,84 @@
 
 </div>
 
-<script>
-    var byRoleId = '';
-    // btn事件：開啟新增視窗
-    $('#btnInsert').click(function () {
-        $('#insertWin').window('open')
+@section Scripts {
+    <script>
+        var byRoleId = '';
+        // btn事件：開啟新增視窗
+        $('#btnInsert').click(function () {
+            $('#insertWin').window('open')
 
-    });
-    // btn事件：匯入按鈕
-    $('#btnSave').click(function () {
-        var insertRoleName = $('#roleName').val();
-        if (insertRoleName != null && insertRoleName != '') {
-            $.ajax({
-                type: 'POST',
-                url: '/UserRoleManage/InsertToSYS_Roles',
-                data: { roleName: insertRoleName },  // 將行數據作為 JSON 物件傳遞給後端
-                success: function (response) {
-                    if (response.message == '儲存成功') {
-                        $('#insertWin').window('close');
-                        console.log("新增:[" + insertRoleName + "]角色成功。");
-                        alert("新增:[" + insertRoleName + "]角色成功。");
-                        location.reload();
-                    } else {
-                        console.log('儲存失敗', response.message);
-                        alert(response.message);
-                        $('#insertWin').window('close');
+        });
+        // btn事件：匯入按鈕
+        $('#btnSave').click(function () {
+            var insertRoleName = $('#roleName').val();
+            if (insertRoleName != null && insertRoleName != '') {
+                $.ajax({
+                    type: 'POST',
+                    url: '/UserRoleManage/InsertToSYS_Roles',
+                    data: { roleName: insertRoleName },  // 將行數據作為 JSON 物件傳遞給後端
+                    success: function (response) {
+                        if (response.message == '儲存成功') {
+                            $('#insertWin').window('close');
+                            console.log("新增:[" + insertRoleName + "]角色成功。");
+                            alert("新增:[" + insertRoleName + "]角色成功。");
+                            location.reload();
+                        } else {
+                            console.log('儲存失敗', response.message);
+                            alert(response.message);
+                            $('#insertWin').window('close');
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Action錯誤', error);
+                        alert("Action錯誤。\n\r" + error.message);
                     }
-                },
-                error: function (error) {
-                    console.error('Action錯誤', error);
-                    alert("Action錯誤。\n\r" + error.message);
-                }
-            });
-        } else {
-            alert('請輸入角色名稱!');
-        }
-    });
-    // btn事件：取消按鈕
-    $('#btnCancel').click(function () {
-        $('#roleName').val('');
-        $('#insertWin').window('close');
-    });
+                });
+            } else {
+                alert('請輸入角色名稱!');
+            }
+        });
+        // btn事件：取消按鈕
+        $('#btnCancel').click(function () {
+            $('#roleName').val('');
+            $('#insertWin').window('close');
+        });
 
 
-    // roles-table的.checkbox-switch元件
-    var checkboxes = document.querySelectorAll('.checkbox-switch');
-    // 監聽每個checkbox的change事件
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
-            // 在這裡處理checkbox狀態改變時的邏輯
-            var isChecked = this.checked;
-            var checkboxId = this.id;
-            //紀錄原先狀態
-            var originalChecked = !isChecked;
+        // roles-table的.checkbox-switch元件
+        var checkboxes = document.querySelectorAll('.checkbox-switch');
+        // 監聽每個checkbox的change事件
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                // 在這裡處理checkbox狀態改變時的邏輯
+                var isChecked = this.checked;
+                var checkboxId = this.id;
+                //紀錄原先狀態
+                var originalChecked = !isChecked;
 
-            // 在這裡使用checkboxId，可以將其傳送給後端或進行其他操作
-            console.log("Checkbox with ID " + checkboxId + " is checked: " + isChecked);
-            console.log("OriginalChecked: " + originalChecked);
-            //修改資料庫的資料
-            $.ajax({
-                type: 'POST',
-                url: '/UserRoleManage/UpdateRolesStatus',
-                data: JSON.stringify({ roleId: checkboxId, isStatus: isChecked }),
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (message) {
-                    alert('Data Saved: ' + message);
-                },
-                error: function (message) {
-                    checkbox.checked = originalChecked;
-                    alert('Failed: ' + message);
-                }
+                // 在這裡使用checkboxId，可以將其傳送給後端或進行其他操作
+                console.log("Checkbox with ID " + checkboxId + " is checked: " + isChecked);
+                console.log("OriginalChecked: " + originalChecked);
+                //修改資料庫的資料
+                $.ajax({
+                    type: 'POST',
+                    url: '/UserRoleManage/UpdateRolesStatus',
+                    data: JSON.stringify({ roleId: checkboxId, isStatus: isChecked }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (message) {
+                        alert('Data Saved: ' + message);
+                    },
+                    error: function (message) {
+                        checkbox.checked = originalChecked;
+                        alert('Failed: ' + message);
+                    }
+                });
             });
         });
-    });
 
-</script>
-
+    </script>
+    }
 
 
 

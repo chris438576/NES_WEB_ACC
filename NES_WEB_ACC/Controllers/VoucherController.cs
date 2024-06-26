@@ -96,10 +96,65 @@ namespace NES_WEB_ACC.Controllers
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<ACC_VoucherInfo> customerdata = conn.Query<ACC_VoucherInfo>(sql).ToList();
-                    if (customerdata.Count > 0)
+                    List<ACC_VoucherInfo> resultdata = conn.Query<ACC_VoucherInfo>(sql).ToList();
+                    if (resultdata.Count > 0)
                     {
-                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                        var formatData = resultdata.Select(item => new
+                        {
+                            Id = item.Id.ToString(), // 將Id轉換為字符串
+                            CompId = item.CompId,
+                            CompNo = item.CompNo,
+                            CompAbbr = item.CompAbbr,
+                            AccountBill = item.AccountBill,
+                            DocType = item.DocType,
+                            DocSubType = item.DocSubType,
+                            DocSubTypeName = item.DocSubTypeName,
+                            BillDate = item.BillDate,
+                            Code1 = item.Code1,
+                            Code2 = item.Code2,
+                            BillNo = item.BillNo,
+                            DcType = item.DcType,
+                            VoucherType = item.VoucherType,
+                            VoucherNameC = item.VoucherNameC,
+                            EmpId = item.EmpId,
+                            EmpNo = item.EmpNo,
+                            EmpNameC = item.EmpNameC,
+                            DeptId = item.DeptId,
+                            DeptNo = item.DeptNo,
+                            DeptName = item.DeptName,
+                            CurrencyNo = item.CurrencyNo,
+                            Rate1 = item.Rate1,
+                            Rate2 = item.Rate2,
+                            SourceCompId = item.SourceCompId,
+                            SourceProjectId = item.SourceProjectId,
+                            SourceDocSubType = item.SourceDocSubType,
+                            SourceDocSubTypeName = item.SourceDocSubTypeName,
+                            SourceDocId = item.SourceDocId,
+                            SourceNo = item.SourceNo,
+                            BillAddType = item.BillAddType,
+                            Remark = item.Remark,
+                            ActivityType = item.ActivityType,
+                            AccDocType = item.AccDocType,
+                            Money11 = item.Money11,
+                            Money12 = item.Money12,
+                            Money21 = item.Money21,
+                            Money22 = item.Money22,
+                            Money1Dc = item.Money1Dc,
+                            Money2Dc = item.Money2Dc,
+                            Flag = item.Flag,
+                            IsState = item.IsState,
+                            StateDate = item.StateDate,
+                            StateBy = item.StateBy,
+                            IsChecked = item.IsChecked,
+                            CheckDate = item.CheckDate,
+                            CheckBy = item.CheckBy,
+                            CreateDate = item.CreateDate,
+                            CreateBy = item.CreateBy,
+                            BillStatus = item.BillStatus,
+                            SignDate = item.SignDate,
+                            SignBy = item.SignBy
+                        }).ToList();
+                        return Json(resultdata, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -454,7 +509,6 @@ namespace NES_WEB_ACC.Controllers
                 new { id = "5", ActivityType = "所的稅" },
                 new { id = "6", ActivityType = "停業單位" },
                 new { id = "7", ActivityType = "權益" },
-
             };
 
             return Json(docSubTypes, JsonRequestBehavior.AllowGet);
