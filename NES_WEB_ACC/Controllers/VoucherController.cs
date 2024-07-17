@@ -25,7 +25,7 @@ namespace NES_WEB_ACC.Controllers
         {
             return View();
         }
-     
+       
         public ActionResult GetVoucherInfo()
         {
             string sql = @"
@@ -169,7 +169,7 @@ namespace NES_WEB_ACC.Controllers
                 return Json("C0004", JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult GetVoucherItem1(string docid)
+        public ActionResult GetVoucherItem(string docid)
         {
             if (string.IsNullOrEmpty(docid))
             {
@@ -262,6 +262,10 @@ namespace NES_WEB_ACC.Controllers
                 return Json("C0004", JsonRequestBehavior.AllowGet);
             }
         }        
+        /// <summary>
+        /// 會計科目
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetEditTableCode()
         {
             //if (string.IsNullOrEmpty(docid))
@@ -294,6 +298,10 @@ namespace NES_WEB_ACC.Controllers
                 return Json("C0004", JsonRequestBehavior.AllowGet);
             }
         }
+        /// <summary>
+        /// 對象別
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetEditTableCode2()
         {
             // 創建一個包含數據的列表
@@ -307,6 +315,10 @@ namespace NES_WEB_ACC.Controllers
             
             return Json(targetTypes, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 幣別
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetEditTableCode3()
         {
             // 創建一個包含數據的列表
@@ -499,6 +511,10 @@ namespace NES_WEB_ACC.Controllers
                 return Json("C0004", JsonRequestBehavior.AllowGet);
             }
         }
+        /// <summary>
+        /// 活動類別
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetEditTableCode7() {
             var docSubTypes = new List<object>
             {
@@ -523,7 +539,8 @@ namespace NES_WEB_ACC.Controllers
             {
                 new { DocSubType = "A", DocSubTypeName = "一般傳票" },
                 new { DocSubType = "B", DocSubTypeName = "特殊傳票" },
-                new { DocSubType = "C", DocSubTypeName = "其他傳票" }
+                new { DocSubType = "C", DocSubTypeName = "其他傳票" },
+                new { DocSubType = "E", DocSubTypeName = "年結傳票" },
             };
 
             return Json(docSubTypes, JsonRequestBehavior.AllowGet);
@@ -607,7 +624,7 @@ namespace NES_WEB_ACC.Controllers
             try
             {
 
-                return Json(new { success = true, message = "資料已成功儲存." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, message = "資料已成功修改." }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
@@ -615,11 +632,15 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, message = "資料處理時發生錯誤." }, JsonRequestBehavior.AllowGet);
             }
         }
-
-        public ActionResult VoucherOpen()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VoucherCheck()
         {
             return View();
         }
+     
 
         /// <summary>
         /// 部分檢視_表頭欄位

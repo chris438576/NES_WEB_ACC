@@ -559,11 +559,8 @@
             <div class="row" style="width: 99%; height: 70%; margin: 2px;">
                 <div id="content-tabs" class="easyui-tabs" style="width:100%;height:100%;">
                     <div title="分錄明細" style="padding:2px;display:none;">
-                        <table id="itemdg1" class="datagrid easyui-itemdg" style="width: 100%; height: 100%; margin: 5px;"></table>
-                    </div>
-                    <div title="管理幣分錄" style="overflow:auto;padding:20px;display:none;">
-                        <table id="itemdg2" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
-                    </div>
+                        <table id="itemdg" class="datagrid easyui-itemdg" style="width: 100%; height: 100%; margin: 5px;"></table>
+                    </div>                   
                     <div title="進階資料" style="overflow: auto; padding: 20px; display: none;">
                         @{ Html.RenderAction("_VoucherTableAdvPartial"); }
                     </div>
@@ -684,8 +681,7 @@
         //#region 基本參數
         var controllerurl = '/Voucher', functionurl = "/", actionurl = "";
         var maindg = $('#maindg'),        //左側列表
-            itemdg1 = $('#itemdg1'),      //表身頁籤1列表
-            itemdg2 = $('#itemdg2');      //表身頁籤2列表
+            itemdg = $('#itemdg');      //表身頁籤1列表
         var dlgdg1 = $('#dlgdg1'),        //Dlg列表-會計科目
             dlgdg2 = $('#dlgdg2'),        //Dlg列表-交易幣別
             dlgdg30 = $('#dlgdg30'), dlgdg31 = $('#dlgdg31'), dlgdg32 = $('#dlgdg32'), dlgdg33 = $('#dlgdg33')        //Dlg列表-對象編號
@@ -696,8 +692,8 @@
             advtabs = $('#advtabs'), //右側表身頁籤3_進階資料
             dlgtabs = $('#dlgtabs');
         var maindgIndex = -1,
-            itemdg1Index,
-            itemdg2Index;
+            itemdgIndex;
+           
         var actioncode = 'view';
 
         //#endregion
@@ -732,8 +728,7 @@
         $(function () {
             ///-----dg欄位設定-----///            
             maindgSet();    //左側列表欄位           
-            itemdg1Set();    //右側側列表欄位_分錄明細            
-            itemdg2Set();   //右側側列表欄位_管理幣分錄            
+            itemdgSet();    //右側側列表欄位_分錄明細       
             dlgdg1Set();    //編輯_科目編號           
             dlgdg2Set();     //編輯_幣別            
             dlgdg3Set();    //編輯_目標編號            
@@ -771,7 +766,7 @@
                                     actioncode = 'view'; // 更新行為模式
                                     btnEnableSet(actioncode); // 更新按鈕狀態
                                     tableHeadData(row); // 更新表頭資料
-                                    itemdg1Data(row.Id); // 更新相關資料表
+                                    itemdgData(row.Id); // 更新相關資料表
                                     maindg.datagrid('selectRow', index); // 選擇新行
                                 } else {
                                     maindg.datagrid('unselectRow', index);
@@ -782,7 +777,7 @@
                     } else {
                         maindgIndex = index;
                         tableHeadData(row);
-                        itemdg1Data(row.Id);
+                        itemdgData(row.Id);
                     }                   
                 },
                 onClickRow: function (index, row) {
@@ -812,8 +807,8 @@
                 }
             });
         }
-        function itemdg1Set() {
-            itemdg1.datagrid({
+        function itemdgSet() {
+            itemdg.datagrid({
                 singleSelect: true,
                 striped: true,
                 columns: [
@@ -874,24 +869,24 @@
                                     ]],
                                     panelHeight: 'auto',
                                     onSelect: function (index, row) {
-                                        // 檢查 itemdg1Index
-                                        if (itemdg1Index === -1) {
+                                        // 檢查 itemdgIndex
+                                        if (itemdgIndex === -1) {
                                             $.messager.alert('提示', '请先选择需要编辑的行！');
                                             return;
                                         }
-                                        // 更新 itemdg1 中的编辑行
-                                        itemdg1.datagrid('updateRow', {
-                                            index: itemdg1Index,
+                                        // 更新 itemdg 中的编辑行
+                                        itemdg.datagrid('updateRow', {
+                                            index: itemdgIndex,
                                             row: {
                                                 TargetNo: '',
                                                 TargetAbbr: ''                                               
                                             }
                                         });
                                         // 结束编辑状态
-                                        itemdg1.datagrid('endEdit', itemdg1Index);
+                                        itemdg.datagrid('endEdit', itemdgIndex);
 
                                         // 如果需要继续编辑，可以立即重新开始编辑
-                                        itemdg1.datagrid('beginEdit', itemdg1Index);
+                                        itemdg.datagrid('beginEdit', itemdgIndex);
                                     }
                                 }
                             }
@@ -948,34 +943,34 @@
                 ],
                 onClickRow: function (index, row) {                   
                     if (actioncode === 'edit' || actioncode === 'add') { 
-                        itemdg1.datagrid('beginEdit', index); //啟用編輯
-                        itemdg1Index = index; // 更新當前行索引
+                        itemdg.datagrid('beginEdit', index); //啟用編輯
+                        itemdgIndex = index; // 更新當前行索引
                         voucherDC();
                     }                   
                 },
                 onBeforeEdit: function (index, row) {                   
                     if (actioncode === 'edit' || actioncode === 'add') {                                        
                         // 如果上一行正在編輯，結束它的編輯狀態
-                        if (itemdg1Index !== undefined && itemdg1Index !== index) {
-                            itemdg1.datagrid('endEdit', itemdg1Index);
+                        if (itemdgIndex !== undefined && itemdgIndex !== index) {
+                            itemdg.datagrid('endEdit', itemdgIndex);
                         }
                     }                  
                 },                
                 onAfterEdit: function (index, row, changes) {                   
                     if (actioncode === 'edit' || actioncode === 'add') {                        
                         // 使用 updateRow 更新數據源
-                        itemdg1.datagrid('updateRow', { index: index, row: row });
+                        itemdg.datagrid('updateRow', { index: index, row: row });
                         // 刷新該行以應用格式化並重構編輯狀態
-                        itemdg1.datagrid('refreshRow', index);
+                        itemdg.datagrid('refreshRow', index);
                         voucherDC();
                         // 重置當前的編輯行索引
-                        itemdg1Index = undefined;                       
+                        itemdgIndex = undefined;                       
                     }
                 },
                 onCancelEdit: function (index, row) {
                     if (actioncode === 'edit' || actioncode === 'add') {
                         console.log("取消編輯，行索引：" + index);
-                        itemdg1Index = undefined; // 重置索引
+                        itemdgIndex = undefined; // 重置索引
                     }
                 },                
                 onBeginEdit: function (index, row) {
@@ -992,26 +987,21 @@
                 }
             });
         }
-        function itemdg1Data(docid) {
-            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherItem1?docid=' + docid;
+        function itemdgData(docid) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherItem?docid=' + docid;
             doajax("GET", actionurl, null, function (data) {
                 if (data == "C0003") {
                     $.messager.alert('alert', '讀取無資料!');
-                    itemdg1.datagrid('loadData', '');
+                    itemdg.datagrid('loadData', '');
                     console.log("C0003: Not Found");
                 } else {
-                    itemdg1.datagrid('loadData', data);
+                    itemdg.datagrid('loadData', data);
                     // VoucherDC計算
                     voucherDC();
                 }
             });
         }
-        function itemdg2Set() {
-
-        }
-        function itemdg2Data() {
-
-        }
+       
         ///----- dlg_dg -----///
         function dlgdg1Set() {
             try {
@@ -1057,9 +1047,9 @@
                     // 取得點選列的CurrencyNo值
                     var selectedCurrencyNo = row.CurrencyNo;
 
-                    // 將值填入itemdg1並更新行
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    // 將值填入itemdg並更新行
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             CurrencyNo: selectedCurrencyNo
                         }
@@ -1296,7 +1286,7 @@
                     advtabs.tabs('select', 1); //進階資訊切換
                     maindg.datagrid('unselectRow', maindgIndex );
                     addForm(); //格式化、下拉選單初始化、預設欄位填值
-                    itemdg1.datagrid('loadData', { total: 0, rows: [] });//itemdg1資料清空
+                    itemdg.datagrid('loadData', { total: 0, rows: [] });//itemdg資料清空
                     $('.colMoneyD').textbox('setValue', '');
                     $('.colMoneyC').textbox('setValue', '');
                     $('.colMoney').textbox('setValue', '');
@@ -1341,7 +1331,7 @@
                                 'TargetNo': $('.fomTargetNo').textbox('getValue')
                             };
 
-                            infodatadg = itemdg1.datagrid('getRows')
+                            infodatadg = itemdg.datagrid('getRows')
                             infodata = infodatadg.map(function (row) {
                                 return {
                                     'Id': row.Id,
@@ -1439,7 +1429,7 @@
                                 'Rate2': maindatadg.Rate2,
                                 'TargetNo': maindatadg.TargetNo,
                             };
-                            infodatadg = itemdg1.datagrid('getRows')
+                            infodatadg = itemdg.datagrid('getRows')
                             infodata = infodatadg.map(function (row) {
                                 return {
                                     'Id': row.Id,
@@ -1533,7 +1523,7 @@
                                 $('#addForm .easyui-combogrid').combogrid('clear');
                                 $('#addForm .easyui-textbox').textbox('clear');
                                 //表身清空
-                                itemdg1.datagrid('loadData', { total: 0, rows: [] });
+                                itemdg.datagrid('loadData', { total: 0, rows: [] });
                                 infotabs.tabs('select', 0);//表頭表單切換
                                 advtabs.tabs('select', 0);//進階資訊切換
                                 maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
@@ -1569,16 +1559,16 @@
                         return;
                     }
 
-                    // 檢查 itemdg1Index
-                    if (itemdg1Index === -1) {
+                    // 檢查 itemdgIndex
+                    if (itemdgIndex === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
                     }
 
-                    // 更新 itemdg1 中的编辑行
+                    // 更新 itemdg 中的编辑行
                     //if (actioncode === 'edit') {
-                    //    itemdg1.datagrid('updateRow', {
-                    //        index: itemdg1Index,
+                    //    itemdg.datagrid('updateRow', {
+                    //        index: itemdgIndex,
                     //        row: {
                     //            AccNo: selectedRow.AccNo,
                     //            AccNameC: selectedRow.AccNameC,
@@ -1591,8 +1581,8 @@
                     //    });
                     //}
                     if (actioncode === 'add' || actioncode === 'edit') {
-                        itemdg1.datagrid('updateRow', {
-                            index: itemdg1Index,
+                        itemdg.datagrid('updateRow', {
+                            index: itemdgIndex,
                             row: {
                                 AccNo: selectedRow.AccNo,
                                 AccNameC: selectedRow.AccNameC,
@@ -1623,12 +1613,12 @@
                         $.messager.alert('提示', '請選擇資料填入！');
                         return;
                     }
-                    if (itemdg1Index === -1) {
+                    if (itemdgIndex === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
                     }                  
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             TargetNo: selectedRow.PartnerNo,
                             TargetAbbr: selectedRow.PartnerAbbr,
@@ -1642,13 +1632,13 @@
                         $.messager.alert('提示', '請選擇資料填入！');
                         return;
                     }
-                    if (itemdg1Index === -1) {
+                    if (itemdgIndex === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
 
                     }
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             TargetNo: selectedRow.PartnerNo,
                             TargetAbbr: selectedRow.PartnerAbbr,
@@ -1662,13 +1652,13 @@
                         $.messager.alert('提示', '請選擇資料填入！');
                         return;
                     }
-                    if (itemdg1Index === -1) {
+                    if (itemdgIndex === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
 
                     }
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             TargetNo: selectedRow.EmpNo,
                             TargetAbbr: selectedRow.EmpNameC,
@@ -1682,13 +1672,13 @@
                         $.messager.alert('提示', '請選擇資料填入！');
                         return;
                     }
-                    if (itemdg1Index === -1) {
+                    if (itemdgIndex === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
 
                     }
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             TargetNo: selectedRow.Code,
                             TargetAbbr: selectedRow.field,
@@ -1705,13 +1695,13 @@
                         $.messager.alert('提示', '請選擇資料填入！');
                         return;
                     }
-                    if (itemdg1Index === -1) {
+                    if (itemdgIndex === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
                     }
-                    // 更新 itemdg1 中的编辑行
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    // 更新 itemdg 中的编辑行
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             AccDeptNo: selectedRow.DeptNo,
                             AccDeptName: selectedRow.DeptNameC,
@@ -1729,13 +1719,13 @@
                         $.messager.alert('提示', '請選擇資料填入！');
                         return;
                     }
-                    if (itemdg1Index === -1) {
+                    if (itemdgIndex === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
                     }
-                    // 更新 itemdg1 中的编辑行
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    // 更新 itemdg 中的编辑行
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             PayDeptNo: selectedRow.DeptNo,
                             PayDeptName: selectedRow.DeptNameC,
@@ -1849,7 +1839,7 @@
             let totalDMoney = 0;
             let totalCMoney = 0;
             let balance = 0;
-            let rows = itemdg1.datagrid('getRows');
+            let rows = itemdg.datagrid('getRows');
 
             for (let i = 0; i < rows.length; i++) {
                 if (rows[i].DCTypeNo === 'D') {
@@ -1908,13 +1898,13 @@
             var rowCount, currentRow, newRow;
             switch (item.name) {
                 case 'add':
-                    rowCount = itemdg1.datagrid('getRows').length;
-                    // 先檢查 itemdg1 是否被正確初始化
-                    if (!itemdg1) {
-                        console.error('itemdg1 is not initialized');
+                    rowCount = itemdg.datagrid('getRows').length;
+                    // 先檢查 itemdg 是否被正確初始化
+                    if (!itemdg) {
+                        console.error('itemdg is not initialized');
                         return;
                     }
-                    itemdg1.datagrid('appendRow', {
+                    itemdg.datagrid('appendRow', {
                         Id: '', // 根據你的需求設置默認值
                         Linage: rowCount + 1,
                         AccNo: '',
@@ -1956,14 +1946,14 @@
                         SourceNo: '',
                         InitialNo: ''
                     });
-                    var newIndex = itemdg1.datagrid('getRows').length - 1;
-                    itemdg1.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
-                    itemdg1Index = newIndex;
+                    var newIndex = itemdg.datagrid('getRows').length - 1;
+                    itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
+                    itemdgIndex = newIndex;
                     break;
                 case 'addD':
-                    rowCount = itemdg1.datagrid('getRows').length;
+                    rowCount = itemdg.datagrid('getRows').length;
                     // Append a new row with specific fields set for '借貸方向' and '借貸名稱'
-                    itemdg1.datagrid('appendRow', {
+                    itemdg.datagrid('appendRow', {
                         Id: '',
                         Linage: rowCount + 1,
                         AccNo: '',
@@ -2005,13 +1995,13 @@
                         SourceNo: '',
                         InitialNo: ''
                     });
-                    var newIndex = itemdg1.datagrid('getRows').length - 1;
-                    itemdg1.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
-                    itemdg1Index = newIndex;
+                    var newIndex = itemdg.datagrid('getRows').length - 1;
+                    itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
+                    itemdgIndex = newIndex;
                     break;
                 case 'addC':
-                    rowCount = itemdg1.datagrid('getRows').length;                 
-                    itemdg1.datagrid('appendRow', {
+                    rowCount = itemdg.datagrid('getRows').length;                 
+                    itemdg.datagrid('appendRow', {
                         Id: '',
                         Linage: rowCount + 1,
                         AccNo: '',
@@ -2053,16 +2043,16 @@
                         SourceNo: '',
                         InitialNo: ''
                     });
-                    var newIndex = itemdg1.datagrid('getRows').length - 1;
-                    itemdg1.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
-                    itemdg1Index = newIndex;
+                    var newIndex = itemdg.datagrid('getRows').length - 1;
+                    itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
+                    itemdgIndex = newIndex;
                     break;
                 case 'addReverse':
-                    if (itemdg1Index == null || itemdg1Index < 0) {
+                    if (itemdgIndex == null || itemdgIndex < 0) {
                         $.messager.alert('alert', '請先選擇一行進行操作');                        
                         return;
                     }
-                    currentRow = itemdg1.datagrid('getRows')[itemdg1Index];
+                    currentRow = itemdg.datagrid('getRows')[itemdgIndex];
                     // Determine the reverse values based on the current selection
                     if (currentRow.DCTypeNo === 'D') {
                         reverseDCTypeNo = 'C';
@@ -2074,8 +2064,8 @@
                         $.messager.alert('alert', '當前行的借貸方向不正確');                       
                         return;
                     }
-                    rowCount = itemdg1.datagrid('getRows').length;
-                    itemdg1.datagrid('appendRow', {
+                    rowCount = itemdg.datagrid('getRows').length;
+                    itemdg.datagrid('appendRow', {
                         Id: '',                       
                         Linage: rowCount + 1,
                         AccNo: currentRow.AccNo,
@@ -2118,16 +2108,16 @@
                         SourceNo: currentRow.SourceNo,
                         InitialNo: currentRow.InitialNo
                     });
-                    var newIndex = itemdg1.datagrid('getRows').length - 1;
-                    itemdg1.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
-                    itemdg1Index = newIndex;
+                    var newIndex = itemdg.datagrid('getRows').length - 1;
+                    itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
+                    itemdgIndex = newIndex;
                     break;
                 case 'remove':
-                    if (itemdg1Index !== null) {
-                        itemdg1.datagrid('deleteRow', itemdg1Index);
-                        rowCount = itemdg1.datagrid('getRows').length;
+                    if (itemdgIndex !== null) {
+                        itemdg.datagrid('deleteRow', itemdgIndex);
+                        rowCount = itemdg.datagrid('getRows').length;
                         for (var i = 0; i < rowCount; i++) {
-                            itemdg1.datagrid('updateRow', {
+                            itemdg.datagrid('updateRow', {
                                 index: i,
                                 row: {
                                     Linage: i + 1  // Start numbering from 1
@@ -2147,8 +2137,8 @@
         function dctypeChecked(type) {
             switch (type) {
                 case "C":
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             DCTypeNo: 'C',
                             DCTypeNameC: '貸',
@@ -2159,8 +2149,8 @@
                     voucherDC();
                     break;
                 case "D":
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             DCTypeNo: 'D',
                             DCTypeNameC: '借',
@@ -2387,7 +2377,7 @@
             return `${year}/${month}/${day}`;
         }
 
-        // itemdg1多表頭Function
+        // itemdg多表頭Function
         function format1(value, row, index) {
             const accNameCInput = `<div class="subtd readonly-text" value="${row.AccNameC}" data-index="${index}" data-field="AccNameC">${row.AccNameC}</div>`;
             const remarkInput = `<div class="subtd readonly-text" value="${row.Remark}" data-index="${index}" data-field="Remark">${row.Remark}</div>`;
@@ -2454,7 +2444,7 @@
 
             return `${initialDocSubTypeNameDiv}${initialNoDiv}`;
         }
-        // itemdg1欄位Function
+        // itemdg欄位Function
         function formatTargetType(value) {
             switch (String(value)) {
                 case '15':
@@ -2590,7 +2580,7 @@
             $('#dctpyeD').radiobutton('uncheck');
             $('#dctpyeC').radiobutton('uncheck');
             //設計選取值
-            var editDCType = itemdg1.datagrid('getRows')[itemdg1Index].DCTypeNo;
+            var editDCType = itemdg.datagrid('getRows')[itemdgIndex].DCTypeNo;
             if (editDCType === "D") {
                 $('#dctpyeD').radiobutton('check');
             } else if (editDCType === "C") {
@@ -2599,7 +2589,7 @@
             $('#dlgEditDCType').dialog('open').dialog('center');
         }
         function dlgEditTarget() {
-            let editTargetType = itemdg1.datagrid('getRows')[itemdg1Index].TargetType;            
+            let editTargetType = itemdg.datagrid('getRows')[itemdgIndex].TargetType;            
             switch (editTargetType) {
                 case '15':                   
                     objdata(objTargetNo0, 'read', function (data) {
@@ -2699,7 +2689,7 @@
         //#endregion
     </script>
     <script>// 監聽器        
-        // itemdg1編輯_點擊subtd
+        // itemdg編輯_點擊subtd
         document.addEventListener('click', function (event) {
             // 檢查點擊的元素是否為 .subtd
             const target = event.target;
@@ -2735,16 +2725,16 @@
                 }
             }
         });
-        // itemdg1編輯_remark按下enter
+        // itemdg編輯_remark按下enter
         $(document).ready(function () {
             // 监听 #remarkBox 输入框的 keydown 事件
             $('#remarkBox').textbox('textbox').bind('keydown', function (e) {
                 if (e.key === 'Enter') {
                     // 获取输入框的值
                     var remarkValue = $('#remarkBox').textbox('getValue');
-                    // 更新 itemdg1 中的编辑行
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    // 更新 itemdg 中的编辑行
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             Remark: remarkValue
                         }
@@ -2758,9 +2748,9 @@
                 if (e.key === 'Enter') {
                     // 获取输入框的值
                     var remarkValue = $('#moneyBox').textbox('getValue');
-                    // 更新 itemdg1 中的编辑行
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    // 更新 itemdg 中的编辑行
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             Money: remarkValue,
                             Money1: remarkValue
@@ -2775,9 +2765,9 @@
                 if (e.key === 'Enter') {
                     // 获取输入框的值
                     var remarkValue = $('#money1Box').textbox('getValue');
-                    // 更新 itemdg1 中的编辑行
-                    itemdg1.datagrid('updateRow', {
-                        index: itemdg1Index,
+                    // 更新 itemdg 中的编辑行
+                    itemdg.datagrid('updateRow', {
+                        index: itemdgIndex,
                         row: {
                             Money1: remarkValue
                         }
@@ -2788,7 +2778,7 @@
                 }
             });
         });
-        // itemdg1編輯_借貸選擇鈕
+        // itemdg編輯_借貸選擇鈕
         $('#dctpyeC').radiobutton({
             onChange: function (checked) {
                 if (checked) {

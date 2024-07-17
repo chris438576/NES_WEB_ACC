@@ -1040,7 +1040,7 @@
     <Content Include="Views\Shared\_VoucherDCShowPartial.cshtml" />
     <Content Include="Views\Shared\_VoucherTableAdvPartial.cshtml" />
     <Content Include="Views\ReportView\AccReport.cshtml" />
-    <Content Include="Views\Voucher\VoucherOpen.cshtml" />
+    <Content Include="Views\Voucher\VoucherCheck.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
