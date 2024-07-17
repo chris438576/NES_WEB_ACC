@@ -751,7 +751,7 @@
                 singleSelect: true,
                 striped: true,
                 columns: [[
-                    { field: 'Id', title: 'Id', hidden: true, type: 'number' },
+                    { field: 'Id', title: 'Id', hidden: true, type: 'text' },
                     { field: 'Flag', title: '旗', hidden: true },
                     { field: 'BillDate', title: maindglang.BillDate, width: 70, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'BillNo', title: maindglang.BillNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
@@ -818,7 +818,7 @@
                 striped: true,
                 columns: [
                     [
-                        { field: 'Id', title: 'Id', hidden: true, type: 'number', rowspan: 2 },
+                        { field: 'Id', title: 'Id', hidden: true, type: 'text', rowspan: 2 },
                         { field: 'Linage', title: '行號', hidden: false, type: 'string', rowspan: 2 },
                         {
                             field: 'AccNo', title: '科目編號', hidden: false, type: 'string', rowspan: 2,

@@ -33,8 +33,24 @@ namespace NES_WEB_ACC.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult GetAccCode1()
-        {            
-            string sql = @"select * from ACC_AccCode1 where ([CompId] = '150615163202244')";
+        {
+            var lang = Session["lang"] as string;
+            string sql;
+            switch (lang)
+            {
+                case "en":
+                    sql = @"select Id,AccGroupNo,AccGroupNameE as 'AccGroupNameC' from ACC_AccCode1 where ([CompId] = '150615163202244')";
+                    break;
+                case "zh-TW":
+                    sql = @"select Id,AccGroupNo,AccGroupNameC as 'AccGroupNameC' from ACC_AccCode1 where ([CompId] = '150615163202244')";
+                    break;
+                case "es-MX":
+                    sql = @"select Id,AccGroupNo,AccGroupNameMX as 'AccGroupNameC' from ACC_AccCode1 where ([CompId] = '150615163202244')";
+                    break;
+                default:
+                    sql = @"select Id,AccGroupNo,AccGroupNameE as 'AccGroupNameC' from ACC_AccCode1 where ([CompId] = '150615163202244')";
+                    break;
+            }            
             
             try
             {
@@ -70,7 +86,24 @@ namespace NES_WEB_ACC.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("C0001", JsonRequestBehavior.AllowGet);
             }
-            string sql = @"SELECT * FROM ACC_AccCode2 where ([CompId] = '150615163202244')　and DocId = @docid";
+            var lang = Session["lang"] as string;
+            string sql;
+            switch (lang)
+            {
+                case "en":
+                    sql = @"SELECT Id,AccNoBy,AccNoByNameE as 'AccNoByNameC',DCTypeNo,DCTypeNameC,AccNoType FROM ACC_AccCode2 where ([CompId] = '150615163202244')　and DocId = @docid";
+                    break;
+                case "zh-TW":
+                    sql = @"SELECT Id,AccNoBy,AccNoByNameC as 'AccNoByNameC',DCTypeNo,DCTypeNameC,AccNoType FROM ACC_AccCode2 where ([CompId] = '150615163202244')　and DocId = @docid";
+                    break;
+                case "es-MX":
+                    sql = @"SELECT Id,AccNoBy,AccNoByNameMX as 'AccNoByNameC',DCTypeNo,DCTypeNameC,AccNoType FROM ACC_AccCode2 where ([CompId] = '150615163202244')　and DocId = @docid";
+                    break;
+                default:
+                    sql = @"SELECT Id,AccNoBy,AccNoByNameE as 'AccNoByNameC',DCTypeNo,DCTypeNameC,AccNoType FROM ACC_AccCode2 where ([CompId] = '150615163202244')　and DocId = @docid";
+                    break;
+            }
+           
             var param = new { docid };
             try
             {

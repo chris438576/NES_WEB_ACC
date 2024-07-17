@@ -154,7 +154,7 @@ namespace NES_WEB_ACC.Controllers
                             SignDate = item.SignDate,
                             SignBy = item.SignBy
                         }).ToList();
-                        return Json(resultdata, JsonRequestBehavior.AllowGet);
+                        return Json(formatData, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
