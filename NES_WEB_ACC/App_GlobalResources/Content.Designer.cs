@@ -196,7 +196,16 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 BillDate 的當地語系化字串。
+        ///   查詢類似 Alert 的當地語系化字串。
+        /// </summary>
+        public static string Alert {
+            get {
+                return ResourceManager.GetString("Alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Voucher Date 的當地語系化字串。
         /// </summary>
         public static string BillDate {
             get {
@@ -205,7 +214,7 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 BillNo 的當地語系化字串。
+        ///   查詢類似 Voucher No 的當地語系化字串。
         /// </summary>
         public static string BillNo {
             get {
@@ -214,7 +223,7 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 CompAbbr 的當地語系化字串。
+        ///   查詢類似 Comp Abbr 的當地語系化字串。
         /// </summary>
         public static string CompAbbr {
             get {
@@ -223,11 +232,20 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 CompNo 的當地語系化字串。
+        ///   查詢類似 Comp No 的當地語系化字串。
         /// </summary>
         public static string CompNo {
             get {
                 return ResourceManager.GetString("CompNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Confirm 的當地語系化字串。
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
             }
         }
         
@@ -250,7 +268,7 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 EmpNameC 的當地語系化字串。
+        ///   查詢類似 Accountant Name 的當地語系化字串。
         /// </summary>
         public static string EmpNameC {
             get {
@@ -259,7 +277,7 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 EmpNo 的當地語系化字串。
+        ///   查詢類似 Accountant No 的當地語系化字串。
         /// </summary>
         public static string EmpNo {
             get {
@@ -331,6 +349,24 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 An error occurred, error code: 的當地語系化字串。
+        /// </summary>
+        public static string MsgErrCode {
+            get {
+                return ResourceManager.GetString("MsgErrCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 The data has not been saved. Do you want to leave? 的當地語系化字串。
+        /// </summary>
+        public static string MsgLeave {
+            get {
+                return ResourceManager.GetString("MsgLeave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Remark 的當地語系化字串。
         /// </summary>
         public static string Remark {
@@ -340,7 +376,16 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 SystemManagement-Roles 的當地語系化字串。
+        ///   查詢類似 System Setting 的當地語系化字串。
+        /// </summary>
+        public static string SysSetting {
+            get {
+                return ResourceManager.GetString("SysSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Permission Setting 的當地語系化字串。
         /// </summary>
         public static string SystemManagementRoles {
             get {
@@ -349,11 +394,20 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 SystemManagement-Users 的當地語系化字串。
+        ///   查詢類似 UserAccount Setting 的當地語系化字串。
         /// </summary>
         public static string SystemManagementUsers {
             get {
                 return ResourceManager.GetString("SystemManagementUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Voucher Close 的當地語系化字串。
+        /// </summary>
+        public static string VoucherClose {
+            get {
+                return ResourceManager.GetString("VoucherClose", resourceCulture);
             }
         }
         
@@ -385,20 +439,29 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 Voucher Open 的當地語系化字串。
-        /// </summary>
-        public static string VoucherOpen {
-            get {
-                return ResourceManager.GetString("VoucherOpen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查詢類似 Voucher Operation 的當地語系化字串。
         /// </summary>
         public static string VoucherOperation {
             get {
                 return ResourceManager.GetString("VoucherOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Voucher Review 的當地語系化字串。
+        /// </summary>
+        public static string VoucherReview {
+            get {
+                return ResourceManager.GetString("VoucherReview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Workflow 的當地語系化字串。
+        /// </summary>
+        public static string Workflow {
+            get {
+                return ResourceManager.GetString("Workflow", resourceCulture);
             }
         }
     }

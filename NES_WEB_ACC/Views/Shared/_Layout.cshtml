@@ -27,11 +27,11 @@
             padding: 0;
         }
 
-        .container .top-content {
-            height: 50px;
-            margin: 0;
-            padding: 0;
-        }
+            .container .top-content {
+                height: 50px;
+                margin: 0;
+                padding: 0;
+            }
 
         .navbar-default {
             background-color: #7BE0AD; /* 設定背景色 */
@@ -39,6 +39,7 @@
             margin: 0;
             padding: 0;
         }
+
         .container-fluid {
             display: flex;
             align-items: center;
@@ -200,8 +201,14 @@
                                     @Resources.Content.Instrument
                                 </a>
                             </li>
+                            <li>
+                                @* 流程圖 *@
+                                <a href="@Url.Action("Workflow", "Home")">
+                                    @Resources.Content.Workflow
+                                </a>
+                            </li>
                             <li class="dropdown">
-                                @*會計設定圖*@
+                                @*會計設定*@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     @Resources.Content.AccSet
                                     <span class="caret"></span>
@@ -261,31 +268,49 @@
                                         </a>
                                     </li>
                                     <li>
-                                        @*傳票開帳作業*@
-                                        <a href="@Url.Action("VoucherOpen", "Voucher")">
-                                            @Resources.Content.VoucherOpen
+                                        @*傳票審核作業*@
+                                        <a href="@Url.Action("VoucherReview", "Voucher")">
+                                            @Resources.Content.VoucherReview
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @*傳票關帳作業*@
+                                        <a href="@Url.Action("VoucherClose", "Voucher")">
+                                            @Resources.Content.VoucherClose
                                         </a>
                                     </li>
                                     <li role="separator" class="divider"></li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <!--<li class="dropdown">-->
+                            @* 調整分錄 *@
+                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     @Resources.Content.AJE
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                 </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            </li>-->
+                            <!--<li class="dropdown">-->
+                            @* 報表 *@
+                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     @Resources.Content.FinanceReport
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                </ul>
+                            </li>-->
+                            <li class="dropdown">
+                                @* 系統設定 *@
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @Resources.Content.SysSetting
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                 </ul>
                             </li>
                             <li class="dropdown">
+                                @*權限設定*@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     <label id="lblPermissionSetting">@Resources.Content.lblPermissionSetting</label>
                                     <span class="caret"></span>
@@ -305,6 +330,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
+                                @*多語系*@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     <label id="lblMenuLanguage">@Resources.Content.lblMenuLanguage</label>
                                     <span class="caret"></span>
@@ -332,7 +358,7 @@
                                     </span>
                                 </a>
 
-                            </li>
+                            </li>                           
                             <li>
                                 <a href="/logout.aspx" class="btn-34">登出</a>
                             </li>
@@ -362,7 +388,8 @@
         var logoutUrl = "@Url.Content("~/Home/TimeOut")";
         var warningTimer;
         var timeoutTimer;
-        var testalerttip ='<div id="alerttip" style="position:fixed;left:0;top:0;width:220px;height:45px;margin:0px;padding:4px 0px 0px 30px;background-color:#f3f41b;color:#000000;font-size:2em;font-weight:bold;border-radius:0px 20px 20px 0px;">這是測試版</div>';
+        var testalerttip = '<div id="alerttip" style="position:fixed;left:0;top:0;width:220px;height:45px;margin:0px;padding:4px 0px 0px 30px;background-color:#f3f41b;color:#000000;font-size:2em;font-weight:bold;border-radius:0px 20px 20px 0px;">這是測試版</div>';
+
     </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -377,7 +404,7 @@
             let a = '@HttpContext.Current.Request.Url.Host';
             if (a != '192.168.50.8') {
                 $('#test-tip').html(testalerttip);
-            }
+            }          
         };
         // Start timers.
         function StartTimers() {

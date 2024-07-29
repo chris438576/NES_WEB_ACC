@@ -12,10 +12,15 @@ namespace NES_WEB_ACC.Controllers
     [Authorize]  
     public class HomeController : Controller
     {
+        /// <summary>
+        /// 介面_儀錶板
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {           
             string identityEmpNo = ControllerContext.HttpContext.User.Identity.Name;
-            UserSessionSetting(identityEmpNo);
+            CompanySessionSetting("C");
+            UserSessionSetting(identityEmpNo);           
 
             // 檢查TempData是否包含訊息
             if (TempData["Message"] != null)
@@ -23,9 +28,16 @@ namespace NES_WEB_ACC.Controllers
                 ViewBag.Message = TempData["Message"].ToString();
             }
 
-
             return View();
         }      
+        /// <summary>
+        /// 介面_作業流程圖
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Workflow()
+        {
+            return View();
+        }
 
         public ActionResult UserSessionSetting(string identityEmpNo)
         {
@@ -63,7 +75,7 @@ namespace NES_WEB_ACC.Controllers
                                 Session["EmpNo"] = reader.GetString(reader.GetOrdinal("EmpNo"));
                                 Session["EmpNameC"] = reader.GetString(reader.GetOrdinal("EmpNameC"));
                                 Session["DeptNo"] = reader.GetString(reader.GetOrdinal("DeptNo"));
-                                Session["DeptName"] = reader.GetString(reader.GetOrdinal("DeptName"));
+                                Session["DeptName"] = reader.GetString(reader.GetOrdinal("DeptName"));                                
                                 TempData["Message"] = "角色Session設定完成。";
                                 return RedirectToAction("Index");
                             }
@@ -81,6 +93,10 @@ namespace NES_WEB_ACC.Controllers
                     }
                 }
             }
+        }
+        public void CompanySessionSetting(string company)
+        {
+            Session["CompNo"] = company;            
         }
 
         public ActionResult TimeOut()

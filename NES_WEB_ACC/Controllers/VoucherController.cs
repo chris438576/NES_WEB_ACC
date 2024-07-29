@@ -10,8 +10,10 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+
 
 
 namespace NES_WEB_ACC.Controllers
@@ -21,160 +23,126 @@ namespace NES_WEB_ACC.Controllers
         public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
         private NES_WEB_ACCEntities _dbContext = new NES_WEB_ACCEntities();
         
+        //------ 介面 ------//
+        /// <summary>
+        /// 介面_傳票建立
+        /// </summary>
+        /// <returns></returns>
         public ActionResult VoucherCreate()
         {
             return View();
         }
-       
-        public ActionResult GetVoucherInfo()
+        /// <summary>
+        /// 介面_主管審核
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VoucherCheck()
         {
-            string sql = @"
-                            SELECT [Id]
-                                  ,[CompId]
-                                  ,[CompNo]
-                                  ,[CompAbbr]
-                                  ,[AccountBill]
-                                  ,[DocType]
-                                  ,[DocSubType]
-                                  ,[DocSubTypeName]
-                                  ,CONVERT(VARCHAR, BillDate, 111) as 'BillDate'
-                                  ,[Code1]
-                                  ,[Code2]
-                                  ,[BillNo]
-                                  ,[DcType]
-                                  ,[VoucherType]
-                                  ,[VoucherNameC]
-                                  ,[EmpId]
-                                  ,[EmpNo]
-                                  ,[EmpNameC]
-                                  ,[DeptId]
-                                  ,[DeptNo]
-                                  ,[DeptName]
-                                  ,[CurrencyNo]
-                                  ,[Rate1]
-                                  ,[Rate2]
-                                  ,[SourceCompId]
-                                  ,[SourceProjectId]
-                                  ,[SourceDocSubType]
-                                  ,[SourceDocSubTypeName]
-                                  ,[SourceDocId]
-                                  ,[SourceNo]
-                                  ,[BillAddType]
-                                  ,[Remark]
-                                  ,[ActivityType]
-                                  ,[AccDocType]
-                                  ,[Money11]
-                                  ,[Money12]
-                                  ,[Money21]
-                                  ,[Money22]
-                                  ,[Money1Dc]
-                                  ,[Money2Dc]
-                                  ,[Flag]
-                                  ,[IsState]
-                                  ,[StateDate]
-                                  ,[StateBy]
-                                  ,[IsChecked]
-                                  ,[CheckDate]
-                                  ,[CheckBy]
-                                  ,[CreateDate]
-                                  ,[CreateBy]
-                                  ,[BillStatus]
-                                  ,[SignDate]
-                                  ,[SignBy]
-                              FROM [ACC_VoucherInfo]
-　                            where Id in(
-	                        SELECT  DISTINCT top(200)
-		                        T1.Id 
-	                         FROM 
-		                        ACC_VoucherInfo as T1 
-		                        left join ACC_DataSet AS T7 on (T1. AccountBill = T7.Id and T7.GroupNo = N'AccountBill')                                     
-	                        WHERE T1.CompId in ( -1 , 150615163202244 ) And T1.DocType = N'V1'  
-	                        )
-                                ";
+            return View();
+        }
+        /// <summary>
+        /// 介面_傳票結案
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VoucherClose()
+        {
+            return View();
+        }
+        
+        //------ 資料讀取 ------//
+        public ActionResult GetVoucherInfo(string type)
+        {
+            var roles = ((GenericPrincipal)User).Identity as GenericIdentity;
+            string sql,sqlwhere;
+            object param = null;
+
+            if (string.IsNullOrEmpty(type))
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+          
+            if (roles != null)
+            {
+                var userRoles = ((GenericPrincipal)User).Claims
+                    .Where(c => c.Type == ClaimTypes.Role)
+                    .Select(c => c.Value)
+                    .ToArray();
+
+                sql = @"
+                            select * from NES_WEB_ACC.dbo.ACC_VoucherInfo 
+                            where 1=1                                
+                ";
+              
+                switch (type)
+                {
+                    case "create":
+                        sqlwhere = @"
+                            and IsClosed = 0                           
+                            and CreateBy = @craeteby
+                        ";
+                        if (!userRoles.Contains("Admin"))
+                        {
+                            sql = sql + sqlwhere;
+                            param = new { roles.Name };
+                        }                       
+                        break;
+                    case "check":
+                        sqlwhere = @"
+                            and IsClosed = 0   
+                            and IsChecked = 1
+                        ";
+                        sql = sql + sqlwhere;
+                        break;
+                    case "close":
+                        sqlwhere = @"
+                            and IsClosed = 0   
+                            and IsChecked = 1
+                            and IsState = 1
+                        ";
+                        sql = sql + sqlwhere;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                return Json (new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<ACC_VoucherInfo> resultdata = conn.Query<ACC_VoucherInfo>(sql).ToList();
-                    if (resultdata.Count > 0)
+                    List<ACC_VoucherInfo> resultdata;
+                    if (param == null)
                     {
-                        var formatData = resultdata.Select(item => new
-                        {
-                            Id = item.Id.ToString(), // 將Id轉換為字符串
-                            CompId = item.CompId,
-                            CompNo = item.CompNo,
-                            CompAbbr = item.CompAbbr,
-                            AccountBill = item.AccountBill,
-                            DocType = item.DocType,
-                            DocSubType = item.DocSubType,
-                            DocSubTypeName = item.DocSubTypeName,
-                            BillDate = item.BillDate,
-                            Code1 = item.Code1,
-                            Code2 = item.Code2,
-                            BillNo = item.BillNo,
-                            DcType = item.DcType,
-                            VoucherType = item.VoucherType,
-                            VoucherNameC = item.VoucherNameC,
-                            EmpId = item.EmpId,
-                            EmpNo = item.EmpNo,
-                            EmpNameC = item.EmpNameC,
-                            DeptId = item.DeptId,
-                            DeptNo = item.DeptNo,
-                            DeptName = item.DeptName,
-                            CurrencyNo = item.CurrencyNo,
-                            Rate1 = item.Rate1,
-                            Rate2 = item.Rate2,
-                            SourceCompId = item.SourceCompId,
-                            SourceProjectId = item.SourceProjectId,
-                            SourceDocSubType = item.SourceDocSubType,
-                            SourceDocSubTypeName = item.SourceDocSubTypeName,
-                            SourceDocId = item.SourceDocId,
-                            SourceNo = item.SourceNo,
-                            BillAddType = item.BillAddType,
-                            Remark = item.Remark,
-                            ActivityType = item.ActivityType,
-                            AccDocType = item.AccDocType,
-                            Money11 = item.Money11,
-                            Money12 = item.Money12,
-                            Money21 = item.Money21,
-                            Money22 = item.Money22,
-                            Money1Dc = item.Money1Dc,
-                            Money2Dc = item.Money2Dc,
-                            Flag = item.Flag,
-                            IsState = item.IsState,
-                            StateDate = item.StateDate,
-                            StateBy = item.StateBy,
-                            IsChecked = item.IsChecked,
-                            CheckDate = item.CheckDate,
-                            CheckBy = item.CheckBy,
-                            CreateDate = item.CreateDate,
-                            CreateBy = item.CreateBy,
-                            BillStatus = item.BillStatus,
-                            SignDate = item.SignDate,
-                            SignBy = item.SignBy
-                        }).ToList();
-                        return Json(formatData, JsonRequestBehavior.AllowGet);
+                        resultdata = conn.Query<ACC_VoucherInfo>(sql).ToList();
                     }
                     else
                     {
-                        Response.StatusCode = (int)HttpStatusCode.OK;
-                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                        resultdata = conn.Query<ACC_VoucherInfo>(sql, param).ToList();
+                    }
+                    if (resultdata.Count > 0)
+                    {                        
+                        return Json(new { success = true, code = "OK",data = resultdata }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, code = "C0003"}, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0004", JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "C0004",err = e }, JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult GetVoucherItem(string docid)
         {
             if (string.IsNullOrEmpty(docid))
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0001", JsonRequestBehavior.AllowGet);
+            {              
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
             string sql = @"select * from ACC_VoucherDetail where DocId = @docid";
             var param = new { docid };
@@ -247,23 +215,21 @@ namespace NES_WEB_ACC.Controllers
                             CreateBy = item.CreateBy,
                             ShowPage = item.ShowPage
                         }).ToList();
-                        return Json(formatData, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, code = "OK" , data = formatData }, JsonRequestBehavior.AllowGet);
                     }
                     else
-                    {
-                        Response.StatusCode = (int)HttpStatusCode.OK;
-                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    {                       
+                        return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            catch
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0004", JsonRequestBehavior.AllowGet);
+            catch (Exception e)
+            {              
+                return Json(new { success = false, code = "C0004" , err = e}, JsonRequestBehavior.AllowGet);
             }
         }        
         /// <summary>
-        /// 會計科目
+        /// 編輯_會計科目
         /// </summary>
         /// <returns></returns>
         public ActionResult GetEditTableCode()
@@ -283,29 +249,28 @@ namespace NES_WEB_ACC.Controllers
                     List<ACC_AccTitleNo> customerdata = conn.Query<ACC_AccTitleNo>(sql).ToList();
                     if (customerdata.Count > 0)
                     {
-                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, code = "OK" , data = customerdata }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        Response.StatusCode = (int)HttpStatusCode.OK;
-                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                       
+                        return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0004", JsonRequestBehavior.AllowGet);
+               
+                return Json(new { success = false, code = "C0004" , err = e }, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>
-        /// 對象別
+        /// 編輯_對象別
         /// </summary>
         /// <returns></returns>
         public ActionResult GetEditTableCode2()
-        {
-            // 創建一個包含數據的列表
-            var targetTypes = new List<object>
+        {            
+            var dataList = new List<object>
             {
             new { TargetType = "15", TargetTypeName = "廠商" },
             new { TargetType = "14", TargetTypeName = "客戶" },
@@ -313,36 +278,35 @@ namespace NES_WEB_ACC.Controllers
             new { TargetType = "65", TargetTypeName = "銀行" },
             };
             
-            return Json(targetTypes, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
-        /// 幣別
+        /// 編輯_幣別&匯率
         /// </summary>
         /// <returns></returns>
         public ActionResult GetEditTableCode3()
-        {
-            // 創建一個包含數據的列表
-            var targetTypes = new List<object>
+        {           
+            var dataList = new List<object>
             {
-            new { CurrencyNo = "NT$" },
-            new { CurrencyNo = "USD" },
-            new { CurrencyNo = "RMB" },
-            new { CurrencyNo = "EUR" },
-            new { CurrencyNo = "HKD" },
-            new { CurrencyNo = "JPY" },
-            new { CurrencyNo = "SGD" },
-            new { CurrencyNo = "GBP" },
-            new { CurrencyNo = "CAD" },
-            new { CurrencyNo = "KRW" },
-            new { CurrencyNo = "VND" },
-            new { CurrencyNo = "AUD" },
-            new { CurrencyNo = "PLN" },
-            new { CurrencyNo = "CHF" },
-            new { CurrencyNo = "MXN" },
-            new { CurrencyNo = "CZK" },
+                new { CurrencyNo = "NT$", Rate1 = "1" },
+                new { CurrencyNo = "USD", Rate1 = "30.73" },
+                new { CurrencyNo = "RMB", Rate1 = "4.27" },
+                new { CurrencyNo = "EUR", Rate1 = "34.40" },
+                new { CurrencyNo = "HKD", Rate1 = "3.94" },
+                new { CurrencyNo = "JPY", Rate1 = "0.22" },
+                new { CurrencyNo = "SGD", Rate1 = "22.70" },
+                new { CurrencyNo = "GBP", Rate1 = "39.92" },
+                new { CurrencyNo = "CAD", Rate1 = "23.55" },
+                new { CurrencyNo = "KRW", Rate1 = "0.024" },
+                new { CurrencyNo = "VND", Rate1 = "0.0013" },
+                new { CurrencyNo = "AUD", Rate1 = "21.03" },
+                new { CurrencyNo = "PLN", Rate1 = "7.71" },
+                new { CurrencyNo = "CHF", Rate1 = "34.64" },
+                new { CurrencyNo = "MXN", Rate1 = "1.84" },
+                new { CurrencyNo = "CZK", Rate1 = "1.47" },
             };
 
-            return Json(targetTypes, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 編輯_表身資訊_對象編號
@@ -352,9 +316,8 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult GetEditTableCode4(string type)
         {
             if (string.IsNullOrEmpty(type))
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0001", JsonRequestBehavior.AllowGet);
+            {               
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
             string sql;
             Type viewModelType = null;
@@ -408,9 +371,8 @@ namespace NES_WEB_ACC.Controllers
                     ";
                     viewModelType = typeof(VoucherCreateEditTargetNo4ViewModel);
                     break;
-                default:
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json("C0002", JsonRequestBehavior.AllowGet); 
+                default:                    
+                    return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet); 
             }
              
             //var param = new { docid };
@@ -421,19 +383,17 @@ namespace NES_WEB_ACC.Controllers
                     var customerdata = conn.Query(viewModelType, sql).ToList();
                     if (customerdata.Count > 0)
                     {
-                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, code = "OK", data = customerdata }, JsonRequestBehavior.AllowGet);
                     }
                     else
-                    {
-                        Response.StatusCode = (int)HttpStatusCode.OK;
-                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    {                        
+                        return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            catch
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0004", JsonRequestBehavior.AllowGet);
+            catch (Exception e)
+            {               
+                return Json(new { success = false, code = "C0004" , err = e }, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>
@@ -460,19 +420,17 @@ namespace NES_WEB_ACC.Controllers
                     List<VoucherCreateEditAccDeptViewModel> customerdata = conn.Query<VoucherCreateEditAccDeptViewModel>(sql).ToList();
                     if (customerdata.Count > 0)
                     {
-                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, code = "OK", data = customerdata }, JsonRequestBehavior.AllowGet);
                     }
                     else
-                    {
-                        Response.StatusCode = (int)HttpStatusCode.OK;
-                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    {                        
+                        return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            catch
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0004", JsonRequestBehavior.AllowGet);
+            catch (Exception e)
+            {              
+                return Json(new { success = false, code = "C0004" , err = e }, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>
@@ -496,27 +454,25 @@ namespace NES_WEB_ACC.Controllers
                     List<VoucherCreateEditPayDeptViewModel> customerdata = conn.Query<VoucherCreateEditPayDeptViewModel>(sql).ToList();
                     if (customerdata.Count > 0)
                     {
-                        return Json(customerdata, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, code = "OK" , data = customerdata }, JsonRequestBehavior.AllowGet);
                     }
                     else
-                    {
-                        Response.StatusCode = (int)HttpStatusCode.OK;
-                        return Json("C0003", JsonRequestBehavior.AllowGet);
+                    {                       
+                        return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0004", JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, code = "C0004", err= e }, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>
-        /// 活動類別
+        /// 編輯_活動類別
         /// </summary>
         /// <returns></returns>
         public ActionResult GetEditTableCode7() {
-            var docSubTypes = new List<object>
+            var dataList = new List<object>
             {
                 new { id = "1", ActivityType = "營業活動" },
                 new { id = "2", ActivityType = "投資活動" },
@@ -526,8 +482,8 @@ namespace NES_WEB_ACC.Controllers
                 new { id = "6", ActivityType = "停業單位" },
                 new { id = "7", ActivityType = "權益" },
             };
-
-            return Json(docSubTypes, JsonRequestBehavior.AllowGet);
+            return Json(dataList, JsonRequestBehavior.AllowGet);
+            //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 新增_表頭資訊_單據類別
@@ -535,15 +491,15 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult GetAddInfoCode()
         {
-            var docSubTypes = new List<object>
+            var dataList = new List<object>
             {
                 new { DocSubType = "A", DocSubTypeName = "一般傳票" },
                 new { DocSubType = "B", DocSubTypeName = "特殊傳票" },
                 new { DocSubType = "C", DocSubTypeName = "其他傳票" },
                 new { DocSubType = "E", DocSubTypeName = "年結傳票" },
             };
-
-            return Json(docSubTypes, JsonRequestBehavior.AllowGet);
+            return Json(dataList, JsonRequestBehavior.AllowGet);
+            //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 新增_表頭資訊_公司編號
@@ -551,15 +507,18 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult GetAddInfoCode2()
         {
-            var companies = new List<object>
+            var dataList = new[]
             {
                 new { CompId = "150615163202244", CompNo = "A", CompAbbr = "NES" },
                 new { CompId = "5354520274329583096", CompNo = "B", CompAbbr = "RNES" },
                 new { CompId = "5563551763276641505", CompNo = "C", CompAbbr = "RUIS SERVICES" },
                 new { CompId = "4844350623996401600", CompNo = "F", CompAbbr = "瑞師福委" }
-            };
+            };                      
+            var compNo = Session["CompNo"]?.ToString();                        
+            var filteredCompanies = dataList.Where(c => c.CompNo == compNo).ToList();
 
-            return Json(companies, JsonRequestBehavior.AllowGet);
+            return Json(filteredCompanies, JsonRequestBehavior.AllowGet);
+            //return Json(new { success = true, code = "OK", data = filteredCompanies }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 新增_表頭資訊_傳票類別
@@ -567,11 +526,12 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult GetAddInfoCode3()
         {
-            var voucherTypes = new List<object>
+            var dataList = new List<object>
             {
                 new { VoucherType = "1", VoucherNameC = "轉帳傳票" }
             };
-            return Json(voucherTypes, JsonRequestBehavior.AllowGet);
+            return Json(dataList, JsonRequestBehavior.AllowGet);
+            //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 新增_表頭資訊_交易幣別
@@ -579,69 +539,101 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult GetAddInfoCode4()
         {          
-            var currencies = new List<object>
+            var dataList = new List<object>
             {
                 new { CurrencyNo = "NT$", Rate1 = "1" },
                 new { CurrencyNo = "RMB", Rate1 = "4.28760" },
                 new { CurrencyNo = "CAD", Rate1 = "23.23800" },
                 new { CurrencyNo = "USD", Rate1 = "31.84000" },
                 new { CurrencyNo = "CHF", Rate1 = "30.06000" },
-                new { CurrencyNo = "EUR", Rate1 = "31.16500" }
+                new { CurrencyNo = "EUR", Rate1 = "31.16500" },
+                new { CurrencyNo = "MXN", Rate1 = "1.82810" },
             };
-            return Json(currencies, JsonRequestBehavior.AllowGet);
-        }       
+            return Json(dataList, JsonRequestBehavior.AllowGet);
+            //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
+        }
+
+        //------ 資料寫入 ------//
         /// <summary>
-        /// 
+        /// 新增傳票
         /// </summary>
         /// <param name="data"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult PostAddData(VoucherDataViewModel data)
         {
             if (data == null)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0001", JsonRequestBehavior.AllowGet);
+            {               
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
             try
-            {             
-
-                return Json(new { success = true, message = "資料已成功儲存." }, JsonRequestBehavior.AllowGet);
-            }
-            catch
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(new { success = false, message = "資料處理時發生錯誤." }, JsonRequestBehavior.AllowGet);
+                #region 參數值設定
+                DateTime dateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
+                var billNoCode = _dbContext.ACC_VoucherInfo.Where(v => v.BillDate == dateTime).GroupBy(v => v.BillDate).Select(g => g.Max(v => v.Code2)).FirstOrDefault();
+                string str_Code2 = string.IsNullOrEmpty(billNoCode) ? "001"  : Convert.ToInt64(billNoCode + 1).ToString("D3");
+                #endregion
+
+                #region 主檔寫入
+                var mainData = new ACC_VoucherInfo
+                {
+                    WebId = Guid.NewGuid(),
+                    CompId = data.Maindata.CompId,
+                    CompNo = data.Maindata.CompNo,
+                    CompAbbr = data.Maindata.CompAbbr,
+                    DocType = "V1",
+                    DocSubType = data.Maindata.DocSubType,
+                    DocSubTypeName = data.Maindata.DocSubTypeName,
+                    BillDate = dateTime,
+                    Code1 = "V"+ data.Maindata.CompNo+ dateTime.ToString("yyMMdd"),
+                    Code2 = str_Code2,
+                    BillNo = "V" + data.Maindata.CompNo + dateTime.ToString("yyMMdd") + str_Code2,
+                    DcType = "轉帳",
+                    VoucherType = data.Maindata.VoucherType,
+                    VoucherNameC = data.Maindata.VoucherNameC,
+                    EmpId = Session["EmpId"].ToString(),
+                    //EmpNameC
+                };
+                #endregion
+                #region 明細寫入
+                foreach (var item in data.Infodata)
+                {
+                    
+                }
+                #endregion
+                return Json(new { success = true, code = "OK", data = "Id" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {               
+                return Json(new { success = false, code = "C0004" , err =e }, JsonRequestBehavior.AllowGet);
             }
         }
+        /// <summary>
+        /// 編輯傳票
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult PostEditData(VoucherDataViewModel data) {
             if (data == null)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("C0001", JsonRequestBehavior.AllowGet);
+                
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
             try
             {
-
-                return Json(new { success = true, message = "資料已成功修改." }, JsonRequestBehavior.AllowGet);
+                
+                return Json(new { success = true, code = "OK" , data = "Id." }, JsonRequestBehavior.AllowGet);
             }
-            catch
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(new { success = false, message = "資料處理時發生錯誤." }, JsonRequestBehavior.AllowGet);
+            catch (Exception e)
+            {                
+                return Json(new { success = false, code = "C0004" , err = e }, JsonRequestBehavior.AllowGet);
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult VoucherCheck()
-        {
-            return View();
-        }
-     
 
+
+        //------ 部分檢視 ------//
         /// <summary>
         /// 部分檢視_表頭欄位
         /// </summary>
@@ -659,7 +651,7 @@ namespace NES_WEB_ACC.Controllers
             return PartialView();
         }
         /// <summary>
-        /// 
+        /// 部分檢視_借貸平衡
         /// </summary>
         /// <returns></returns>
         public ActionResult _VoucherDCShowPartial()

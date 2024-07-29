@@ -38,7 +38,7 @@ namespace NES_WEB_ACC
         public virtual DbSet<ACC_SysDocSubType> ACC_SysDocSubType { get; set; }
         public virtual DbSet<ACC_VoucherKind> ACC_VoucherKind { get; set; }
         public virtual DbSet<ACC_DataSet> ACC_DataSet { get; set; }
-        public virtual DbSet<ACC_VoucherInfo> ACC_VoucherInfo { get; set; }
         public virtual DbSet<ACC_VoucherDetail> ACC_VoucherDetail { get; set; }
+        public virtual DbSet<ACC_VoucherInfo> ACC_VoucherInfo { get; set; }
     }
 }

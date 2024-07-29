@@ -35,5 +35,6 @@ namespace NES_WEB_ACC
         public string CheckBy { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
+        public string AccNoByNameMX { get; set; }
     }
 }

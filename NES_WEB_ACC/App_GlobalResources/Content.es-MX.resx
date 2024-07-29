@@ -118,23 +118,23 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccCodeSet" xml:space="preserve">
-    <value>AccSujSet-mx</value>
+    <value>AccCodeSet</value>
     <comment>_Layouyt\會計設定:[會計科目設定]</comment>
   </data>
   <data name="AccGroupNoSet" xml:space="preserve">
-    <value>AccGroupNoSet-mx</value>
+    <value>AccGroupNoSet</value>
     <comment>_Layouyt\會計設定:[科目類別設定]</comment>
   </data>
   <data name="AccReport" xml:space="preserve">
-    <value>AccReport-mx</value>
+    <value>AccReport</value>
     <comment>_Layouyt\會計設定:[會計項目一覽表]</comment>
   </data>
   <data name="AccSet" xml:space="preserve">
-    <value>AccSetting-mx</value>
+    <value>AccSet</value>
     <comment>_Layouyt:[會計設定]</comment>
   </data>
   <data name="AccSysCodeSet" xml:space="preserve">
-    <value>AccSysCodeSet-mx</value>
+    <value>AccSysCodeSet</value>
     <comment>_Layouyt\會計設定:[會計系統基本設定]</comment>
   </data>
   <data name="AJE" xml:space="preserve">
@@ -142,27 +142,27 @@
     <comment>_Layouyt:[調整分錄]</comment>
   </data>
   <data name="BillDate" xml:space="preserve">
-    <value>BillDate-mx</value>
+    <value>Fecha del bono</value>
     <comment>傳票輸入作業\左側列表[傳票日期]</comment>
   </data>
   <data name="BillNo" xml:space="preserve">
-    <value>BillNo-mx</value>
+    <value>Número de vale</value>
     <comment>傳票輸入作業\左側列表[傳票編號]</comment>
   </data>
   <data name="CompAbbr" xml:space="preserve">
-    <value>CompAbbr-mx</value>
+    <value>Abreviatura de la empresa</value>
     <comment>傳票輸入作業\左側列表[公司簡稱]</comment>
   </data>
   <data name="CompNo" xml:space="preserve">
-    <value>CompNo-mx</value>
+    <value>Número de empresa</value>
     <comment>傳票輸入作業\左側列表[公司編號]</comment>
   </data>
   <data name="EmpNameC" xml:space="preserve">
-    <value>EmpNameC-mx</value>
+    <value>Nombre del contador</value>
     <comment>傳票輸入作業\左側列表[會計姓名]</comment>
   </data>
   <data name="EmpNo" xml:space="preserve">
-    <value>EmpNo-mx</value>
+    <value>Contadora no</value>
     <comment>傳票輸入作業\左側列表[負責會計]</comment>
   </data>
   <data name="EquityCodeSet" xml:space="preserve">
@@ -190,11 +190,11 @@
     <comment>傳票輸入作業\左側列表[傳票摘要]</comment>
   </data>
   <data name="SystemManagementRoles" xml:space="preserve">
-    <value>Configuración de permisos-permisos</value>
+    <value>Configuración de permisos</value>
     <comment>_Layouyt\權限設定:[權限設定-Roles]</comment>
   </data>
   <data name="SystemManagementUsers" xml:space="preserve">
-    <value>Configuración de permisos-Usuario</value>
+    <value>Configuración del usuario</value>
     <comment>_Layouyt\權限設定:[權限設定-User]</comment>
   </data>
   <data name="VoucherCodeSet" xml:space="preserve">
@@ -252,7 +252,28 @@
   <data name="AccGroupNameE" xml:space="preserve">
     <value>Acc Group NameE</value>
   </data>
-  <data name="VoucherOpen" xml:space="preserve">
-    <value>Voucher Open</value>
+  <data name="VoucherClose" xml:space="preserve">
+    <value>Cerrar cupón</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirmar</value>
+  </data>
+  <data name="MsgLeave" xml:space="preserve">
+    <value>Los datos no se han guardado. ¿Quieres salir?</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value>Alerta</value>
+  </data>
+  <data name="SysSetting" xml:space="preserve">
+    <value>Configuración del sistema</value>
+  </data>
+  <data name="VoucherReview" xml:space="preserve">
+    <value>Revisión del cupón</value>
+  </data>
+  <data name="Workflow" xml:space="preserve">
+    <value>Flujo de trabajo</value>
+  </data>
+  <data name="MsgErrCode" xml:space="preserve">
+    <value>Se produjo un error, código de error:</value>
   </data>
 </root>

@@ -198,6 +198,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccCodeController.cs" />
+    <Compile Include="Controllers\AccCodeMXController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportViewController.cs" />
@@ -1019,8 +1020,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UserRoleManage\UsersList.cshtml" />
     <Content Include="Views\UserRoleManage\RolesList.cshtml" />
@@ -1041,6 +1040,8 @@
     <Content Include="Views\Shared\_VoucherTableAdvPartial.cshtml" />
     <Content Include="Views\ReportView\AccReport.cshtml" />
     <Content Include="Views\Voucher\VoucherCheck.cshtml" />
+    <Content Include="Views\AccCodeMX\Index.cshtml" />
+    <Content Include="Views\Home\Workflow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

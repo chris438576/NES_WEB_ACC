@@ -14,11 +14,12 @@ namespace NES_WEB_ACC
     
     public partial class ACC_VoucherInfo
     {
-        public long Id { get; set; }
-        public Nullable<long> CompId { get; set; }
+        public System.Guid WebId { get; set; }
+        public string Id { get; set; }
+        public string CompId { get; set; }
         public string CompNo { get; set; }
         public string CompAbbr { get; set; }
-        public Nullable<long> AccountBill { get; set; }
+        public string AccountBill { get; set; }
         public string DocType { get; set; }
         public string DocSubType { get; set; }
         public string DocSubTypeName { get; set; }
@@ -29,20 +30,21 @@ namespace NES_WEB_ACC
         public string DcType { get; set; }
         public string VoucherType { get; set; }
         public string VoucherNameC { get; set; }
-        public Nullable<long> EmpId { get; set; }
+        public string EmpId { get; set; }
         public string EmpNo { get; set; }
         public string EmpNameC { get; set; }
-        public Nullable<long> DeptId { get; set; }
+        public string DeptId { get; set; }
         public string DeptNo { get; set; }
         public string DeptName { get; set; }
         public string CurrencyNo { get; set; }
+        public string CurrencySt { get; set; }
         public Nullable<decimal> Rate1 { get; set; }
         public Nullable<decimal> Rate2 { get; set; }
-        public Nullable<long> SourceCompId { get; set; }
-        public Nullable<long> SourceProjectId { get; set; }
+        public string SourceCompId { get; set; }
+        public string SourceProjectId { get; set; }
         public string SourceDocSubType { get; set; }
         public string SourceDocSubTypeName { get; set; }
-        public Nullable<long> SourceDocId { get; set; }
+        public string SourceDocId { get; set; }
         public string SourceNo { get; set; }
         public Nullable<int> BillAddType { get; set; }
         public string Remark { get; set; }
@@ -55,14 +57,17 @@ namespace NES_WEB_ACC
         public Nullable<decimal> Money1Dc { get; set; }
         public Nullable<decimal> Money2Dc { get; set; }
         public Nullable<int> Flag { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public string CreateBy { get; set; }
         public Nullable<bool> IsState { get; set; }
         public Nullable<System.DateTime> StateDate { get; set; }
         public string StateBy { get; set; }
         public Nullable<bool> IsChecked { get; set; }
         public Nullable<System.DateTime> CheckDate { get; set; }
         public string CheckBy { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
-        public string CreateBy { get; set; }
+        public Nullable<bool> IsClosed { get; set; }
+        public Nullable<System.DateTime> ClosedDate { get; set; }
+        public string ClosedBy { get; set; }
         public Nullable<int> BillStatus { get; set; }
         public Nullable<System.DateTime> SignDate { get; set; }
         public string SignBy { get; set; }

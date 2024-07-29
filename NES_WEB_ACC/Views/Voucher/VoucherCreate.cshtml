@@ -8,7 +8,7 @@
         /*#region container style*/
         #body-container {
             width: 100%;
-            height: calc(100vh - 185px);
+            height: calc(100vh - 140px);
             background-color: #d0d0d0;
             margin: 0px;
             padding: 0px;
@@ -16,10 +16,10 @@
             overflow-y: auto;
         }
 
-        .body-layout {
-            height: calc(100vh - 185px);
-            width: 100%;
-        }
+            #body-container .body-layout {
+                height: calc(100vh - 140px);
+                width: 100%;
+            }
 
         #dgAccGoup {
             width: 315px;
@@ -547,7 +547,7 @@
 @{ Html.RenderAction("_ToolBarPartial"); }
 
 <div id="body-container">
-    <div class="easyui-layout body-layout">
+    <div class="easyui-layout body-layout" >
         <div data-options="region:'west',collapsible:false" title="" style="width:25%;height:100%;">
             <table id="maindg" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>
         </div>
@@ -693,7 +693,7 @@
             dlgtabs = $('#dlgtabs');
         var maindgIndex = -1,
             itemdgIndex;
-           
+
         var actioncode = 'view';
 
         //#endregion
@@ -711,6 +711,12 @@
         var itemdglang = {
 
         };
+        var msglang = {
+            Title1: '@Resources.Content.Confirm',
+            Title2:'@Resources.Content.Alert',
+            MsgLeave: '@Resources.Content.MsgLeave',
+            MsgErrCode : '@Resources.Content.MsgErrCode'
+        }
         //#endregion
         //#region 資料暫存
         var objAccNo = { name: 'AccNo', data: null };
@@ -726,16 +732,18 @@
 
         //#region 初始化
         $(function () {
-            ///-----dg欄位設定-----///            
-            maindgSet();    //左側列表欄位           
-            itemdgSet();    //右側側列表欄位_分錄明細       
-            dlgdg1Set();    //編輯_科目編號           
-            dlgdg2Set();     //編輯_幣別            
-            dlgdg3Set();    //編輯_目標編號            
-            dlgdg4Set();    //編輯_成本中心            
+            ///-----dg欄位設定-----///
+            maindgSet();    //左側列表欄位
+            itemdgSet();    //右側側列表欄位_分錄明細
+            dlgdg1Set();    //編輯_科目編號
+            dlgdg2Set();    //編輯_幣別
+            dlgdg3Set();    //編輯_目標編號
+            dlgdg4Set();    //編輯_成本中心
             dlgdg5Set();    //編輯_支付部門
-            ///-----按鈕狀態-----///  
+            ///-----按鈕狀態-----///
             btnEnableSet('view');
+            ///-----資料填值-----///
+            maindgData();
         });
         //#endregion
 
@@ -757,10 +765,10 @@
                     { field: 'CompNo', title: maindglang.CompNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } }
                 ]],
-                onSelect: function (index, row) {                 
+                onSelect: function (index, row) {
                     if (actioncode === 'add' || actioncode === 'edit') {
                         if (maindgIndex !== index) {
-                            $.messager.confirm('確認', '資料尚未儲存，是否離開?', function (r) {
+                            $.messager.confirm(msglang.Title1, msglang.MsgLeave, function (r) {
                                 if (r) {
                                     maindgIndex = index; // 更新目前行索引
                                     actioncode = 'view'; // 更新行為模式
@@ -778,32 +786,37 @@
                         maindgIndex = index;
                         tableHeadData(row);
                         itemdgData(row.Id);
-                    }                   
+                    }
                 },
-                onClickRow: function (index, row) {
-                   
+                rowStyler: function (index, row) {
+                    if (row.BillStatus == '1') {
+                        return 'background-color:#E4CE40;color:#fff;';
+                    }
+                    if (row.BillStatus == '2') {
+                        return 'background-color:#E4CE40;color:#fff;';
+                    }
                 }
-            });
-            maindgData();
-           
+            });         
         }
         function maindgData() {
-            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo';            
-            doajax("GET", actionurl, null, function (data) {
-                if (data == "C0003") {
-                    $.messager.alert('alert', '讀取無資料!');
-                    maindg.datagrid('loadData', '');
-                    console.log("C0003: Not Found");
-                } else {
-                    if (Array.isArray(data)) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo?type=create';
+            doajax("GET", actionurl, null, function (result) {
+                if (result.success) {
+                    if (Array.isArray(result.data)) {
                         // 遍歷數據並格式化日期
-                        data.forEach(function (item) {
+                        result.data.forEach(function (item) {
                             if (item.BillDate) {
                                 item.BillDate = formatDate(item.BillDate); // 使用formatDate函數格式化日期
                             }
                         });
                     }
-                    maindg.datagrid('loadData', data);
+                    maindg.datagrid('loadData', result.data);
+                } else {
+                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                    if (result.code == 'C0004') {
+                        console.log(result.err);
+                    }
+                    maindg.datagrid('loadData', '');
                 }
             });
         }
@@ -860,7 +873,7 @@
                                         objdata({ name: 'TargetType' }, 'read', function (objtype) {
                                             if (objtype.data) {
                                                 success(objtype.data);
-                                            } 
+                                            }
                                         });
                                     },
                                     columns: [[
@@ -879,7 +892,7 @@
                                             index: itemdgIndex,
                                             row: {
                                                 TargetNo: '',
-                                                TargetAbbr: ''                                               
+                                                TargetAbbr: ''
                                             }
                                         });
                                         // 结束编辑状态
@@ -941,42 +954,38 @@
                         { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string', formatter: format11 },//format11
                     ]
                 ],
-                onClickRow: function (index, row) {                   
-                    if (actioncode === 'edit' || actioncode === 'add') { 
+                onClickRow: function (index, row) {
+                    if (actioncode === 'edit' || actioncode === 'add') {
                         itemdg.datagrid('beginEdit', index); //啟用編輯
                         itemdgIndex = index; // 更新當前行索引
                         voucherDC();
-                    }                   
+                    }
                 },
-                onBeforeEdit: function (index, row) {                   
-                    if (actioncode === 'edit' || actioncode === 'add') {                                        
+                onBeforeEdit: function (index, row) {
+                    if (actioncode === 'edit' || actioncode === 'add') {
                         // 如果上一行正在編輯，結束它的編輯狀態
                         if (itemdgIndex !== undefined && itemdgIndex !== index) {
                             itemdg.datagrid('endEdit', itemdgIndex);
                         }
-                    }                  
-                },                
-                onAfterEdit: function (index, row, changes) {                   
-                    if (actioncode === 'edit' || actioncode === 'add') {                        
+                    }
+                },
+                onAfterEdit: function (index, row, changes) {
+                    if (actioncode === 'edit' || actioncode === 'add') {
                         // 使用 updateRow 更新數據源
                         itemdg.datagrid('updateRow', { index: index, row: row });
                         // 刷新該行以應用格式化並重構編輯狀態
                         itemdg.datagrid('refreshRow', index);
                         voucherDC();
                         // 重置當前的編輯行索引
-                        itemdgIndex = undefined;                       
+                        itemdgIndex = undefined;
                     }
                 },
                 onCancelEdit: function (index, row) {
-                    if (actioncode === 'edit' || actioncode === 'add') {
-                        console.log("取消編輯，行索引：" + index);
+                    if (actioncode === 'edit' || actioncode === 'add') {                        
                         itemdgIndex = undefined; // 重置索引
                     }
-                },                
-                onBeginEdit: function (index, row) {
-
                 },
-                onRowContextMenu: function (e, rowIndex, rowData) {
+                onRowContextMenu: function (e, index, row) {
                     if (actioncode === 'edit' || actioncode === 'add') {
                         $('#mm').menu('show', {
                             left: e.pageX,
@@ -989,19 +998,21 @@
         }
         function itemdgData(docid) {
             actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherItem?docid=' + docid;
-            doajax("GET", actionurl, null, function (data) {
-                if (data == "C0003") {
-                    $.messager.alert('alert', '讀取無資料!');
-                    itemdg.datagrid('loadData', '');
-                    console.log("C0003: Not Found");
-                } else {
-                    itemdg.datagrid('loadData', data);
+            doajax("GET", actionurl, null, function (result) {
+                if (result.success) {
+                    itemdg.datagrid('loadData', result.data);
                     // VoucherDC計算
                     voucherDC();
-                }
+                } else {
+                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                    if (result.code == 'C0004') {
+                        console.log(result.err);
+                    }
+                    itemdg.datagrid('loadData', '');
+                }               
             });
         }
-       
+
         ///----- dlg_dg -----///
         function dlgdg1Set() {
             try {
@@ -1019,21 +1030,19 @@
                     ]],
                     toolbar: '#toolbar1',
                     fitColumns: true,
-                    onLoadSuccess: function (data) {
-                        console.log('加载成功dlgdg1', data);
+                    onLoadSuccess: function (data) {                      
                         try {
                             $(this).datagrid('enableFilter');
                         } catch (error) {
-                            console.error('dlgdg1启用过滤器时出错:', error);
+                            console.error('dlgdg1_Filter error::', error);
                         }
                     }
                 });
-
             } catch (error) {
-                console.error('dlgdg1初始化 datagrid 时出错:', error);
+                console.error('dlgdg1_Initialize error::', error);
             }
 
-        }     
+        }
         function dlgdg2Set() {
             // 配置datagrid
             dlgdg2.datagrid({
@@ -1041,17 +1050,18 @@
                 striped: true,
                 columns: [[
                     { field: 'CurrencyNo', title: '幣別', type: 'string', sortable: true },
+                    { field: 'Rate1', title: 'Rate1', type: 'string',hidden:true},
                 ]],
                 fitColumns: true,
                 onClickRow: function (index, row) {
-                    // 取得點選列的CurrencyNo值
-                    var selectedCurrencyNo = row.CurrencyNo;
 
                     // 將值填入itemdg並更新行
                     itemdg.datagrid('updateRow', {
                         index: itemdgIndex,
                         row: {
-                            CurrencyNo: selectedCurrencyNo
+                            CurrencyNo: row.CurrencyNo,
+                            Rate1: row.Rate1
+
                         }
                     });
 
@@ -1060,7 +1070,7 @@
                 }
             });
         }
-        function dlgdg3Set() {    
+        function dlgdg3Set() {
             dlgdg30.datagrid({
                 singleSelect: true,
                 striped: true,
@@ -1086,12 +1096,11 @@
                 ]],
                 toolbar: '#toolbar30',
                 fitColumns: true,
-                onLoadSuccess: function (data) {
-                    console.log('dlgdg30加载成功', data);
+                onLoadSuccess: function (data) {                    
                     try {
                         $(this).datagrid('enableFilter');
                     } catch (error) {
-                        console.error('dlgdg30启用过滤器时出错:', error);
+                        console.error('dlgdg30_Filter error::', error);
                     }
                 }
             });
@@ -1120,12 +1129,11 @@
                 ]],
                 toolbar: '#toolbar31',
                 fitColumns: true,
-                onLoadSuccess: function (data) {
-                    console.log('dlgdg31加载成功', data);
+                onLoadSuccess: function (data) {                   
                     try {
                         $(this).datagrid('enableFilter');
                     } catch (error) {
-                        console.error('dlgdg31启用过滤器时出错:', error);
+                        console.error('dlgdg31_Filter error::', error);
                     }
                 }
             });
@@ -1145,12 +1153,11 @@
                 ]],
                 toolbar: '#toolbar32',
                 fitColumns: true,
-                onLoadSuccess: function (data) {
-                    console.log('dlgdg32加载成功', data);
+                onLoadSuccess: function (data) {                  
                     try {
                         $(this).datagrid('enableFilter');
                     } catch (error) {
-                        console.error('dlgdg32启用过滤器时出错:', error);
+                        console.error('dlgdg32_Filter error:', error);
                     }
                 }
             });
@@ -1169,12 +1176,11 @@
                 ]],
                 toolbar: '#toolbar33',
                 fitColumns: true,
-                onLoadSuccess: function (data) {
-                    console.log('dlgdg33加载成功', data);
+                onLoadSuccess: function (data) {                    
                     try {
                         $(this).datagrid('enableFilter');
                     } catch (error) {
-                        console.error('dlgdg33启用过滤器时出错:', error);
+                        console.error('dlgdg33_Filter error::', error);
                     }
                 }
             });
@@ -1202,10 +1208,10 @@
             } catch (error) {
                 console.error('初始化 datagrid 时出错:', error);
             }
-        }       
+        }
         function dlgdg5Set() {
             try {
-               
+
                 // 配置datagrid
                 dlgdg5.datagrid({
                     singleSelect: true,
@@ -1227,7 +1233,7 @@
             } catch (error) {
                 console.error('初始化 datagrid 时出错:', error);
             }
-        }      
+        }
         //#endregion
 
         //#region 按鈕動作&狀態
@@ -1277,7 +1283,7 @@
                 case 'search':
                     break;
                 //#endregion
-              
+
                 //#region toolbar_itemdg資料動作
                 case 'add':
                     actioncode = 'add'; //狀態碼
@@ -1286,12 +1292,12 @@
                     advtabs.tabs('select', 1); //進階資訊切換
                     maindg.datagrid('unselectRow', maindgIndex );
                     addForm(); //格式化、下拉選單初始化、預設欄位填值
-                    itemdg.datagrid('loadData', { total: 0, rows: [] });//itemdg資料清空
+                    itemdg.datagrid('loadData', { total: 0, rows: [] });//itemdg資料清空                    
                     $('.colMoneyD').textbox('setValue', '');
                     $('.colMoneyC').textbox('setValue', '');
                     $('.colMoney').textbox('setValue', '');
                     break;
-                case 'edit':                  
+                case 'edit':
                     var select = maindg.datagrid('getSelected');
                     if (select != null) {
                         actioncode = 'edit';
@@ -1300,21 +1306,22 @@
                         alert("請選擇傳票進行編輯");
                     }
                     break;
-                case 'save':                   
+                case 'save':
                     let maindata ; //表頭
                     let infodata = []; //表身
                     let data = [];
                     let dosave ; //檢查是否能存
                     let maindatadg, infodatadg;
-                        
-                    if (actioncode === 'add') {                     
+
+                    if (actioncode === 'add') {
                         dosave = saveCheck(actioncode);
                         if (dosave) {
                             maindata = {
                                 'BillDate': $('.fomBillDate').textbox('getValue'),
                                 'DocSubType': $('.fomDocSubType').textbox('getValue'),
                                 'DocSubTypeName': $('.fomDocSubTypeName').textbox('getValue'),
-                                'CompNo': $('.fomCompNo').textbox('getValue'),
+                                'CompId': $('.fomCompNo').textbox('getValue'),
+                                'CompNo': $('.fomCompNo').textbox('getText'),
                                 'CompAbbr': $('.fomCompAbbr').textbox('getValue'),
                                 'VoucherType': $('.fomVoucherType').textbox('getValue'),
                                 'VoucherNameC': $('.fomVoucherNameC').textbox('getValue'),
@@ -1324,9 +1331,9 @@
                                 'DeptName': $('.fomDeptName').textbox('getValue'),
                                 'BillNo': $('.fomBillNo').textbox('getValue'),
                                 'CurrencyNo': $('.fomCurrencyNo').textbox('getValue'),
-                                'CurrencyTw1': $('.fomCurrencyTw1').textbox('getValue'),
+                                'Currency1': $('.fomCurrency1').textbox('getValue'),
                                 'Rate1': $('.fomRate1').textbox('getValue'),
-                                'CurrencyTw2': $('.fomCurrencyTw2').textbox('getValue'),
+                                'Currency2': $('.fomCurrency2').textbox('getValue'),
                                 'Rate2': $('.fomRate2').textbox('getValue'),
                                 'TargetNo': $('.fomTargetNo').textbox('getValue')
                             };
@@ -1376,10 +1383,10 @@
                                     'CaseBillNo': row.CaseBillNo,
                                 };
                             });
-                            // 檢查JSON大小
-                            let jsonString = JSON.stringify(data);
-                            let jsonSize = new Blob([jsonString]).size;
-                            console.log("JSON Size: " + jsonSize + " bytes");
+                            //// 檢查JSON大小
+                            //let jsonString = JSON.stringify(data);
+                            //let jsonSize = new Blob([jsonString]).size;
+                            //console.log("JSON Size: " + jsonSize + " bytes");
 
                             data = {
                                 Maindata: maindata,
@@ -1394,21 +1401,27 @@
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
-                                    $.messager.alert('alert', '資料已成功儲存!');                                      
-                                    console.log(response);
+                                    if (response.success) {
+                                        $.messager.alert(msglang.Title2, '資料已成功儲存!');
+                                    } else {
+                                        $.messager.alert(msglang.Title2, MsgErrCode + response.code);                                        
+                                        if (result.code == 'C0004') {
+                                            console.log(result.err);
+                                        }
+                                    }      
                                 },
                                 error: function (xhr, status, errorThrown) {
-                                    $.messager.alert('alert', '儲存資料時發生錯誤!');                                      
+                                    $.messager.alert(msglang.Title2, '儲存資料時發生錯誤!');
                                     console.error(status, errorThrown);
                                 }
                             });
                         } else {
-                            $.messager.alert('alert', '請檢查欄位是否輸入或借貸平衡!');                             
+                            $.messager.alert(msglang.Title2, '請檢查欄位是否輸入或借貸平衡!');
                         }
-                    } else if (actioncode === 'edit') {                       
-                        dosave = saveCheck(actioncode);                       
-                        if (dosave) {                           
-                            maindatadg = maindg.datagrid('getRows')[maindgIndex]                           
+                    } else if (actioncode === 'edit') {
+                        dosave = saveCheck(actioncode);
+                        if (dosave) {
+                            maindatadg = maindg.datagrid('getRows')[maindgIndex]
                             maindata = {
                                 'BillDate': maindatadg.BillDate,
                                 'DocSubType': maindatadg.DocSubType,
@@ -1477,7 +1490,7 @@
                             data = {
                                 Maindata: maindata,
                                 Infodata: infodata
-                            };                            
+                            };
                             // 檢查JSON大小
                             let jsonString = JSON.stringify(data);
                             let jsonSize = new Blob([jsonString]).size;
@@ -1491,23 +1504,23 @@
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
-                                    $.messager.alert('alert', '資料已成功儲存!');
+                                    $.messager.alert(msglang.Title2, '資料已成功儲存!');
                                     console.log(response);
                                 },
                                 error: function (xhr, status, errorThrown) {
-                                    $.messager.alert('alert', '儲存資料時發生錯誤!');                                   
+                                    $.messager.alert(msglang.Title2, '儲存資料時發生錯誤!');
                                     console.error("Status: " + status);
                                     console.error("Error: " + errorThrown);
                                     console.error("Response: " + xhr.responseText);
                                 }
                             });
                         } else {
-                            $.messager.alert('alert', '請檢查欄位是否輸入或借貸平衡!');
+                            $.messager.alert(msglang.Title2, '請檢查欄位是否輸入或借貸平衡!');
                         }
                     } else {
-                        $.messager.alert('alert', '操作碼錯誤');
+                        $.messager.alert(msglang.Title2, '操作碼錯誤');
                     }
-                                      
+
                     actioncode = 'view';
                     btnEnableSet(actioncode);
 
@@ -1516,7 +1529,7 @@
                     break;
                 case 'cancel':
                     if (actioncode == 'add') {
-                        $.messager.confirm('確認', '是否要取消?', function (r) {
+                        $.messager.confirm(msglang.Title1, '是否要取消?', function (r) {
                             if (r) {
                                 //addForm欄位清空
                                 $('#addForm .easyui-datebox').datebox('clear');
@@ -1529,22 +1542,22 @@
                                 maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
                                 actioncode = 'view';
                                 btnEnableSet(actioncode);
-                            } else {                               
+                            } else {
                                 return;
                             }
                         });
                     } else if (actioncode == 'edit') {
-                        $.messager.confirm('確認', '是否要取消?', function (r) {
+                        $.messager.confirm(msglang.Title1, '是否要取消?', function (r) {
                             if (r) {
                                 maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
                                 actioncode = 'view';
                                 btnEnableSet(actioncode);
-                            } else {                              
+                            } else {
                                 return;
                             }
                         });
                     }
-                   
+
                     break;
                 case 'delete':
                     break;
@@ -1565,21 +1578,6 @@
                         return;
                     }
 
-                    // 更新 itemdg 中的编辑行
-                    //if (actioncode === 'edit') {
-                    //    itemdg.datagrid('updateRow', {
-                    //        index: itemdgIndex,
-                    //        row: {
-                    //            AccNo: selectedRow.AccNo,
-                    //            AccNameC: selectedRow.AccNameC,
-                    //            AccNoBy: selectedRow.AccNoBy,
-                    //            AccNoByNameC: selectedRow.AccNoByNameC,
-                    //            AccGroupNo: selectedRow.AccGroupNo,
-                    //            AccGroupNameC: selectedRow.AccGroupNameC,
-                    //            Remark: '.',
-                    //        }
-                    //    });
-                    //}
                     if (actioncode === 'add' || actioncode === 'edit') {
                         itemdg.datagrid('updateRow', {
                             index: itemdgIndex,
@@ -1616,7 +1614,7 @@
                     if (itemdgIndex === -1) {
                         $.messager.alert('提示', '请先选择需要编辑的行！');
                         return;
-                    }                  
+                    }
                     itemdg.datagrid('updateRow', {
                         index: itemdgIndex,
                         row: {
@@ -1665,7 +1663,7 @@
                         }
                     });
                     $('#dlgEditTargetNo').dialog('close');
-                    break;                   
+                    break;
                 case 'dlgdg33insert':
                     var selectedRow = dlgdg33.datagrid('getSelected');
                     if (!selectedRow) {
@@ -1773,14 +1771,14 @@
                     break;
                 default:
                     $('#btnAdd').linkbutton('enable');
-                    $('#btnEdit').linkbutton('enable');                    
+                    $('#btnEdit').linkbutton('enable');
                     $('#btnSave').linkbutton('disable');
                     $('#btnDetail').linkbutton('disable');
                     $('#btnRefresh').linkbutton('enable');
                     $('#btnCancel').linkbutton('disable');
                     $('#btnDelete').linkbutton('disable');
             }
-        }     
+        }
         //#endregion
 
         //#region 功能函式
@@ -1818,9 +1816,9 @@
             $('.colDeptName').textbox('setValue', row.DeptName);
             $('.colBillNo').textbox('setValue', row.BillNo);
             $('.colCurrencyNo').textbox('setValue', row.CurrencyNo);
-            /* $('.colCurrencyTw1').textbox('setValue',row.VoucherNameC);*/
+            /* $('.colCurrency1').textbox('setValue',row.VoucherNameC);*/
             $('.colRate1').textbox('setValue', row.Rate1);
-            /* $('.colCurrencyTw2').textbox('setValue',row.VoucherNameC);*/
+            /* $('.colCurrency2').textbox('setValue',row.VoucherNameC);*/
             $('.colRate2').textbox('setValue', row.Rate2);
             $('.colTargetNo').textbox('setValue', row.TargetNo);
             //進階資料
@@ -1831,7 +1829,6 @@
             $('.colSourceDocSubTypeName').textbox('setValue', row.SourceDocSubTypeName);
             $('.colActivityType').textbox('setValue', row.ActivityType);
             $('.colSourceNo').textbox('setValue', row.SourceNo);
-
         }
 
         // 傳票借貸合計(使用記帳金額計算)
@@ -1860,7 +1857,7 @@
         function saveCheck(type) {
             let check1 = true; //表頭必填欄位
             let check2 = false;//借貸平衡
-            
+
             // check1
             if (type === 'add') {
                 let form = document.getElementById('addForm');
@@ -1868,7 +1865,7 @@
 
                 inputs.forEach(function (input) {
                     if (!input.value) {
-                        check1 = false;                       
+                        check1 = false;
                         input.classList.add('error');
                     } else {
                         input.classList.remove('error');
@@ -1879,12 +1876,12 @@
             }
 
             // check2
-            voucherDC();         
-            let dcbalance = $('.colMoney').textbox('getValue');           
+            voucherDC();
+            let dcbalance = $('.colMoney').textbox('getValue');
             if (dcbalance == 0) {
                 check2 = true;
             }
-          
+
             // return
             if (check1 && check2 ) {
                 return true;
@@ -2000,7 +1997,7 @@
                     itemdgIndex = newIndex;
                     break;
                 case 'addC':
-                    rowCount = itemdg.datagrid('getRows').length;                 
+                    rowCount = itemdg.datagrid('getRows').length;
                     itemdg.datagrid('appendRow', {
                         Id: '',
                         Linage: rowCount + 1,
@@ -2049,7 +2046,7 @@
                     break;
                 case 'addReverse':
                     if (itemdgIndex == null || itemdgIndex < 0) {
-                        $.messager.alert('alert', '請先選擇一行進行操作');                        
+                        $.messager.alert(msglang.Title2, '請先選擇一行進行操作');
                         return;
                     }
                     currentRow = itemdg.datagrid('getRows')[itemdgIndex];
@@ -2061,12 +2058,12 @@
                         reverseDCTypeNo = 'D';
                         reverseDCTypeName = '借';
                     } else {
-                        $.messager.alert('alert', '當前行的借貸方向不正確');                       
+                        $.messager.alert(msglang.Title2, '當前行的借貸方向不正確');
                         return;
                     }
                     rowCount = itemdg.datagrid('getRows').length;
                     itemdg.datagrid('appendRow', {
-                        Id: '',                       
+                        Id: '',
                         Linage: rowCount + 1,
                         AccNo: currentRow.AccNo,
                         AccNameC: currentRow.AccNameC,
@@ -2125,9 +2122,9 @@
                             });
                         }
                     } else {
-                        $.messager.alert('alert', '未選擇任何行刪除');                       
+                        $.messager.alert(msglang.Title2, '未選擇任何行刪除');
                     }
-                    break;               
+                    break;
                 default:
                     break;
             }
@@ -2175,13 +2172,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[AccNo]無資料!');
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {                                    
+                                    objtype.data = result.data;                                    
+                                } else {                                 
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                     objtype.data = null;
-                                    console.log("C0003: Not Found");
-                                } else {
-                                    objtype.data = data;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }                                    
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2196,13 +2198,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode3';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[CurrencyNo]無資料!');
-                                    objtype.data = null;
-                                    console.log("C0003: Not Found");
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {
+                                    objtype.data = result.data;
                                 } else {
-                                    objtype.data = data;
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                    objtype.data = null;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2217,13 +2224,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode5';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[AccDept]無資料!');
-                                    objtype.data = null;
-                                    console.log("C0003: Not Found");
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {
+                                    objtype.data = result.data;
                                 } else {
-                                    objtype.data = data;
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                    objtype.data = null;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2238,13 +2250,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode4?type=15';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[TargetNo0]無資料!');
-                                    objtype.data = null;
-                                    console.log("C0003: Not Found");
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {
+                                    objtype.data = result.data;
                                 } else {
-                                    objtype.data = data;
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                    objtype.data = null;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2259,13 +2276,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode4?type=14';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[TargetNo1]無資料!');
-                                    objtype.data = null;
-                                    console.log("C0003: Not Found");
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {
+                                    objtype.data = result.data;
                                 } else {
-                                    objtype.data = data;
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                    objtype.data = null;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2280,13 +2302,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode4?type=12';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[TargetNo2]無資料!');
-                                    objtype.data = null;
-                                    console.log("C0003: Not Found");
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {
+                                    objtype.data = result.data;
                                 } else {
-                                    objtype.data = data;
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                    objtype.data = null;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2301,13 +2328,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode4?type=65';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[TargetNo3]無資料!');
-                                    objtype.data = null;
-                                    console.log("C0003: Not Found");
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {
+                                    objtype.data = result.data;
                                 } else {
-                                    objtype.data = data;
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                    objtype.data = null;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2322,13 +2354,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode6';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[PayDept]無資料!');
-                                    objtype.data = null;
-                                    console.log("C0003: Not Found");
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {
+                                    objtype.data = result.data;
                                 } else {
-                                    objtype.data = data;
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                    objtype.data = null;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2343,13 +2380,18 @@
                             if (callback) callback(objtype);
                         } else {
                             actionurl = defaultUrl + controllerurl + functionurl + 'GetEditTableCode2';
-                            doajax("GET", actionurl, null, function (data) {
-                                if (data == "C0003") {
-                                    $.messager.alert('alert', '讀取物件[TargetType]無資料!');
-                                    objtype.data = null;
-                                    console.log("C0003: Not Found");
+                            doajax("GET", actionurl, null, function (result) {
+                                if (result.success) {
+                                    objtype.data = result.data;
                                 } else {
-                                    objtype.data = data;
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                    objtype.data = null;
+                                    if (result.code == 'C0003') {
+                                        console.log("C0003: [AccNo] Not Found");
+                                    }
+                                    if (result.code == 'C0004') {
+                                        console.log(result.err);
+                                    }
                                 }
                                 if (callback) callback(objtype);
                             });
@@ -2485,19 +2527,19 @@
                 required: true,
                 panelWidth: 355,
                 panelHeight: 150,
-                idField: 'DocSubType', // 主键字段
-                textField: 'DocSubType', // 显示的字段
-                mode: 'remote', // 使用远程数据
+                idField: 'DocSubType',
+                textField: 'DocSubType',
+                mode: 'remote',
                 url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode',
                 columns: [[
                     { field: 'DocSubType', title: '單據類別', width: 150 },
-                    { field: 'DocSubTypeName', title: '單據類別名稱', width: 200 }
+                    { field: 'DocSubTypeName', title: '單據類別名稱', width: 180 }
                 ]],
                 onSelect: function (index, row) {
-                    // 设置关联的文本框
                     $('.fomDocSubTypeName').textbox('setValue', row.DocSubTypeName);
                 }
             });
+
             //下拉選單_公司編號
             $('.fomCompNo').combogrid({
                 required: true,
@@ -2509,7 +2551,7 @@
                 url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode2',
                 columns: [[
                     { field: 'CompNo', title: '公司編號', width: 150 },
-                    { field: 'CompAbbr', title: '公司編號名稱', width: 200 }
+                    { field: 'CompAbbr', title: '公司編號名稱', width: 180 }
                 ]],
                 onSelect: function (index, row) {
                     $('.fomCompAbbr').textbox('setValue', row.CompAbbr);
@@ -2558,14 +2600,15 @@
         //#endregion
 
         //#region 彈跳視窗
-        function dlgEditAccNo() {
+        function dlgEditAccNo() {           
             objdata(objAccNo, 'read', function (data) {
+                console.log(objAccNo.data);
                 if (data.data) {
                     dlgdg1.datagrid('loadData', data.data);
                 } else {
                     dlgdg1.datagrid('loadData', '');
                 }
-            });
+            });            
             let winheight = $(window).height();
             let winwidth = $(window).width();
             $('#dlgEditAccNo').dialog({ height: winheight - 50, width: winwidth - 200, title: '會計科目' });
@@ -2589,9 +2632,9 @@
             $('#dlgEditDCType').dialog('open').dialog('center');
         }
         function dlgEditTarget() {
-            let editTargetType = itemdg.datagrid('getRows')[itemdgIndex].TargetType;            
+            let editTargetType = itemdg.datagrid('getRows')[itemdgIndex].TargetType;
             switch (editTargetType) {
-                case '15':                   
+                case '15':
                     objdata(objTargetNo0, 'read', function (data) {
                         if (data.data) {
                             dlgdg30.datagrid('loadData', data.data);
@@ -2601,7 +2644,7 @@
                         }
                     });
                     break;
-                case '14':                   
+                case '14':
                     objdata(objTargetNo1, 'read', function (data) {
                         if (data.data) {
                             dlgdg31.datagrid('loadData', data.data);
@@ -2611,7 +2654,7 @@
                         }
                     });
                     break;
-                case '12':                   
+                case '12':
                     objdata(objTargetNo2, 'read', function (data) {
                         if (data.data) {
                             dlgdg32.datagrid('loadData', data.data);
@@ -2621,7 +2664,7 @@
                         }
                     });
                     break;
-                case '65':                   
+                case '65':
                     objdata(objTargetNo3, 'read', function (data) {
                         if (data.data) {
                             dlgdg33.datagrid('loadData', data.data);
@@ -2630,7 +2673,7 @@
                             dlgdg33.datagrid('loadData', '');
                         }
                     });
-                    break;                   
+                    break;
                 default:
                     break;
             }
@@ -2652,7 +2695,7 @@
             $('#dlgEditCurrencyNo').dialog({ height: 200, width: 80, title: '交易幣別' });
             $('#dlgEditCurrencyNo').dialog('open').dialog('center');
         }
-        function dlgEditAccDept() {  
+        function dlgEditAccDept() {
             objdata(objAccDept, 'read', function (data) {
                 if (data.data) {
                     dlgdg4.datagrid('loadData', data.data);
@@ -2665,7 +2708,7 @@
             $('#dlgEditAccDept').dialog({ height: winheight - 100, width: winwidth - 200, title: '成本中心' });
             $('#dlgEditAccDept').dialog('open').dialog('center');
         }
-        function dlgEditPayDept() {   
+        function dlgEditPayDept() {
             objdata(objPayDept, 'read', function (data) {
                 if (data.data) {
                     dlgdg5.datagrid('loadData', data.data);

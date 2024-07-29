@@ -10,6 +10,7 @@ namespace NES_WEB_ACC.ViewModels
         public string BillDate { get; set; }
         public string DocSubType { get; set; }
         public string DocSubTypeName { get; set; }
+        public string CompId { get; set; }
         public string CompNo { get; set; }
         public string CompAbbr { get; set; }
         public string VoucherType { get; set; }

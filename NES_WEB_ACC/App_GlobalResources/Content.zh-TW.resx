@@ -190,11 +190,11 @@
     <comment>傳票輸入作業\左側列表[傳票摘要]</comment>
   </data>
   <data name="SystemManagementRoles" xml:space="preserve">
-    <value>權限設定-Roles</value>
+    <value>權限設定</value>
     <comment>_Layouyt\權限設定:[權限設定-Roles]</comment>
   </data>
   <data name="SystemManagementUsers" xml:space="preserve">
-    <value>權限設定-User</value>
+    <value>帳號設定</value>
     <comment>_Layouyt\權限設定:[權限設定-User]</comment>
   </data>
   <data name="VoucherCodeSet" xml:space="preserve">
@@ -252,7 +252,28 @@
   <data name="AccGroupNameE" xml:space="preserve">
     <value>科目大類英文名稱</value>
   </data>
-  <data name="VoucherOpen" xml:space="preserve">
-    <value>傳票開帳作業</value>
+  <data name="VoucherClose" xml:space="preserve">
+    <value>傳票關帳作業</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="MsgLeave" xml:space="preserve">
+    <value>資料尚未儲存，是否離開?</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="SysSetting" xml:space="preserve">
+    <value>系統設定</value>
+  </data>
+  <data name="VoucherReview" xml:space="preserve">
+    <value>傳票主管審核</value>
+  </data>
+  <data name="Workflow" xml:space="preserve">
+    <value>流程圖</value>
+  </data>
+  <data name="MsgErrCode" xml:space="preserve">
+    <value>發生錯誤，錯誤代碼：</value>
   </data>
 </root>

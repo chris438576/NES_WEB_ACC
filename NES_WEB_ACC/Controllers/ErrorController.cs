@@ -9,7 +9,7 @@ namespace NES_WEB_ACC.Controllers
     public class ErrorController : Controller
     {
         // GET: Error
-        public ActionResult Index()
+        public ActionResult Index(string errmsg)
         {
             return View();
         }
