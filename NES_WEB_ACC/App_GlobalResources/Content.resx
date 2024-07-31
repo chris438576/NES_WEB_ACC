@@ -198,7 +198,7 @@
     <comment>_Layouyt\權限設定:[權限設定-User]</comment>
   </data>
   <data name="VoucherCodeSet" xml:space="preserve">
-    <value>VoucherCodeSet</value>
+    <value>Voucher Code Set</value>
     <comment>_Layouyt\會計設定:[傳票類別設定]</comment>
   </data>
   <data name="VoucherCreate" xml:space="preserve">
@@ -275,5 +275,14 @@
   </data>
   <data name="MsgErrCode" xml:space="preserve">
     <value>An error occurred, error code:</value>
+  </data>
+  <data name="Prompts" xml:space="preserve">
+    <value>Prompts</value>
+  </data>
+  <data name="MsgSelectRow" xml:space="preserve">
+    <value>Please select the row to be edited first!</value>
+  </data>
+  <data name="VoucherCheck" xml:space="preserve">
+    <value>Voucher Check</value>
   </data>
 </root>

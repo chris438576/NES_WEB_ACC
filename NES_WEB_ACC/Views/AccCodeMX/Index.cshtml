@@ -1,4 +1,4 @@
-﻿
+﻿@* 會計科目設定MX *@
 @{
     ViewBag.Title = "會計科目設定MX";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -120,8 +120,7 @@
         //#endregion
         //#region 多語系
         var maindglang = {
-            AccGroupNo: '@Resources.Content.AccGroupNo',
-            AccGroupNameC: '@Resources.Content.AccGroupNameC',
+
         };
         //#endregion
         //#region 資料暫存
@@ -130,10 +129,30 @@
 
         //----初始化----------///
 
-        $(function () {           
-           
+        $(function () {
+            maindgSet();
         });
-       
+
+        function maindgSet() {
+            maindg.datagrid({
+                singleSelect: true,
+                striped: true,
+                columns: [[
+                    { field: 'Id', title: 'Id', hidden: true, type: 'text' },
+                    { field: 'Flag', title: '旗', hidden: true },
+                    { field: 'BillDate', title: maindglang.BillDate, width: 80, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'BillNo', title: maindglang.BillNo, width: 130, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'VoucherNameC', title: maindglang.VoucherNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'EmpNo', title: maindglang.EmpNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'EmpNameC', title: maindglang.EmpNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'Remark', title: maindglang.Remark, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'CompNo', title: maindglang.CompNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } }
+                ]],
+                onSelect: function (index, row) {
+                }
+            });
+        }
 
     </script>
-    }
+}

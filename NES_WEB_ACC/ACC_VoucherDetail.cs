@@ -14,51 +14,57 @@ namespace NES_WEB_ACC
     
     public partial class ACC_VoucherDetail
     {
-        public long Id { get; set; }
-        public Nullable<long> DocId { get; set; }
+        public System.Guid WebId { get; set; }
+        public string Id { get; set; }
+        public System.Guid WebDocId { get; set; }
+        public string DocId { get; set; }
         public Nullable<int> Linage { get; set; }
-        public Nullable<long> AccNoId { get; set; }
+        public Nullable<System.Guid> AccNoWebId { get; set; }
+        public string AccNoId { get; set; }
         public string AccNo { get; set; }
         public string AccNameC { get; set; }
         public string AccNameE { get; set; }
+        public string AccNameMX { get; set; }
         public string Remark { get; set; }
         public string DCTypeNo { get; set; }
         public string DCTypeNameC { get; set; }
+        public string DCTypeNameMX { get; set; }
         public string CurrencyNo { get; set; }
+        public string CurrencySt { get; set; }
         public Nullable<decimal> Rate1 { get; set; }
         public Nullable<decimal> Rate2 { get; set; }
         public Nullable<decimal> Money { get; set; }
         public Nullable<decimal> Money1 { get; set; }
         public Nullable<decimal> Money2 { get; set; }
-        public Nullable<long> AccProfitId { get; set; }
+        public string AccProfitId { get; set; }
         public string AccProfitNo { get; set; }
         public string AccProfitName { get; set; }
-        public Nullable<long> AccDeptId { get; set; }
+        public string AccDeptId { get; set; }
         public string AccDeptNo { get; set; }
         public string AccDeptName { get; set; }
-        public Nullable<long> PayDeptId { get; set; }
+        public string PayDeptId { get; set; }
         public string PayDeptNo { get; set; }
         public string PayDeptName { get; set; }
-        public Nullable<long> TargetType { get; set; }
-        public Nullable<long> TargetId { get; set; }
+        public string TargetType { get; set; }
+        public string TargetId { get; set; }
         public string TargetNo { get; set; }
         public string TargetAbbr { get; set; }
         public string OffsetNo { get; set; }
-        public Nullable<long> CaseBillId { get; set; }
+        public string CaseBillId { get; set; }
         public string CaseBillNo { get; set; }
-        public Nullable<long> SourceProjectId { get; set; }
+        public string SourceProjectId { get; set; }
         public string SourceDocSubType { get; set; }
         public string SourceDocSubTypeName { get; set; }
-        public Nullable<long> SourceDocId { get; set; }
-        public Nullable<long> SourceSeqId { get; set; }
+        public string SourceDocId { get; set; }
+        public string SourceSeqId { get; set; }
         public string SourceNo { get; set; }
-        public Nullable<long> InitialProjectId { get; set; }
+        public string InitialProjectId { get; set; }
         public string InitialDocSubType { get; set; }
         public string InitialDocSubTypeName { get; set; }
-        public Nullable<long> InitialDocId { get; set; }
+        public string InitialDocId { get; set; }
         public string InitialNo { get; set; }
-        public Nullable<long> CheckType { get; set; }
-        public Nullable<long> CheckId { get; set; }
+        public string CheckType { get; set; }
+        public string CheckId { get; set; }
         public string CheckNo { get; set; }
         public string EventType { get; set; }
         public string ActivityType { get; set; }

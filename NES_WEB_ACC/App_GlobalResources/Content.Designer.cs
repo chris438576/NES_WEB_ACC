@@ -367,6 +367,24 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Please select the row to be edited first! 的當地語系化字串。
+        /// </summary>
+        public static string MsgSelectRow {
+            get {
+                return ResourceManager.GetString("MsgSelectRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Prompts 的當地語系化字串。
+        /// </summary>
+        public static string Prompts {
+            get {
+                return ResourceManager.GetString("Prompts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Remark 的當地語系化字串。
         /// </summary>
         public static string Remark {
@@ -403,6 +421,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Voucher Check 的當地語系化字串。
+        /// </summary>
+        public static string VoucherCheck {
+            get {
+                return ResourceManager.GetString("VoucherCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Voucher Close 的當地語系化字串。
         /// </summary>
         public static string VoucherClose {
@@ -412,7 +439,7 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 VoucherCodeSet 的當地語系化字串。
+        ///   查詢類似 Voucher Code Set 的當地語系化字串。
         /// </summary>
         public static string VoucherCodeSet {
             get {

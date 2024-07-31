@@ -276,4 +276,13 @@
   <data name="MsgErrCode" xml:space="preserve">
     <value>發生錯誤，錯誤代碼：</value>
   </data>
+  <data name="Prompts" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="MsgSelectRow" xml:space="preserve">
+    <value>請先選擇需要編輯的行！</value>
+  </data>
+  <data name="VoucherCheck" xml:space="preserve">
+    <value>傳票檢核作業</value>
+  </data>
 </root>

@@ -1,8 +1,899 @@
 ﻿
 @{
-    ViewBag.Title = "VoucherCheck";
+    ViewBag.Title = @Resources.Content.VoucherCheck;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>VoucherCheck</h2>
+@section css {
+    <style>
+        /*#region container style*/
+        #body-container {
+            width: 100%;
+            height: calc(100vh - 140px);
+            background-color: #d0d0d0;
+            margin: 0px;
+            padding: 0px;
+            font-size: 1.0em;
+            overflow-y: auto;
+        }
 
+            #body-container .body-layout {
+                height: calc(100vh - 140px);
+                width: 100%;
+            }
+
+        #dgAccGoup {
+            width: 315px;
+            height: calc(100vh - 120px);
+            padding: 0px;
+            background-color: #F2F2F2;
+        }
+
+        #body-content {
+            padding: 0px;
+            margin: 0px;
+            background: white;
+            height: 100%;
+        }
+
+        .modulecontent {
+            height: 100%;
+            width: 99%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /*#endregion*/
+        /*#region Body style*/
+        #content-top {
+            min-width: 500px;
+            width: 99%;
+            min-height: 170px;
+            height: 18% auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        #content-form {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        #content-grid {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border: 0.5px solid #d2d2d2;
+            background-color: #ffffff;
+            overflow-x: auto !important;
+        }
+
+        .header-toolbar {
+            overflow: auto;
+            font-size: 0.9em;
+            padding: 1px 15px 1px 3px;
+            width: 100%;
+            background-color: #cfcfcf;
+            margin: 0;
+            border: 1px solid gray;
+        }
+
+        #content-tabs {
+            padding-bottom: 10px;
+        }
+
+        /*#endregion*/
+
+        /*#region easyui style*/
+        .textbox-readonly .textbox-text {
+            background: #EEEEEE;
+        }
+
+        .ischecked-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fdff47;
+            color: black;
+            cursor: default;
+        }
+
+        /*.yellow-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #a2f8f8;
+            color: black;
+            cursor: default;
+        }*/
+
+        .gray-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fa806f;
+            color: black;
+            cursor: default;
+        }
+
+        .close-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #6df757;
+            color: black;
+            cursor: default;
+        }
+
+        .cancel-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #e196fb;
+            color: black;
+            cursor: default;
+        }
+
+        .error-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fdff47;
+            color: black;
+            cursor: default;
+        }
+
+        .datagrid-row-selected div {
+            color: white;
+        }
+
+        .datagrid-row-editing td {
+            color: black;
+        }
+
+        .header-toolbar .easyui-linkbutton {
+            width: 50px;
+            height: 52px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .header-toolbar .linkbtn2 {
+            width: 60px;
+        }
+
+        .header-toolbar .linkbtn3 {
+            width: 95px;
+        }
+
+        .header-toolbar .l-btn-text {
+            font-size: 12px !important;
+            margin-top: 28px !important;
+        }
+
+        .header-toolbar .l-btn-icon {
+            width: 24px !important;
+            height: 24px !important;
+            left: 60% !important;
+        }
+
+        .separatorbar {
+            margin-right: 20px;
+        }
+
+        .tabs-wrap .tabs {
+            width: 99% !important;
+        }
+
+        .switchbtn {
+            text-decoration: none;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: middle;
+            margin: 5px 10px 0px 0px;
+            padding: 3px;
+            cursor: pointer;
+            border: 1px solid #bbb;
+            -moz-border-radius: 5px 5px 5px 5px;
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+            .switchbtn label {
+                margin-left: 3px;
+            }
+
+        .btnliktype .l-btn-text {
+            margin-left: 15px;
+            font-size: 12px !important;
+        }
+        /*#endregion*/
+        /*#region datagrid style*/
+
+        .datagrid-view tr, .datagrid-view td {
+            border: 1px solid black;
+        }
+
+        .datagrid-header-row td {
+            background-color: #d2d2d2;
+            color: #333;
+            font-weight: bold;
+            border: 1px solid black !important;
+        }
+
+        .datagrid-header, .datagrid-td-rownumber {
+            background-color: #fff !important;
+            background: none;
+            background-repeat: no-repeat;
+        }
+
+
+        .datagrid-cell-rownumber {
+            color: black !important;
+        }
+
+        .datagrid-row .datagrid-cell {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+
+        .subtd {
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0px !important;
+            padding: 1px !important;
+            border: 1px solid black !important;
+            min-height: 22px;
+        }
+        /*#endregion */
+        /*#region table style*/
+        /* 初始表格外框顏色 */
+        .datagrid {
+            border: 2px solid white; /* 默認顏色 */
+        }
+
+        .container-table {
+            width: 99%;
+            margin: 0px 20px 0px 2px;
+            padding: 0px;
+            table-layout: fixed;
+            word-break: break-all;
+        }
+
+            .container-table .table-header {
+                background-color: #95B3D7;
+                border: solid 1px black;
+            }
+
+            .container-table th, .container-table tr, .container-table tr td {
+                /*border: none;*/
+                border: solid 1px black !important;
+                text-align: center;
+            }
+
+            .container-table th, .container-table tr, .container-table td {
+                height: 32px !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+                .container-table tr td {
+                    font-size: 1.0em;
+                    vertical-align: middle !important;
+                    font-weight: bold;
+                }
+
+            .container-table th {
+                font-size: 1.0em;
+                vertical-align: middle !important;
+            }
+
+        tr td label {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+        /*#endregion*/
+        /*#region row style*/
+        .row-fix {
+            margin-left: 0px !important;
+        }
+
+        .row-filestyle {
+            margin-top: 5px;
+            margin-left: 3px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid black;
+            padding: 3px;
+        }
+
+        .col-fix-1, .col-fix-2, .col-fix-3 {
+            padding: 0px;
+            margin-right: 0px;
+        }
+
+            .col-fix-1 > span {
+                margin-left: 35px;
+            }
+
+            .col-fix-1 input[type="text"], .col-fix-1 .form-control,
+            .col-fix-1 .easyui-combobox,
+            .col-fix-1 .easyui-textbox:not(.col-fix-lg),
+            .col-fix-1 .easyui-datebox, .col-fix-1 .easyui-maskedbox {
+                width: 120px !important;
+            }
+
+
+            .col-fix-2 input[type="text"]:not(.textbox-text), .col-fix-2 .form-control,
+            .col-fix-2 .easyui-combobox, .col-fix-2 .easyui-textbox,
+            .col-fix-2 .easyui-datebox, .col-fix-2 .easyui-maskedbox {
+                width: 110px !important;
+            }
+
+            .col-fix-3 input[type="text"], .col-fix-3 .form-control,
+            .col-fix-3 .easyui-combobox, .col-fix-3 .easyui-textbox,
+            .col-fix-3 .easyui-datebox, .col-fix-3 .easyui-maskedbox {
+                width: 120px !important;
+            }
+
+            .col-fix-1 .col-fix-lg, .col-fix-2 .col-fix-lg, .col-fix-3 .col-fix-lg {
+                width: 300px !important;
+            }
+
+                .col-fix-1 .col-fix-lg input[type="text"], .col-fix-1 .col-fix-lg .easyui-textbox {
+                    width: 300px !important;
+                }
+        /*#endregion*/
+        /*#region dom style*/
+        #reportFrame {
+            height: auto 100%;
+        }
+
+        .dlgtabs {
+            min-height: 80%;
+            max-height: calc(100vh - 100px);
+            border: 0.5px solid #bbbaba;
+        }
+
+        .rowstyle {
+            margin-left: 8px !important;
+            margin-top: 5px;
+            padding-right: 0px;
+        }
+
+        input[type=radio] {
+            margin-right: 5px;
+            padding: 0.5em;
+            -webkit-appearance: none;
+            outline: 0.1em solid black;
+            outline-offset: 0.1em;
+        }
+
+            input[type=radio]:checked {
+                display: inline-block;
+                background-color: #000 !important;
+            }
+
+            input[type=radio]:disabled {
+                background-color: #EEEEEE;
+            }
+
+        /*#endregion*/
+
+        .progress-extended div label, .progress-txtextended div label {
+            width: 100%;
+            text-align: left;
+        }
+
+        .progress-extended .row, .progress-txtextended .row {
+            margin: 10px;
+            padding: 5px;
+            border-bottom: 0.5px solid black;
+        }
+
+            .progress-extended .row .btn, .progress-txtextended .row .btn {
+                margin-right: 15px;
+            }
+
+        .form-viewer {
+            width: 99%;
+            height: 100%;
+        }
+
+        /*#region form style*/
+        .formtext {
+            white-space: nowrap;
+            border: 1px solid black;
+        }
+
+        .formimport {
+            border: 1px solid black;
+        }
+        /*#endregion */
+        @@media (max-width: 1400px) {
+            #submenu {
+                font-size: 0.9em !important;
+            }
+
+            #body-container {
+                max-height: calc(100vh - 130px);
+                font-size: 0.9em;
+            }
+
+            #content-top {
+                font-size: 0.9em !important;
+                min-height: 155px;
+            }
+
+            #content-grid {
+                min-height: calc(100vh - 300px);
+            }
+
+            .panel-title, .tabs-title {
+                font-size: 0.8em;
+            }
+
+            .panel-header, .tabs, .tabs-wrap, .tabs-selected, .tabs-inner {
+                height: 23px !important;
+                padding: 1px !important;
+            }
+
+            .datagrid-cell {
+                font-size: 0.8em !important;
+            }
+
+            .datagrid-header-row {
+                font-size: 0.8em !important;
+                height: 28px !important;
+            }
+
+            .layout-panel-center .datagrid-row,
+            .layout-panel-center .datagrid-row-editing,
+            .layout-panel-center .datagrid-row-editing td,
+            .layout-panel-center .datagrid-row-editing span,
+            .layout-panel-center .datagrid-row-editing input {
+                height: 35px;
+            }
+
+            .col-fix-1 label, .col-fix-2 label, .col-fix-3 label {
+                font-size: 9px !important;
+            }
+
+            .col-fix-1 span {
+                margin-left: 10px;
+            }
+
+            .col-fix-1 input[type="text"], .col-fix-1 .form-control,
+            .col-fix-1 .easyui-combobox, .col-fix-1 .easyui-textbox,
+            .col-fix-1 .easyui-datebox, .col-fix-1 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 100px !important;
+            }
+
+            .col-fix-2 input[type="text"], .col-fix-2 .form-control,
+            .col-fix-2 .easyui-combobox, .col-fix-2 .easyui-textbox,
+            .col-fix-2 .easyui-datebox, .col-fix-2 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 90px !important;
+            }
+
+            .col-fix-3 input[type="text"], .col-fix-3 .form-control,
+            .col-fix-3 .easyui-combobox, .col-fix-3 .easyui-textbox,
+            .col-fix-3 .easyui-datebox, .col-fix-3 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 100px !important;
+            }
+
+            .col-fix-4 input[type="text"], .col-fix-4 .form-control,
+            .col-fix-4 .easyui-combobox, .col-fix-4 .easyui-textbox,
+            .col-fix-4 .easyui-datebox, .col-fix-4 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 80px !important;
+            }
+
+            .col-fix-1 .col-fix-lg, .col-fix-2 .col-fix-lg, .col-fix-3 .col-fix-lg {
+                width: 200px !important;
+            }
+
+            .textbox-button .l-btn-left {
+                margin: 0px !important;
+                padding-left: 20px;
+                height: 28px;
+                width: 28px;
+            }
+
+                .textbox-button .l-btn-left .l-btn-icon {
+                    margin-top: -8px;
+                    margin-left: 0px !important;
+                }
+
+            .textbox-button .l-btn-text {
+                font-size: 0px !important;
+            }
+
+            .btndeliverychange, .btnmanualclose, .btnstockenter {
+                width: 65px !important;
+                height: 45px !important;
+            }
+
+            .btnreportset {
+                width: 60px !important;
+                height: 45px !important;
+                font-size: 0.7em !important;
+            }
+        }
+
+        /* sub欄位*/
+        /*#region datagrid style*/
+        .datagrid {
+            border: 2px solid white; /* 默認顏色 */
+        }
+
+        .datagrid-header-row td {
+            background-color: #d2d2d2;
+            color: #333;
+            font-weight: bold;
+            border: 1px solid black !important;
+        }
+
+        .datagrid-header, .datagrid-td-rownumber {
+            background-color: #fff !important;
+            background: none;
+            background-repeat: no-repeat;
+        }
+
+        .datagrid-cell-rownumber {
+            color: black !important;
+        }
+
+        .datagrid-row .datagrid-cell {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+
+        .datagrid-row td {
+            border: 1px solid black !important;
+        }
+
+        #infotabs .tabs-header, #advtabs .tabs-header, #dlgtabs .tabs-header {
+            display: none;
+        }
+    </style>
+}
+
+@{ Html.RenderAction("_ToolBarPartial"); }
+
+<div id="body-container">
+    <div class="easyui-layout body-layout">
+        <div data-options="region:'west',collapsible:false" title="" style="width:25%;height:100%;">
+            <table id="maindg" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>
+        </div>
+
+        <div data-options="region:'east',collapsible:false" title="" style="width: 75%; height: 100%;">
+            <div class="row" style="width: 99%;height:21%; margin: 2px;">
+                @{ Html.RenderAction("_VoucherTableInfoPartial"); }
+            </div>
+            <div class="row" style="width: 99%; height: 70%; margin: 2px;">
+                <div id="content-tabs" class="easyui-tabs" style="width:100%;height:100%;">
+                    <div title="分錄明細" style="padding:2px;display:none;">
+                        <table id="itemdg" class="datagrid easyui-itemdg" style="width: 100%; height: 100%; margin: 5px;"></table>
+                    </div>
+                    <div title="進階資料" style="overflow: auto; padding: 20px; display: none;">
+                        @{ Html.RenderAction("_VoucherTableAdvPartial"); }
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="width: 99%; height: 5%; margin: 0px;">
+                @{ Html.RenderAction("_VoucherDCShowPartial"); }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        ///-----基本參數-----///
+        //#region 基本參數
+        var controllerurl = '/Voucher', functionurl = "/", actionurl = "";
+        var maindg = $('#maindg'),        //左側列表
+            itemdg = $('#itemdg');      //表身頁籤1列表
+        var maindgIndex = -1,
+            itemdgIndex;
+        var actioncode = 'view';
+        //#endregion
+
+        //#region 多語系
+        var maindglang = {
+            BillDate: '@Resources.Content.BillDate',
+            BillNo: '@Resources.Content.BillNo',
+            VoucherNameC: '@Resources.Content.VoucherNameC',
+            EmpNo: '@Resources.Content.EmpNo',
+            EmpNameC: '@Resources.Content.EmpNameC',
+            Remark: '@Resources.Content.Remark',
+            CompNo: '@Resources.Content.CompNo',
+            CompAbbr: '@Resources.Content.CompAbbr'
+        };
+        var itemdglang = {
+
+        };
+        var msglang = {
+            Title1: '@Resources.Content.Confirm',//確認
+            Title2: '@Resources.Content.Alert',  //警告
+            Title3: '@Resources.Content.Prompts',  //提示
+            MsgLeave: '@Resources.Content.MsgLeave',
+            MsgErrCode: '@Resources.Content.MsgErrCode',
+            MsgSelectRow: '@Resources.Content.MsgSelectRow',
+        }
+        //#endregion
+
+        //#region 初始化
+        $(function () {
+            ///-----dg欄位設定-----///
+            maindgSet();    //左側列表欄位
+            itemdgSet();    //右側側列表欄位_分錄明細           
+            ///-----按鈕狀態-----///
+            btnEnableSet('view');
+            ///-----資料填值-----///
+            maindgData();
+        });
+        //#endregion
+
+        //#region dg設定與填值
+        ///----- 頁面dg -----///
+        function maindgSet() {
+            maindg.datagrid({
+                singleSelect: true,
+                striped: true,
+                columns: [[
+                    { field: 'Id', title: 'Id', hidden: true, type: 'text' },
+                    { field: 'Flag', title: '旗', hidden: true },
+                    { field: 'BillDate', title: maindglang.BillDate, width: 80, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'BillNo', title: maindglang.BillNo, width: 130, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'VoucherNameC', title: maindglang.VoucherNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'EmpNo', title: maindglang.EmpNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'EmpNameC', title: maindglang.EmpNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'Remark', title: maindglang.Remark, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'CompNo', title: maindglang.CompNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } }
+                ]],
+                onSelect: function (index, row) {
+                    if (actioncode === 'add' || actioncode === 'edit') {
+                        if (maindgIndex !== index) {
+                            $.messager.confirm(msglang.Title1, msglang.MsgLeave, function (r) {
+                                if (r) {
+                                    maindgIndex = index; // 更新目前行索引
+                                    actioncode = 'view'; // 更新行為模式
+                                    btnEnableSet(actioncode); // 更新按鈕狀態
+                                    tableHeadData(row); // 更新表頭資料
+                                    itemdgData(row.Id); // 更新相關資料表
+                                    maindg.datagrid('selectRow', index); // 選擇新行
+                                } else {
+                                    maindg.datagrid('unselectRow', index);
+                                    maindg.datagrid('selectRow', maindgIndex); // 重新選擇原來的行
+                                }
+                            });
+                        }
+                    } else {
+                        maindgIndex = index;
+                        tableHeadData(row);
+                        itemdgData(row.Id);
+                    }
+                },
+                rowStyler: function (index, row) {
+                    if (row.BillStatus == '0') { //新建立
+                        return 'background-color:#FFFFFF;color:#000000;';
+                    }
+                    if (row.BillStatus == '1') { //已覆核
+                        return 'background-color:#E4CE40;color:#000000;';
+                    }
+                    if (row.BillStatus == '2') { //主管已審核
+                        return 'background-color:#A7CECB;color:#000000;';
+                    }
+                    if (row.BillStatus == '4') { //主管退件
+                        return 'background-color:#FF8552;color:#000000;';
+                    }
+                }
+            });
+        }
+        function maindgData() {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo?type=check';
+            doajax("GET", actionurl, null, function (result) {
+                if (result.success) {
+                    if (Array.isArray(result.data)) {
+                        // 遍歷數據並格式化日期
+                        result.data.forEach(function (item) {
+                            if (item.BillDate) {
+                                item.BillDate = formatDate(item.BillDate); // 使用formatDate函數格式化日期
+                            }
+                        });
+                    }
+                    maindg.datagrid('loadData', result.data);
+                } else {
+                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                    if (result.code == 'C0004') {
+                        console.log(result.err);
+                    }
+                    maindg.datagrid('loadData', '');
+                }
+            });
+        }
+        function itemdgSet() {
+            itemdg.datagrid({
+                singleSelect: true,
+                striped: true,
+                columns: [
+                    [
+                        { field: 'Id', title: 'Id', hidden: true, type: 'text', rowspan: 2 },
+                        { field: 'Linage', title: '行號', hidden: false, type: 'string', rowspan: 2 },
+                        {
+                            field: 'AccNo', title: '科目編號', hidden: false, type: 'string', rowspan: 2,
+                            editor: {
+                                type: 'textbox',
+                                options: {
+                                    icons: [{
+                                        iconCls: 'icon-search',
+                                        handler: function (e) {
+                                            dlgEditAccNo();
+                                        }
+                                    }]
+                                }
+                            }
+                        },
+                        { field: 'AccNameC', title: '科目名稱', hidden: false, type: 'string' }, //format1
+                        { field: 'DCTypeNo', title: '借貸方向', hidden: false, type: 'string' }, //format2
+                        { field: 'CurrencyNo', title: '交易幣別', hidden: false, type: 'string' },//format3
+                        {
+                            field: 'Rate1', title: '匯率', hidden: false, type: 'string', rowspan: 2,
+                            editor: {
+                                type: 'numberbox',
+                                options: {
+                                    precision: 2,  // 保留小數點後兩位
+                                    min: 0,        // 最小值設置為 0 或其他合適的值
+                                    //max: 999999,   // 最大值設置為一個合理的數值
+                                    //groupSeparator: ',',  // 設置數字分隔符
+                                    decimalSeparator: '.' // 設置小數點分隔符
+                                }
+                            }
+                        },
+                        { field: 'Money', title: '交易金額', hidden: false, type: 'number' },//format4
+                        { field: 'TargetId', title: '對象別Id', hidden: true, type: 'string', rowspan: 2, },
+                        {
+                            field: 'TargetType', title: '對象別', hidden: false, type: 'string', rowspan: 2, formatter: formatTargetType,
+                            editor: {
+                                type: 'combogrid',
+                                options: {
+                                    panelWidth: 200,  // 可以根據需要調整寬度
+                                    idField: 'TargetType',
+                                    textField: 'TargetTypeName',
+                                    mode: 'remote',
+                                    loader: function (param, success, error) {
+                                        objdata({ name: 'TargetType' }, 'read', function (objtype) {
+                                            if (objtype.data) {
+                                                success(objtype.data);
+                                            }
+                                        });
+                                    },
+                                    columns: [[
+                                        { field: 'TargetType', title: '編號', width: 97 },
+                                        { field: 'TargetTypeName', title: '名稱', width: 97 }
+                                    ]],
+                                    panelHeight: 'auto',
+                                    onSelect: function (index, row) {
+                                        // 檢查 itemdgIndex
+                                        if (itemdgIndex === -1) {
+                                            $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                                            return;
+                                        }
+                                        // 更新 itemdg 中的编辑行
+                                        itemdg.datagrid('updateRow', {
+                                            index: itemdgIndex,
+                                            row: {
+                                                TargetNo: '',
+                                                TargetAbbr: ''
+                                            }
+                                        });
+                                        // 结束编辑状态
+                                        itemdg.datagrid('endEdit', itemdgIndex);
+
+                                        // 如果需要继续编辑，可以立即重新开始编辑
+                                        itemdg.datagrid('beginEdit', itemdgIndex);
+                                    }
+                                }
+                            }
+                        },
+                        { field: 'TargetNo', title: '對象編號', hidden: false, type: 'string' },//format5
+                        { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'AccProfitNo', title: '會計部門編號', hidden: false, type: 'string' },//format6
+                        { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'AccDeptNo', title: '成本中心編號', hidden: false, type: 'string' }, //format7
+                        { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'PayDeptNo', title: '支付部門編號', hidden: false, type: 'string' },//format8
+                        { field: 'CheckType', title: '票據Type', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'CheckId', title: '票據Id', hidden: true, type: 'string', rowspan: 2, },
+                        {
+                            field: 'CheckNo', title: '票據編號', hidden: false, type: 'string', rowspan: 2, editor: {
+                                type: 'text',
+                            }
+                        },
+                        { field: 'OffsetNo', title: '立沖編號', hidden: false, type: 'string' },//format9
+                        { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'SourceDocSubTypeName', title: '來源單別', hidden: false, type: 'string' },//format10
+                        { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string', rowspan: 2, },
+                        { field: 'InitialDocSubTypeName', title: '原始單別', hidden: false, type: 'string' },//format11
+                        {
+                            field: 'ActivityType', title: '活動類別', hidden: false, type: 'string', rowspan: 2,
+                            editor: {
+                                type: 'combobox',
+                                options: {
+                                    panelWidth: 200,
+                                    url: defaultUrl + controllerurl + functionurl + 'GetEditTableCode7',
+                                    valueField: 'ActivityType',
+                                    textField: 'ActivityType',
+                                    mode: 'remote',
+                                }
+                            }
+                        },
+                    ],
+                    [
+                        { field: 'Remark', title: '摘要說明', type: 'string', formatter: format1 }, //format1
+                        { field: 'DCTypeNameC', title: '借貸名稱', type: 'string', formatter: format2 },//format2
+                        { field: 'CurrencySt', title: '記帳幣別', type: 'string', formatter: format3 },//format3
+                        { field: 'Money1', title: '記帳金額', hidden: false, type: 'number', formatter: format4 },//format4
+                        { field: 'TargetAbbr', title: '對象名稱', hidden: false, type: 'string', formatter: format5 },//format5
+                        { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string', formatter: format6 },//format6
+                        { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string', formatter: format7 },//format7
+                        { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string', formatter: format8 },//format8
+                        { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string', formatter: format9 },//format9
+                        { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string', formatter: format10 },//format10
+                        { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string', formatter: format11 },//format11
+                    ]
+                ],
+                onClickRow: function (index, row) {
+                    if (actioncode === 'edit' || actioncode === 'add') {
+                        itemdg.datagrid('beginEdit', index); //啟用編輯
+                        itemdgIndex = index; // 更新當前行索引
+                        voucherDC();
+                    }
+                },
+                onBeforeEdit: function (index, row) {
+                    if (actioncode === 'edit' || actioncode === 'add') {
+                        // 如果上一行正在編輯，結束它的編輯狀態
+                        if (itemdgIndex !== undefined && itemdgIndex !== index) {
+                            itemdg.datagrid('endEdit', itemdgIndex);
+                        }
+                    }
+                },
+                onAfterEdit: function (index, row, changes) {
+                    if (actioncode === 'edit' || actioncode === 'add') {
+                        // 使用 updateRow 更新數據源
+                        itemdg.datagrid('updateRow', { index: index, row: row });
+                        // 刷新該行以應用格式化並重構編輯狀態
+                        itemdg.datagrid('refreshRow', index);
+                        voucherDC();
+                        // 重置當前的編輯行索引
+                        itemdgIndex = undefined;
+                    }
+                },
+                onCancelEdit: function (index, row) {
+                    if (actioncode === 'edit' || actioncode === 'add') {
+                        itemdgIndex = undefined; // 重置索引
+                    }
+                },
+                onRowContextMenu: function (e, index, row) {
+                    if (actioncode === 'edit' || actioncode === 'add') {
+                        $('#mm').menu('show', {
+                            left: e.pageX,
+                            top: e.pageY
+                        });
+                        e.preventDefault();
+                    }
+                }
+            });
+        }
+        function itemdgData(docid) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherItem?docid=' + docid;
+            doajax("GET", actionurl, null, function (result) {
+                if (result.success) {
+                    itemdg.datagrid('loadData', result.data);
+                    // VoucherDC計算
+                    voucherDC();
+                } else {
+                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                    if (result.code == 'C0004') {
+                        console.log(result.err);
+                    }
+                    itemdg.datagrid('loadData', '');
+                }
+            });
+        }
+        //#endregion
+
+    </script>
+    }

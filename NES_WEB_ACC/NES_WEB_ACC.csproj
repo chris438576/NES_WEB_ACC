@@ -158,6 +158,9 @@
     <Compile Include="ACC_AccTitleNo.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ACC_AccTitleNo_MX.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ACC_DataSet.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
@@ -252,6 +255,7 @@
     <Compile Include="SYS_Users.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CreateInfoViewModel.cs" />
     <Compile Include="ViewModels\VoucherDataViewModel.cs" />
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />

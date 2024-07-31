@@ -30,7 +30,18 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult VoucherCreate()
         {
-            return View();
+            var createInfo = new CreateInfoViewModel
+            {
+                EmpId = Session["EmpId"].ToString(),
+                EmpNo = (string)Session["EmpNo"],
+                EmpNameC = (string)Session["EmpNameC"],
+                DeptNo = (string)Session["DeptNo"],
+                DeptName = (string)Session["DeptName"],
+                CompNo = (string)Session["CompNo"],
+                CurrencySt = "MXN"
+            };
+
+            return View(createInfo);
         }
         /// <summary>
         /// 介面_主管審核
@@ -153,69 +164,70 @@ namespace NES_WEB_ACC.Controllers
                     List<ACC_VoucherDetail> customerdata = conn.Query<ACC_VoucherDetail>(sql, param).ToList();
                     if (customerdata.Count > 0)
                     {
-                        var formatData = customerdata.Select(item => new {
-                            Id = item.Id.ToString(), // 將Id轉換為字符串
-                            DocId = item.DocId,
-                            Linage = item.Linage,
-                            AccNoId = item.AccNoId,
-                            AccNo = item.AccNo,
-                            AccNameC = item.AccNameC,
-                            AccNameE = item.AccNameE,
-                            Remark = item.Remark,
-                            DCTypeNo = item.DCTypeNo,
-                            DCTypeNameC = item.DCTypeNameC,
-                            CurrencyNo = item.CurrencyNo,
-                            Rate1 = item.Rate1,
-                            Rate2 = item.Rate2,
-                            Money = item.Money,
-                            Money1 = item.Money1,
-                            Money2 = item.Money2,
-                            AccProfitId = item.AccProfitId,
-                            AccProfitNo = item.AccProfitNo,
-                            AccProfitName = item.AccProfitName,
-                            AccDeptId = item.AccDeptId,
-                            AccDeptNo = item.AccDeptNo,
-                            AccDeptName = item.AccDeptName,
-                            PayDeptId = item.PayDeptId,
-                            PayDeptNo = item.PayDeptNo,
-                            PayDeptName = item.PayDeptName,
-                            TargetType = item.TargetType,
-                            TargetId = item.TargetId,
-                            TargetNo = item.TargetNo,
-                            TargetAbbr = item.TargetAbbr,
-                            OffsetNo = item.OffsetNo,
-                            CaseBillId = item.CaseBillId,
-                            CaseBillNo = item.CaseBillNo,
-                            SourceProjectId = item.SourceProjectId,
-                            SourceDocSubType = item.SourceDocSubType,
-                            SourceDocSubTypeName = item.SourceDocSubTypeName,
-                            SourceDocId = item.SourceDocId,
-                            SourceSeqId = item.SourceSeqId,
-                            SourceNo = item.SourceNo,
-                            InitialProjectId = item.InitialProjectId,
-                            InitialDocSubType = item.InitialDocSubType,
-                            InitialDocSubTypeName = item.InitialDocSubTypeName,
-                            InitialDocId = item.InitialDocId,
-                            InitialNo = item.InitialNo,
-                            CheckType = item.CheckType,
-                            CheckId = item.CheckId,
-                            CheckNo = item.CheckNo,
-                            EventType = item.EventType,
-                            ActivityType = item.ActivityType,
-                            IsParty = item.IsParty,
-                            BillAddType = item.BillAddType,
-                            Flag = item.Flag,
-                            IsState = item.IsState,
-                            StateDate = item.StateDate,
-                            StateBy = item.StateBy,
-                            IsChecked = item.IsChecked,
-                            CheckDate = item.CheckDate,
-                            CheckBy = item.CheckBy,
-                            CreateDate = item.CreateDate,
-                            CreateBy = item.CreateBy,
-                            ShowPage = item.ShowPage
-                        }).ToList();
-                        return Json(new { success = true, code = "OK" , data = formatData }, JsonRequestBehavior.AllowGet);
+                        //var formatData = customerdata.Select(item => new {
+
+                        //    Id = item.Id.ToString(), // 將Id轉換為字符串
+                        //    DocId = item.DocId,
+                        //    Linage = item.Linage,
+                        //    AccNoId = item.AccNoId,
+                        //    AccNo = item.AccNo,
+                        //    AccNameC = item.AccNameC,
+                        //    AccNameE = item.AccNameE,
+                        //    Remark = item.Remark,
+                        //    DCTypeNo = item.DCTypeNo,
+                        //    DCTypeNameC = item.DCTypeNameC,
+                        //    CurrencyNo = item.CurrencyNo,
+                        //    Rate1 = item.Rate1,
+                        //    Rate2 = item.Rate2,
+                        //    Money = item.Money,
+                        //    Money1 = item.Money1,
+                        //    Money2 = item.Money2,
+                        //    AccProfitId = item.AccProfitId,
+                        //    AccProfitNo = item.AccProfitNo,
+                        //    AccProfitName = item.AccProfitName,
+                        //    AccDeptId = item.AccDeptId,
+                        //    AccDeptNo = item.AccDeptNo,
+                        //    AccDeptName = item.AccDeptName,
+                        //    PayDeptId = item.PayDeptId,
+                        //    PayDeptNo = item.PayDeptNo,
+                        //    PayDeptName = item.PayDeptName,
+                        //    TargetType = item.TargetType,
+                        //    TargetId = item.TargetId,
+                        //    TargetNo = item.TargetNo,
+                        //    TargetAbbr = item.TargetAbbr,
+                        //    OffsetNo = item.OffsetNo,
+                        //    CaseBillId = item.CaseBillId,
+                        //    CaseBillNo = item.CaseBillNo,
+                        //    SourceProjectId = item.SourceProjectId,
+                        //    SourceDocSubType = item.SourceDocSubType,
+                        //    SourceDocSubTypeName = item.SourceDocSubTypeName,
+                        //    SourceDocId = item.SourceDocId,
+                        //    SourceSeqId = item.SourceSeqId,
+                        //    SourceNo = item.SourceNo,
+                        //    InitialProjectId = item.InitialProjectId,
+                        //    InitialDocSubType = item.InitialDocSubType,
+                        //    InitialDocSubTypeName = item.InitialDocSubTypeName,
+                        //    InitialDocId = item.InitialDocId,
+                        //    InitialNo = item.InitialNo,
+                        //    CheckType = item.CheckType,
+                        //    CheckId = item.CheckId,
+                        //    CheckNo = item.CheckNo,
+                        //    EventType = item.EventType,
+                        //    ActivityType = item.ActivityType,
+                        //    IsParty = item.IsParty,
+                        //    BillAddType = item.BillAddType,
+                        //    Flag = item.Flag,
+                        //    IsState = item.IsState,
+                        //    StateDate = item.StateDate,
+                        //    StateBy = item.StateBy,
+                        //    IsChecked = item.IsChecked,
+                        //    CheckDate = item.CheckDate,
+                        //    CheckBy = item.CheckBy,
+                        //    CreateDate = item.CreateDate,
+                        //    CreateBy = item.CreateBy,
+                        //    ShowPage = item.ShowPage
+                        //}).ToList();
+                        return Json(new { success = true, code = "OK" , data = customerdata }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {                       
@@ -595,14 +607,45 @@ namespace NES_WEB_ACC.Controllers
                     EmpId = Session["EmpId"].ToString(),
                     //EmpNameC
                 };
+                _dbContext.ACC_VoucherInfo.Add(mainData);
                 #endregion
                 #region 明細寫入
                 foreach (var item in data.Infodata)
                 {
-                    
+                    //取會計科目的資訊
+                    var accTitle = _dbContext.ACC_AccTitleNo_MX.FirstOrDefault(x => x.AccNo == item.AccNo);
+                    var infoData = new ACC_VoucherDetail
+                    {
+                        WebId = Guid.NewGuid(),
+                        WebDocId = mainData.WebId,
+                        Linage = Convert.ToInt32(item.Linage),
+                        AccNoWebId = accTitle.WebId,
+                        AccNoId = accTitle.Id,
+                        AccNo = accTitle.AccNo,
+                        AccNameC = accTitle.AccNameC,
+                        AccNameE = accTitle.AccNameE,
+                        AccNameMX = accTitle.AccNameMX,
+                        Remark = item.Remark,
+                        DCTypeNo = item.DCTypeNo,
+                        DCTypeNameC = item.DCTypeNameC,
+                        DCTypeNameMX = (item.DCTypeNo == "D") ? "Débito" : "Crédito",
+                        CurrencyNo = item.CurrencyNo,
+                        CurrencySt = item.CurrencySt,
+                        Rate1 = Convert.ToDecimal(item.Rate1),
+                        Rate2 = Convert.ToDecimal(item.Rate1),
+                        Money = item.Money,
+                        Money1 = item.Money1,
+                        Money2 = item.Money1,
+                        AccProfitId = item.AccProfitId,
+                        AccProfitNo = item.AccProfitNo,
+                        AccProfitName = item.AccProfitName,
+
+                    };
+                    _dbContext.ACC_VoucherDetail.Add(infoData);
                 }
                 #endregion
-                return Json(new { success = true, code = "OK", data = "Id" }, JsonRequestBehavior.AllowGet);
+                _dbContext.SaveChanges();
+                return Json(new { success = true, code = "OK", data = $"新增傳票編號：{mainData.BillNo}" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {               

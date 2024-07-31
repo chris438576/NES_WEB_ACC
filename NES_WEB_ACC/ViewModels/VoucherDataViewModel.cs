@@ -6,7 +6,7 @@ using System.Web;
 namespace NES_WEB_ACC.ViewModels
 {
     public class MainData
-    {
+    {        
         public string BillDate { get; set; }
         public string DocSubType { get; set; }
         public string DocSubTypeName { get; set; }
@@ -28,7 +28,7 @@ namespace NES_WEB_ACC.ViewModels
         public string TargetNo { get; set; }
     }
     public class InfoData
-    {
+    {       
         public string Id { get; set; }
         public string Linage { get; set; }
         public string AccNo { get; set; }
@@ -36,7 +36,7 @@ namespace NES_WEB_ACC.ViewModels
         public string DCTypeNo { get; set; }
         public string DCTypeNameC { get; set; }
         public string CurrencyNo { get; set; }
-        public string CurrencyNoNote { get; set; }
+        public string CurrencySt { get; set; }      
         public string Rate1 { get; set; }
         public decimal Money { get; set; }
         public decimal Money1 { get; set; }

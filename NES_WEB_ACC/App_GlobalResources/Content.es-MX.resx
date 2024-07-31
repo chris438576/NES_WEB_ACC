@@ -202,7 +202,7 @@
     <comment>_Layouyt\會計設定:[傳票類別設定]</comment>
   </data>
   <data name="VoucherCreate" xml:space="preserve">
-    <value>Voucher Create-mx</value>
+    <value>Crear Vale</value>
     <comment>_Layouyt\傳票作業:[傳票輸入作業]</comment>
   </data>
   <data name="VoucherNameC" xml:space="preserve">
@@ -253,7 +253,7 @@
     <value>Acc Group NameE</value>
   </data>
   <data name="VoucherClose" xml:space="preserve">
-    <value>Cerrar cupón</value>
+    <value>Cerrar Vale</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirmar</value>
@@ -275,5 +275,14 @@
   </data>
   <data name="MsgErrCode" xml:space="preserve">
     <value>Se produjo un error, código de error:</value>
+  </data>
+  <data name="Prompts" xml:space="preserve">
+    <value>Indicaciones</value>
+  </data>
+  <data name="MsgSelectRow" xml:space="preserve">
+    <value>¡Seleccione la fila que desea editar primero!</value>
+  </data>
+  <data name="VoucherCheck" xml:space="preserve">
+    <value>Cheque Vale</value>
   </data>
 </root>
