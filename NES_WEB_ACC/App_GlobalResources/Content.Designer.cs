@@ -115,11 +115,29 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 Acc Name 的當地語系化字串。
+        ///   查詢類似 ACC Name (Chinese) 的當地語系化字串。
         /// </summary>
         public static string AccNameC {
             get {
                 return ResourceManager.GetString("AccNameC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 ACC Name (English) 的當地語系化字串。
+        /// </summary>
+        public static string AccNameE {
+            get {
+                return ResourceManager.GetString("AccNameE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 ACC name (Spanish) 的當地語系化字串。
+        /// </summary>
+        public static string AccNameMX {
+            get {
+                return ResourceManager.GetString("AccNameMX", resourceCulture);
             }
         }
         
@@ -183,6 +201,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string AccSysCodeSet {
             get {
                 return ResourceManager.GetString("AccSysCodeSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Add 的當地語系化字串。
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
             }
         }
         
@@ -268,6 +295,33 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Delete 的當地語系化字串。
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Disable 的當地語系化字串。
+        /// </summary>
+        public static string Disable {
+            get {
+                return ResourceManager.GetString("Disable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Edit 的當地語系化字串。
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Accountant Name 的當地語系化字串。
         /// </summary>
         public static string EmpNameC {
@@ -282,6 +336,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string EmpNo {
             get {
                 return ResourceManager.GetString("EmpNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Enable 的當地語系化字串。
+        /// </summary>
+        public static string Enable {
+            get {
+                return ResourceManager.GetString("Enable", resourceCulture);
             }
         }
         
@@ -331,6 +394,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Is Enable 的當地語系化字串。
+        /// </summary>
+        public static string IsEnable {
+            get {
+                return ResourceManager.GetString("IsEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Language 的當地語系化字串。
         /// </summary>
         public static string lblMenuLanguage {
@@ -372,6 +444,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string MsgSelectRow {
             get {
                 return ResourceManager.GetString("MsgSelectRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Please select the row to be delete first! 的當地語系化字串。
+        /// </summary>
+        public static string MsgSelectRow1 {
+            get {
+                return ResourceManager.GetString("MsgSelectRow1", resourceCulture);
             }
         }
         

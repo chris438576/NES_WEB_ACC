@@ -1,6 +1,6 @@
 ﻿@* 會計科目設定MX *@
 @{
-    ViewBag.Title = "會計科目設定MX";
+    ViewBag.Title = @Resources.Content.AccCodeSet + "MX";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -103,56 +103,378 @@
     </style>
 }
 
-@{ Html.RenderAction("_ToolBarPartial"); }
+@{ Html.RenderAction("_ToolBar2Partial"); }
 
 <div class="body-container">
-    <table id="maindg" class="datagrid easyui-maindg" style="width:100%;height:99%;">
-    </table>
+    <div class="easyui-layout body-layout">
+        <div data-options="region:'center'" style="width:100%;">
+            <table id="maindg" class="datagrid easyui-maindg" style="width:100%;height:99%;">
+            </table>
+        </div>        
+    </div>
+</div>
+@* Form視窗 *@
+<div id="dlgForm" class="easyui-dialog" data-options="modal:true,closed:true">
+    <form id="AccNoAdd" method="post">
+        <div style="margin-bottom:20px">
+            <input id="accNo" class="easyui-textbox" name="accNo" style="width:100%" data-options="label:'會計編號:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="accNameC" class="easyui-textbox" name="accNameC" style="width:100%" data-options="label:'會計名稱(中文):',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="accNameE" class="easyui-textbox" name="accNameE" style="width:100%" data-options="label:'會計名稱(英文):',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="accNameMX" class="easyui-textbox" name="accNameMX" style="width:100%" data-options="label:'會計名稱(西文):',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <select id="dcTypeNo" class="easyui-combobox" name="dcTypeNo" label="借貸方向" style="width:100%"><option value="D">D</option><option value="C">C</option></select>
+        </div>
+    </form>
+    <div style="text-align:center;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">Submit</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">Clear</a>
+    </div>
 </div>
 
-@section Scripts {
+@section Scripts {    
     <script>
         ///-----基本參數-----///
         //#region 基本參數
         var controllerurl = '/AccCodeMX', functionurl = "/", actionurl = "";
         var maindg = $('#maindg');
+        let maindgIndex = -1;
         var actioncode = 'view';
         //#endregion
         //#region 多語系
         var maindglang = {
-
+            AccNo: '@Resources.Content.AccNo',
+            AccNameC: '@Resources.Content.AccNameC',
+            AccNameE: '@Resources.Content.AccNameE',
+            AccNameMX: '@Resources.Content.AccNameMX',
+            DCTypeNo: '@Resources.Content.DCTypeNo',
+            DCTypeNameC: '@Resources.Content.DCTypeNameC',
+            IsEnable:'@Resources.Content.IsEnable',
         };
+
+        var msglang = {
+            Title1: '@Resources.Content.Confirm', // 確認
+            Title2: '@Resources.Content.Alert',  // 警告
+            Title3: '@Resources.Content.Prompts',  // 提示
+            MsgLeave: '@Resources.Content.MsgLeave',
+            MsgErrCode: '@Resources.Content.MsgErrCode',
+            MsgSelectRow: '@Resources.Content.MsgSelectRow',
+            MsgSelectRow1: '@Resources.Content.MsgSelectRow1'
+        };
+
+        var toolbarlang = {
+            Add:'@Resources.Content.Add',
+            Edit:'@Resources.Content.Edit',
+            Delete: '@Resources.Content.Delete',
+            Enable: '@Resources.Content.Enable', //啟用
+            Disable: '@Resources.Content.Disable', //停用
+        }
         //#endregion
         //#region 資料暫存
         var obj = { name: 'objname', data: null };
         //#endregion
 
-        //----初始化----------///
-
+        ///----初始化----------///
+        //#region 初始化
         $(function () {
             maindgSet();
+            maindgData();
+            btnEnableSet(actioncode);
         });
+        //#endregion
 
+        ///----dg設定與填值----------///
         function maindgSet() {
             maindg.datagrid({
                 singleSelect: true,
                 striped: true,
                 columns: [[
-                    { field: 'Id', title: 'Id', hidden: true, type: 'text' },
-                    { field: 'Flag', title: '旗', hidden: true },
-                    { field: 'BillDate', title: maindglang.BillDate, width: 80, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'BillNo', title: maindglang.BillNo, width: 130, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'VoucherNameC', title: maindglang.VoucherNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'EmpNo', title: maindglang.EmpNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'EmpNameC', title: maindglang.EmpNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'Remark', title: maindglang.Remark, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'CompNo', title: maindglang.CompNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } }
+                    { field: 'WebId', title: 'WebId', hidden: true, type: 'text' },
+                    { field: 'AccNo', title: maindglang.AccNo, width: 80, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'AccNameC', title: maindglang.AccNameC, width: '16%', editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'AccNameE', title: maindglang.AccNameE, width: '16%', editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'AccNameMX', title: maindglang.AccNameMX, width: '16%', editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'DCTypeNo', title: maindglang.DCTypeNo, width: '16%', editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'DCTypeNameC', title: maindglang.DCTypeNameC, width: '16%', editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'IsState', title: maindglang.IsEnable, width: 80, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                 ]],
                 onSelect: function (index, row) {
+                    maindgIndex = index
+                }
+            });
+        }
+        function maindgData() {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetAccTitleNo';
+            doajax("GET", actionurl, null, function (result) {
+                if (result.success) {
+                    maindg.datagrid('loadData', result.data);
+                } else {
+                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                    if (result.code == 'C0004') {
+                        console.log(result.err);
+                    }
+                    maindg.datagrid('loadData', '');
+                }
+            }, function (xhr, status, errorThrown) {
+                $.messager.alert(msglang.Title2, msglang.MsgErrCode + "AJAX Error: " + status);
+                console.log("AJAX Error: " + errorThrown);
+                maindg.datagrid('loadData', '');
+            });
+        }
+
+
+        ///----按鈕動作&狀態----------///
+        function btnClick(type) {
+            let row;
+            switch (type) {
+                //#region toolbar_maindg導覽&搜尋
+                case 'first':
+                    maindg.datagrid('selectRow', 0);
+                    break;
+                case 'previous':
+                    row = maindg.datagrid('getSelected');
+                    if (row) {
+                        nowindex = maindg.datagrid('getRowIndex', row);
+                    } else if (maindgindex >= 0) {
+                        nowindex = maindgindex;
+                    } else {
+                        let rows = maindg.datagrid('getRows');
+                        if (rows) {
+                            nowindex = 0;
+                        }
+                    }
+                    maindg.datagrid('selectRow', nowindex - 1);
+                    break;
+                case 'next':
+                    row = maindg.datagrid('getSelected');
+                    if (row) {
+                        nowindex = maindg.datagrid('getRowIndex', row);
+                    } else if (maindgindex >= 0) {
+                        nowindex = maindgindex;
+                    } else {
+                        let rows = maindg.datagrid('getRows');
+                        if (rows) {
+                            nowindex = -1;
+                        }
+                    }
+                    maindg.datagrid('selectRow', nowindex + 1);
+                    break;
+                    break;
+                case 'last':
+                    row = maindg.datagrid('getRows');
+                    if (row) {
+                        index = row.length;
+                    }
+                    maindg.datagrid('selectRow', index - 1);
+                    break;
+                case 'search':
+                    break;
+                //#endregion
+
+                //#region toolbar_maindg資料動作
+                case 'add':
+                    actioncode = 'add';
+                    let winheight = $(window).height();
+                    let winwidth = $(window).width();
+                    $('#dlgForm').dialog({ height: 400, width: 300, title: toolbarlang.Add });
+                    $('#dlgForm').dialog('open').dialog('center');
+                    break;
+                case 'edit':                   
+                    if (maindgIndex === -1) {
+                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        return;
+                    }                   
+                    row = maindg.datagrid('getSelected');                   
+                    if (!row) {
+                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        return;
+                    } else {                        
+                        actioncode = 'edit';
+
+                        $('#accNo').textbox('setValue', row.AccNo);
+                        $('#accNameC').textbox('setValue', row.AccNameC);
+                        $('#accNameE').textbox('setValue', row.AccNameE);
+                        $('#accNameMX').textbox('setValue', row.AccNameMX);
+                        $('#dcTypeNo').combobox('setValue', row.DCTypeNo);
+
+                        let winheight = $(window).height();
+                        let winwidth = $(window).width();
+                        $('#dlgForm').dialog({ height: 400, width: 300, title: toolbarlang.Edit });
+                        $('#dlgForm').dialog('open').dialog('center');
+                    }
+                    break;
+                case 'enable':
+                    if (maindgIndex === -1) {
+                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        return;
+                    }
+                    row = maindg.datagrid('getSelected');                   
+                    if (!row) {
+                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        return;
+                    }
+                    if (row.IsState == '1') {
+                        $.messager.alert(msglang.Title3, '該科目以啟用');
+                        return;
+                    }else {
+                        actioncode = 'enable';
+                        $.messager.confirm(msglang.Enable, 'Are you confirm this?', function (r) {
+                            if (r) {
+                                console.log(row.WebId);
+                                actionurl = defaultUrl + controllerurl + functionurl + 'UpdateIsState?type=' + actioncode + '&webid=' + row.WebId;
+                                doajax("POST", actionurl, null, function (result) {
+                                    if (result.success) {
+                                        $.messager.alert(msglang.Title2, '已成功起用!' + result.data);
+                                    } else {
+                                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                        if (result.code == 'C0004') {
+                                            console.log(result.err);
+                                        }
+                                        maindg.datagrid('loadData', '');
+                                    }
+                                }, function (xhr, status, errorThrown) {
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + "AJAX Error: " + status);
+                                    console.log("AJAX Error: " + errorThrown);
+                                    maindg.datagrid('loadData', '');
+                                });
+                            }
+                        });
+                    }
+                    break;
+                case 'disable':
+                    if (maindgIndex === -1) {
+                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        return;
+                    }
+                    row = maindg.datagrid('getSelected');                   
+                    if (!row) {
+                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        return;
+                    }
+                    if (row.IsState == '0') {
+                        $.messager.alert(msglang.Title3, '該科目以停用');
+                        return;
+                    }else {
+                        actioncode = 'disable';
+                        $.messager.confirm(msglang.Enable, 'Are you confirm this?', function (r) {
+                            if (r) {
+                                actionurl = defaultUrl + controllerurl + functionurl + 'UpdateIsState?type=' + actioncode + '&webid=' + row.WebId;
+                                doajax("POST", actionurl, null, function (result) {
+                                    if (result.success) {
+
+                                        $.messager.alert(msglang.Title2, '已成功停用!' + result.data);
+                                    } else {
+                                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                        if (result.code == 'C0004') {
+                                            console.log(result.err);
+                                        }
+                                        maindg.datagrid('loadData', '');
+                                    }
+                                }, function (xhr, status, errorThrown) {
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + "AJAX Error: " + status);
+                                    console.log("AJAX Error: " + errorThrown);
+                                    maindg.datagrid('loadData', '');
+                                });
+                            }
+                        });
+                    }
+
+
+                    break;
+                //#endregion
+
+                //#region toolbar_maindg報表
+                case 'report':
+                    break;
+                //#endregion
+            }
+        }
+        function btnEnableSet(type) {
+            switch (type) {
+                case 'view':
+                    $('#btnAdd').linkbutton('enable');
+                    $('#btnEdit').linkbutton('enable');
+                    $('#btnSave').linkbutton('disable');
+                    $('#btnDetail').linkbutton('disable');
+                    $('#btnRefresh').linkbutton('disable');
+                    $('#btnCancel').linkbutton('disable');
+                    $('#btnDelete').linkbutton('enable');
+                    break;
+                case 'add':
+                    $('#btnAdd').linkbutton('disable');
+                    $('#btnEdit').linkbutton('disable');
+                    $('#btnSave').linkbutton('disable');
+                    $('#btnDetail').linkbutton('disable');
+                    $('#btnRefresh').linkbutton('disable');
+                    $('#btnCancel').linkbutton('disable');
+                    $('#btnDelete').linkbutton('disable');
+                    break;
+                case 'edit':
+                    $('#btnAdd').linkbutton('disable');
+                    $('#btnEdit').linkbutton('disable');
+                    $('#btnSave').linkbutton('disable');
+                    $('#btnDetail').linkbutton('disable');
+                    $('#btnRefresh').linkbutton('disable');
+                    $('#btnCancel').linkbutton('disable');
+                    $('#btnDelete').linkbutton('disable');
+                    break;
+                case 'delete':
+                    break;
+                default:
+                    $('#btnAdd').linkbutton('enable');
+                    $('#btnEdit').linkbutton('enable');
+                    $('#btnSave').linkbutton('disable');
+                    $('#btnDetail').linkbutton('disable');
+                    $('#btnRefresh').linkbutton('disable');
+                    $('#btnCancel').linkbutton('disable');
+                    $('#btnDelete').linkbutton('enable');
+
+            }
+        }
+
+        ///----其他功能----------///
+        //#region 格式化
+        // 日期轉換
+        function formatDate(dateString) {
+            const regex = /\/Date\((\d+)\)\//;
+            const match = dateString.match(regex);
+            const timestamp = match ? parseInt(match[1], 10) : 0;
+            const date = new Date(timestamp);
+
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            const day = ('0' + date.getDate()).slice(-2);
+
+            return `${year}/${month}/${day}`;
+        }
+        //#endregion
+        ///----其他功能----------///
+        //#region 功能函式
+        // 自定義doajax
+        function doajax(type, url, data, successCallback, errorCallback) {
+            $.ajax({
+                type: type,
+                url: url,
+                data: data,
+                success: function (response) {
+                    if (typeof successCallback === 'function') {
+                        successCallback(response);
+                    }
+                },
+                error: function (xhr, status, errorThrown) {
+                    if (typeof errorCallback === 'function') {
+                        errorCallback(xhr, status, errorThrown);
+                    }
                 }
             });
         }
 
+        //#endregion
     </script>
 }

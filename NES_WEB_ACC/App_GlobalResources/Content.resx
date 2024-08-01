@@ -241,7 +241,7 @@
     <value>Acc No</value>
   </data>
   <data name="AccNameC" xml:space="preserve">
-    <value>Acc Name</value>
+    <value>ACC Name (Chinese)</value>
   </data>
   <data name="AccCode" xml:space="preserve">
     <value>Acc Code</value>
@@ -284,5 +284,32 @@
   </data>
   <data name="VoucherCheck" xml:space="preserve">
     <value>Voucher Check</value>
+  </data>
+  <data name="AccNameE" xml:space="preserve">
+    <value>ACC Name (English)</value>
+  </data>
+  <data name="AccNameMX" xml:space="preserve">
+    <value>ACC name (Spanish)</value>
+  </data>
+  <data name="MsgSelectRow1" xml:space="preserve">
+    <value>Please select the row to be delete first!</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="IsEnable" xml:space="preserve">
+    <value>Is Enable</value>
   </data>
 </root>

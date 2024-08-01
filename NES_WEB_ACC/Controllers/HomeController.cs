@@ -19,7 +19,7 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult Index()
         {           
             string identityEmpNo = ControllerContext.HttpContext.User.Identity.Name;
-            CompanySessionSetting("C");
+            CompanySessionSetting();
             UserSessionSetting(identityEmpNo);           
 
             // 檢查TempData是否包含訊息
@@ -94,9 +94,11 @@ namespace NES_WEB_ACC.Controllers
                 }
             }
         }
-        public void CompanySessionSetting(string company)
+        public void CompanySessionSetting()
         {
-            Session["CompNo"] = company;            
+            Session["CompId"] = "5563551763276641505";
+            Session["CompNo"] = "C";
+            Session["CompAbbr"] = "RUIS SERVICES";
         }
 
         public ActionResult TimeOut()

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,16 +11,123 @@ namespace NES_WEB_ACC.Controllers
 {
     public class AccCodeMXController : Controller
     {
-        // GET: AccCodeMX
+        public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
+        private NES_WEB_ACCEntities _dbContext = new NES_WEB_ACCEntities();
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
+        public ActionResult GetAccTitleNo()
+        {
+            string compid, compno, compabbr;
+            try
+            {
+                compid = Session["CompId"].ToString();
+                compno = Session["CompNo"].ToString();
+                compabbr = Session["CompAbbr"].ToString();
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0001", err = e }, JsonRequestBehavior.AllowGet);
+            }
+           
+            string sql = @"  
+                select * from ACC_AccTitleNo_MX 
+                where   1=1
+                    and ([CompId] = @compid and [CompNo] = @compno and [CompAbbr] = @compabbr) 
+                order by AccNo
+            ";
+            var param = new { compid, compno, compabbr };
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<ACC_AccTitleNo_MX> customerdata = conn.Query<ACC_AccTitleNo_MX>(sql, param).ToList();
+                    if (customerdata.Count > 0)
+                    {
+                        return Json(new { success = true, code = "OK", data = customerdata }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {                       
+                        return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception e)
+            {                
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult UpdateIsState(string type, string webid)
+        {
+            if (string.IsNullOrEmpty(type) || string.IsNullOrEmpty(webid) || webid == "00000000-0000-0000-0000-000000000000")
+            {
+                return Json(new { success = false, code = "C0001"}, JsonRequestBehavior.AllowGet);
+            }
+            Guid guidId;
+            if (!Guid.TryParse(webid, out guidId))
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            if (type != "enable" && type != "disable")
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+
+            try
+            {
+
+                var existdata = _dbContext.ACC_AccTitleNo_MX.FirstOrDefault(x => x.WebId == guidId);
+                if (existdata != null)
+                {
+                    switch (type)
+                    {
+                        case "enable":
+                            existdata.IsState = true;
+                            break;
+                        case "disable":
+                            existdata.IsState = false;
+                            break;                       
+                    }
+                    _dbContext.SaveChanges();
+                    return Json(new { success = true, code = "OK", data= existdata.AccNo }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, code = "C0003"}, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        //[HttpPost]
+        //public AvtionResult EditData(string type, ACC_AccTitleNo_MX data)
+        //{
+        //    if (string.IsNullOrEmpty(type) || data is null)
+        //    {
+        //        return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+        //    }           
+        //    if (type != "edit")
+        //    {
+        //        return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    var existdata = _dbContext.ACC_AccTitleNo_MX.FirstOrDefault(x => x.WebId == data.WebId);
+        //}
+
         /// <summary>
         /// 工具列介面
         /// </summary>
         /// <returns></returns>
-        public ActionResult _ToolBarPartial()
+        public ActionResult _ToolBar2Partial()
         {
             return PartialView();
         }

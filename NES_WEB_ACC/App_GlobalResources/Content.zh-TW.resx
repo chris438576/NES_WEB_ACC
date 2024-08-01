@@ -241,7 +241,7 @@
     <value>會計科目</value>
   </data>
   <data name="AccNameC" xml:space="preserve">
-    <value>會科名稱</value>
+    <value>會科名稱(中文)</value>
   </data>
   <data name="AccCode" xml:space="preserve">
     <value>會計項目</value>
@@ -284,5 +284,32 @@
   </data>
   <data name="VoucherCheck" xml:space="preserve">
     <value>傳票檢核作業</value>
+  </data>
+  <data name="AccNameE" xml:space="preserve">
+    <value>會計科目(英文)</value>
+  </data>
+  <data name="AccNameMX" xml:space="preserve">
+    <value>會計科目(西語)</value>
+  </data>
+  <data name="MsgSelectRow1" xml:space="preserve">
+    <value>請先選擇需要刪除的行！</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>啟用</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>停用</value>
+  </data>
+  <data name="IsEnable" xml:space="preserve">
+    <value>是否啟用</value>
   </data>
 </root>

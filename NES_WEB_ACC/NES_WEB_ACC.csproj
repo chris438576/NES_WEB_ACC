@@ -1046,6 +1046,7 @@
     <Content Include="Views\Voucher\VoucherCheck.cshtml" />
     <Content Include="Views\AccCodeMX\Index.cshtml" />
     <Content Include="Views\Home\Workflow.cshtml" />
+    <Content Include="Views\Shared\_ToolBar2Partial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

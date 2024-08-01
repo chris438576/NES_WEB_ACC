@@ -895,5 +895,43 @@
         }
         //#endregion
 
+        //#region 格式化
+        // 日期轉換
+        function formatDate(dateString) {
+            const regex = /\/Date\((\d+)\)\//;
+            const match = dateString.match(regex);
+            const timestamp = match ? parseInt(match[1], 10) : 0;
+            const date = new Date(timestamp);
+
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            const day = ('0' + date.getDate()).slice(-2);
+
+            return `${year}/${month}/${day}`;
+        }
+        //#endregion
+
+        //#region 功能函式
+        // 自定義doajax
+        function doajax(type, url, data, successCallback, errorCallback) {
+            $.ajax({
+                type: type,
+                url: url,
+                data: data,
+                success: function (response) {
+                    if (typeof successCallback === 'function') {
+                        successCallback(response);
+                    }
+                },
+                error: function (xhr, status, errorThrown) {
+                    if (typeof errorCallback === 'function') {
+                        errorCallback(xhr, status, errorThrown);
+                    }
+                }
+            });
+        }
+
+        //#endregion
+
     </script>
     }

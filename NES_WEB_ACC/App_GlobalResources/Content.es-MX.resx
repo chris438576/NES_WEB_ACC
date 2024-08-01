@@ -241,7 +241,7 @@
     <value>Acc No</value>
   </data>
   <data name="AccNameC" xml:space="preserve">
-    <value>Acc Name</value>
+    <value>Nombre ACC (chino)</value>
   </data>
   <data name="IsControl" xml:space="preserve">
     <value>Is Control</value>
@@ -284,5 +284,32 @@
   </data>
   <data name="VoucherCheck" xml:space="preserve">
     <value>Cheque Vale</value>
+  </data>
+  <data name="AccNameE" xml:space="preserve">
+    <value>Nombre ACC (en inglés)</value>
+  </data>
+  <data name="AccNameMX" xml:space="preserve">
+    <value>Nombre ACC (español)</value>
+  </data>
+  <data name="MsgSelectRow1" xml:space="preserve">
+    <value>¡Seleccione primero la fila que desea eliminar!</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Permitir</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Desactivar</value>
+  </data>
+  <data name="IsEnable" xml:space="preserve">
+    <value>está habilitado</value>
   </data>
 </root>
