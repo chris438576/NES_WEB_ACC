@@ -295,6 +295,8 @@
     <Content Include="Scripts\easyui\jquery.edatagrid.js" />
     <Content Include="Scripts\easyui\plugins\jquery.calendar" />
     <Content Include="Scripts\easyui\themes\icons\copy.png" />
+    <Content Include="Scripts\easyui\themes\icons\icons8-start.png" />
+    <Content Include="Scripts\easyui\themes\icons\icons8-stop.png" />
     <Content Include="Scripts\easyui\themes\icons\larg-detail.png" />
     <Content Include="Scripts\easyui\themes\icons\large-add.png" />
     <Content Include="Scripts\easyui\themes\icons\large-cancel.png" />

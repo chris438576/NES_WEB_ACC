@@ -117,7 +117,7 @@
 <div id="dlgForm" class="easyui-dialog" data-options="modal:true,closed:true">
     <form id="AccNoAdd" method="post">
         <div style="margin-bottom:20px">
-            <input id="accNo" class="easyui-textbox" name="accNo" style="width:100%" data-options="label:'會計編號:',required:true">
+            <input id="accNo" class="easyui-textbox" name="accNo" style="width:100%" data-options="label:'會計編號:',required:true,validType:'pattern'">
         </div>
         <div style="margin-bottom:20px">
             <input id="accNameC" class="easyui-textbox" name="accNameC" style="width:100%" data-options="label:'會計名稱(中文):',required:true">
@@ -133,8 +133,8 @@
         </div>
     </form>
     <div style="text-align:center;padding:5px 0">
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">Submit</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">Clear</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('submit')" style="width:80px">Submit</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('clear')" style="width:80px">Clear</a>
     </div>
 </div>
 
@@ -145,7 +145,8 @@
         var controllerurl = '/AccCodeMX', functionurl = "/", actionurl = "";
         var maindg = $('#maindg');
         let maindgIndex = -1;
-        var actioncode = 'view';
+        let actioncode = 'view';
+        let scroll = @ViewBag.Scroll;
         //#endregion
         //#region 多語系
         var maindglang = {
@@ -165,7 +166,12 @@
             MsgLeave: '@Resources.Content.MsgLeave',
             MsgErrCode: '@Resources.Content.MsgErrCode',
             MsgSelectRow: '@Resources.Content.MsgSelectRow',
-            MsgSelectRow1: '@Resources.Content.MsgSelectRow1'
+            MsgSelectRow1: '@Resources.Content.MsgSelectRow1',
+            MsgActionErr: '@Resources.Content.MsgActionErr', //操作碼錯誤
+            MsgSes1:'@Resources.Content.MsgSes1', //成功新增
+            MsgSes2: '@Resources.Content.MsgSes2', //成功編輯
+            MsgSes3: '@Resources.Content.MsgSes3', //成功啟用
+            MsgSes4: '@Resources.Content.MsgSes4', //成功停用
         };
 
         var toolbarlang = {
@@ -214,6 +220,7 @@
             doajax("GET", actionurl, null, function (result) {
                 if (result.success) {
                     maindg.datagrid('loadData', result.data);
+                    setMaindgScroll();
                 } else {
                     $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                     if (result.code == 'C0004') {
@@ -232,6 +239,7 @@
         ///----按鈕動作&狀態----------///
         function btnClick(type) {
             let row;
+            let postdata;
             switch (type) {
                 //#region toolbar_maindg導覽&搜尋
                 case 'first':
@@ -285,16 +293,16 @@
                     $('#dlgForm').dialog({ height: 400, width: 300, title: toolbarlang.Add });
                     $('#dlgForm').dialog('open').dialog('center');
                     break;
-                case 'edit':                   
+                case 'edit':
                     if (maindgIndex === -1) {
                         $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
                         return;
-                    }                   
-                    row = maindg.datagrid('getSelected');                   
+                    }
+                    row = maindg.datagrid('getSelected');
                     if (!row) {
                         $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
                         return;
-                    } else {                        
+                    } else {
                         actioncode = 'edit';
 
                         $('#accNo').textbox('setValue', row.AccNo);
@@ -314,7 +322,7 @@
                         $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
                         return;
                     }
-                    row = maindg.datagrid('getSelected');                   
+                    row = maindg.datagrid('getSelected');
                     if (!row) {
                         $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
                         return;
@@ -326,11 +334,11 @@
                         actioncode = 'enable';
                         $.messager.confirm(msglang.Enable, 'Are you confirm this?', function (r) {
                             if (r) {
-                                console.log(row.WebId);
                                 actionurl = defaultUrl + controllerurl + functionurl + 'UpdateIsState?type=' + actioncode + '&webid=' + row.WebId;
                                 doajax("POST", actionurl, null, function (result) {
                                     if (result.success) {
-                                        $.messager.alert(msglang.Title2, '已成功起用!' + result.data);
+                                        //$.messager.alert(msglang.Title2, '已成功起用！' + result.data);
+                                        pageReload(getMaindgScroll(),msglang.MsgSes3 + result.data);
                                     } else {
                                         $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                         if (result.code == 'C0004') {
@@ -352,7 +360,7 @@
                         $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
                         return;
                     }
-                    row = maindg.datagrid('getSelected');                   
+                    row = maindg.datagrid('getSelected');
                     if (!row) {
                         $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
                         return;
@@ -367,8 +375,8 @@
                                 actionurl = defaultUrl + controllerurl + functionurl + 'UpdateIsState?type=' + actioncode + '&webid=' + row.WebId;
                                 doajax("POST", actionurl, null, function (result) {
                                     if (result.success) {
-
-                                        $.messager.alert(msglang.Title2, '已成功停用!' + result.data);
+                                        //$.messager.alert(msglang.Title2, '已成功停用！' + result.data);
+                                        pageReload(getMaindgScroll(), msglang.MsgSes4 + result.data);
                                     } else {
                                         $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                         if (result.code == 'C0004') {
@@ -391,6 +399,75 @@
 
                 //#region toolbar_maindg報表
                 case 'report':
+                    break;
+                //#endregion
+
+                //#region Form Button
+                case 'submit':
+                    row = maindg.datagrid('getSelected');
+                    if (actioncode == 'add') {
+                        postdata = {
+                            'type': actioncode,
+                            'data': {
+                                'WebId': null,
+                                'AccNo': $('#accNo').textbox('getText'),
+                                'AccNameC': $('#accNameC').textbox('getText'),
+                                'AccNameE': $('#accNameE').textbox('getText'),
+                                'AccNameMX': $('#accNameMX').textbox('getText'),
+                                'DCTypeNo': $('#dcTypeNo').combobox('getValue')
+                            }
+                        };
+                        actionurl = defaultUrl + controllerurl + functionurl + 'AddData';
+                        doajax('POST', actionurl, $.param(postdata), function (result) {
+                            if (result.success) {
+                                //$.messager.alert(msglang.Title2, '已成功新增！' + result.data);
+                                pageReload(getMaindgScroll(), msglang.MsgSes1 + result.data);
+                            } else {
+                                $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                if (result.code == 'C0004') {
+                                    console.log(result.err);
+                                }
+                            }
+                        }, function (xhr, status, errorThrown) {
+                            $.messager.alert(msglang.Title2, msglang.MsgErrCode + "AJAX Error: " + status);
+                            console.log("AJAX Error: " + errorThrown);
+                        });
+                    }
+                    if (actioncode == 'edit') {
+                        postdata = {
+                            'type': actioncode,
+                            'data': {
+                                'WebId': row.WebId,
+                                'AccNo': $('#accNo').textbox('getText'),
+                                'AccNameC': $('#accNameC').textbox('getText'),
+                                'AccNameE': $('#accNameE').textbox('getText'),
+                                'AccNameMX': $('#accNameMX').textbox('getText'),
+                                'DCTypeNo': $('#dcTypeNo').combobox('getValue')
+                            }
+                        };
+                        actionurl = defaultUrl + controllerurl + functionurl + 'EditData';
+                        doajax('POST', actionurl, $.param(postdata), function (result) {
+                            if (result.success) {
+                                //$.messager.alert(msglang.Title2, '已成功修改！' + result.data);
+                                pageReload(getMaindgScroll(), msglang.MsgSes2 + result.data);
+                            } else {
+                                $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                if (result.code == 'C0004') {
+                                    console.log(result.err);
+                                }
+                            }
+                        }, function (xhr, status, errorThrown) {
+                            $.messager.alert(msglang.Title2, msglang.MsgErrCode + "AJAX Error: " + status);
+                            console.log("AJAX Error: " + errorThrown);
+                        });
+                    }
+                    if (actioncode != 'add' && actioncode != 'edit') {
+                        $.messager.alert(msglang.Title2, msglang.MsgActionErr);
+                    }
+                    break;
+                case 'clear':
+                    actioncode = 'view';
+                    $('#dlgForm').dialog('close');
                     break;
                 //#endregion
             }
@@ -438,6 +515,7 @@
             }
         }
 
+
         ///----其他功能----------///
         //#region 格式化
         // 日期轉換
@@ -474,7 +552,43 @@
                 }
             });
         }
-
+        // 取得maindg位置
+        function getMaindgScroll() {
+            var datagrid = maindg.datagrid('getPanel').children('div.datagrid-view');
+            var view2 = datagrid.children('div.datagrid-view2');
+            return view2.children('div.datagrid-body').scrollTop();
+        }
+        // 設置maindg位置
+        function setMaindgScroll() {
+            var datagrid = maindg.datagrid('getPanel').children('div.datagrid-view');
+            var view2 = datagrid.children('div.datagrid-view2');
+            view2.children('div.datagrid-body').scrollTop(scroll);
+        }
+        // PageReload
+        function pageReload(scrollposition, msg) {
+            var url = new URL(window.location.href);
+            url.searchParams.set('scroll', scrollposition);
+            url.searchParams.set('msg', msg);
+            window.location.href = url.toString();
+        }
         //#endregion
+    </script>
+    <script>
+        $(function () {
+            $.extend($.fn.validatebox.defaults.rules, {
+                pattern: {
+                    validator: function (value, param) {
+                        return /^\d{3}-\d{2}-\d{3}$/.test(value);
+                    },
+                    message: '輸入的格式必須是000-00-000.'
+                }
+            });
+        });
+         $(document).ready(function() {
+            let msg = '@ViewBag.Msg';
+            if (msg) {
+                $.messager.alert(msglang.Title2, msg);
+            }
+        });
     </script>
 }

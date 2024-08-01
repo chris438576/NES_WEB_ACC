@@ -312,4 +312,19 @@
   <data name="IsEnable" xml:space="preserve">
     <value>是否啟用</value>
   </data>
+  <data name="MsgActionErr" xml:space="preserve">
+    <value>操作代碼錯誤！</value>
+  </data>
+  <data name="MsgSes1" xml:space="preserve">
+    <value>成功新增：</value>
+  </data>
+  <data name="MsgSes2" xml:space="preserve">
+    <value>成功編輯：</value>
+  </data>
+  <data name="MsgSes3" xml:space="preserve">
+    <value>成功啟用：</value>
+  </data>
+  <data name="MsgSes4" xml:space="preserve">
+    <value>成功停用：</value>
+  </data>
 </root>

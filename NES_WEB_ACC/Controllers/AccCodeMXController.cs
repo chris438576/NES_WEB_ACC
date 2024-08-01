@@ -18,8 +18,10 @@ namespace NES_WEB_ACC.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public ActionResult Index(int? scroll, string msg)
         {
+            ViewBag.Scroll = (scroll == null) ? 0 : scroll;
+            ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View();
         }
         public ActionResult GetAccTitleNo()
@@ -95,6 +97,8 @@ namespace NES_WEB_ACC.Controllers
                             existdata.IsState = false;
                             break;                       
                     }
+                    existdata.StateBy = Session["EmpNo"].ToString();
+                    existdata.StateDate = System.DateTime.Now;
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data= existdata.AccNo }, JsonRequestBehavior.AllowGet);
                 }
@@ -108,20 +112,86 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
             }
         }
-        //[HttpPost]
-        //public AvtionResult EditData(string type, ACC_AccTitleNo_MX data)
-        //{
-        //    if (string.IsNullOrEmpty(type) || data is null)
-        //    {
-        //        return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
-        //    }           
-        //    if (type != "edit")
-        //    {
-        //        return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    var existdata = _dbContext.ACC_AccTitleNo_MX.FirstOrDefault(x => x.WebId == data.WebId);
-        //}
+        [HttpPost]
+        public ActionResult EditData(string type, ACC_AccTitleNo_MX data)
+        {
+            if (string.IsNullOrEmpty(type) || data is null || data.WebId == null )
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            if (type != "edit")
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                var existdata = _dbContext.ACC_AccTitleNo_MX.FirstOrDefault(x => x.WebId == data.WebId);
+                if (existdata != null)
+                {
+                    existdata.AccNo = data.AccNo;
+                    existdata.AccNameC = data.AccNameC;
+                    existdata.AccNameE = data.AccNameE;
+                    existdata.AccNameMX = data.AccNameMX;
+                    existdata.DCTypeNo = data.DCTypeNo;
+                    existdata.StateBy = Session["EmpNo"].ToString();
+                    existdata.StateDate = System.DateTime.Now;
+                    _dbContext.SaveChanges();
+                    return Json(new { success = true, code = "OK", data = existdata.AccNo }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }            
+        }
+        [HttpPost]
+        public ActionResult AddData(string type, ACC_AccTitleNo_MX data)
+        {
+            if (string.IsNullOrEmpty(type) || data is null)
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            if (type != "add")
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                var existdata = _dbContext.ACC_AccTitleNo_MX.FirstOrDefault(x => x.AccNo == data.AccNo);
+                if (existdata != null)
+                {
+                    return Json(new { success = false, code = "C0002" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var insertdata = new ACC_AccTitleNo_MX
+                    {
+                        WebId = Guid.NewGuid(),
+                        CompId = Session["CompId"].ToString(),
+                        CompNo = Session["CompNo"].ToString(),
+                        CompAbbr = Session["CompAbbr"].ToString(),
+                        AccNo = data.AccNo,
+                        AccNameC = data.AccNameC,
+                        AccNameE = data.AccNameE,
+                        AccNameMX = data.AccNameMX,
+                        IsState = true,
+                        CreateBy = Session["EmpNo"].ToString(),
+                        CreateDate = System.DateTime.Now
+                    };
+                    _dbContext.ACC_AccTitleNo_MX.Add(insertdata);
+                    _dbContext.SaveChanges();
+                    return Json(new { success = true, code = "OK", data = insertdata.AccNo }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         /// <summary>
         /// 工具列介面

@@ -421,6 +421,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Operation code error 的當地語系化字串。
+        /// </summary>
+        public static string MsgActionErr {
+            get {
+                return ResourceManager.GetString("MsgActionErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 An error occurred, error code: 的當地語系化字串。
         /// </summary>
         public static string MsgErrCode {
@@ -453,6 +462,42 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string MsgSelectRow1 {
             get {
                 return ResourceManager.GetString("MsgSelectRow1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Successfully added: 的當地語系化字串。
+        /// </summary>
+        public static string MsgSes1 {
+            get {
+                return ResourceManager.GetString("MsgSes1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Successfully edited: 的當地語系化字串。
+        /// </summary>
+        public static string MsgSes2 {
+            get {
+                return ResourceManager.GetString("MsgSes2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Successfully enabled: 的當地語系化字串。
+        /// </summary>
+        public static string MsgSes3 {
+            get {
+                return ResourceManager.GetString("MsgSes3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Successfully disable: 的當地語系化字串。
+        /// </summary>
+        public static string MsgSes4 {
+            get {
+                return ResourceManager.GetString("MsgSes4", resourceCulture);
             }
         }
         

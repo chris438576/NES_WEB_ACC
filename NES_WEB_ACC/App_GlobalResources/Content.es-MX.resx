@@ -312,4 +312,19 @@
   <data name="IsEnable" xml:space="preserve">
     <value>está habilitado</value>
   </data>
+  <data name="MsgActionErr" xml:space="preserve">
+    <value>Error de código de operación</value>
+  </data>
+  <data name="MsgSes1" xml:space="preserve">
+    <value>Añadida con éxito:</value>
+  </data>
+  <data name="MsgSes2" xml:space="preserve">
+    <value>Editado exitosamente</value>
+  </data>
+  <data name="MsgSes3" xml:space="preserve">
+    <value>Habilitado exitosamente:</value>
+  </data>
+  <data name="MsgSes4" xml:space="preserve">
+    <value>Deshabilitar exitosamente:</value>
+  </data>
 </root>

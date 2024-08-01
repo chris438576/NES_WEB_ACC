@@ -242,3 +242,10 @@
 .icon-arrow-right {
 	background: url('icons/arrow_right.png') no-repeat center center;
 }
+
+.icons8-start {
+	background: url('icons/icons8-start.png') no-repeat center center;
+}
+.icons8-stop {
+	background: url('icons/icons8-stop.png') no-repeat center center;
+}
