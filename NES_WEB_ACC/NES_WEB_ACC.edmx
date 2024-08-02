@@ -352,7 +352,7 @@
             <PropertyRef Name="WebId" />
           </Key>
           <Property Name="WebId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Id" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="20" />
           <Property Name="CompId" Type="nvarchar" MaxLength="20" />
           <Property Name="CompNo" Type="nvarchar" MaxLength="20" />
           <Property Name="CompAbbr" Type="nvarchar" MaxLength="20" />
@@ -626,9 +626,9 @@
           <EntitySet Name="ACC_SysDocSubType" EntityType="NES_WEB_ACCModel.ACC_SysDocSubType" />
           <EntitySet Name="ACC_VoucherKind" EntityType="NES_WEB_ACCModel.ACC_VoucherKind" />
           <EntitySet Name="ACC_DataSet" EntityType="NES_WEB_ACCModel.ACC_DataSet" />
-          <EntitySet Name="ACC_VoucherInfo" EntityType="NES_WEB_ACCModel.ACC_VoucherInfo" />
-          <EntitySet Name="ACC_VoucherDetail" EntityType="NES_WEB_ACCModel.ACC_VoucherDetail" />
           <EntitySet Name="ACC_AccTitleNo_MX" EntityType="NES_WEB_ACCModel.ACC_AccTitleNo_MX" />
+          <EntitySet Name="ACC_VoucherDetail" EntityType="NES_WEB_ACCModel.ACC_VoucherDetail" />
+          <EntitySet Name="ACC_VoucherInfo" EntityType="NES_WEB_ACCModel.ACC_VoucherInfo" />
           </EntityContainer>
         <EntityType Name="ACC_AccCode1">
           <Key>
@@ -878,67 +878,55 @@
           <Property Name="CreateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="ACC_VoucherInfo">
+        <EntityType Name="ACC_AccTitleNo_MX">
           <Key>
             <PropertyRef Name="WebId" />
           </Key>
           <Property Name="WebId" Type="Guid" Nullable="false" />
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CompId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CompNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CompAbbr" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccountBill" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DocType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="DocSubType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="DocSubTypeName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="BillDate" Type="DateTime" Precision="0" />
-          <Property Name="Code1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Code2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="BillNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DcType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="VoucherType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="VoucherNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmpId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="EmpNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="EmpNameC" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="DeptId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DeptNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DeptName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="CurrencyNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CurrencySt" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Rate1" Type="Decimal" Precision="19" Scale="5" />
-          <Property Name="Rate2" Type="Decimal" Precision="19" Scale="5" />
-          <Property Name="SourceCompId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SourceProjectId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SourceDocSubType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="SourceDocSubTypeName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="SourceDocId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SourceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="BillAddType" Type="Int32" />
-          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ActivityType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccDocType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Money11" Type="Decimal" Precision="19" Scale="5" />
-          <Property Name="Money12" Type="Decimal" Precision="19" Scale="5" />
-          <Property Name="Money21" Type="Decimal" Precision="19" Scale="5" />
-          <Property Name="Money22" Type="Decimal" Precision="19" Scale="5" />
-          <Property Name="Money1Dc" Type="Decimal" Precision="19" Scale="5" />
-          <Property Name="Money2Dc" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="AccGroupNoId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccGroupNameMX" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoById" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoByNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoByNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNoByNameMX" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AccNameMX" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DCTypeNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DCTypeNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccCode" Type="Boolean" />
+          <Property Name="IsControl" Type="Boolean" />
+          <Property Name="IsCancel" Type="Boolean" />
+          <Property Name="IsCash" Type="Boolean" />
+          <Property Name="IsParty" Type="Boolean" />
+          <Property Name="IsCurrency" Type="Boolean" />
+          <Property Name="IsTarget" Type="Boolean" />
+          <Property Name="IsDept" Type="Boolean" />
+          <Property Name="IsOffset" Type="Boolean" />
+          <Property Name="IsProject" Type="Boolean" />
+          <Property Name="AccNoRemark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="StatuDate" Type="DateTime" Precision="0" />
+          <Property Name="StatusBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Flag" Type="Int32" />
-          <Property Name="CreateDate" Type="DateTime" Precision="0" />
-          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsState" Type="Boolean" />
           <Property Name="StateDate" Type="DateTime" Precision="0" />
           <Property Name="StateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsChecked" Type="Boolean" />
           <Property Name="CheckDate" Type="DateTime" Precision="0" />
           <Property Name="CheckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="IsClosed" Type="Boolean" />
-          <Property Name="ClosedDate" Type="DateTime" Precision="0" />
-          <Property Name="ClosedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="BillStatus" Type="Int32" />
-          <Property Name="SignDate" Type="DateTime" Precision="0" />
-          <Property Name="SignBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccSetting" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ACC_VoucherDetail">
           <Key>
@@ -1011,7 +999,7 @@
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="ShowPage" Type="Int32" />
         </EntityType>
-        <EntityType Name="ACC_AccTitleNo_MX">
+        <EntityType Name="ACC_VoucherInfo">
           <Key>
             <PropertyRef Name="WebId" />
           </Key>
@@ -1020,46 +1008,58 @@
           <Property Name="CompId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CompNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CompAbbr" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccGroupNoId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccGroupNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccGroupNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccGroupNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccGroupNameMX" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccNoById" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccNoBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccNoByNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccNoByNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccNoByNameMX" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AccNameMX" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DCTypeNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DCTypeNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccCode" Type="Boolean" />
-          <Property Name="IsControl" Type="Boolean" />
-          <Property Name="IsCancel" Type="Boolean" />
-          <Property Name="IsCash" Type="Boolean" />
-          <Property Name="IsParty" Type="Boolean" />
-          <Property Name="IsCurrency" Type="Boolean" />
-          <Property Name="IsTarget" Type="Boolean" />
-          <Property Name="IsDept" Type="Boolean" />
-          <Property Name="IsOffset" Type="Boolean" />
-          <Property Name="IsProject" Type="Boolean" />
-          <Property Name="AccNoRemark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="StatuDate" Type="DateTime" Precision="0" />
-          <Property Name="StatusBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccountBill" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DocType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DocSubType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DocSubTypeName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="BillDate" Type="DateTime" Precision="0" />
+          <Property Name="Code1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Code2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BillNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DcType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherNameC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmpId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EmpNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EmpNameC" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="DeptId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeptNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeptName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencySt" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Rate1" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="Rate2" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="SourceCompId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SourceProjectId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SourceDocSubType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SourceDocSubTypeName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="SourceDocId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SourceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BillAddType" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccDocType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Money11" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="Money12" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="Money21" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="Money22" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="Money1Dc" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="Money2Dc" Type="Decimal" Precision="19" Scale="5" />
           <Property Name="Flag" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsState" Type="Boolean" />
           <Property Name="StateDate" Type="DateTime" Precision="0" />
           <Property Name="StateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsChecked" Type="Boolean" />
           <Property Name="CheckDate" Type="DateTime" Precision="0" />
           <Property Name="CheckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="0" />
-          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccSetting" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsClosed" Type="Boolean" />
+          <Property Name="ClosedDate" Type="DateTime" Precision="0" />
+          <Property Name="ClosedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BillStatus" Type="Int32" />
+          <Property Name="SignDate" Type="DateTime" Precision="0" />
+          <Property Name="SignBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1405,61 +1405,49 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ACC_VoucherInfo">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_VoucherInfo">
-              <MappingFragment StoreEntitySet="ACC_VoucherInfo">
-                <ScalarProperty Name="SignBy" ColumnName="SignBy" />
-                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
-                <ScalarProperty Name="BillStatus" ColumnName="BillStatus" />
-                <ScalarProperty Name="ClosedBy" ColumnName="ClosedBy" />
-                <ScalarProperty Name="ClosedDate" ColumnName="ClosedDate" />
-                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+          <EntitySetMapping Name="ACC_AccTitleNo_MX">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_AccTitleNo_MX">
+              <MappingFragment StoreEntitySet="ACC_AccTitleNo_MX">
+                <ScalarProperty Name="AccSetting" ColumnName="AccSetting" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
                 <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
                 <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
                 <ScalarProperty Name="StateBy" ColumnName="StateBy" />
                 <ScalarProperty Name="StateDate" ColumnName="StateDate" />
                 <ScalarProperty Name="IsState" ColumnName="IsState" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="Money2Dc" ColumnName="Money2Dc" />
-                <ScalarProperty Name="Money1Dc" ColumnName="Money1Dc" />
-                <ScalarProperty Name="Money22" ColumnName="Money22" />
-                <ScalarProperty Name="Money21" ColumnName="Money21" />
-                <ScalarProperty Name="Money12" ColumnName="Money12" />
-                <ScalarProperty Name="Money11" ColumnName="Money11" />
-                <ScalarProperty Name="AccDocType" ColumnName="AccDocType" />
-                <ScalarProperty Name="ActivityType" ColumnName="ActivityType" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="BillAddType" ColumnName="BillAddType" />
-                <ScalarProperty Name="SourceNo" ColumnName="SourceNo" />
-                <ScalarProperty Name="SourceDocId" ColumnName="SourceDocId" />
-                <ScalarProperty Name="SourceDocSubTypeName" ColumnName="SourceDocSubTypeName" />
-                <ScalarProperty Name="SourceDocSubType" ColumnName="SourceDocSubType" />
-                <ScalarProperty Name="SourceProjectId" ColumnName="SourceProjectId" />
-                <ScalarProperty Name="SourceCompId" ColumnName="SourceCompId" />
-                <ScalarProperty Name="Rate2" ColumnName="Rate2" />
-                <ScalarProperty Name="Rate1" ColumnName="Rate1" />
-                <ScalarProperty Name="CurrencySt" ColumnName="CurrencySt" />
-                <ScalarProperty Name="CurrencyNo" ColumnName="CurrencyNo" />
-                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
-                <ScalarProperty Name="DeptNo" ColumnName="DeptNo" />
-                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
-                <ScalarProperty Name="EmpNameC" ColumnName="EmpNameC" />
-                <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-                <ScalarProperty Name="VoucherNameC" ColumnName="VoucherNameC" />
-                <ScalarProperty Name="VoucherType" ColumnName="VoucherType" />
-                <ScalarProperty Name="DcType" ColumnName="DcType" />
-                <ScalarProperty Name="BillNo" ColumnName="BillNo" />
-                <ScalarProperty Name="Code2" ColumnName="Code2" />
-                <ScalarProperty Name="Code1" ColumnName="Code1" />
-                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
-                <ScalarProperty Name="DocSubTypeName" ColumnName="DocSubTypeName" />
-                <ScalarProperty Name="DocSubType" ColumnName="DocSubType" />
-                <ScalarProperty Name="DocType" ColumnName="DocType" />
-                <ScalarProperty Name="AccountBill" ColumnName="AccountBill" />
+                <ScalarProperty Name="StatusBy" ColumnName="StatusBy" />
+                <ScalarProperty Name="StatuDate" ColumnName="StatuDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AccNoRemark" ColumnName="AccNoRemark" />
+                <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+                <ScalarProperty Name="IsOffset" ColumnName="IsOffset" />
+                <ScalarProperty Name="IsDept" ColumnName="IsDept" />
+                <ScalarProperty Name="IsTarget" ColumnName="IsTarget" />
+                <ScalarProperty Name="IsCurrency" ColumnName="IsCurrency" />
+                <ScalarProperty Name="IsParty" ColumnName="IsParty" />
+                <ScalarProperty Name="IsCash" ColumnName="IsCash" />
+                <ScalarProperty Name="IsCancel" ColumnName="IsCancel" />
+                <ScalarProperty Name="IsControl" ColumnName="IsControl" />
+                <ScalarProperty Name="AccCode" ColumnName="AccCode" />
+                <ScalarProperty Name="DCTypeNameC" ColumnName="DCTypeNameC" />
+                <ScalarProperty Name="DCTypeNo" ColumnName="DCTypeNo" />
+                <ScalarProperty Name="AccNameMX" ColumnName="AccNameMX" />
+                <ScalarProperty Name="AccNameE" ColumnName="AccNameE" />
+                <ScalarProperty Name="AccNameC" ColumnName="AccNameC" />
+                <ScalarProperty Name="AccNo" ColumnName="AccNo" />
+                <ScalarProperty Name="AccNoByNameMX" ColumnName="AccNoByNameMX" />
+                <ScalarProperty Name="AccNoByNameE" ColumnName="AccNoByNameE" />
+                <ScalarProperty Name="AccNoByNameC" ColumnName="AccNoByNameC" />
+                <ScalarProperty Name="AccNoBy" ColumnName="AccNoBy" />
+                <ScalarProperty Name="AccNoById" ColumnName="AccNoById" />
+                <ScalarProperty Name="AccGroupNameMX" ColumnName="AccGroupNameMX" />
+                <ScalarProperty Name="AccGroupNameE" ColumnName="AccGroupNameE" />
+                <ScalarProperty Name="AccGroupNameC" ColumnName="AccGroupNameC" />
+                <ScalarProperty Name="AccGroupNo" ColumnName="AccGroupNo" />
+                <ScalarProperty Name="AccGroupNoId" ColumnName="AccGroupNoId" />
                 <ScalarProperty Name="CompAbbr" ColumnName="CompAbbr" />
                 <ScalarProperty Name="CompNo" ColumnName="CompNo" />
                 <ScalarProperty Name="CompId" ColumnName="CompId" />
@@ -1540,49 +1528,61 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ACC_AccTitleNo_MX">
-            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_AccTitleNo_MX">
-              <MappingFragment StoreEntitySet="ACC_AccTitleNo_MX">
-                <ScalarProperty Name="AccSetting" ColumnName="AccSetting" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <EntitySetMapping Name="ACC_VoucherInfo">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_VoucherInfo">
+              <MappingFragment StoreEntitySet="ACC_VoucherInfo">
+                <ScalarProperty Name="SignBy" ColumnName="SignBy" />
+                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
+                <ScalarProperty Name="BillStatus" ColumnName="BillStatus" />
+                <ScalarProperty Name="ClosedBy" ColumnName="ClosedBy" />
+                <ScalarProperty Name="ClosedDate" ColumnName="ClosedDate" />
+                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
                 <ScalarProperty Name="CheckBy" ColumnName="CheckBy" />
                 <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
                 <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
                 <ScalarProperty Name="StateBy" ColumnName="StateBy" />
                 <ScalarProperty Name="StateDate" ColumnName="StateDate" />
                 <ScalarProperty Name="IsState" ColumnName="IsState" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="StatusBy" ColumnName="StatusBy" />
-                <ScalarProperty Name="StatuDate" ColumnName="StatuDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="AccNoRemark" ColumnName="AccNoRemark" />
-                <ScalarProperty Name="IsProject" ColumnName="IsProject" />
-                <ScalarProperty Name="IsOffset" ColumnName="IsOffset" />
-                <ScalarProperty Name="IsDept" ColumnName="IsDept" />
-                <ScalarProperty Name="IsTarget" ColumnName="IsTarget" />
-                <ScalarProperty Name="IsCurrency" ColumnName="IsCurrency" />
-                <ScalarProperty Name="IsParty" ColumnName="IsParty" />
-                <ScalarProperty Name="IsCash" ColumnName="IsCash" />
-                <ScalarProperty Name="IsCancel" ColumnName="IsCancel" />
-                <ScalarProperty Name="IsControl" ColumnName="IsControl" />
-                <ScalarProperty Name="AccCode" ColumnName="AccCode" />
-                <ScalarProperty Name="DCTypeNameC" ColumnName="DCTypeNameC" />
-                <ScalarProperty Name="DCTypeNo" ColumnName="DCTypeNo" />
-                <ScalarProperty Name="AccNameMX" ColumnName="AccNameMX" />
-                <ScalarProperty Name="AccNameE" ColumnName="AccNameE" />
-                <ScalarProperty Name="AccNameC" ColumnName="AccNameC" />
-                <ScalarProperty Name="AccNo" ColumnName="AccNo" />
-                <ScalarProperty Name="AccNoByNameMX" ColumnName="AccNoByNameMX" />
-                <ScalarProperty Name="AccNoByNameE" ColumnName="AccNoByNameE" />
-                <ScalarProperty Name="AccNoByNameC" ColumnName="AccNoByNameC" />
-                <ScalarProperty Name="AccNoBy" ColumnName="AccNoBy" />
-                <ScalarProperty Name="AccNoById" ColumnName="AccNoById" />
-                <ScalarProperty Name="AccGroupNameMX" ColumnName="AccGroupNameMX" />
-                <ScalarProperty Name="AccGroupNameE" ColumnName="AccGroupNameE" />
-                <ScalarProperty Name="AccGroupNameC" ColumnName="AccGroupNameC" />
-                <ScalarProperty Name="AccGroupNo" ColumnName="AccGroupNo" />
-                <ScalarProperty Name="AccGroupNoId" ColumnName="AccGroupNoId" />
+                <ScalarProperty Name="Money2Dc" ColumnName="Money2Dc" />
+                <ScalarProperty Name="Money1Dc" ColumnName="Money1Dc" />
+                <ScalarProperty Name="Money22" ColumnName="Money22" />
+                <ScalarProperty Name="Money21" ColumnName="Money21" />
+                <ScalarProperty Name="Money12" ColumnName="Money12" />
+                <ScalarProperty Name="Money11" ColumnName="Money11" />
+                <ScalarProperty Name="AccDocType" ColumnName="AccDocType" />
+                <ScalarProperty Name="ActivityType" ColumnName="ActivityType" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="BillAddType" ColumnName="BillAddType" />
+                <ScalarProperty Name="SourceNo" ColumnName="SourceNo" />
+                <ScalarProperty Name="SourceDocId" ColumnName="SourceDocId" />
+                <ScalarProperty Name="SourceDocSubTypeName" ColumnName="SourceDocSubTypeName" />
+                <ScalarProperty Name="SourceDocSubType" ColumnName="SourceDocSubType" />
+                <ScalarProperty Name="SourceProjectId" ColumnName="SourceProjectId" />
+                <ScalarProperty Name="SourceCompId" ColumnName="SourceCompId" />
+                <ScalarProperty Name="Rate2" ColumnName="Rate2" />
+                <ScalarProperty Name="Rate1" ColumnName="Rate1" />
+                <ScalarProperty Name="CurrencySt" ColumnName="CurrencySt" />
+                <ScalarProperty Name="CurrencyNo" ColumnName="CurrencyNo" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="DeptNo" ColumnName="DeptNo" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="EmpNameC" ColumnName="EmpNameC" />
+                <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="VoucherNameC" ColumnName="VoucherNameC" />
+                <ScalarProperty Name="VoucherType" ColumnName="VoucherType" />
+                <ScalarProperty Name="DcType" ColumnName="DcType" />
+                <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+                <ScalarProperty Name="Code2" ColumnName="Code2" />
+                <ScalarProperty Name="Code1" ColumnName="Code1" />
+                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+                <ScalarProperty Name="DocSubTypeName" ColumnName="DocSubTypeName" />
+                <ScalarProperty Name="DocSubType" ColumnName="DocSubType" />
+                <ScalarProperty Name="DocType" ColumnName="DocType" />
+                <ScalarProperty Name="AccountBill" ColumnName="AccountBill" />
                 <ScalarProperty Name="CompAbbr" ColumnName="CompAbbr" />
                 <ScalarProperty Name="CompNo" ColumnName="CompNo" />
                 <ScalarProperty Name="CompId" ColumnName="CompId" />

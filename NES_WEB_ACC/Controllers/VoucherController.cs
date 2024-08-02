@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -81,7 +82,10 @@ namespace NES_WEB_ACC.Controllers
 
                 sql = @"
                             select * from NES_WEB_ACC.dbo.ACC_VoucherInfo 
-                            where 1=1                                
+                            where 1=1      
+                                --and CompId = @compid
+                                --and CompNo = @compno
+                                --amd CompAbbr = @compabbr
                 ";
               
                 switch (type)
@@ -149,84 +153,21 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, message = "C0004",err = e }, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult GetVoucherItem(string docid)
+        public ActionResult GetVoucherItem(string webdocid)
         {
-            if (string.IsNullOrEmpty(docid))
+            if (string.IsNullOrEmpty(webdocid))
             {              
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
-            string sql = @"select * from ACC_VoucherDetail where DocId = @docid";
-            var param = new { docid };
+            string sql = @"select * from ACC_VoucherDetail where WebDocId = @webdocid";
+            var param = new { webdocid };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     List<ACC_VoucherDetail> customerdata = conn.Query<ACC_VoucherDetail>(sql, param).ToList();
                     if (customerdata.Count > 0)
-                    {
-                        //var formatData = customerdata.Select(item => new {
-
-                        //    Id = item.Id.ToString(), // 將Id轉換為字符串
-                        //    DocId = item.DocId,
-                        //    Linage = item.Linage,
-                        //    AccNoId = item.AccNoId,
-                        //    AccNo = item.AccNo,
-                        //    AccNameC = item.AccNameC,
-                        //    AccNameE = item.AccNameE,
-                        //    Remark = item.Remark,
-                        //    DCTypeNo = item.DCTypeNo,
-                        //    DCTypeNameC = item.DCTypeNameC,
-                        //    CurrencyNo = item.CurrencyNo,
-                        //    Rate1 = item.Rate1,
-                        //    Rate2 = item.Rate2,
-                        //    Money = item.Money,
-                        //    Money1 = item.Money1,
-                        //    Money2 = item.Money2,
-                        //    AccProfitId = item.AccProfitId,
-                        //    AccProfitNo = item.AccProfitNo,
-                        //    AccProfitName = item.AccProfitName,
-                        //    AccDeptId = item.AccDeptId,
-                        //    AccDeptNo = item.AccDeptNo,
-                        //    AccDeptName = item.AccDeptName,
-                        //    PayDeptId = item.PayDeptId,
-                        //    PayDeptNo = item.PayDeptNo,
-                        //    PayDeptName = item.PayDeptName,
-                        //    TargetType = item.TargetType,
-                        //    TargetId = item.TargetId,
-                        //    TargetNo = item.TargetNo,
-                        //    TargetAbbr = item.TargetAbbr,
-                        //    OffsetNo = item.OffsetNo,
-                        //    CaseBillId = item.CaseBillId,
-                        //    CaseBillNo = item.CaseBillNo,
-                        //    SourceProjectId = item.SourceProjectId,
-                        //    SourceDocSubType = item.SourceDocSubType,
-                        //    SourceDocSubTypeName = item.SourceDocSubTypeName,
-                        //    SourceDocId = item.SourceDocId,
-                        //    SourceSeqId = item.SourceSeqId,
-                        //    SourceNo = item.SourceNo,
-                        //    InitialProjectId = item.InitialProjectId,
-                        //    InitialDocSubType = item.InitialDocSubType,
-                        //    InitialDocSubTypeName = item.InitialDocSubTypeName,
-                        //    InitialDocId = item.InitialDocId,
-                        //    InitialNo = item.InitialNo,
-                        //    CheckType = item.CheckType,
-                        //    CheckId = item.CheckId,
-                        //    CheckNo = item.CheckNo,
-                        //    EventType = item.EventType,
-                        //    ActivityType = item.ActivityType,
-                        //    IsParty = item.IsParty,
-                        //    BillAddType = item.BillAddType,
-                        //    Flag = item.Flag,
-                        //    IsState = item.IsState,
-                        //    StateDate = item.StateDate,
-                        //    StateBy = item.StateBy,
-                        //    IsChecked = item.IsChecked,
-                        //    CheckDate = item.CheckDate,
-                        //    CheckBy = item.CheckBy,
-                        //    CreateDate = item.CreateDate,
-                        //    CreateBy = item.CreateBy,
-                        //    ShowPage = item.ShowPage
-                        //}).ToList();
+                    {                       
                         return Json(new { success = true, code = "OK" , data = customerdata }, JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -246,19 +187,23 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult GetEditTableCode()
         {
-            //if (string.IsNullOrEmpty(docid))
-            //{
-            //    Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            //    return Json("C0001", JsonRequestBehavior.AllowGet);
-            //}
-            string sql = @"select AccNo,AccNameC,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  from NES_WEB_ACC.dbo.ACC_AccTitleNo where CompId = '150615163202244' 
+            string compid = Session["CompId"].ToString();
+            string compno = Session["CompNo"].ToString();
+            string compabbr = Session["CompAbbr"].ToString();
+            string sql = @"
+                select AccNo,AccNameC,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
+                from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX 
+                where 1=1
+                    and CompId = @compid 
+                    and CompNo = @compno
+                    and CompAbbr = @compabbr
             ";
-            //var param = new { docid };
+            var param = new { compid, compno,compabbr };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<ACC_AccTitleNo> customerdata = conn.Query<ACC_AccTitleNo>(sql).ToList();
+                    List<ACC_AccTitleNo_MX> customerdata = conn.Query<ACC_AccTitleNo_MX>(sql, param).ToList();
                     if (customerdata.Count > 0)
                     {
                         return Json(new { success = true, code = "OK" , data = customerdata }, JsonRequestBehavior.AllowGet);
@@ -572,8 +517,8 @@ namespace NES_WEB_ACC.Controllers
         /// <param name="data"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult PostAddData(VoucherDataViewModel data)
+        [HttpPost]       
+        public ActionResult AddData(VoucherDataViewModel data)
         {
             if (data == null)
             {               
@@ -605,9 +550,20 @@ namespace NES_WEB_ACC.Controllers
                     VoucherType = data.Maindata.VoucherType,
                     VoucherNameC = data.Maindata.VoucherNameC,
                     EmpId = Session["EmpId"].ToString(),
-                    //EmpNameC
+                    EmpNo = Session["EmpNo"].ToString(),
+                    EmpNameC = Session["EmpNameC"].ToString(),
+                    //DeptId = Session["DeptId"].ToString(),
+                    DeptNo = Session["DeptNo"].ToString(),
+                    DeptName = Session["DeptName"].ToString(),
+                    CurrencyNo = data.Maindata.CurrencyNo,
+                    CurrencySt = data.Maindata.CurrencySt,
+                    Rate1 = Convert.ToDecimal(data.Maindata.Rate1),
+                    Rate2 = Convert.ToDecimal(data.Maindata.Rate1),
+                    CreateDate = System.DateTime.Now,
+                    CreateBy= Session["EmpNo"].ToString(),
+                    BillStatus = 0,
                 };
-                _dbContext.ACC_VoucherInfo.Add(mainData);
+                _dbContext.ACC_VoucherInfo.Add(mainData);               
                 #endregion
                 #region 明細寫入
                 foreach (var item in data.Infodata)
@@ -642,14 +598,27 @@ namespace NES_WEB_ACC.Controllers
 
                     };
                     _dbContext.ACC_VoucherDetail.Add(infoData);
+                  
                 }
                 #endregion
-                _dbContext.SaveChanges();
+                try
+                {
+                    _dbContext.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.PropertyName + ": " + x.ErrorMessage);
+                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    return Json(new { success = false, code = "C0004", err = exceptionMessage }, JsonRequestBehavior.AllowGet);
+                }
                 return Json(new { success = true, code = "OK", data = $"新增傳票編號：{mainData.BillNo}" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {               
-                return Json(new { success = false, code = "C0004" , err =e }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, code = "C0004" , err = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>
@@ -658,7 +627,7 @@ namespace NES_WEB_ACC.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult PostEditData(VoucherDataViewModel data) {
+        public ActionResult EditData(VoucherDataViewModel data) {
             if (data == null)
             {
                 
@@ -666,12 +635,78 @@ namespace NES_WEB_ACC.Controllers
             }
             try
             {
-                
+                var existdata = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == data.Maindata);
+                if (true)
+                {
+
+                }
+                foreach (var item in data.Infodata)
+                {
+                    var existdata
+                }
                 return Json(new { success = true, code = "OK" , data = "Id." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {                
                 return Json(new { success = false, code = "C0004" , err = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult VoucherStatus(string webid, string type)
+        {
+            if (String.IsNullOrEmpty(webid))
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            Guid guidId;
+            if (!Guid.TryParse(webid, out guidId))
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+
+            try
+            {
+                var existdata = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == guidId);
+                if (existdata != null)
+                {
+                    switch (type)
+                    {
+                        case "lock":
+                            existdata.IsChecked = true;
+                            existdata.CheckDate = System.DateTime.Now;
+                            existdata.CheckBy = Session["EmpNo"].ToString();
+                            existdata.BillStatus = 1;
+                            break;
+                        case "check":
+                            existdata.IsState = true;
+                            existdata.StateDate = System.DateTime.Now;
+                            existdata.StateBy = Session["EmpNo"].ToString();
+                            existdata.BillStatus = 2;
+                            break;
+                        case "close":
+                            existdata.IsClosed = true;
+                            existdata.ClosedDate = System.DateTime.Now;
+                            existdata.ClosedBy = Session["EmpNo"].ToString();
+                            existdata.BillStatus = 3;
+                            break;
+                        case "reject":
+                            existdata.IsChecked = false;
+                            existdata.SignDate = System.DateTime.Now;
+                            existdata.SignBy = Session["EmpNo"].ToString();
+                            existdata.BillStatus = 4;
+                            break;
+                    }                   
+                    _dbContext.SaveChanges();
+                    return Json(new { success = true, code = "OK", data = existdata.BillNo }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, code = "C0003"}, JsonRequestBehavior.AllowGet);
+                }                
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
             }
         }
 

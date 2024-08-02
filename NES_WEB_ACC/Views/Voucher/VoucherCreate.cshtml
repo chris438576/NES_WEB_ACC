@@ -219,7 +219,7 @@
         .datagrid-row .datagrid-cell {
             margin: 0px !important;
             padding: 0px ;
-            padding-left: 5px ;
+            
         }
 
         .subtd {
@@ -532,8 +532,7 @@
 
         .datagrid-row .datagrid-cell {
             margin: 0px !important;
-            padding: 0px;
-            padding-left: 5px;
+            padding: 0px;           
         }
 
         .datagrid-row td {
@@ -758,16 +757,18 @@
                 singleSelect: true,
                 striped: true,
                 columns: [[
+                    { field: 'WebId', title: 'WebId', hidden: true, type: 'text' },
                     { field: 'Id', title: 'Id', hidden: true, type: 'text' },
                     { field: 'Flag', title: '旗', hidden: true },
                     { field: 'BillDate', title: maindglang.BillDate, width: 80, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'BillNo', title: maindglang.BillNo, width: 130, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'VoucherNameC', title: maindglang.VoucherNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'VoucherNameC', title: maindglang.VoucherNameC, hidden: true },
                     { field: 'EmpNo', title: maindglang.EmpNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'EmpNameC', title: maindglang.EmpNameC, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'Remark', title: maindglang.Remark, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'CompNo', title: maindglang.CompNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } }
+                    { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
+                    { field: 'BillStatus', title: 'BillStatus', hidden: true  }
                 ]],
                 onSelect: function (index, row) {
                     if (actioncode === 'add' || actioncode === 'edit') {
@@ -778,7 +779,7 @@
                                     actioncode = 'view'; // 更新行為模式
                                     btnEnableSet(actioncode); // 更新按鈕狀態
                                     tableHeadData(row); // 更新表頭資料
-                                    itemdgData(row.Id); // 更新相關資料表
+                                    itemdgData(row.WebId); // 更新相關資料表
                                     maindg.datagrid('selectRow', index); // 選擇新行
                                 } else {
                                     maindg.datagrid('unselectRow', index);
@@ -789,7 +790,7 @@
                     } else {
                         maindgIndex = index;
                         tableHeadData(row);
-                        itemdgData(row.Id);
+                        itemdgData(row.WebId);
                     }
                 },
                 rowStyler: function (index, row) {
@@ -836,6 +837,7 @@
                 striped: true,
                 columns: [
                     [
+                        { field: 'WebId', title: 'WebId', hidden: true, type: 'text', rowspan: 2 },
                         { field: 'Id', title: 'Id', hidden: true, type: 'text', rowspan: 2 },
                         { field: 'Linage', title: '行號', hidden: false, type: 'string', rowspan: 2 },
                         {
@@ -1006,8 +1008,8 @@
                 }
             });
         }
-        function itemdgData(docid) {
-            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherItem?docid=' + docid;
+        function itemdgData(webdocid) {
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherItem?webdocid=' + webdocid;
             doajax("GET", actionurl, null, function (result) {
                 if (result.success) {
                     itemdg.datagrid('loadData', result.data);
@@ -1308,10 +1310,14 @@
                     $('.colMoney').textbox('setValue', '');
                     break;
                 case 'edit':
-                    var select = maindg.datagrid('getSelected');
-                    if (select != null) {
-                        actioncode = 'edit';
-                        btnEnableSet(actioncode);
+                    row = maindg.datagrid('getSelected');
+                    if (row != null) {
+                        if (row.IsChecked == true) {
+                            alert("此傳票無法編輯");
+                        } else {
+                            actioncode = 'edit';
+                            btnEnableSet(actioncode);
+                        }                        
                     } else {
                         alert("請選擇傳票進行編輯");
                     }
@@ -1325,7 +1331,7 @@
 
                     if (actioncode === 'add') {
                         dosave = saveCheck(actioncode);
-                        if (dosave) {
+                        if (dosave) {                           
                             maindata = {
                                 'BillDate': $('.fomBillDate').textbox('getValue'),
                                 'DocSubType': $('.fomDocSubType').textbox('getValue'),
@@ -1343,11 +1349,10 @@
                                 'CurrencyNo': $('.fomCurrencyNo').textbox('getValue'),
                                 'CurrencySt': $('.fomCurrencySt').textbox('getValue'),
                                 'Rate1': $('.fomRate1').textbox('getValue'),
-                                'Currency2': $('.fomCurrency2').textbox('getValue'),
-                                'Rate2': $('.fomRate2').textbox('getValue'),
+                               /* 'Currency2': $('.fomCurrency2').textbox('getValue'),*/
+                                /*'Rate2': $('.fomRate2').textbox('getValue'),*/
                                 'TargetNo': $('.fomTargetNo').textbox('getValue')
-                            };
-
+                            };                           
                             infodatadg = itemdg.datagrid('getRows')
                             infodata = infodatadg.map(function (row) {
                                 return {
@@ -1399,7 +1404,7 @@
                                 Infodata: infodata
                             };
                            
-                            actionurl = defaultUrl + controllerurl + functionurl + 'PostAddData';
+                            actionurl = defaultUrl + controllerurl + functionurl + 'AddData';
                             $.ajax({
                                 type: "POST",
                                 url: actionurl,
@@ -1424,7 +1429,8 @@
                         } else {
                             $.messager.alert(msglang.Title2, '請檢查欄位是否輸入或借貸平衡!');
                         }
-                    } else if (actioncode === 'edit') {
+                    }
+                    if (actioncode === 'edit') {
                         dosave = saveCheck(actioncode);
                         if (dosave) {
                             maindatadg = maindg.datagrid('getRows')[maindgIndex]
@@ -1451,6 +1457,7 @@
                             infodatadg = itemdg.datagrid('getRows')
                             infodata = infodatadg.map(function (row) {
                                 return {
+                                    'WebId': row.WebId,
                                     'Id': row.Id,
                                     'Linage': row.Linage,
                                     'AccNo': row.AccNo,
@@ -1497,12 +1504,8 @@
                                 Maindata: maindata,
                                 Infodata: infodata
                             };
-                            // 檢查JSON大小
-                            let jsonString = JSON.stringify(data);
-                            let jsonSize = new Blob([jsonString]).size;
-                            console.log("JSON Size: " + jsonSize + " bytes");
-                            console.log(JSON.stringify(data));
-                            actionurl = defaultUrl + controllerurl + functionurl + 'PostEditData';
+                          
+                            actionurl = defaultUrl + controllerurl + functionurl + 'EditData';
                             $.ajax({
                                 type: "POST",
                                 url: actionurl,
@@ -1523,8 +1526,9 @@
                         } else {
                             $.messager.alert(msglang.Title2, '請檢查欄位是否輸入或借貸平衡!');
                         }
-                    } else {
-                        $.messager.alert(msglang.Title2, '操作碼錯誤');
+                    }
+                    if (actioncode != 'add' && actioncode != 'edit') {
+                        $.messager.alert(msglang.Title2, msglang.MsgActionErr);
                     }
 
                     actioncode = 'view';
@@ -1556,6 +1560,7 @@
                         $.messager.confirm(msglang.Title1, '是否要取消?', function (r) {
                             if (r) {
                                 maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
+                                itemdg.datagrid('endEdit', itemdgIndex);
                                 actioncode = 'view';
                                 btnEnableSet(actioncode);
                             } else {
@@ -1566,6 +1571,36 @@
 
                     break;
                 case 'delete':
+                    break;
+                case 'lock':
+                    row = maindg.datagrid('getSelected');
+                    if (row != null) {
+                        if (actioncode == 'add' || actioncode == 'edit') {
+                            $.messager.alert(msglang.Title2, '請先存檔，再覆核。');
+                            return;
+                        }
+                        $.messager.confirm(msglang.Title1, '是否覆核?', function (r) {
+                            if (r) {
+                                actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?webid=' + row.WebId +'&type=lock';
+                                doajax("POST", actionurl, null, function (result) {
+                                    if (result.success) {
+                                        $.messager.alert(msglang.Title2, '單號：' + result.data + '已覆核。');
+                                    } else {
+                                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                        if (result.code == 'C0004') {
+                                            console.log(result.err);
+                                        }
+                                        itemdg.datagrid('loadData', '');
+                                    }
+                                });
+                            } else {
+                                return;
+                            }
+                        });
+                    } else {                        
+                        $.messager.alert(msglang.Title2, "請選擇傳票進行覆核");
+                    }
+                   
                     break;
                 //#endregion
 
@@ -2616,8 +2651,7 @@
 
         //#region 彈跳視窗
         function dlgEditAccNo() {
-            objdata(objAccNo, 'read', function (data) {
-                console.log(objAccNo.data);
+            objdata(objAccNo, 'read', function (data) {                
                 if (data.data) {
                     dlgdg1.datagrid('loadData', data.data);
                 } else {

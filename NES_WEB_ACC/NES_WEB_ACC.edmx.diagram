@@ -18,9 +18,9 @@
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_SysDocSubType" Width="1.5" PointX="12.625" PointY="4.75" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherKind" Width="1.5" PointX="14.5" PointY="4.75" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_DataSet" Width="1.5" PointX="0.75" PointY="15.375" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherInfo" Width="1.5" PointX="2.5" PointY="15.375" />
-        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherDetail" Width="1.5" PointX="4.375" PointY="15.375" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_AccTitleNo_MX" Width="1.5" PointX="6.625" PointY="4.75" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherDetail" Width="1.5" PointX="2.75" PointY="15.375" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherInfo" Width="1.5" PointX="4.75" PointY="15.375" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
