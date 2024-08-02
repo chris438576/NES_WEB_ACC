@@ -4,45 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
+    <link rel="stylesheet" type="text/css" href="~/Scripts/mycss/body_container_erp.css" />
     <style>
-        /*#region container style*/
-        #body-container {
-            width: 100%;
-            height: calc(100vh - 140px);
-            background-color: #d0d0d0;
-            margin: 0px;
-            padding: 0px;
-            font-size: 1.0em;
-            overflow-y: auto;
-        }
-
-            #body-container .body-layout {
-                height: calc(100vh - 140px);
-                width: 100%;
-            }
-
-        #dgAccGoup {
-            width: 315px;
-            height: calc(100vh - 120px);
-            padding: 0px;
-            background-color: #F2F2F2;
-        }
-
-        #body-content {
-            padding: 0px;
-            margin: 0px;
-            background: white;
-            height: 100%;
-        }
-
-        .modulecontent {
-            height: 100%;
-            width: 99%;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        /*#endregion*/
         /*#region Body style*/
         #content-top {
             min-width: 500px;
@@ -218,8 +181,7 @@
 
         .datagrid-row .datagrid-cell {
             margin: 0px !important;
-            padding: 0px ;
-            
+            padding: 0px;
         }
 
         .subtd {
@@ -532,7 +494,7 @@
 
         .datagrid-row .datagrid-cell {
             margin: 0px !important;
-            padding: 0px;           
+            padding: 0px;
         }
 
         .datagrid-row td {
@@ -827,7 +789,7 @@
                     if (result.code == 'C0004') {
                         console.log(result.err);
                     }
-                    maindg.datagrid('loadData', '');
+                    //maindg.datagrid('loadData', '');
                 }
             });
         }
@@ -1302,7 +1264,7 @@
                     btnEnableSet(actioncode);
                     infotabs.tabs('select', 1); //表頭表單切換
                     advtabs.tabs('select', 1); //進階資訊切換
-                    maindg.datagrid('unselectRow', maindgIndex);                    
+                    maindg.datagrid('unselectRow', maindgIndex);
                     addForm(); //格式化、下拉選單初始化、預設欄位填值
                     itemdg.datagrid('loadData', { total: 0, rows: [] });//itemdg資料清空
                     $('.colMoneyD').textbox('setValue', '');
@@ -1317,7 +1279,7 @@
                         } else {
                             actioncode = 'edit';
                             btnEnableSet(actioncode);
-                        }                        
+                        }
                     } else {
                         alert("請選擇傳票進行編輯");
                     }
@@ -1331,7 +1293,7 @@
 
                     if (actioncode === 'add') {
                         dosave = saveCheck(actioncode);
-                        if (dosave) {                           
+                        if (dosave) {
                             maindata = {
                                 'BillDate': $('.fomBillDate').textbox('getValue'),
                                 'DocSubType': $('.fomDocSubType').textbox('getValue'),
@@ -1352,7 +1314,7 @@
                                /* 'Currency2': $('.fomCurrency2').textbox('getValue'),*/
                                 /*'Rate2': $('.fomRate2').textbox('getValue'),*/
                                 'TargetNo': $('.fomTargetNo').textbox('getValue')
-                            };                           
+                            };
                             infodatadg = itemdg.datagrid('getRows')
                             infodata = infodatadg.map(function (row) {
                                 return {
@@ -1397,13 +1359,13 @@
                                     'Remark': row.Remark,
                                     'CaseBillNo': row.CaseBillNo,
                                 };
-                            });                            
+                            });
 
                             data = {
                                 Maindata: maindata,
                                 Infodata: infodata
                             };
-                           
+
                             actionurl = defaultUrl + controllerurl + functionurl + 'AddData';
                             $.ajax({
                                 type: "POST",
@@ -1504,7 +1466,7 @@
                                 Maindata: maindata,
                                 Infodata: infodata
                             };
-                          
+
                             actionurl = defaultUrl + controllerurl + functionurl + 'EditData';
                             $.ajax({
                                 type: "POST",
@@ -1597,10 +1559,10 @@
                                 return;
                             }
                         });
-                    } else {                        
+                    } else {
                         $.messager.alert(msglang.Title2, "請選擇傳票進行覆核");
                     }
-                   
+
                     break;
                 //#endregion
 
@@ -2651,7 +2613,7 @@
 
         //#region 彈跳視窗
         function dlgEditAccNo() {
-            objdata(objAccNo, 'read', function (data) {                
+            objdata(objAccNo, 'read', function (data) {
                 if (data.data) {
                     dlgdg1.datagrid('loadData', data.data);
                 } else {

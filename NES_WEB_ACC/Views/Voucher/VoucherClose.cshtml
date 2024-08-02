@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewBag.Title = @Resources.Content.VoucherCheck;
+﻿@{
+    ViewBag.Title = @Resources.Content.VoucherClose;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,11 +13,6 @@
             height: 100%;
         }
        
-       
-
-        
-
-        /*#endregion*/
         /*#region Body style*/
         #content-top {
             min-width: 500px;
@@ -639,7 +633,7 @@
             });
         }
         function maindgData() {
-            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo?type=check';
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo?type=close';
             doajax("GET", actionurl, null, function (result) {
                 if (result.success) {
                     if (Array.isArray(result.data)) {
@@ -822,10 +816,10 @@
                 case 'check':
                     row = maindg.datagrid('getSelected');
                     if (row != null) {
-                        actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=check';
+                        actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=close';
                         doajax("POST", actionurl, null, function (result) {
                             if (result.success) {
-                                $.messager.alert(msglang.Title2, '已審核');
+                                $.messager.alert(msglang.Title2, '已結案');
                             } else {
                                 $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                 if (result.code == 'C0004') {
@@ -835,13 +829,13 @@
                             }
                         });
                     } else {
-                        alert("請選擇傳票進行審核");
+                        alert("請選擇傳票進行結案");
                     }
                     break;
                 case 'reject':
                     row = maindg.datagrid('getSelected');
                     if (row != null) {
-                        actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=reject';
+                        actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=reject2';
                         doajax("POST", actionurl, null, function (result) {
                             if (result.success) {
                                 $.messager.alert(msglang.Title2, '已退件');

@@ -31,6 +31,8 @@ namespace NES_WEB_ACC.ViewModels
     {       
         public string WebId { get; set; }
         public string Id { get; set; }
+        public string DocId { get; set; }
+        public string WebDocId { get; set; }
         public string Linage { get; set; }
         public string AccNo { get; set; }
         public string AccNameC { get; set; }

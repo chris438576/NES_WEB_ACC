@@ -91,28 +91,30 @@ namespace NES_WEB_ACC.Controllers
                 switch (type)
                 {
                     case "create":
-                        sqlwhere = @"
-                            and IsClosed = 0                           
-                            and CreateBy = @craeteby
+                        sqlwhere = @"                            
+                            and Isnull(IsClosed,0) = 0    --未結案   
+                            --and BillStatus in ('0','1','2','4','5')
                         ";
+                        sql = sql + sqlwhere ;
                         if (!userRoles.Contains("Admin"))
                         {
-                            sql = sql + sqlwhere;
+                            sql = sql + " and CreateBy = @craeteby ";
                             param = new { roles.Name };
-                        }                       
+                        }                                     
                         break;
                     case "check":
                         sqlwhere = @"
-                            and IsClosed = 0   
-                            and IsChecked = 1
+                            and Isnull(IsChecked,0) = 1   --已覆核
+                            and Isnull(IsState,0) = 0     --主管未審核
+                            and Isnull(IsClosed,0) = 0    --未結案                            
                         ";
                         sql = sql + sqlwhere;
                         break;
                     case "close":
-                        sqlwhere = @"
-                            and IsClosed = 0   
-                            and IsChecked = 1
-                            and IsState = 1
+                        sqlwhere = @" 
+                            and Isnull(IsChecked,0) = 1   --已覆核
+                            and Isnull(IsState,0) = 1     --主管已審核
+                            and Isnull(IsClosed,0) = 0    --未結案
                         ";
                         sql = sql + sqlwhere;
                         break;
@@ -601,19 +603,7 @@ namespace NES_WEB_ACC.Controllers
                   
                 }
                 #endregion
-                try
-                {
-                    _dbContext.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    var errorMessages = ex.EntityValidationErrors
-                        .SelectMany(x => x.ValidationErrors)
-                        .Select(x => x.PropertyName + ": " + x.ErrorMessage);
-                    var fullErrorMessage = string.Join("; ", errorMessages);
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
-                    return Json(new { success = false, code = "C0004", err = exceptionMessage }, JsonRequestBehavior.AllowGet);
-                }
+                _dbContext.SaveChanges();
                 return Json(new { success = true, code = "OK", data = $"新增傳票編號：{mainData.BillNo}" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -633,18 +623,61 @@ namespace NES_WEB_ACC.Controllers
                 
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
-            try
+            Guid guidId;
+            if (!Guid.TryParse(data.Maindata.WebId, out guidId))
             {
-                var existdata = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == data.Maindata);
-                if (true)
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {               
+                var existdata = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == guidId);
+                if (existdata != null)
                 {
+                    var itemToDelete = _dbContext.ACC_VoucherDetail.Where(x => x.WebDocId == existdata.WebId).ToList();                                       
+                    foreach (var item in itemToDelete)
+                    {
+                        _dbContext.ACC_VoucherDetail.Remove(item);
+                    }
+                    foreach (var item in data.Infodata)
+                    {
+                        //取會計科目的資訊
+                        var accTitle = _dbContext.ACC_AccTitleNo_MX.FirstOrDefault(x => x.AccNo == item.AccNo);
+                        var infoData = new ACC_VoucherDetail
+                        {
+                            WebId = Guid.NewGuid(),
+                            WebDocId = existdata.WebId,
+                            Linage = Convert.ToInt32(item.Linage),
+                            AccNoWebId = accTitle.WebId,
+                            AccNoId = accTitle.Id,
+                            AccNo = accTitle.AccNo,
+                            AccNameC = accTitle.AccNameC,
+                            AccNameE = accTitle.AccNameE,
+                            AccNameMX = accTitle.AccNameMX,
+                            Remark = item.Remark,
+                            DCTypeNo = item.DCTypeNo,
+                            DCTypeNameC = item.DCTypeNameC,
+                            DCTypeNameMX = (item.DCTypeNo == "D") ? "Débito" : "Crédito",
+                            CurrencyNo = item.CurrencyNo,
+                            CurrencySt = item.CurrencySt,
+                            Rate1 = Convert.ToDecimal(item.Rate1),
+                            Rate2 = Convert.ToDecimal(item.Rate1),
+                            Money = item.Money,
+                            Money1 = item.Money1,
+                            Money2 = item.Money1,
+                            AccProfitId = item.AccProfitId,
+                            AccProfitNo = item.AccProfitNo,
+                            AccProfitName = item.AccProfitName,
 
+                        };
+                        _dbContext.ACC_VoucherDetail.Add(infoData);
+                    }
+                    _dbContext.SaveChanges();
+                    return Json(new { success = true, code = "OK", data = $"修改傳票編號：{existdata.BillNo}" }, JsonRequestBehavior.AllowGet);
                 }
-                foreach (var item in data.Infodata)
+                else
                 {
-                    var existdata
+                    return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
                 }
-                return Json(new { success = true, code = "OK" , data = "Id." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {                
@@ -690,12 +723,23 @@ namespace NES_WEB_ACC.Controllers
                             existdata.BillStatus = 3;
                             break;
                         case "reject":
-                            existdata.IsChecked = false;
-                            existdata.SignDate = System.DateTime.Now;
-                            existdata.SignBy = Session["EmpNo"].ToString();
+                            existdata.IsChecked = false;                          
                             existdata.BillStatus = 4;
                             break;
-                    }                   
+                        case "reject2":
+                            existdata.IsChecked = false;
+                            existdata.IsState = false;
+                            existdata.BillStatus = 5;
+                            break;
+                        case "scrap":
+                            existdata.IsClosed = true;
+                            existdata.ClosedDate = System.DateTime.Now;
+                            existdata.ClosedBy = Session["EmpNo"].ToString();
+                            existdata.BillStatus = 9;
+                            break;
+                    }
+                    existdata.SignDate = System.DateTime.Now;
+                    existdata.SignBy = Session["EmpNo"].ToString();
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data = existdata.BillNo }, JsonRequestBehavior.AllowGet);
                 }
