@@ -9,16 +9,16 @@ using System.Web.Mvc;
 
 namespace NES_WEB_ACC.Controllers
 {
-    public class AccCodeMXController : Controller
+    public class AccSetController : Controller
     {
         public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
         private NES_WEB_ACCEntities _dbContext = new NES_WEB_ACCEntities();
         
         /// <summary>
-        /// 
+        /// 介面_會計科目
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index(int? scroll, string msg)
+        public ActionResult AccTitle(int? scroll, string msg)
         {
             ViewBag.Scroll = (scroll == null) ? 0 : scroll;
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
@@ -191,6 +191,15 @@ namespace NES_WEB_ACC.Controllers
             {
                 return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        /// <summary>
+        /// 介面_匯率
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Rate()
+        {
+            return View();
         }
 
         /// <summary>

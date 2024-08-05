@@ -253,7 +253,7 @@
     <value>科目大類英文名稱</value>
   </data>
   <data name="VoucherClose" xml:space="preserve">
-    <value>傳票關帳作業</value>
+    <value>傳票結案作業</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>確認</value>

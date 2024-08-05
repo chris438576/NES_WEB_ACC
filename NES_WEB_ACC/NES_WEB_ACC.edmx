@@ -241,6 +241,24 @@
           <Property Name="CreateDate" Type="smalldatetime" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="ACC_Rate">
+          <Key>
+            <PropertyRef Name="WebId" />
+          </Key>
+          <Property Name="WebId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CurrencyNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CurrencySt" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExchangeYear" Type="int" Nullable="false" />
+          <Property Name="ExchangeMonth" Type="int" Nullable="false" />
+          <Property Name="ExchangeMonthFlag" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="CreateEmpId" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateEmpNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreatEmpDate" Type="datetime" />
+          <Property Name="UpdateEmpId" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateEmpNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="ACC_SysDocSubType">
           <Key>
             <PropertyRef Name="Id" />
@@ -521,6 +539,7 @@
           <EntitySet Name="ACC_DataSet" EntityType="Self.ACC_DataSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ACC_EquityInfo" EntityType="Self.ACC_EquityInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ACC_EquityItem" EntityType="Self.ACC_EquityItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ACC_Rate" EntityType="Self.ACC_Rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ACC_SysDocSubType" EntityType="Self.ACC_SysDocSubType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ACC_VoucherDetail" EntityType="Self.ACC_VoucherDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ACC_VoucherInfo" EntityType="Self.ACC_VoucherInfo" Schema="dbo" store:Type="Tables" />
@@ -629,6 +648,7 @@
           <EntitySet Name="ACC_AccTitleNo_MX" EntityType="NES_WEB_ACCModel.ACC_AccTitleNo_MX" />
           <EntitySet Name="ACC_VoucherDetail" EntityType="NES_WEB_ACCModel.ACC_VoucherDetail" />
           <EntitySet Name="ACC_VoucherInfo" EntityType="NES_WEB_ACCModel.ACC_VoucherInfo" />
+          <EntitySet Name="ACC_Rate" EntityType="NES_WEB_ACCModel.ACC_Rate" />
           </EntityContainer>
         <EntityType Name="ACC_AccCode1">
           <Key>
@@ -1060,6 +1080,24 @@
           <Property Name="BillStatus" Type="Int32" />
           <Property Name="SignDate" Type="DateTime" Precision="0" />
           <Property Name="SignBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ACC_Rate">
+          <Key>
+            <PropertyRef Name="WebId" />
+          </Key>
+          <Property Name="WebId" Type="Guid" Nullable="false" />
+          <Property Name="CurrencyNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencySt" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExchangeYear" Type="Int32" Nullable="false" />
+          <Property Name="ExchangeMonth" Type="Int32" Nullable="false" />
+          <Property Name="ExchangeMonthFlag" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="CreateEmpId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateEmpNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatEmpDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateEmpId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateEmpNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1587,6 +1625,25 @@
                 <ScalarProperty Name="CompNo" ColumnName="CompNo" />
                 <ScalarProperty Name="CompId" ColumnName="CompId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WebId" ColumnName="WebId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ACC_Rate">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_Rate">
+              <MappingFragment StoreEntitySet="ACC_Rate">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateEmpNo" ColumnName="UpdateEmpNo" />
+                <ScalarProperty Name="UpdateEmpId" ColumnName="UpdateEmpId" />
+                <ScalarProperty Name="CreatEmpDate" ColumnName="CreatEmpDate" />
+                <ScalarProperty Name="CreateEmpNo" ColumnName="CreateEmpNo" />
+                <ScalarProperty Name="CreateEmpId" ColumnName="CreateEmpId" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="ExchangeMonthFlag" ColumnName="ExchangeMonthFlag" />
+                <ScalarProperty Name="ExchangeMonth" ColumnName="ExchangeMonth" />
+                <ScalarProperty Name="ExchangeYear" ColumnName="ExchangeYear" />
+                <ScalarProperty Name="CurrencySt" ColumnName="CurrencySt" />
+                <ScalarProperty Name="CurrencyNo" ColumnName="CurrencyNo" />
                 <ScalarProperty Name="WebId" ColumnName="WebId" />
               </MappingFragment>
             </EntityTypeMapping>

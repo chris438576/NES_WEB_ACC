@@ -7,39 +7,6 @@
     <link rel="stylesheet" type="text/css" href="~/Scripts/mycss/body_container_erp.css" />
     <style>
         /*#region Body style*/
-        #content-top {
-            min-width: 500px;
-            width: 99%;
-            min-height: 170px;
-            height: 18% auto;
-            margin: 0;
-            padding: 0;
-        }
-
-        #content-form {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.2);
-        }
-
-        #content-grid {
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border: 0.5px solid #d2d2d2;
-            background-color: #ffffff;
-            overflow-x: auto !important;
-        }
-
-        .header-toolbar {
-            overflow: auto;
-            font-size: 0.9em;
-            padding: 1px 15px 1px 3px;
-            width: 100%;
-            background-color: #cfcfcf;
-            margin: 0;
-            border: 1px solid gray;
-        }
 
         #content-tabs {
             padding-bottom: 10px;
@@ -290,41 +257,7 @@
                     width: 300px !important;
                 }
         /*#endregion*/
-        /*#region dom style*/
-        #reportFrame {
-            height: auto 100%;
-        }
 
-        .dlgtabs {
-            min-height: 80%;
-            max-height: calc(100vh - 100px);
-            border: 0.5px solid #bbbaba;
-        }
-
-        .rowstyle {
-            margin-left: 8px !important;
-            margin-top: 5px;
-            padding-right: 0px;
-        }
-
-        input[type=radio] {
-            margin-right: 5px;
-            padding: 0.5em;
-            -webkit-appearance: none;
-            outline: 0.1em solid black;
-            outline-offset: 0.1em;
-        }
-
-            input[type=radio]:checked {
-                display: inline-block;
-                background-color: #000 !important;
-            }
-
-            input[type=radio]:disabled {
-                background-color: #EEEEEE;
-            }
-
-        /*#endregion*/
 
         .progress-extended div label, .progress-txtextended div label {
             width: 100%;
@@ -467,42 +400,6 @@
                 height: 45px !important;
                 font-size: 0.7em !important;
             }
-        }
-
-        /* sub欄位*/
-        /*#region datagrid style*/
-        .datagrid {
-            border: 2px solid white; /* 默認顏色 */
-        }
-
-        .datagrid-header-row td {
-            background-color: #d2d2d2;
-            color: #333;
-            font-weight: bold;
-            border: 1px solid black !important;
-        }
-
-        .datagrid-header, .datagrid-td-rownumber {
-            background-color: #fff !important;
-            background: none;
-            background-repeat: no-repeat;
-        }
-
-        .datagrid-cell-rownumber {
-            color: black !important;
-        }
-
-        .datagrid-row .datagrid-cell {
-            margin: 0px !important;
-            padding: 0px;
-        }
-
-        .datagrid-row td {
-            border: 1px solid black !important;
-        }
-
-        #infotabs .tabs-header, #advtabs .tabs-header, #dlgtabs .tabs-header {
-            display: none;
         }
     </style>
 }
@@ -709,6 +606,7 @@
             btnEnableSet('view');
             ///-----資料填值-----///
             maindgData();
+            $('#btnreject').hide();
         });
         //#endregion
 
@@ -1780,6 +1678,8 @@
                     $('#btnRefresh').linkbutton('enable');
                     $('#btnCancel').linkbutton('disable');
                     $('#btnDelete').linkbutton('disable');
+                   
+
             }
         }
         //#endregion
@@ -2849,5 +2749,21 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(function () {  
+            //$('#btnAdd').addClass('hidden-btn');
+            //$('#btnEdit').addClass('hidden-btn');
+            //$('#btnSave').addClass('hidden-btn');
+            //$('#btnDetail').addClass('hidden-btn');
+            $('#btnRefresh').addClass('hidden-btn');
+            //$('#btnCancel').addClass('hidden-btn');
+            $('#btnDelete').addClass('hidden-btn');
 
+            /*$('#btnlock').hide();*/
+            $('#btncheck').hide();
+            $('#btnclose').hide();
+            $('#btnunlock').hide();
+            $('#btnreject').hide();
+        });
+    </script>
 }

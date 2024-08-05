@@ -4,5 +4,465 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Workflow</h2>
+@section css{
+     <style>
+            /*#region 共用參數*/
+            .box-contain {
+                margin: 0px 0px 0px 0px;
+                height: calc(100vh - 90px);
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: lightgray;
+            }
 
+            .box-body {
+                height: calc(100vh - 90px);
+            }
+
+            #flowstatus {
+                overflow-x: hidden;
+                width: 100%;
+                height: calc(100vh - 90px);
+                font-size: 1.1em;
+                border: 3px solid #d0d0d0;
+                background-color: #ffdebb;
+            }
+
+                #flowstatus a,
+                #flowstatus a:link,
+                #flowstatus a:visited,
+                #flowstatus a:hover,
+                #flowstatus a:active {
+                    color: black;
+                    font-size: 1.2em !important;
+                }
+
+            .flowtitle {
+                font-size: 1.5em;
+                height: 55px;
+                text-align: center;
+                margin: 0px 0px 25px 0px;
+                padding: 10px 10px 10px 10px;
+                border: 0.5px solid #808080;
+                background-color: #F5F5F5;
+            }
+
+            .flowcontent {
+                font-size: 1.2em;
+                text-align: center;
+                margin: 0px 0px 25px 0px;
+                padding: 10px 10px 10px 10px;
+                width: 100%;
+                height: calc(100vh - 250px);
+            }
+
+            .flow-header, .flow-body {
+                font-size: 1.2em;
+                text-align: center;
+                margin: 0px;
+                padding: 0px;
+            }
+
+            .flow-header {
+                width: 100%;
+                border-bottom: 3px solid black;
+            }
+
+            .header-fix-1 {
+                width: 400px;
+                height: 100%;
+                text-align: center;
+                border-right: 2px solid black;
+            }
+
+            .header-fix-2 {
+                width: 1050px;
+                height: 100%;
+                border-left: 2px solid black;
+                text-align: center;
+            }
+
+            .flow-body {
+                width: 100%;
+                height: 100%;
+            }
+            /*#endregion*/
+
+
+            .row-first {
+                margin-top: 45px;
+            }
+
+            .row-top-fix {
+                margin-top: 20px;
+            }
+
+            .row-space {
+                height: 60px;
+            }
+
+            .row-space1 {
+                height: 55px;
+            }
+
+            .row-space2 {
+                height: 70px;
+            }
+
+            .col-fix-5 {
+                width: 200px;
+            }
+
+            .col-fix-1 {
+                width: 100px;
+            }
+
+            .col-fix-2 {
+                width: 100px;
+            }
+
+            .col-fix-1-8 {
+                width: 80px;
+            }
+
+            .col-fix-1-4 {
+                width: 1px;
+            }
+
+            .col-fix-1-1 {
+                width: 1px;
+            }
+
+            .clearpad {
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+            .clearpad2 {
+                margin: -38px 0px 0px 0px !important;
+                padding: 0px !important;
+            }
+
+            .clearpad3 {
+                margin: -35px 0px 0px 0px !important;
+                padding: 0px !important;
+            }
+
+            /*#region 流程圖-箭頭*/
+            .chart-right {
+                border-bottom: 3px solid black;
+                margin: 30px 0px 0px 0px;
+                padding: 0px;
+            }
+
+            .chart-left {
+                border-bottom: 3px solid black;
+                margin: 30px 0px 0px 0px !important;
+                padding: 0px;
+            }
+
+            .arrow-right {
+                float: right;
+                width: 0;
+                height: 0;
+                border-width: 10px;
+                border-style: solid;
+                border-color: transparent transparent transparent black;
+                margin: 22px 0px 0px 0px;
+                padding: 0px;
+            }
+
+            .chart-down {
+                border-left: 3px solid black;
+                margin: 0px 0px 0px 130px !important;
+                padding: 0px;
+                height: 35px;
+                width: 100px;
+            }
+
+            .chart-down-2 {
+                border-left: 3px solid black;
+                margin: 0px 0px 0px 189px !important;
+                padding: 0px;
+                width: 100px;
+                height: 20px;
+            }
+
+            .chart-down-3 {
+                border-right: 3px solid black;
+                border-bottom: 3px solid black;
+                margin: 0px 60px 0px 0px !important;
+                padding: 0px;
+                height: 33px;
+                width: 82px;
+            }
+
+            .arrow-down {
+                float: left;
+                width: 0;
+                height: 0;
+                border-width: 10px;
+                border-style: solid;
+                border-color: black transparent transparent transparent;
+                margin: 0px 0px 0px 120px;
+                padding: 0px;
+            }
+
+            .arrow-left {
+                float: left;
+                width: 0;
+                height: 0;
+                border-width: 10px;
+                border-style: solid;
+                border-color: transparent black transparent transparent;
+                margin: 22px 0px 0px 0px;
+                padding: 0px;
+            }
+            /*#endregion*/
+
+            /*#region 按鈕*/
+            .flowcontentrow {
+                margin: 0px;
+                padding: 0px;
+                border-radius: 8px;
+                text-align: center;
+                height: 60px;
+                width: auto;
+            }
+
+            .flowrow {
+                margin: 0px;
+                padding: 8px;
+                border-radius: 8px;
+                text-align: center;
+                height: 60px;
+            }
+
+            .flowrow-lg {
+                margin: 0px;
+                padding: 8px;
+                border-radius: 8px;
+                text-align: center;
+                height: 95px;
+            }
+
+            .flow-default {
+                border: 1px solid black;
+                color: black;
+                width: 100%;
+                height: 100%;
+            }
+
+            .flow-container {
+                width: 100% auto;
+                height: 60px;
+                margin: 0px;
+                padding: 0px;
+                border-radius: 8px;
+                text-align: center;
+            }
+
+            .flow-container-lg {
+                width: 100% auto;
+                height: 95px;
+                margin: 0px;
+                padding: 0px;
+                border-radius: 8px;
+                text-align: center;
+            }
+            /*#endregion*/
+
+            /*#region 流程圖按鈕顏色*/
+            .flow1 {
+                background-color: #AEE5D8;
+            }
+
+            .flow2 {
+                background-color: #E5D0E3;
+            }
+
+            .flow3 {
+                background-color: #60fd5e;
+            }
+
+            .flow4 {
+                background-color: #808080;
+            }
+
+            .flow5 {
+                background-color: #60fd5e;
+            }
+
+            .flow6 {
+                background-color: #fa8f8f;
+            }
+
+            .flow7 {
+                background-color: #edf616;
+            }
+
+            .flow8 {
+                background-color: #fd3fff;
+            }
+
+            .flow9 {
+                background-color: #ff5858;
+            }
+            /*#endregion*/
+
+
+        </style>
+    }
+
+<div class="rectangle" data-options="region:'center'">
+
+    <div class="row flowtitle">
+        <label><span>總帳系統作業流程圖</span><span class="bg-green" style="margin-left:50px;width:25px;height:25px;"></span></label>
+    </div>
+    <div class="row flowcontent">
+        <!--Header-->
+        <div class="row flow-header">
+            <div class="col-md-4 header-fix-1">
+                <div class="col-header">
+                    <label>墨西哥部門</label>
+                </div>
+            </div>
+            <div class="col-md-4 header-fix-1">
+                <div class="col-header">
+                    <label>主管</label>
+                </div>
+            </div>
+            <div class="col-md-4 header-fix-1">
+                <div class="col-header">
+                    <label>台灣部門</label>
+                </div>
+            </div>
+        </div>
+        <!--Body-->
+        <div class="row flow-body">
+            <!--Left-->
+            <div class="col-md-4 header-fix-1 clearpad">
+                <!--Row 1-->
+                <div class="row row-first">
+                    <div class="col-md-3 clearpad"></div>
+                    <!--Flow Btn-->
+                    <div class="col-md-7 clearpad">
+                        <div class="flow-container">
+                            <a class="flowrow flow-default flow1 btn" href="@Url.Content("~/Voucher/VoucherCreate")">
+                                <span style="width:100%;height:100%;">傳票作業</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="chart-left"></div>
+                    </div>
+                </div>
+              
+            </div>
+            <!--Middle-->
+            <div class="col-md-4 header-fix-1 clearpad">
+                <!--Row 1-->
+                <div class="row row-first">
+                    <div class="col-md-3">
+                        <div class="row clearpad">
+                            <div class="col-md-9 clearpad">
+                                <div class="chart-right"></div>
+                            </div>
+                            <div class="col-md-3 clearpad">
+                                <div class="arrow-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Flow Btn-->
+                    <div class="col-md-7 clearpad">
+                        <div class="flow-container">
+                            <a class="flowrow flow-default flow1 btn" href="@Url.Content("~/Voucher/VoucherCheck")">
+                                <span style="width:100%;height:100%;">傳票審核</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="chart-left"></div>
+                    </div>
+                </div>
+                <!-- arrow -->
+                <div class="row row-space2"></div>
+
+            </div>
+            <!--Right-->
+            <div class="col-md-4 header-fix-1 clearpad">
+                <!--Row 1-->
+                <div class="row row-first">
+                    <div class="col-md-3">
+                        <div class="row clearpad">
+                            <div class="col-md-9 clearpad">
+                                <div class="chart-right"></div>
+                            </div>
+                            <div class="col-md-3 clearpad">
+                                <div class="arrow-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Flow Btn-->
+                    <div class="col-md-7 clearpad">
+                        <div class="flow-container">
+                            <a class="flowrow flow-default flow1 btn" href="@Url.Content("~/Voucher/VoucherClose")">
+                                <span style="width:100%;height:100%;">傳票關帳</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>
+                <div class="row row-space2"></div>
+                <!--Row 2-->
+                <div class="row row-top-fix">
+                    <div class="col-md-3 ">
+
+                    </div>
+                    <div class="col-md-7 clearpad3">
+                        <div class="flow-container">
+                            <a class="flowrow-lg flow-default flow2 btn" href="@Url.Content("~/ARS/ArInfo/CloseInfo")">
+                                <span style="width:100%;height:100%;">會科設定</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+
+                    </div>
+                </div>
+
+                <div class="row row-space1">
+                    @*<div class="row clearpad">
+                        <div class="col-md-1 clearpad"></div>
+                        <div class="col-md-5 chart-down"></div>
+                    </div>
+                    <div class="row clearpad">
+                        <div class="col-md-1 clearpad"></div>
+                        <div class="arrow-down"></div>
+                    </div>*@
+                </div>
+                <!--Row 3-->
+                <div class="row row-top-fix">
+                    <div class="col-md-3 ">
+
+                    </div>
+                    <div class="col-md-7 clearpad3">
+                        <div class="flow-container">
+                            <a class="flowrow-lg flow-default flow2 btn" href="@Url.Content("~/ARS/ArInfo/CloseInfo")">
+                                <span style="width:100%;height:100%;">匯率設定</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

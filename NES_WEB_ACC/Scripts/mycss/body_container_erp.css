@@ -1,4 +1,17 @@
-﻿
+﻿/* 工具列 */
+.header-toolbar {
+    overflow: auto;
+    font-size: 0.9em;
+    padding: 1px 15px 1px 3px;
+    width: 100%;
+    background-color: #cfcfcf;
+    margin: 0;
+    border: 1px solid gray;
+}
+    .header-toolbar .hidden-btn {
+        visibility: hidden;
+    }
+/* 頁面內容(不含工具列) */
 #body-container {
     width: 100%;
     height: calc(100vh - 140px);
@@ -14,10 +27,69 @@
     width: 100%;
 }
 
-/*?*/
+
+
 .modulecontent {
     height: 100%;
     width: 99%;
     overflow-y: auto;
     overflow-x: hidden;
+}
+/*#region datagrid */
+.datagrid {
+    border: 2px solid white; /* 默認顏色 */
+}
+.datagrid-header-row td {
+    background-color: #d2d2d2;
+    color: #333;
+    font-weight: bold;
+    border: 1px solid black !important;
+}
+/*#endregion */
+
+/*#region datagrid sub欄位*/
+#maindg .rowstyle {
+    margin-left: 8px !important;
+    margin-top: 5px;
+    padding-right: 0px;
+}
+.datagrid-header, .datagrid-td-rownumber {
+    background-color: #fff !important;
+    background: none;
+    background-repeat: no-repeat;
+}
+
+.datagrid-cell-rownumber {
+    color: black !important;
+}
+
+.datagrid-row .datagrid-cell {
+    margin: 0px !important;
+    padding: 0px;
+}
+
+.datagrid-row td {
+    border: 1px solid black !important;
+}
+
+/*#endregion */
+
+/*#region easyui-tabs元件*/
+#content-tabs {
+    padding-bottom: 10px;
+}
+#infotabs .tabs-header, #advtabs .tabs-header, #dlgtabs .tabs-header {
+    display: none;
+}
+.dlgtabs {
+    min-height: 80%;
+    max-height: calc(100vh - 100px);
+    border: 0.5px solid #bbbaba;
+}
+/*#endregion */
+
+/* 小畫面 */
+@media (max-width: 1400px) {
+
+
 }

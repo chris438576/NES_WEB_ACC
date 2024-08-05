@@ -1,0 +1,67 @@
+﻿@* 匯率設定 *@
+@{
+    ViewBag.Title = "Rate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="header-toolbar">
+    <select class="easyui-combobox" name="CurrencyNo" label="CurrencyNo:" labelPosition="top" style="width:100%;"></select>
+    <select class="easyui-combobox" name="CurrencySt" label="CurrencySt:" labelPosition="top" style="width:100%;"></select>
+    <a href="#" class="separatorbar"></a>
+    <input id="ymDatebox" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,calendar:mycalendar" style="width:200px;">
+    <a href="#" class="separatorbar"></a>
+
+    <a href="#" class="separatorbar"></a>
+    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('report');" data-options="iconCls:'icon-large-report',size:'large',iconAlign:'top'">報表</a>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        // 格式化函數，只顯示年月
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            return y + '-' + (m < 10 ? ('0' + m) : m);
+        }
+
+        // 解析函數，將選擇的年月解析為日期對象
+        function myparser(s) {
+            if (!s) return new Date();
+            var ss = (s.split('-'));
+            var y = parseInt(ss[0], 10);
+            var m = parseInt(ss[1], 10);
+            if (!isNaN(y) && !isNaN(m)) {
+                return new Date(y, m - 1, 1);
+            } else {
+                return new Date();
+            }
+        }
+
+        // 自定義日曆，只顯示年月
+        function mycalendar(target) {
+            var opts = $(target).datebox('options');
+            $(target).datebox('calendar').calendar({
+                validator: function (date) {
+                    return true;
+                },
+                firstDay: opts.firstDay,
+                weeks: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+                months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                onSelect: function (date) {
+                    $(target).datebox('hidePanel');
+                    var value = opts.formatter.call(target, date);
+                    $(target).datebox('setText', value).datebox('setValue', value);
+                }
+            });
+        }
+
+        // 初始化 datebox
+        $('#ymDatebox').datebox({
+            formatter: myformatter,
+            parser: myparser,
+            calendar: mycalendar
+        });
+    </script>
+    }
+    

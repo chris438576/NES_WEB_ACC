@@ -49,10 +49,10 @@
       <HintPath>..\packages\Dapper.2.1.35\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -170,6 +170,9 @@
     <Compile Include="ACC_EquityItem.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ACC_Rate.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ACC_SysDocSubType.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
@@ -201,7 +204,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccCodeController.cs" />
-    <Compile Include="Controllers\AccCodeMXController.cs" />
+    <Compile Include="Controllers\AccSetController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportViewController.cs" />
@@ -1047,10 +1050,11 @@
     <Content Include="Views\Shared\_VoucherTableAdvPartial.cshtml" />
     <Content Include="Views\ReportView\AccReport.cshtml" />
     <Content Include="Views\Voucher\VoucherCheck.cshtml" />
-    <Content Include="Views\AccCodeMX\Index.cshtml" />
+    <Content Include="Views\AccSet\AccTitle.cshtml" />
     <Content Include="Views\Home\Workflow.cshtml" />
     <Content Include="Views\Shared\_ToolBar2Partial.cshtml" />
     <Content Include="Views\Voucher\VoucherClose.cshtml" />
+    <Content Include="Views\AccSet\Rate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
