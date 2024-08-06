@@ -36,7 +36,7 @@ namespace NES_WEB_ACC
             // セ诀代刚
             string username = "NES1492"; // 安砞眤璶家览ノめ嘿
             string[] roles = { "Admin" }; // 安砞眤璶家览ノめà︹
-            //// タΑㄏノ
+            ////タΑㄏノ
             //string username = User.Identity.Name;
             //string[] roles = RoleSetting(username);
 
@@ -110,8 +110,12 @@ namespace NES_WEB_ACC
         protected void Application_AcquireRequestState(Object sender, EventArgs e)
         {
             HttpContext context = HttpContext.Current;
-            var languageSession = "en";
-            if (context != null && context.Session != null)
+            var languageSession = "en";           
+            if (context != null && context.Request != null && context.Request.Cookies["lang"] != null)
+            {
+                languageSession = context.Request.Cookies["lang"].Value;
+            }
+            else if (context != null && context.Session != null)
             {
                 languageSession = context.Session["lang"] != null ? context.Session["lang"].ToString() : "en";
             }

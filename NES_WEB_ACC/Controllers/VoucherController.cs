@@ -15,8 +15,6 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Web.Mvc;
 
-
-
 namespace NES_WEB_ACC.Controllers
 {
     public class VoucherController : Controller
