@@ -99,6 +99,7 @@ namespace NES_WEB_ACC.Controllers
             Session["CompId"] = "5563551763276641505";
             Session["CompNo"] = "C";
             Session["CompAbbr"] = "RUIS SERVICES";
+            Session["CurrencySt"] = "MXN";
         }
 
         public ActionResult TimeOut()

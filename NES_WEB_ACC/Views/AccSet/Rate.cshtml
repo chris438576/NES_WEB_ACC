@@ -1,67 +1,937 @@
 ﻿@* 匯率設定 *@
+@model NES_WEB_ACC.ViewModels.CbxDataViewModel
 @{
     ViewBag.Title = "Rate";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section css {
+    <link rel="stylesheet" type="text/css" href="~/Scripts/mycss/body_container_erp.css" />
+    <style>
+        /*#region Body style*/
 
+        #content-tabs {
+            padding-bottom: 10px;
+        }
+
+        /*#endregion*/
+
+        /*#region easyui style*/
+        .textbox-readonly .textbox-text {
+            background: #EEEEEE;
+        }
+
+        .ischecked-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fdff47;
+            color: black;
+            cursor: default;
+        }
+
+        /*.yellow-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #a2f8f8;
+            color: black;
+            cursor: default;
+        }*/
+
+        .gray-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fa806f;
+            color: black;
+            cursor: default;
+        }
+
+        .close-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #6df757;
+            color: black;
+            cursor: default;
+        }
+
+        .cancel-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #e196fb;
+            color: black;
+            cursor: default;
+        }
+
+        .error-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fdff47;
+            color: black;
+            cursor: default;
+        }
+
+        .datagrid-row-selected div {
+            color: white;
+        }
+
+        .datagrid-row-editing td {
+            color: black;
+        }
+
+        .header-toolbar .easyui-linkbutton {
+            width: 50px;
+            height: 52px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .header-toolbar .linkbtn2 {
+            width: 60px;
+        }
+
+        .header-toolbar .linkbtn3 {
+            width: 95px;
+        }
+
+        .header-toolbar .l-btn-text {
+            font-size: 12px !important;
+            margin-top: 28px !important;
+        }
+
+        .header-toolbar .l-btn-icon {
+            width: 24px !important;
+            height: 24px !important;
+            left: 60% !important;
+        }
+
+        .separatorbar {
+            margin-right: 20px;
+        }
+
+        .tabs-wrap .tabs {
+            width: 99% !important;
+        }
+
+        .switchbtn {
+            text-decoration: none;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: middle;
+            margin: 5px 10px 0px 0px;
+            padding: 3px;
+            cursor: pointer;
+            border: 1px solid #bbb;
+            -moz-border-radius: 5px 5px 5px 5px;
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+            .switchbtn label {
+                margin-left: 3px;
+            }
+
+        .btnliktype .l-btn-text {
+            margin-left: 15px;
+            font-size: 12px !important;
+        }
+        /*#endregion*/
+        /*#region datagrid style*/
+
+        .datagrid-view tr, .datagrid-view td {
+            border: 1px solid black;
+        }
+
+        .datagrid-header-row td {
+            background-color: #d2d2d2;
+            color: #333;
+            font-weight: bold;
+            border: 1px solid black !important;
+        }
+
+        .datagrid-header, .datagrid-td-rownumber {
+            background-color: #fff !important;
+            background: none;
+            background-repeat: no-repeat;
+        }
+
+
+        .datagrid-cell-rownumber {
+            color: black !important;
+        }
+
+        .datagrid-row .datagrid-cell {
+            margin: 0px !important;
+            padding: 0px;
+        }
+
+        .subtd {
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0px !important;
+            padding: 1px !important;
+            border: 1px solid black !important;
+            min-height: 22px;
+        }
+        /*#endregion */
+        /*#region table style*/
+        /* 初始表格外框顏色 */
+        .datagrid {
+            border: 2px solid white; /* 默認顏色 */
+        }
+
+        .container-table {
+            width: 99%;
+            margin: 0px 20px 0px 2px;
+            padding: 0px;
+            table-layout: fixed;
+            word-break: break-all;
+        }
+
+            .container-table .table-header {
+                background-color: #95B3D7;
+                border: solid 1px black;
+            }
+
+            .container-table th, .container-table tr, .container-table tr td {
+                /*border: none;*/
+                border: solid 1px black !important;
+                text-align: center;
+            }
+
+            .container-table th, .container-table tr, .container-table td {
+                height: 32px !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+                .container-table tr td {
+                    font-size: 1.0em;
+                    vertical-align: middle !important;
+                    font-weight: bold;
+                }
+
+            .container-table th {
+                font-size: 1.0em;
+                vertical-align: middle !important;
+            }
+
+        tr td label {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+        /*#endregion*/
+        /*#region row style*/
+        .row-fix {
+            margin-left: 0px !important;
+        }
+
+        .row-filestyle {
+            margin-top: 5px;
+            margin-left: 3px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid black;
+            padding: 3px;
+        }
+
+        .col-fix-1, .col-fix-2, .col-fix-3 {
+            padding: 0px;
+            margin-right: 0px;
+        }
+
+            .col-fix-1 > span {
+                margin-left: 35px;
+            }
+
+            .col-fix-1 input[type="text"], .col-fix-1 .form-control,
+            .col-fix-1 .easyui-combobox,
+            .col-fix-1 .easyui-textbox:not(.col-fix-lg),
+            .col-fix-1 .easyui-datebox, .col-fix-1 .easyui-maskedbox {
+                width: 120px !important;
+            }
+
+
+            .col-fix-2 input[type="text"]:not(.textbox-text), .col-fix-2 .form-control,
+            .col-fix-2 .easyui-combobox, .col-fix-2 .easyui-textbox,
+            .col-fix-2 .easyui-datebox, .col-fix-2 .easyui-maskedbox {
+                width: 110px !important;
+            }
+
+            .col-fix-3 input[type="text"], .col-fix-3 .form-control,
+            .col-fix-3 .easyui-combobox, .col-fix-3 .easyui-textbox,
+            .col-fix-3 .easyui-datebox, .col-fix-3 .easyui-maskedbox {
+                width: 120px !important;
+            }
+
+            .col-fix-1 .col-fix-lg, .col-fix-2 .col-fix-lg, .col-fix-3 .col-fix-lg {
+                width: 300px !important;
+            }
+
+                .col-fix-1 .col-fix-lg input[type="text"], .col-fix-1 .col-fix-lg .easyui-textbox {
+                    width: 300px !important;
+                }
+        /*#endregion*/
+
+
+        .progress-extended div label, .progress-txtextended div label {
+            width: 100%;
+            text-align: left;
+        }
+
+        .progress-extended .row, .progress-txtextended .row {
+            margin: 10px;
+            padding: 5px;
+            border-bottom: 0.5px solid black;
+        }
+
+            .progress-extended .row .btn, .progress-txtextended .row .btn {
+                margin-right: 15px;
+            }
+
+        .form-viewer {
+            width: 99%;
+            height: 100%;
+        }
+
+        /*#region form style*/
+        .formtext {
+            white-space: nowrap;
+            border: 1px solid black;
+        }
+
+        .formimport {
+            border: 1px solid black;
+        }
+        /*#endregion */
+        @@media (max-width: 1400px) {
+            #submenu {
+                font-size: 0.9em !important;
+            }
+
+            #body-container {
+                max-height: calc(100vh - 130px);
+                font-size: 0.9em;
+            }
+
+            #content-top {
+                font-size: 0.9em !important;
+                min-height: 155px;
+            }
+
+            #content-grid {
+                min-height: calc(100vh - 300px);
+            }
+
+            .panel-title, .tabs-title {
+                font-size: 0.8em;
+            }
+
+            .panel-header, .tabs, .tabs-wrap, .tabs-selected, .tabs-inner {
+                height: 23px !important;
+                padding: 1px !important;
+            }
+
+            .datagrid-cell {
+                font-size: 0.8em !important;
+            }
+
+            .datagrid-header-row {
+                font-size: 0.8em !important;
+                height: 28px !important;
+            }
+
+            .layout-panel-center .datagrid-row,
+            .layout-panel-center .datagrid-row-editing,
+            .layout-panel-center .datagrid-row-editing td,
+            .layout-panel-center .datagrid-row-editing span,
+            .layout-panel-center .datagrid-row-editing input {
+                height: 35px;
+            }
+
+            .col-fix-1 label, .col-fix-2 label, .col-fix-3 label {
+                font-size: 9px !important;
+            }
+
+            .col-fix-1 span {
+                margin-left: 10px;
+            }
+
+            .col-fix-1 input[type="text"], .col-fix-1 .form-control,
+            .col-fix-1 .easyui-combobox, .col-fix-1 .easyui-textbox,
+            .col-fix-1 .easyui-datebox, .col-fix-1 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 100px !important;
+            }
+
+            .col-fix-2 input[type="text"], .col-fix-2 .form-control,
+            .col-fix-2 .easyui-combobox, .col-fix-2 .easyui-textbox,
+            .col-fix-2 .easyui-datebox, .col-fix-2 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 90px !important;
+            }
+
+            .col-fix-3 input[type="text"], .col-fix-3 .form-control,
+            .col-fix-3 .easyui-combobox, .col-fix-3 .easyui-textbox,
+            .col-fix-3 .easyui-datebox, .col-fix-3 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 100px !important;
+            }
+
+            .col-fix-4 input[type="text"], .col-fix-4 .form-control,
+            .col-fix-4 .easyui-combobox, .col-fix-4 .easyui-textbox,
+            .col-fix-4 .easyui-datebox, .col-fix-4 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 80px !important;
+            }
+
+            .col-fix-1 .col-fix-lg, .col-fix-2 .col-fix-lg, .col-fix-3 .col-fix-lg {
+                width: 200px !important;
+            }
+
+            .textbox-button .l-btn-left {
+                margin: 0px !important;
+                padding-left: 20px;
+                height: 28px;
+                width: 28px;
+            }
+
+                .textbox-button .l-btn-left .l-btn-icon {
+                    margin-top: -8px;
+                    margin-left: 0px !important;
+                }
+
+            .textbox-button .l-btn-text {
+                font-size: 0px !important;
+            }
+
+            .btndeliverychange, .btnmanualclose, .btnstockenter {
+                width: 65px !important;
+                height: 45px !important;
+            }
+
+            .btnreportset {
+                width: 60px !important;
+                height: 45px !important;
+                font-size: 0.7em !important;
+            }
+        }
+    </style>
+}
 <div class="header-toolbar">
-    <select class="easyui-combobox" name="CurrencyNo" label="CurrencyNo:" labelPosition="top" style="width:100%;"></select>
-    <select class="easyui-combobox" name="CurrencySt" label="CurrencySt:" labelPosition="top" style="width:100%;"></select>
+    <select class="easyui-combobox" id="CurrencyNo" label="CurrencyNo:" labelPosition="left" labelWidth="100px" style="width:15%;">
+        @foreach (var item in Model.CurrencyNo)
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    </select>
+    <select class="easyui-combobox" id="CurrencySt" label="CurrencySt:" labelPosition="left" labelWidth="100px" style="width:15%;">
+        @foreach (var item in Model.CurrencySt)
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    </select>
     <a href="#" class="separatorbar"></a>
     <input id="ymDatebox" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,calendar:mycalendar" style="width:200px;">
     <a href="#" class="separatorbar"></a>
-
+    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('search');" data-options="iconCls:'icon-large-select',size:'large',iconAlign:'top'">搜尋</a>
     <a href="#" class="separatorbar"></a>
     <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('report');" data-options="iconCls:'icon-large-report',size:'large',iconAlign:'top'">報表</a>
 </div>
 
+<div id="body-container">
+    <div class="easyui-layout body-layout">
+        <div data-options="region:'center',collapsible:false" title="" style="width: 98%; height: 100%;">
+            <table id="maindg" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>
+        </div>
+    </div>
+</div>
 
-@section Scripts {
+@section Scripts {   
+    <script>
+        ///-----基本參數-----///
+        //#region 基本參數
+        var controllerurl = '/AccSet', functionurl = "/", actionurl = "";
+        var maindg = $('#maindg');
+        var maindgIndex;
+        var actioncode = 'view';
+        var scroll = @ViewBag.Scroll;       
+        //#endregion
+        //#region 多語系
+        let maindglang = {
+            OrderId: 'Id',
+            OrderDate: '下單日',
+            OrderExportDays: '下單至出貨天數',
+            OrderWorkDays: '出貨工作天數',
+            ShippingDate: '訂單交期',
+            ItemNo: '總項次',
+            TargetProdNo: '客戶料號',
+            ProdNo: '廠內料號',
+            OrderProdNo: '排程生產料號',
+            Remark1: '量/研',
+            OrderNum: '訂單數量',
+            Remark2: '訂單備註',
+            SetSchedulerNum: '排程量',
+            ScheduledNum: '已排量',
+            SurplusNum: '未排量',
+            SchedulerFinishNum: '已完工數量'
+        };
+        var msglang = {
+            Title1: '@Resources.Content.Confirm', // 確認
+            Title2: '@Resources.Content.Alert',  // 警告
+            Title3: '@Resources.Content.Prompts',  // 提示
+            MsgLeave: '@Resources.Content.MsgLeave',
+            MsgErrCode: '@Resources.Content.MsgErrCode',
+            MsgSelectRow: '@Resources.Content.MsgSelectRow',
+            MsgSelectRow1: '@Resources.Content.MsgSelectRow1',
+            MsgActionErr: '@Resources.Content.MsgActionErr', //操作碼錯誤
+            MsgSes1:'@Resources.Content.MsgSes1', //成功新增
+            MsgSes2: '@Resources.Content.MsgSes2', //成功編輯
+            MsgSes3: '@Resources.Content.MsgSes3', //成功啟用
+            MsgSes4: '@Resources.Content.MsgSes4', //成功停用
+        };
+        //#endregion
+        //#region 資料暫存
+        let obj = null;
+        //#endregion
+
+        ///-----初始化----------///
+        //#region 初始化
+        $(function () {
+            maindgSet();
+            //maindgData();     
+        });
+        $(document).ready(function() {
+            let msg = '@ViewBag.Msg';
+            if (msg) {
+                $.messager.alert(msglang.Title2, msg);
+            }
+        });
+        //#endregion
+
+        ///-----功能設定----------///
+        //#region dg欄位設定
+        function maindgSet() {
+            maindg.datagrid({
+                singleSelect: true,
+                rownumbers: true,
+                columns: [[
+                    { field: 'WebId', title: 'WebId', width: 100, hidden: true },
+                    { field: 'CurrencyNo', title: '交易幣別', width: 100 },
+                    { field: 'CurrencySt', title: '記帳幣別', width: 100 },
+                    { field: 'ExchangeYear', title: '年', width: 100 },
+                    { field: 'ExchangeMonth', title: '月', width: 100 },
+                    { field: 'ExchangeMonthFlag', title: 'Flag', width: 100 },
+                    {
+                        field: 'Rate', title: '匯率', width: 100, align: 'center', editor: {
+                            type: 'numberbox',
+                            options: {
+                                precision: 3
+                            }
+                        },
+                        formatter: function (value) {
+                            if (typeof value !== 'number') {
+                                value = parseFloat(value);
+                                if (isNaN(value)) {
+                                    return '';
+                                }
+                            }
+                            return value.toFixed(3);
+                        }
+                    },
+                    { field: 'action', title: '操作', width: 100, align: 'center', formatter: formatAction }
+                ]],
+                onDblClickRow: function (index, row) {
+                    $(this).datagrid('beginEdit', index);
+                },
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    $(this).datagrid('refreshRow', index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    $(this).datagrid('refreshRow', index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    $(this).datagrid('refreshRow', index);
+                }
+            });
+        }
+        function maindgData() {           
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetRate';
+            doajax("GET", actionurl,null, function (result) {
+                if (result.success) {
+                    maindg.datagrid('loadData', result.data);
+                    setMaindgScroll(scroll);
+                } else {
+                    if (result.code == 'C0004') {
+                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                        if (result.code == 'C0004') {
+                            console.log(result.err);
+                        }
+                    }
+                }
+            });
+        }
+        function formatAction(value, row, index) {
+            if (row.editing) {
+                var s = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'save\', ' + index + ')" value="儲存" /> ';
+                var c = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'cancel\', ' + index + ')" value="取消" /> ';
+                return s + c;
+            } else {
+                var e = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'edit\', ' + index + ')" value="編輯" /> ';
+                return e;
+            }
+        }
+        function dgCRUD(type, rowIndex) {
+            let actionurl;
+            switch (type) {
+                case 'edit':
+                    actioncode = 'edit';                    
+                    maindgIndex = rowIndex;
+                    maindg.datagrid('beginEdit', rowIndex);
+                    break;
+                case 'save':                    
+                    maindg.datagrid('endEdit', rowIndex);
+                    var row = maindg.datagrid('getRows')[rowIndex];
+
+                    if (actioncode === 'edit') {
+                        actionurl = defaultUrl + controllerurl + functionurl + 'UpdateRate';
+                        var dataEdit = {
+                            WebId: row.WebId,
+                            Rate: row.Rate
+                        };
+                        doajax("POST", actionurl, JSON.stringify(dataEdit), function (result) {
+                            if (result.success) {
+                                pageReload(getMaindgScroll(), msglang.MsgSes2 + result.data);
+                            } else {
+                                $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                if (result.code == 'C0004') {
+                                    console.log(result.err);
+                                }
+                            }
+                        });
+                        actioncode = 'view';
+                    } else {
+                        $.messager.alert(msglang.Title2, msglang.MsgActionErr);
+                        return;
+                    }
+                    break;
+                case 'cancel':
+                    maindg.datagrid('cancelEdit', rowIndex);
+                    actioncode = 'view';
+                
+                    break;
+                default:
+            }
+        }
+        function getRowIndex(target) {
+            var tr = $(target).closest('tr.datagrid-row');
+            return parseInt(tr.attr('datagrid-row-index'));
+        }
+        //#endregion
+
+        //#region 按鈕功能
+        function btnClick(type) {
+            let nowindex, row;
+            switch (type) {
+                //// dg選取列
+                //case 'first':
+                //    maindg.datagrid('selectRow', 0);
+                //    break;
+                //case 'previous':
+                //    row = maindg.datagrid('getSelected');
+                //    if (row) {
+                //        nowindex = maindg.datagrid('getRowIndex', row);
+                //    } else if (maindgindex >= 0) {
+                //        nowindex = maindgindex;
+                //    } else {
+                //        let rows = maindg.datagrid('getRows');
+                //        if (rows) {
+                //            nowindex = 0;
+                //        }
+                //    }
+                //    maindg.datagrid('selectRow', nowindex - 1);
+                //    break;
+                //case 'next':
+                //    row = maindg.datagrid('getSelected');
+                //    if (row) {
+                //        nowindex = maindg.datagrid('getRowIndex', row);
+                //    } else if (maindgindex >= 0) {
+                //        nowindex = maindgindex;
+                //    } else {
+                //        let rows = maindg.datagrid('getRows');
+                //        if (rows) {
+                //            nowindex = -1;
+                //        }
+                //    }
+                //    maindg.datagrid('selectRow', nowindex + 1);
+                //    break;
+                //    break;
+                //case 'last':
+                //    row = maindg.datagrid('getRows');
+                //    if (row) {
+                //        index = row.length;
+                //    }
+                //    maindg.datagrid('selectRow', index - 1);
+                //    break;
+                //// 狀態碼切換//資料動作
+                //case 'add':
+                //    actioncode = 'add';
+                //    btnEnableSet(actioncode);
+                //    maindg.datagrid('appendRow', {
+                //        MchGroupId: '',
+                //        MchGroupNo: '',
+                //        MchGroupName: '',
+                //        Remark: '',
+                //        editing: true
+                //    });
+                //    var editIndex = maindg.datagrid('getRows').length - 1;
+                //    maindg.datagrid('selectRow', editIndex).datagrid('beginEdit', editIndex);
+                //    break;
+                //case 'edit':
+                //    actioncode = 'edit';
+                //    btnEnableSet(actioncode);
+                //    break;
+                //case 'cancel':
+                //    if (actioncode !== 'view') {
+                //        $.messager.confirm('確認', '你有資料未儲存，是否取消？', function (r) {
+                //            if (r) {
+                //                actioncode = 'view';
+                //                btnEnableSet(actioncode);
+                //                location.reload();
+                //            } else {
+                //                return;
+                //            }
+                //        });
+                //    }
+                //    break;
+                // dg資料
+                case 'save':
+                    break;
+                case 'delete':
+                    break;
+                // 覆核
+                case 'check':
+                    break;
+                case 'uncheck':
+                    break;
+                // 其他功能
+                case 'detail':
+                    break;
+                case 'refresh':
+                    break;
+                case 'search':                   
+                    var currencyNo = $('#CurrencyNo').combobox('getValue');
+                    var currencySt = $('#CurrencySt').combobox('getValue');                   
+                    var selectedDate = $('#ymDatebox').datebox('getValue');                    
+                    var dateParts = selectedDate.split('/');
+                    var rateDate = (parseInt(dateParts[2], 10) >= 1 && parseInt(dateParts[2], 10) <= 10) ? dateParts[0] + '/' + dateParts[1] + '/B' : (parseInt(dateParts[2], 10) >= 11 && parseInt(dateParts[2], 10) <= 20) ? dateParts[0] + '/' + dateParts[1] + '/M' : (parseInt(dateParts[2], 10) >=21)? dateParts[0] + '/' + dateParts[1] + '/E': null;
+                    var dataSearch = {
+                        currencyno: currencyNo,
+                        currencyst: currencySt,
+                        ratedate: rateDate
+                    }                    
+                    actionurl = defaultUrl + controllerurl + functionurl + 'GetRate';
+                    doajax("GET", actionurl, dataSearch, function (result) {
+                        if (result.success) {
+                            maindg.datagrid('loadData', result.data);
+                            setMaindgScroll(scroll);
+                        } else {
+                            $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                            if (result.code == 'C0004') {
+                                console.log(result.err);
+                            }
+                        }
+                    });
+                    break;
+                case 'report':
+                    break;
+                case 'synch':
+                    actionurl = defaultUrl + controllerurl + functionurl + '';
+                    doajax("POST", actionurl, null, function (data) {
+                        if (data.success == true) {
+                            $.messager.alert('alert', data.message);
+                        } else {
+                            $.messager.alert('alert', data.message);
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+        //function btnEnableSet(type) {
+        //    switch (type) {
+        //        case 'view':
+        //            $('#btnAdd').linkbutton('disable');
+        //            $('#btnEdit').linkbutton('disable');
+        //            $('#btnCancel').linkbutton('disable');
+        //            $('#btnSave').linkbutton('enable');
+        //            $('#btnDelete').linkbutton('disable');
+        //            break;
+        //        case 'add':
+        //            $('#btnAdd').linkbutton('disable');
+        //            $('#btnEdit').linkbutton('disable');
+        //            $('#btnCancel').linkbutton('enable');
+        //            $('#btnSave').linkbutton('enable');
+        //            $('#btnDelete').linkbutton('disable');
+        //            break;
+        //        case 'edit':
+        //            $('#btnAdd').linkbutton('disable');
+        //            $('#btnEdit').linkbutton('disable');
+        //            $('#btnCancel').linkbutton('enable');
+        //            $('#btnSave').linkbutton('enable');
+        //            $('#btnDelete').linkbutton('disable');
+        //            break;
+        //        default:
+        //            $('#btnAdd').linkbutton('enable');
+        //            $('#btnEdit').linkbutton('disable');
+        //            $('#btnCancel').linkbutton('disable');
+        //            $('#btnSave').linkbutton('disable');
+        //            $('#btnDelete').linkbutton('disable');
+        //            break;
+        //    }
+        //}
+        //#endregion
+
+
+        //#region 功能函式
+        // 自定義doajax
+        function doajax(type, url, data, successCallback, errorCallback) {
+            $.ajax({
+                type: type,
+                url: url,
+                data: data,
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                    if (typeof successCallback === 'function') {
+                        successCallback(response);
+                    }
+                },
+                error: function (xhr, status, errorThrown) {
+                    console.error("Error: " + status + " " + errorThrown);
+                    console.error("Response: ", xhr.responseText);
+                    var responseText = xhr.responseText;
+                    switch (xhr.status) {
+                        case 400:
+                            $.messager.alert('Error', '參數錯誤: ' + responseText);
+                            break;
+                        case 404:
+                            $.messager.alert('Error', '未找到資料: ' + responseText);
+                            break;
+                        case 500:
+                            $.messager.alert('Error', '伺服器錯誤: ' + responseText);
+                            break;
+                        default:
+                            $.messager.alert('Error', '未預期的錯誤: ' + responseText);
+                            break;
+                    }
+                }
+            });
+        }
+        // 取得maindg位置
+        function getMaindgScroll() {
+            var datagrid = maindg.datagrid('getPanel').children('div.datagrid-view');
+            var view2 = datagrid.children('div.datagrid-view2');
+            return view2.children('div.datagrid-body').scrollTop();
+        }
+        // 設置maindg位置
+        function setMaindgScroll(scroll) {
+            var datagrid = maindg.datagrid('getPanel').children('div.datagrid-view');
+            var view2 = datagrid.children('div.datagrid-view2');
+            view2.children('div.datagrid-body').scrollTop(scroll);
+        }
+        // PageReload
+        function pageReload(scrollposition, msg) {
+            var url = new URL(window.location.href);
+            url.searchParams.set('scroll', scrollposition);
+            url.searchParams.set('msg', msg);
+            window.location.href = url.toString();
+        }
+        //#endregion
+    </script>
     <script type="text/javascript">
-        // 格式化函數，只顯示年月
+        var currentCulture = '@ViewBag.CurrentCulture';
+        var langToday,langClose,langWeeks, langMonths;
+        switch (currentCulture) {
+            case 'en':
+                langToday = 'Today';
+                langClose = 'Close';
+                langWeeks = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+                langMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                break;
+            case 'zh-TW':
+                langToday = '今天';
+                langClose = '關閉';
+                langWeeks = ['日', '一', '二', '三', '四', '五', '六'];
+                langMonths = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+                break;
+            case 'es-MX':
+                langToday = 'Hoy';
+                langClose = 'Cerca';
+                langWeeks = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+                langMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                break;
+            default:
+                langToday = 'Today';
+                langClose = 'Close';
+                langWeeks = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+                langMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                break;
+        }
+
         function myformatter(date) {
+            if (!date) return '';
             var y = date.getFullYear();
             var m = date.getMonth() + 1;
-            return y + '-' + (m < 10 ? ('0' + m) : m);
+            var d = date.getDate();
+            var suffix = '';
+
+            if (d >= 1 && d <= 10) {
+                suffix = 'B';
+            } else if (d >= 11 && d <= 20) {
+                suffix = 'M';
+            } else if (d >= 21) {
+                suffix = 'E';
+            }
+            return y + '/' + (m < 10 ? ('0' + m) : m) + '/' + (d < 10 ? ('0' + d) : d) ;
+            //return y + '/' + (m < 10 ? ('0' + m) : m) + '/' + (d < 10 ? ('0' + d) : d) + '/' + suffix;
         }
 
         // 解析函數，將選擇的年月解析為日期對象
         function myparser(s) {
             if (!s) return new Date();
-            var ss = (s.split('-'));
+            var ss = s.split('/');
             var y = parseInt(ss[0], 10);
             var m = parseInt(ss[1], 10);
-            if (!isNaN(y) && !isNaN(m)) {
-                return new Date(y, m - 1, 1);
+            var d = parseInt(ss[2], 10);
+            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+                return new Date(y, m - 1, d);
             } else {
                 return new Date();
             }
         }
 
-        // 自定義日曆，只顯示年月
         function mycalendar(target) {
             var opts = $(target).datebox('options');
             $(target).datebox('calendar').calendar({
                 validator: function (date) {
                     return true;
                 },
-                firstDay: opts.firstDay,
-                weeks: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-                months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                firstDay: opts.firstDay,               
                 onSelect: function (date) {
                     $(target).datebox('hidePanel');
                     var value = opts.formatter.call(target, date);
                     $(target).datebox('setText', value).datebox('setValue', value);
                 }
             });
+
         }
 
         // 初始化 datebox
         $('#ymDatebox').datebox({
             formatter: myformatter,
             parser: myparser,
-            calendar: mycalendar
+            calendar: mycalendar,
+            closeText: langClose,
+            currentText: langToday,
+            onShowPanel: function () {
+                var c = $('#ymDatebox').datebox('calendar');
+                c.calendar({
+                    weeks: langWeeks,
+                    months: langMonths,
+                });
+            }
         });
     </script>
-    }
-    
+}
+

@@ -10,7 +10,9 @@ using System.Web;
 using System.Web.Mvc;
 using Dapper;
 using NES_WEB_ACC.Modules;
-
+/// <summary>
+/// 參照千碩設計版面
+/// </summary>
 namespace NES_WEB_ACC.Controllers
 {
     [Authorize]

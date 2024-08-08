@@ -722,11 +722,14 @@
                             editor: {
                                 type: 'numberbox',
                                 options: {
-                                    precision: 2,  // 保留小數點後兩位
+                                    precision: 3,  // 保留小數點後兩位
                                     min: 0,        // 最小值設置為 0 或其他合適的值
                                     //max: 999999,   // 最大值設置為一個合理的數值
                                     //groupSeparator: ',',  // 設置數字分隔符
-                                    decimalSeparator: '.' // 設置小數點分隔符
+                                    decimalSeparator: '.', // 設置小數點分隔符
+                                    onChange: function (newValue, oldValue) {
+                                        updateMoney1(newValue);
+                                    }
                                 }
                             }
                         },
@@ -922,17 +925,16 @@
                 striped: true,
                 columns: [[
                     { field: 'CurrencyNo', title: '幣別', type: 'string', sortable: true },
-                    { field: 'Rate1', title: 'Rate1', type: 'string',hidden:true},
+                    { field: 'Rate', title: 'Rate', type: 'string',hidden:true},
                 ]],
                 fitColumns: true,
                 onClickRow: function (index, row) {
-
                     // 將值填入itemdg並更新行
                     itemdg.datagrid('updateRow', {
                         index: itemdgIndex,
                         row: {
                             CurrencyNo: row.CurrencyNo,
-                            Rate1: row.Rate1
+                            Rate1: row.Rate
 
                         }
                     });
@@ -1274,6 +1276,7 @@
                                 success: function (response) {
                                     if (response.success) {
                                         $.messager.alert(msglang.Title2, '資料已成功儲存!');
+                                        //頁面重載
                                     } else {
                                         $.messager.alert(msglang.Title2, MsgErrCode + response.code);
                                         if (result.code == 'C0004') {
@@ -1388,12 +1391,10 @@
                         }
                     }
                     if (actioncode != 'add' && actioncode != 'edit') {
+                        actioncode = 'view';
+                        btnEnableSet(actioncode);
                         $.messager.alert(msglang.Title2, msglang.MsgActionErr);
                     }
-
-                    actioncode = 'view';
-                    btnEnableSet(actioncode);
-
                     break;
                 case 'refresh':
                     break;
@@ -1465,8 +1466,7 @@
                 //#endregion
 
                 //#region dlg_按鈕動作
-                case 'dlgdg1insert':
-                    // 获取对话框中的 datagrid 选定行
+                case 'dlgdg1insert':                    
                     var selectedRow = dlgdg1.datagrid('getSelected');
                     if (!selectedRow) {
                         $.messager.alert(msglang.Title3, '請選擇資料填入！');
@@ -1489,14 +1489,10 @@
                                 AccNoByNameC: selectedRow.AccNoByNameC,
                                 AccGroupNo: selectedRow.AccGroupNo,
                                 AccGroupNameC: selectedRow.AccGroupNameC,
-                                Remark: '.',
+                                Remark: '',
                                 DCTypeNo: selectedRow.DCTypeNo,
-                                DCTypeNameC: selectedRow.DCTypeNameC,
-                                CurrencyNo: 'NT$',
-                                CurrencyNoNote: 'NT$',
-                                Money: '0',
-                                Money1: '0',
-                                Rate1: '1'
+                                DCTypeNameC: selectedRow.DCTypeNameC,                                                          
+                               
                             }
                         });
                     }
@@ -1738,6 +1734,21 @@
             $('.colCurrency').textbox('setValue', row.CurrencySt);
         }
 
+        // 明細編輯
+        function updateMoney1(newRate) {
+            if (itemdgIndex !== undefined) {
+                var row = itemdg.datagrid('getRows')[itemdgIndex];
+                var newMoney1 = row.Money *  newRate;
+                itemdg.datagrid('updateRow', {
+                    index: itemdgIndex,
+                    row: {
+                        Rate1: newRate,
+                        Money1: newMoney1
+                    }
+                });
+            }
+        }
+
         // 傳票借貸合計(使用記帳金額計算)
         function voucherDC() {
             let totalDMoney = 0;
@@ -1809,14 +1820,14 @@
                         return;
                     }
                     itemdg.datagrid('appendRow', {
-                        Id: '', // 根據你的需求設置默認值
+                        Id: '', 
                         Linage: rowCount + 1,
                         AccNo: '',
                         AccNameC: '',
                         DCTypeNo: '',
-                        CurrencyNo: '',
-                        Rate1: '',
-                        Money: '',
+                        CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
+                        Rate1: $('.fomRate1').textbox('getValue'),
+                        Money: 0,
                         TargetId: '',
                         TargetType: '',
                         TargetNo: '',
@@ -1841,7 +1852,7 @@
                         Remark: '',
                         DCTypeNameC: '',
                         CurrencyNoNote: '',
-                        Money1: '',
+                        Money1: 0,
                         TargetAbbr: '',
                         AccProfitName: '',
                         AccDeptName: '',
@@ -2341,7 +2352,7 @@
         }
         function format3(value, row, index) {
             const currencyNoDiv = `<div class="subtd readonly-text" value="${row.CurrencyNo}" data-index="${index}" data-field="CurrencyNo">${row.CurrencyNo}</div>`;
-            const currencyStDiv = `<div class="subtd readonly-text" value="${row.CurrencySt}" data-index="${index}" data-field="CurrencySymbol">NT$</div>`;
+            const currencyStDiv = `<div class="subtd readonly-text" value="${row.CurrencySt}" data-index="${index}" data-field="CurrencySymbol">MXN</div>`;
 
             return `${currencyNoDiv}${currencyStDiv}`;
         }
@@ -2446,7 +2457,6 @@
                     $('.fomDocSubTypeName').textbox('setValue', row.DocSubTypeName);
                 }
             });
-
             //下拉選單_公司編號
             $('.fomCompNo').combogrid({
                 required: true,
@@ -2494,8 +2504,8 @@
                     { field: 'CurrencyNo', title: '幣別', width: 150 }
                 ]],
                 onSelect: function (index, row) {
-                    $('.fomRate1').textbox('setValue', row.Rate1);
-                    $('.fomRate2').textbox('setValue', row.Rate1);
+                    $('.fomRate1').textbox('setValue', row.Rate);
+                    $('.fomRate2').textbox('setValue', row.Rate);
                 }
             });
             //預設欄位填值
@@ -2700,15 +2710,15 @@
                 }
             });
             $('#moneyBox').textbox('textbox').bind('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    // 获取输入框的值
+                if (e.key === 'Enter') {                   
                     var remarkValue = $('#moneyBox').textbox('getValue');
-                    // 更新 itemdg 中的编辑行
+                    var rowdata = itemdg.datagrid('getRows')[itemdgIndex];
+                    var Money1 = (rowdata.Rate1 != null) ? remarkValue * rowdata.Rate1 : remarkValue                    
                     itemdg.datagrid('updateRow', {
                         index: itemdgIndex,
                         row: {
                             Money: remarkValue,
-                            Money1: remarkValue
+                            Money1: Money1
                         }
                     });
                     $('#moneyBox').textbox('setValue', '')
@@ -2717,13 +2727,14 @@
                 }
             });
             $('#money1Box').textbox('textbox').bind('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    // 获取输入框的值
+                if (e.key === 'Enter') {                   
                     var remarkValue = $('#money1Box').textbox('getValue');
-                    // 更新 itemdg 中的编辑行
+                    var rowdata = itemdg.datagrid('getRows')[itemdgIndex];
+                    var rate1 = (rowdata.Money != null) ? remarkValue / rowdata.Money : 1
                     itemdg.datagrid('updateRow', {
                         index: itemdgIndex,
                         row: {
+                            Rate1: rate1,
                             Money1: remarkValue
                         }
                     });

@@ -37,7 +37,7 @@ namespace NES_WEB_ACC.Controllers
                 DeptNo = (string)Session["DeptNo"],
                 DeptName = (string)Session["DeptName"],
                 CompNo = (string)Session["CompNo"],
-                CurrencySt = "MXN"
+                CurrencySt = (string)Session["CurrencySt"]
             };
 
             return View(createInfo);
@@ -112,7 +112,7 @@ namespace NES_WEB_ACC.Controllers
                         sqlwhere = @" 
                             and Isnull(IsChecked,0) = 1   --已覆核
                             and Isnull(IsState,0) = 1     --主管已審核
-                            and Isnull(IsClosed,0) = 0    --未結案
+                            --and Isnull(IsClosed,0) = 0    --未結案
                         ";
                         sql = sql + sqlwhere;
                         break;
@@ -242,28 +242,48 @@ namespace NES_WEB_ACC.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult GetEditTableCode3()
-        {           
-            var dataList = new List<object>
+        {
+            string currencyst = (string)Session["CurrencySt"];
+            string sql = @"
+                select a.CurrencyNo , a.Rate
+                from NES_WEB_ACC.dbo.ACC_Rate as a
+                    inner join (
+	                    select  
+	                    [CurrencyNo]
+	                    ,[CurrencySt]
+	                    ,MAX(ExchangeDate) as ExchangeDate
+	                    ,MAX(Rate) as Rate
+                    from (
+	                    select 
+		                    CurrencyNo
+		                    ,CurrencySt
+		                    ,CONCAT([ExchangeYear], '/', [ExchangeMonth],'/',  case 
+			                    when ExchangeMonthFlag = 'B' then  '01' 
+			                    when ExchangeMonthFlag = 'M' then '11' 
+			                    when ExchangeMonthFlag = 'E' then '21' 
+		                    end ) AS ExchangeDate
+		                    ,Rate
+		                    from NES_WEB_ACC.dbo.ACC_Rate 
+	                    ) as a group by a.CurrencyNo,a.CurrencySt
+                    ) as b on a.CurrencyNo = b.CurrencyNo
+	                    and a.CurrencySt = b.CurrencySt
+	                    and a.ExchangeYear = LEFT(b.[ExchangeDate], CHARINDEX('/', b.[ExchangeDate]) - 1)
+	                    and a.ExchangeMonth = SUBSTRING(b.[ExchangeDate], CHARINDEX('/', b.[ExchangeDate]) + 1, CHARINDEX('/', b.[ExchangeDate], CHARINDEX('/', b.[ExchangeDate]) + 1) - CHARINDEX('/', b.[ExchangeDate]) - 1)
+	                    and a.ExchangeMonthFlag =CASE
+                            WHEN RIGHT(b.[ExchangeDate], 2) = '01' THEN 'B'
+                            WHEN RIGHT(b.[ExchangeDate], 2) = '11' THEN 'M'
+                            WHEN RIGHT(b.[ExchangeDate], 2) = '21' THEN 'E'
+                        END
+                where a.CurrencySt = @currencyst  --'MXN'
+            ";
+            var param = new { currencyst };
+            List<ACC_Rate> resultdata;
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                new { CurrencyNo = "NT$", Rate1 = "1" },
-                new { CurrencyNo = "USD", Rate1 = "30.73" },
-                new { CurrencyNo = "RMB", Rate1 = "4.27" },
-                new { CurrencyNo = "EUR", Rate1 = "34.40" },
-                new { CurrencyNo = "HKD", Rate1 = "3.94" },
-                new { CurrencyNo = "JPY", Rate1 = "0.22" },
-                new { CurrencyNo = "SGD", Rate1 = "22.70" },
-                new { CurrencyNo = "GBP", Rate1 = "39.92" },
-                new { CurrencyNo = "CAD", Rate1 = "23.55" },
-                new { CurrencyNo = "KRW", Rate1 = "0.024" },
-                new { CurrencyNo = "VND", Rate1 = "0.0013" },
-                new { CurrencyNo = "AUD", Rate1 = "21.03" },
-                new { CurrencyNo = "PLN", Rate1 = "7.71" },
-                new { CurrencyNo = "CHF", Rate1 = "34.64" },
-                new { CurrencyNo = "MXN", Rate1 = "1.84" },
-                new { CurrencyNo = "CZK", Rate1 = "1.47" },
-            };
+                resultdata = conn.Query<ACC_Rate>(sql, param).ToList();
+            }
 
-            return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, code = "OK", data = resultdata }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 編輯_表身資訊_對象編號
@@ -495,18 +515,48 @@ namespace NES_WEB_ACC.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult GetAddInfoCode4()
-        {          
-            var dataList = new List<object>
-            {
-                new { CurrencyNo = "NT$", Rate1 = "1" },
-                new { CurrencyNo = "RMB", Rate1 = "4.28760" },
-                new { CurrencyNo = "CAD", Rate1 = "23.23800" },
-                new { CurrencyNo = "USD", Rate1 = "31.84000" },
-                new { CurrencyNo = "CHF", Rate1 = "30.06000" },
-                new { CurrencyNo = "EUR", Rate1 = "31.16500" },
-                new { CurrencyNo = "MXN", Rate1 = "1.82810" },
-            };
-            return Json(dataList, JsonRequestBehavior.AllowGet);
+        {
+            string currencyst = (string)Session["CurrencySt"];
+            string sql = @"
+                select a.CurrencyNo , a.Rate
+                from NES_WEB_ACC.dbo.ACC_Rate as a
+                    inner join (
+	                    select  
+	                    [CurrencyNo]
+	                    ,[CurrencySt]
+	                    ,MAX(ExchangeDate) as ExchangeDate
+	                    ,MAX(Rate) as Rate
+                    from (
+	                    select 
+		                    CurrencyNo
+		                    ,CurrencySt
+		                    ,CONCAT([ExchangeYear], '/', [ExchangeMonth],'/',  case 
+			                    when ExchangeMonthFlag = 'B' then  '01' 
+			                    when ExchangeMonthFlag = 'M' then '11' 
+			                    when ExchangeMonthFlag = 'E' then '21' 
+		                    end ) AS ExchangeDate
+		                    ,Rate
+		                    from NES_WEB_ACC.dbo.ACC_Rate 
+	                    ) as a group by a.CurrencyNo,a.CurrencySt
+                    ) as b on a.CurrencyNo = b.CurrencyNo
+	                    and a.CurrencySt = b.CurrencySt
+	                    and a.ExchangeYear = LEFT(b.[ExchangeDate], CHARINDEX('/', b.[ExchangeDate]) - 1)
+	                    and a.ExchangeMonth = SUBSTRING(b.[ExchangeDate], CHARINDEX('/', b.[ExchangeDate]) + 1, CHARINDEX('/', b.[ExchangeDate], CHARINDEX('/', b.[ExchangeDate]) + 1) - CHARINDEX('/', b.[ExchangeDate]) - 1)
+	                    and a.ExchangeMonthFlag =CASE
+                            WHEN RIGHT(b.[ExchangeDate], 2) = '01' THEN 'B'
+                            WHEN RIGHT(b.[ExchangeDate], 2) = '11' THEN 'M'
+                            WHEN RIGHT(b.[ExchangeDate], 2) = '21' THEN 'E'
+                        END
+                where a.CurrencySt = @currencyst  --'MXN'
+            ";
+            var param = new { currencyst };
+            List<ACC_Rate> resultdata;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {               
+                resultdata = conn.Query<ACC_Rate>(sql,param).ToList();
+            }            
+           
+            return Json(resultdata, JsonRequestBehavior.AllowGet);
             //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
 

@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using NES_WEB_ACC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -197,9 +199,183 @@ namespace NES_WEB_ACC.Controllers
         /// 介面_匯率
         /// </summary>
         /// <returns></returns>
-        public ActionResult Rate()
+        public ActionResult Rate(int? scroll, string msg)
         {
-            return View();
+            var viewModel = new CbxDataViewModel
+            {
+                CurrencyNo = GetData(1),
+                CurrencySt = GetData(2)
+            };           
+
+            var currentCulture = Thread.CurrentThread.CurrentCulture.Name;           
+           
+            ViewBag.CurrentCulture = currentCulture;
+            ViewBag.Scroll = (scroll == null) ? 0 : scroll;
+            ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
+
+            return View(viewModel);
+        }
+        private List<ListViewModel> GetData(int docType)
+        {
+            var result = new List<ListViewModel>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "select ElmVal as Id, ElmTxt as Name from NES_WEB_ACC.dbo.ACC_SysCode where DocType = @DocType";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@DocType", docType);
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result.Add(new ListViewModel
+                            {
+                                Id = reader["Id"].ToString(),
+                                Name = reader["Name"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return result;
+        }        
+        public ActionResult GetRate(string currencyno, string currencyst, string ratedate)
+        {
+            string sql;
+            object param = null;
+            if (string.IsNullOrEmpty(currencyno)|| string.IsNullOrEmpty(currencyst))
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrEmpty(ratedate) || ratedate == "")
+            {
+                sql = @"
+                    select * 
+                        ,case ExchangeMonthFlag
+                            WHEN 'B' THEN 1
+                            WHEN 'M' THEN 2
+                            WHEN 'E' THEN 3
+                          END as ob
+                    from NES_WEB_ACC.dbo.ACC_Rate 
+                    where CurrencyNo = @currencyno and CurrencySt = @currencyst 
+                    order by ExchangeYear desc ,ExchangeMonth desc,ob desc
+                ";
+                param = new { currencyno, currencyst };
+            }
+            else
+            {
+                sql = @"
+                    select * 
+                        ,case ExchangeMonthFlag
+                            WHEN 'B' THEN 1
+                            WHEN 'M' THEN 2
+                            WHEN 'E' THEN 3
+                          END as ob
+                    from NES_WEB_ACC.dbo.ACC_Rate 
+                    where CurrencyNo = @currencyno and CurrencySt = @currencyst and ExchangeYear = @exYear and ExchangeMonth = @exMonth and ExchangeMonthFlag = @exFlag 
+                    order by ExchangeYear desc ,ExchangeMonth desc,ob desc
+                ";
+                string[] dateParts = ratedate.Split('/');
+                int exYear = Convert.ToInt32(dateParts[0]);
+                int exMonth = Convert.ToInt32(dateParts[1]);
+                string exFlag = dateParts[2];
+                param = new { currencyno, currencyst , exYear , exMonth, exFlag };
+            }           
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<ACC_Rate> resultdata = conn.Query<ACC_Rate>(sql,param).ToList();
+                    if (resultdata.Count > 0)
+                    {
+                        return Json(new { success = true, code = "OK", data = resultdata }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult UpdateRate(Guid webid, decimal rate)
+        {
+            if (webid == Guid.Empty || rate < 0)
+            {
+                return Json(new { success = false, code = "C0001"}, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                var existdata = _dbContext.ACC_Rate.FirstOrDefault(x => x.WebId == webid);
+                if (existdata != null)
+                {
+                    existdata.Rate = rate;
+                    existdata.UpdateEmpId = Session["EmpId"].ToString();
+                    existdata.UpdateEmpNo = Session["EmpNo"].ToString();
+                    existdata.UpdateDate = System.DateTime.Now;
+                    _dbContext.SaveChanges();
+                    return Json(new { success = true, code = "OK", data = $"{existdata.ExchangeYear}/{existdata.ExchangeMonth}/{existdata.ExchangeMonthFlag}" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e )
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult AddRate(string currencyno, string currencyst, decimal rate, string ratedate)
+        {
+            if (string.IsNullOrEmpty(currencyno) || string.IsNullOrEmpty(currencyst) || string.IsNullOrEmpty(ratedate) || rate < 0)
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                #region 參數設定
+                string[] dateParts = ratedate.Split('/');
+                int exYear = Convert.ToInt32(dateParts[0]);
+                int exMonth = Convert.ToInt32(dateParts[1]);
+                string exFlag = dateParts[2];
+                #endregion
+                var existdata = _dbContext.ACC_Rate.FirstOrDefault(x => x.CurrencyNo == currencyno && x.CurrencySt == currencyst && x.ExchangeYear == exYear && x.ExchangeMonth == exMonth && x.ExchangeMonthFlag == exFlag);
+                if (existdata != null)
+                {
+                    return Json(new { success = false, code = "C0002" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var insrtdata = new ACC_Rate
+                    {
+                        WebId = Guid.NewGuid(),
+                        CurrencyNo = currencyno,
+                        CurrencySt = currencyst,
+                        ExchangeYear = exYear,
+                        ExchangeMonth = exMonth,
+                        ExchangeMonthFlag = exFlag,
+                        CreateEmpId = Session["EmpId"].ToString(),
+                        CreateEmpNo = Session["EmpNo"].ToString(),
+                        CreatEmpDate = System.DateTime.Now
+                    };
+                    _dbContext.ACC_Rate.Add(insrtdata);
+                    return Json(new { success = true, code = "OK", data = $"{existdata.ExchangeYear}/{existdata.ExchangeMonth}/{existdata.ExchangeMonthFlag}" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         /// <summary>

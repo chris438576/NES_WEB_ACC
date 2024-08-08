@@ -327,4 +327,7 @@
   <data name="MsgSes4" xml:space="preserve">
     <value>Deshabilitar exitosamente:</value>
   </data>
+  <data name="RateSet" xml:space="preserve">
+    <value>Ajuste de la tasa</value>
+  </data>
 </root>

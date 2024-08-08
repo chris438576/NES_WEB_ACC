@@ -327,4 +327,7 @@
   <data name="MsgSes4" xml:space="preserve">
     <value>Successfully disable:</value>
   </data>
+  <data name="RateSet" xml:space="preserve">
+    <value>Rate Setting</value>
+  </data>
 </root>

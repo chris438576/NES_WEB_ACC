@@ -158,7 +158,6 @@
             DCTypeNameC: '@Resources.Content.DCTypeNameC',
             IsEnable:'@Resources.Content.IsEnable',
         };
-
         var msglang = {
             Title1: '@Resources.Content.Confirm', // 確認
             Title2: '@Resources.Content.Alert',  // 警告
@@ -173,7 +172,6 @@
             MsgSes3: '@Resources.Content.MsgSes3', //成功啟用
             MsgSes4: '@Resources.Content.MsgSes4', //成功停用
         };
-
         var toolbarlang = {
             Add:'@Resources.Content.Add',
             Edit:'@Resources.Content.Edit',
@@ -220,7 +218,7 @@
             doajax("GET", actionurl, null, function (result) {
                 if (result.success) {
                     maindg.datagrid('loadData', result.data);
-                    setMaindgScroll();
+                    setMaindgScroll(scroll);
                 } else {
                     $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                     if (result.code == 'C0004') {
@@ -338,7 +336,7 @@
                                 doajax("POST", actionurl, null, function (result) {
                                     if (result.success) {
                                         //$.messager.alert(msglang.Title2, '已成功起用！' + result.data);
-                                        pageReload(getMaindgScroll(),msglang.MsgSes3 + result.data);
+                                        pageReload(getMaindgScroll(), msglang.MsgSes3 + result.data);                                       
                                     } else {
                                         $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                         if (result.code == 'C0004') {
@@ -559,7 +557,7 @@
             return view2.children('div.datagrid-body').scrollTop();
         }
         // 設置maindg位置
-        function setMaindgScroll() {
+        function setMaindgScroll(scroll) {
             var datagrid = maindg.datagrid('getPanel').children('div.datagrid-view');
             var view2 = datagrid.children('div.datagrid-view2');
             view2.children('div.datagrid-body').scrollTop(scroll);

@@ -113,7 +113,7 @@ namespace NES_WEB_ACC
             var languageSession = "en";           
             if (context != null && context.Request != null && context.Request.Cookies["lang"] != null)
             {
-                languageSession = context.Request.Cookies["lang"].Value;
+                languageSession = context.Request.Cookies["lang"].Value;                
             }
             else if (context != null && context.Session != null)
             {

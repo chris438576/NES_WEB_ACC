@@ -327,4 +327,7 @@
   <data name="MsgSes4" xml:space="preserve">
     <value>成功停用：</value>
   </data>
+  <data name="RateSet" xml:space="preserve">
+    <value>匯率設定</value>
+  </data>
 </root>

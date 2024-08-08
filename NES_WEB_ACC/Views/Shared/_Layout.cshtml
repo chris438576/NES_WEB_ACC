@@ -207,58 +207,58 @@
                                     @Resources.Content.Workflow
                                 </a>
                             </li>
-                            <li class="dropdown">
+                            <!--<li class="dropdown">-->
                                 @*會計設定*@
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     @Resources.Content.AccSet
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        @*會計科目設定*@
+                                        會計科目設定
                                         <a href="@Url.Action("AccTitle", "AccSet")">
                                             @Resources.Content.AccCodeSet MX
                                         </a>
                                     </li>
-                                    <!--<li>-->
-                                        @*會計科目設定*@
-                                        <!--<a href="@Url.Action("AccCodeSet", "AccCode")">
+                                    <li>
+                                        會計科目設定
+                                        <a href="@Url.Action("AccCodeSet", "AccCode")">
                                             @Resources.Content.AccCodeSet
                                         </a>
                                     </li>
-                                    <li>-->
-                                        @*科目類別設定*@
-                                        <!--<a href="@Url.Action("AccGroupNoSet", "AccCode")">
+                                    <li>
+                                        科目類別設定
+                                        <a href="@Url.Action("AccGroupNoSet", "AccCode")">
                                             @Resources.Content.AccGroupNoSet
                                         </a>
                                     </li>
-                                    <li>-->
-                                        @*權益科目類別設定*@
-                                        <!--<a href="@Url.Action("EquityCodeSet", "AccCode")">
+                                    <li>
+                                        權益科目類別設定
+                                        <a href="@Url.Action("EquityCodeSet", "AccCode")">
                                             @Resources.Content.EquityCodeSet
                                         </a>
                                     </li>
-                                    <li>-->
-                                        @*傳票類別設定*@
-                                        <!--<a href="@Url.Action("VoucherCodeSet", "AccCode")">
+                                    <li>
+                                        傳票類別設定
+                                        <a href="@Url.Action("VoucherCodeSet", "AccCode")">
                                             @Resources.Content.VoucherCodeSet
                                         </a>
                                     </li>
-                                    <li>-->
-                                        @*會計系統基本設定*@
-                                        <!--<a href="@Url.Action("", "")">
+                                    <li>
+                                        會計系統基本設定
+                                        <a href="@Url.Action("", "")">
                                             @Resources.Content.AccSysCodeSet
                                         </a>
                                     </li>
                                     <li role="separator" class="divider"></li>
-                                    <li>-->
-                                        @*會計項目一覽表*@
-                                        <!--<a href="@Url.Action("", "")">
+                                    <li>
+                                        會計項目一覽表
+                                        <a href="@Url.Action("", "")">
                                             @Resources.Content.AccReport
                                         </a>
-                                    </li>-->
+                                    </li>
                                 </ul>
-                            </li>
+                            </li>-->
 
                             <li class="dropdown">
                                 @*傳票作業*@
@@ -313,6 +313,18 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        @*會計科目設定*@
+                                        <a href="@Url.Action("AccTitle", "AccSet")">
+                                            @Resources.Content.AccCodeSet
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @*匯率設定*@
+                                        <a href="@Url.Action("Rate", "AccSet")">
+                                            @Resources.Content.RateSet 
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="dropdown">

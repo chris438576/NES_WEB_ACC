@@ -258,7 +258,9 @@
     <Compile Include="SYS_Users.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CbxDataViewModel.cs" />
     <Compile Include="ViewModels\CreateInfoViewModel.cs" />
+    <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\VoucherDataViewModel.cs" />
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />
