@@ -246,7 +246,7 @@ namespace NES_WEB_ACC.Controllers
         {
             string sql;
             object param = null;
-            if (string.IsNullOrEmpty(currencyno)|| string.IsNullOrEmpty(currencyst))
+            if (string.IsNullOrEmpty(currencyno) || string.IsNullOrEmpty(currencyst))
             {
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
@@ -371,6 +371,36 @@ namespace NES_WEB_ACC.Controllers
                     _dbContext.ACC_Rate.Add(insrtdata);
                     return Json(new { success = true, code = "OK", data = $"{existdata.ExchangeYear}/{existdata.ExchangeMonth}/{existdata.ExchangeMonthFlag}" }, JsonRequestBehavior.AllowGet);
                 }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult SynRate()
+        {
+            string EmpId = Session["EmpId"].ToString();
+            string EmpNo = Session["EmpNo"].ToString();
+            if (string.IsNullOrEmpty(EmpId) || string.IsNullOrEmpty(EmpNo))
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand("SP_SynExchange", connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@EmpId", EmpId);
+                        command.Parameters.AddWithValue("@EmpNo", EmpNo);
+
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return Json(new { success = true, code = "OK" });
             }
             catch (Exception e)
             {

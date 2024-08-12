@@ -34,8 +34,8 @@ namespace NES_WEB_ACC
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
             // セ诀代刚
-            string username = "NES1492"; // 安砞眤璶家览ノめ嘿
-            string[] roles = { "Admin" }; // 安砞眤璶家览ノめà︹
+            string username = "NES1492";
+            string[] roles = { "User" };
             ////タΑㄏノ
             //string username = User.Identity.Name;
             //string[] roles = RoleSetting(username);

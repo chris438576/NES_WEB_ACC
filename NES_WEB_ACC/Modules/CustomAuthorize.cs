@@ -10,6 +10,7 @@ namespace NES_WEB_ACC.Modules
     {
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
+            string baseUrl = HttpContext.Current.Application["GlobalUrl"].ToString();
             if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
                 // 如果用戶未驗證，則將其重定向到登錄頁面
@@ -18,7 +19,7 @@ namespace NES_WEB_ACC.Modules
             else
             {
                 // 如果用戶已驗證，但沒有所需角色，則返回未授權的結果
-                filterContext.Result = new RedirectResult(string.Format("{0}?ReturnUrl={1}", "/Error/Permissions", filterContext.HttpContext.Request.Url));
+                filterContext.Result = new RedirectResult(string.Format("{0}/Error/Permissions", baseUrl, filterContext.HttpContext.Request.Url));
             }
         }
 

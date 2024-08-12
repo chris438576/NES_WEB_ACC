@@ -602,8 +602,8 @@
                     //if (row.BillStatus == '4') { //主管退件
                     //    return 'background-color:#FF8552;';
                     //}
-                     if (row.BillStatus == '5') { //結案退件
-                        return 'background-color:#FF8552;';
+                    if (row.BillStatus == '5') { //結案退件
+                        return 'background-color:#FF52F4;';
                     }
                 }
             });
@@ -794,8 +794,8 @@
                     if (row != null) {
                         actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=check&webid='+row.WebId;
                         doajax("POST", actionurl, null, function (result) {
-                            if (result.success) {
-                                $.messager.alert(msglang.Title2, '已審核');
+                            if (result.success) {                                
+                                pageReload('已審核');
                             } else {
                                 $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                 if (result.code == 'C0004') {
@@ -813,8 +813,8 @@
                     if (row != null) {
                         actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=reject&webid=' + row.WebId;
                         doajax("POST", actionurl, null, function (result) {
-                            if (result.success) {
-                                $.messager.alert(msglang.Title2, '已退件');
+                            if (result.success) {                               
+                                pageReload('已退件');
                             } else {
                                 $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                 if (result.code == 'C0004') {
@@ -950,7 +950,12 @@
             $('.colMoney').textbox('setValue', balance);
         }
 
-
+        // PageReload
+        function pageReload(msg) {
+            var url = new URL(window.location.href);           
+            url.searchParams.set('msg', msg);
+            window.location.href = url.toString();
+        }
         //#endregion
 
         //#region 格式化
@@ -969,68 +974,90 @@
         }
         // itemdg多表頭Function
         function format1(value, row, index) {
-            const accNameCDiv = `<div class="subtd readonly-text" value="${row.AccNameC}" data-index="${index}" data-field="AccNameC">${row.AccNameC}</div>`;
-            const remarkDiv = `<div class="subtd readonly-text" value="${row.Remark}" data-index="${index}" data-field="Remark">${row.Remark}</div>`;
+            const fmtAccName = (row.AccNameC == null) ? '' : row.AccNameC;
+            const fmtRemark = (row.Remark == null) ? '' : row.Remark;
+            const accNameCDiv = `<div class="subtd readonly-text" value="${fmtAccName}" data-index="${index}" data-field="AccNameC">${fmtAccName}</div>`;
+            const remarkDiv = `<div class="subtd readonly-text" value="${fmtRemark}" data-index="${index}" data-field="Remark">${fmtRemark}</div>`;
 
             return `${accNameCDiv}${remarkDiv}`;
         }
         function format2(value, row, index) {
-            const dcTypeNoDiv = `<div class="subtd" value="${row.DCTypeNo}" data-index="${index}" data-field="DCTypeNo">${row.DCTypeNo}</div>`;
-            const dcTypeNameCDiv = `<div class="subtd" value="${row.DCTypeNameC}" data-index="${index}" data-field="DCTypeNameC">${row.DCTypeNameC}</div>`;
+            const fmtTypeNo = (row.DCTypeNo == null) ? '' : row.DCTypeNo;
+            const fmtTypeNameC = (row.DCTypeNameC == null) ? '' : row.DCTypeNameC;
+            const dcTypeNoDiv = `<div class="subtd" value="${fmtTypeNo}" data-index="${index}" data-field="DCTypeNo">${fmtTypeNo}</div>`;
+            const dcTypeNameCDiv = `<div class="subtd" value="${fmtTypeNameC}" data-index="${index}" data-field="DCTypeNameC">${fmtTypeNameC}</div>`;
 
             return `${dcTypeNoDiv}${dcTypeNameCDiv}`;
         }
         function format3(value, row, index) {
-            const currencyNoDiv = `<div class="subtd readonly-text" value="${row.CurrencyNo}" data-index="${index}" data-field="CurrencyNo">${row.CurrencyNo}</div>`;
-            const currencyStDiv = `<div class="subtd readonly-text" value="${row.CurrencySt}" data-index="${index}" data-field="CurrencySymbol">NT$</div>`;
+            const fmtCurrencyNo = (row.CurrencyNo == null) ? '' : row.CurrencyNo;
+            const fmtCurrencySt = (row.CurrencySt == null) ? '' : row.CurrencySt;
+            const currencyNoDiv = `<div class="subtd readonly-text" value="${fmtCurrencyNo}" data-index="${index}" data-field="CurrencyNo">${fmtCurrencyNo}</div>`;
+            const currencyStDiv = `<div class="subtd readonly-text" value="${fmtCurrencySt}" data-index="${index}" data-field="CurrencySt">${fmtCurrencySt}</div>`;
 
             return `${currencyNoDiv}${currencyStDiv}`;
         }
         function format4(value, row, index) {
-            const moneyDiv = `<div class="subtd readonly-text" value="${row.Money}" data-index="${index}" data-field="Money">${row.Money}</div>`;
-            const money1Div = `<div class="subtd readonly-text" value="${row.Money1}" data-index="${index}" data-field="Money1">${row.Money1}</div>`;
+            const fmtMoney = (row.Money == null) ? '' : row.Money;
+            const fmtMoney1 = (row.Money1 == null) ? '' : row.Money1;
+            const moneyDiv = `<div class="subtd readonly-text" value="${fmtMoney}" data-index="${index}" data-field="Money">${fmtMoney}</div>`;
+            const money1Div = `<div class="subtd readonly-text" value="${fmtMoney1}" data-index="${index}" data-field="Money1">${fmtMoney1}</div>`;
 
             return `${moneyDiv}${money1Div}`;
         }
         function format5(value, row, index) {
-            const targetNoDiv = `<div class="subtd readonly-text" value="${row.TargetNo}" data-index="${index}" data-field="TargetNo">${row.TargetNo}</div>`;
-            const targetAbbrDiv = `<div class="subtd readonly-text" value="${row.TargetAbbr}" data-index="${index}" data-field="TargetAbbr">${row.TargetAbbr}</div>`;
+            const fmtTargetNo = (row.TargetNo == null) ? '' : row.TargetNo;
+            const fmtTargetAbbr = (row.TargetAbbr == null) ? '' : row.TargetAbbr;
+            const targetNoDiv = `<div class="subtd readonly-text" value="${fmtTargetNo}" data-index="${index}" data-field="TargetNo">${fmtTargetNo}</div>`;
+            const targetAbbrDiv = `<div class="subtd readonly-text" value="${fmtTargetAbbr}" data-index="${index}" data-field="TargetAbbr">${fmtTargetAbbr}</div>`;
 
             return `${targetNoDiv}${targetAbbrDiv}`;
         }
         function format6(value, row, index) {
-            const accProfitNoDiv = `<div class="subtd readonly-text" value="${row.AccProfitNo}" data-index="${index}" data-field="AccProfitNo">${row.AccProfitNo}</div>`;
-            const accProfitNameDiv = `<div class="subtd readonly-text" value="${row.AccProfitName}" data-index="${index}" data-field="AccProfitName">${row.AccProfitName}</div>`;
+            const fmtAccProfitNo = (row.AccProfitNo == null) ? '' : row.AccProfitNo;
+            const fmtAccProfitName = (row.AccProfitName == null) ? '' : row.AccProfitName;
+            const accProfitNoDiv = `<div class="subtd readonly-text" value="${fmtAccProfitNo}" data-index="${index}" data-field="AccProfitNo">${fmtAccProfitNo}</div>`;
+            const accProfitNameDiv = `<div class="subtd readonly-text" value="${fmtAccProfitName}" data-index="${index}" data-field="AccProfitName">${fmtAccProfitName}</div>`;
 
             return `${accProfitNoDiv}${accProfitNameDiv}`;
         }
         function format7(value, row, index) {
-            const accDeptNoDiv = `<div class="subtd readonly-text" value="${row.AccDeptNo}" data-index="${index}" data-field="AccDeptNo">${row.AccDeptNo}</div>`;
-            const accDeptNameDiv = `<div class="subtd readonly-text" value="${row.AccDeptName}" data-index="${index}" data-field="AccDeptName">${row.AccDeptName}</div>`;
+            const fmtAccDeptNo = (row.AccDeptNo == null) ? '' : row.AccDeptNo;
+            const fmtAccDeptName = (row.AccDeptName == null) ? '' : row.AccDeptName;
+            const accDeptNoDiv = `<div class="subtd readonly-text" value="${fmtAccDeptNo}" data-index="${index}" data-field="AccDeptNo">${fmtAccDeptNo}</div>`;
+            const accDeptNameDiv = `<div class="subtd readonly-text" value="${fmtAccDeptName}" data-index="${index}" data-field="AccDeptName">${fmtAccDeptName}</div>`;
 
             return `${accDeptNoDiv}${accDeptNameDiv}`;
         }
         function format8(value, row, index) {
-            const payDeptNoDiv = `<div class="subtd readonly-text" value="${row.PayDeptNo}" data-index="${index}" data-field="PayDeptNo">${row.PayDeptNo}</div>`;
-            const payDeptNameDiv = `<div class="subtd readonly-text" value="${row.PayDeptName}" data-index="${index}" data-field="PayDeptName">${row.PayDeptName}</div>`;
+            const fmtPayDeptNo = (row.PayDeptNo == null) ? '' : row.PayDeptNo;
+            const fmtPayDeptName = (row.PayDeptName == null) ? '' : row.PayDeptName;
+            const payDeptNoDiv = `<div class="subtd readonly-text" value="${fmtPayDeptNo}" data-index="${index}" data-field="PayDeptNo">${fmtPayDeptNo}</div>`;
+            const payDeptNameDiv = `<div class="subtd readonly-text" value="${fmtPayDeptName}" data-index="${index}" data-field="PayDeptName">${fmtPayDeptName}</div>`;
 
             return `${payDeptNoDiv}${payDeptNameDiv}`;
         }
         function format9(value, row, index) {
-            const offsetNoDiv = `<div class="subtd readonly-text" value="${row.OffsetNo}" data-index="${index}" data-field="OffsetNo">${row.OffsetNo}</div>`;
-            const caseBillNoDiv = `<div class="subtd readonly-text" value="${row.CaseBillNo}" data-index="${index}" data-field="CaseBillNo">${row.CaseBillNo}</div>`;
+            const fmtOffsetNo = (row.OffsetNo == null) ? '' : row.OffsetNo;
+            const fmtCaseBillNo = (row.CaseBillNo == null) ? '' : row.CaseBillNo;
+            const offsetNoDiv = `<div class="subtd readonly-text" value="${fmtOffsetNo}" data-index="${index}" data-field="OffsetNo">${fmtOffsetNo}</div>`;
+            const caseBillNoDiv = `<div class="subtd readonly-text" value="${fmtCaseBillNo}" data-index="${index}" data-field="CaseBillNo">${fmtCaseBillNo}</div>`;
 
             return `${offsetNoDiv}${caseBillNoDiv}`;
         }
         function format10(value, row, index) {
-            const sourceDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${row.SourceDocSubTypeName}" data-index="${index}" data-field="SourceDocSubTypeName">${row.SourceDocSubTypeName}</div>`;
-            const sourceNoDiv = `<div class="subtd readonly-text" value="${row.SourceNo}" data-index="${index}" data-field="SourceDocSubTypeName">${row.SourceNo}</div>`;
+            const fmtSourceDocSubTypeName = (row.SourceDocSubTypeName == null) ? '' : row.SourceDocSubTypeName;
+            const fmtSourceNo = (row.SourceNo == null) ? '' : row.SourceNo;
+            const sourceDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${fmtSourceDocSubTypeName}" data-index="${index}" data-field="SourceDocSubTypeName">${fmtSourceDocSubTypeName}</div>`;
+            const sourceNoDiv = `<div class="subtd readonly-text" value="${fmtSourceNo}" data-index="${index}" data-field="SourceDocSubTypeName">${fmtSourceNo}</div>`;
 
             return `${sourceDocSubTypeNameDiv}${sourceNoDiv}`;
         }
         function format11(value, row, index) {
-            const initialDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${row.InitialDocSubTypeName}" data-index="${index}" data-field="InitialDocSubTypeName">${row.InitialDocSubTypeName}</div>`;
-            const initialNoDiv = `<div class="subtd readonly-text" value="${row.InitialNo}" data-index="${index}" data-field="InitialNo">${row.InitialNo}</div>`;
+            const fmtInitialDocSubTypeName = (row.InitialDocSubTypeName == null) ? '' : row.InitialDocSubTypeName;
+            const fmtInitialNo = (row.InitialNo == null) ? '' : row.InitialNo;
+            const initialDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${fmtInitialDocSubTypeName}" data-index="${index}" data-field="InitialDocSubTypeName">${fmtInitialDocSubTypeName}</div>`;
+            const initialNoDiv = `<div class="subtd readonly-text" value="${fmtInitialNo}" data-index="${index}" data-field="InitialNo">${fmtInitialNo}</div>`;
 
             return `${initialDocSubTypeNameDiv}${initialNoDiv}`;
         }
@@ -1060,13 +1087,18 @@
             $('#btnDetail').addClass('hidden-btn');
             $('#btnRefresh').addClass('hidden-btn');
             $('#btnCancel').addClass('hidden-btn');
-            $('#btnDelete').addClass('hidden-btn');         
+            $('#btnDelete').addClass('hidden-btn');
 
             $('#btnlock').hide();
            /* $('#btncheck').hide();*/
             $('#btnclose').hide();
             $('#btnunlock').hide();
             /*$('#btnreject').hide();*/
+
+            let msg = '@ViewBag.Msg';
+            if (msg) {
+                $.messager.alert(msglang.Title2, msg);
+            }
         });
     </script>
 }

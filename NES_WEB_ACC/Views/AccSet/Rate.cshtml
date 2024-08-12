@@ -422,6 +422,8 @@
     <a href="#" class="separatorbar"></a>
     <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('search');" data-options="iconCls:'icon-large-select',size:'large',iconAlign:'top'">搜尋</a>
     <a href="#" class="separatorbar"></a>
+    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('synch');" data-options="iconCls:'icons8-synchronize',size:'large',iconAlign:'top'">更新匯率</a>
+    <a href="#" class="separatorbar"></a>
     <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('report');" data-options="iconCls:'icon-large-report',size:'large',iconAlign:'top'">報表</a>
 </div>
 
@@ -551,11 +553,9 @@
                     maindg.datagrid('loadData', result.data);
                     setMaindgScroll(scroll);
                 } else {
+                    $.messager.alert(msglang.Title3, msglang.MsgErrCode + result.code);
                     if (result.code == 'C0004') {
-                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
-                        if (result.code == 'C0004') {
-                            console.log(result.err);
-                        }
+                        console.log(result.err);
                     }
                 }
             });
@@ -592,7 +592,7 @@
                             if (result.success) {
                                 pageReload(getMaindgScroll(), msglang.MsgSes2 + result.data);
                             } else {
-                                $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                $.messager.alert(msglang.Title3, msglang.MsgErrCode + result.code);
                                 if (result.code == 'C0004') {
                                     console.log(result.err);
                                 }
@@ -600,7 +600,7 @@
                         });
                         actioncode = 'view';
                     } else {
-                        $.messager.alert(msglang.Title2, msglang.MsgActionErr);
+                        $.messager.alert(msglang.Title3, msglang.MsgActionErr);
                         return;
                     }
                     break;
@@ -725,7 +725,7 @@
                             maindg.datagrid('loadData', result.data);
                             setMaindgScroll(scroll);
                         } else {
-                            $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                            $.messager.alert(msglang.Title3, msglang.MsgErrCode + result.code);
                             if (result.code == 'C0004') {
                                 console.log(result.err);
                             }
@@ -735,12 +735,15 @@
                 case 'report':
                     break;
                 case 'synch':
-                    actionurl = defaultUrl + controllerurl + functionurl + '';
-                    doajax("POST", actionurl, null, function (data) {
-                        if (data.success == true) {
-                            $.messager.alert('alert', data.message);
+                    actionurl = defaultUrl + controllerurl + functionurl + 'SynRate';
+                    doajax("POST", actionurl, null, function (result) {
+                        if (result.success == true) {
+                            $.messager.alert('alert', result.code);
                         } else {
-                            $.messager.alert('alert', data.message);
+                            $.messager.alert('alert', result.code);
+                            if (result.code == 'C0004') {
+                                console.log(result.err);
+                            }
                         }
                     });
                     break;

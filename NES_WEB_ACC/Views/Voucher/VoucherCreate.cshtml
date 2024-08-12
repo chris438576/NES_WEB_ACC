@@ -56,7 +56,10 @@
         }
 
         .datagrid-row-selected div {
-            color: white;
+            color: white;            
+        }
+        .datagrid-row-selected {
+            background-color: #3399ff !important;           
         }
 
         .datagrid-row-editing td {
@@ -572,13 +575,19 @@
 
         };
         var msglang = {
-            Title1: '@Resources.Content.Confirm',//確認
-            Title2: '@Resources.Content.Alert',  //警告
-            Title3: '@Resources.Content.Prompts',  //提示
+            Title1: '@Resources.Content.Confirm', // 確認
+            Title2: '@Resources.Content.Alert',  // 警告
+            Title3: '@Resources.Content.Prompts',  // 提示
             MsgLeave: '@Resources.Content.MsgLeave',
             MsgErrCode: '@Resources.Content.MsgErrCode',
             MsgSelectRow: '@Resources.Content.MsgSelectRow',
-        }
+            MsgSelectRow1: '@Resources.Content.MsgSelectRow1',
+            MsgActionErr: '@Resources.Content.MsgActionErr', //操作碼錯誤
+            MsgSes1:'@Resources.Content.MsgSes1', //成功新增
+            MsgSes2: '@Resources.Content.MsgSes2', //成功編輯
+            MsgSes3: '@Resources.Content.MsgSes3', //成功啟用
+            MsgSes4: '@Resources.Content.MsgSes4', //成功停用
+        };
         //#endregion
         //#region 資料暫存
         var objAccNo = { name: 'AccNo', data: null };
@@ -607,6 +616,11 @@
             ///-----資料填值-----///
             maindgData();
             $('#btnreject').hide();
+            ///-----帶入值-----///
+            let billno = '@ViewBag.BillNo';
+            if (billno) {
+                selectRow(billno);
+            }
         });
         //#endregion
 
@@ -663,9 +677,16 @@
                     if (row.BillStatus == '2') { //主管已審核
                         return 'background-color:#A7CECB;color:#000000;';
                     }
+                    if (row.BillStatus == '3') { //已結案
+                        return 'background-color:#C0C0C0;color:#000000;';
+                    }
                     if (row.BillStatus == '4') { //主管退件
                         return 'background-color:#FF8552;color:#000000;';
                     }
+                    if (row.BillStatus == '5') { //結案退件
+                        return 'background-color:#FF52F4;color:#000000;';
+                    }
+                   
                 }
             });
         }
@@ -1275,12 +1296,12 @@
                                 dataType: "json",
                                 success: function (response) {
                                     if (response.success) {
-                                        $.messager.alert(msglang.Title2, '資料已成功儲存!');
-                                        //頁面重載
+                                        //$.messager.alert(msglang.Title2, '資料已成功儲存!');
+                                        pageReload(response.data, msglang.MsgSes1 + response.data);
                                     } else {
-                                        $.messager.alert(msglang.Title2, MsgErrCode + response.code);
-                                        if (result.code == 'C0004') {
-                                            console.log(result.err);
+                                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + response.code);
+                                        if (response.code == 'C0004') {
+                                            console.log(response.err);
                                         }
                                     }
                                 },
@@ -1298,6 +1319,7 @@
                         if (dosave) {
                             maindatadg = maindg.datagrid('getRows')[maindgIndex]
                             maindata = {
+                                'WebId': maindatadg.WebId,
                                 'BillDate': maindatadg.BillDate,
                                 'DocSubType': maindatadg.DocSubType,
                                 'DocSubTypeName': maindatadg.DocSubTypeName,
@@ -1311,10 +1333,10 @@
                                 'DeptNam': maindatadg.DeptName,
                                 'BillNo': maindatadg.BillNo,
                                 'CurrencyNo': maindatadg.CurrencyNo,
-                                'CurrencyTw1': maindatadg.CurrencyTw1,
+                                'CurrencySt': maindatadg.CurrencySt,
                                 'Rate1': maindatadg.Rate1,
-                                'CurrencyTw2': maindatadg.CurrencyTw2,
-                                'Rate2': maindatadg.Rate2,
+                                //'CurrencyTw2': maindatadg.CurrencyTw2,
+                                //'Rate2': maindatadg.Rate2,
                                 'TargetNo': maindatadg.TargetNo,
                             };
                             infodatadg = itemdg.datagrid('getRows')
@@ -1353,6 +1375,7 @@
                                     'SourceSeqId': row.SourceSeqId,
                                     'SourceDocSubTypeName': row.SourceDocSubTypeName,
                                     'SourceNo': row.SourceNo,
+                                    'SourceSt': row.SourceSt,
                                     'InitialProjectId': row.InitialProjectId,
                                     'InitialDocSubType': row.InitialDocSubType,
                                     'InitialDocId': row.InitialDocId,
@@ -1376,8 +1399,15 @@
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
-                                    $.messager.alert(msglang.Title2, '資料已成功儲存!');
-                                    console.log(response);
+                                    if (response.success) {
+                                        //$.messager.alert(msglang.Title2, '資料已成功儲存!');
+                                        pageReload(response.data, msglang.MsgSes2 + response.data);
+                                    } else {
+                                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + response.code);
+                                        if (response.code == 'C0004') {
+                                            console.log(response.err);
+                                        }
+                                    }
                                 },
                                 error: function (xhr, status, errorThrown) {
                                     $.messager.alert(msglang.Title2, '儲存資料時發生錯誤!');
@@ -1410,9 +1440,10 @@
                                 itemdg.datagrid('loadData', { total: 0, rows: [] });
                                 infotabs.tabs('select', 0);//表頭表單切換
                                 advtabs.tabs('select', 0);//進階資訊切換
-                                maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
+
                                 actioncode = 'view';
                                 btnEnableSet(actioncode);
+                                maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
                             } else {
                                 return;
                             }
@@ -1420,10 +1451,11 @@
                     } else if (actioncode == 'edit') {
                         $.messager.confirm(msglang.Title1, '是否要取消?', function (r) {
                             if (r) {
-                                maindg.datagrid('selectRow', maindgIndex);//還原原先選擇列
-                                itemdg.datagrid('endEdit', itemdgIndex);
+                                //itemdg.datagrid('endEdit', itemdgIndex);                                
                                 actioncode = 'view';
                                 btnEnableSet(actioncode);
+                                maindg.datagrid('unselectRow', maindgIndex);
+                                maindg.datagrid('selectRow', maindgIndex);
                             } else {
                                 return;
                             }
@@ -1445,7 +1477,8 @@
                                 actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?webid=' + row.WebId +'&type=lock';
                                 doajax("POST", actionurl, null, function (result) {
                                     if (result.success) {
-                                        $.messager.alert(msglang.Title2, '單號：' + result.data + '已覆核。');
+                                        //$.messager.alert(msglang.Title2, '單號：' + response.data + '已覆核。');
+                                        pageReload(result.data, msglang.MsgSes1 + result.data);
                                     } else {
                                         $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                         if (result.code == 'C0004') {
@@ -1466,7 +1499,7 @@
                 //#endregion
 
                 //#region dlg_按鈕動作
-                case 'dlgdg1insert':                    
+                case 'dlgdg1insert':
                     var selectedRow = dlgdg1.datagrid('getSelected');
                     if (!selectedRow) {
                         $.messager.alert(msglang.Title3, '請選擇資料填入！');
@@ -1491,8 +1524,8 @@
                                 AccGroupNameC: selectedRow.AccGroupNameC,
                                 Remark: '',
                                 DCTypeNo: selectedRow.DCTypeNo,
-                                DCTypeNameC: selectedRow.DCTypeNameC,                                                          
-                               
+                                DCTypeNameC: selectedRow.DCTypeNameC,
+
                             }
                         });
                     }
@@ -1674,7 +1707,7 @@
                     $('#btnRefresh').linkbutton('enable');
                     $('#btnCancel').linkbutton('disable');
                     $('#btnDelete').linkbutton('disable');
-                   
+
 
             }
         }
@@ -1820,12 +1853,13 @@
                         return;
                     }
                     itemdg.datagrid('appendRow', {
-                        Id: '', 
+                        Id: '',
                         Linage: rowCount + 1,
                         AccNo: '',
                         AccNameC: '',
                         DCTypeNo: '',
                         CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
+                        CurrencySt: $('.fomCurrencySt').textbox('getValue'),
                         Rate1: $('.fomRate1').textbox('getValue'),
                         Money: 0,
                         TargetId: '',
@@ -2320,6 +2354,26 @@
                     break;
             }
         }
+
+        // PageReload
+        function pageReload(billno, msg) {
+            var url = new URL(window.location.href);
+            url.searchParams.set('billno', billno);
+            url.searchParams.set('msg', msg);
+            window.location.href = url.toString();
+        }
+
+        //
+        function selectRow(billno) {           
+            var rows = $('#maindg').datagrid('getRows');           
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].BillNo === billno) {
+                   
+                    $('#maindg').datagrid('selectRow', i);
+                    return; 
+                }
+            }
+        }
         //#endregion
 
         //#region 格式化
@@ -2339,68 +2393,90 @@
 
         // itemdg多表頭Function
         function format1(value, row, index) {
-            const accNameCDiv = `<div class="subtd readonly-text" value="${row.AccNameC}" data-index="${index}" data-field="AccNameC">${row.AccNameC}</div>`;
-            const remarkDiv = `<div class="subtd readonly-text" value="${row.Remark}" data-index="${index}" data-field="Remark">${row.Remark}</div>`;
+            const fmtAccName = (row.AccNameC == null) ? '' : row.AccNameC;
+            const fmtRemark = (row.Remark == null) ? '' : row.Remark;
+            const accNameCDiv = `<div class="subtd readonly-text" value="${fmtAccName}" data-index="${index}" data-field="AccNameC">${fmtAccName}</div>`;
+            const remarkDiv = `<div class="subtd readonly-text" value="${fmtRemark}" data-index="${index}" data-field="Remark">${fmtRemark}</div>`;
 
             return `${accNameCDiv}${remarkDiv}`;
         }
         function format2(value, row, index) {
-            const dcTypeNoDiv = `<div class="subtd" value="${row.DCTypeNo}" data-index="${index}" data-field="DCTypeNo">${row.DCTypeNo}</div>`;
-            const dcTypeNameCDiv = `<div class="subtd" value="${row.DCTypeNameC}" data-index="${index}" data-field="DCTypeNameC">${row.DCTypeNameC}</div>`;
+            const fmtTypeNo = (row.DCTypeNo == null) ? '' : row.DCTypeNo;
+            const fmtTypeNameC = (row.DCTypeNameC == null) ? '' : row.DCTypeNameC;
+            const dcTypeNoDiv = `<div class="subtd" value="${fmtTypeNo}" data-index="${index}" data-field="DCTypeNo">${fmtTypeNo}</div>`;
+            const dcTypeNameCDiv = `<div class="subtd" value="${fmtTypeNameC}" data-index="${index}" data-field="DCTypeNameC">${fmtTypeNameC}</div>`;
 
             return `${dcTypeNoDiv}${dcTypeNameCDiv}`;
         }
         function format3(value, row, index) {
-            const currencyNoDiv = `<div class="subtd readonly-text" value="${row.CurrencyNo}" data-index="${index}" data-field="CurrencyNo">${row.CurrencyNo}</div>`;
-            const currencyStDiv = `<div class="subtd readonly-text" value="${row.CurrencySt}" data-index="${index}" data-field="CurrencySymbol">MXN</div>`;
+            const fmtCurrencyNo = (row.CurrencyNo == null) ? '' : row.CurrencyNo;
+            const fmtCurrencySt = (row.CurrencySt == null) ? '' : row.CurrencySt;
+            const currencyNoDiv = `<div class="subtd readonly-text" value="${fmtCurrencyNo}" data-index="${index}" data-field="CurrencyNo">${fmtCurrencyNo}</div>`;
+            const currencyStDiv = `<div class="subtd readonly-text" value="${fmtCurrencySt}" data-index="${index}" data-field="CurrencySt">${fmtCurrencySt}</div>`;
 
             return `${currencyNoDiv}${currencyStDiv}`;
         }
         function format4(value, row, index) {
-            const moneyDiv = `<div class="subtd readonly-text" value="${row.Money}" data-index="${index}" data-field="Money">${row.Money}</div>`;
-            const money1Div = `<div class="subtd readonly-text" value="${row.Money1}" data-index="${index}" data-field="Money1">${row.Money1}</div>`;
+            const fmtMoney = (row.Money == null) ? '' : row.Money;
+            const fmtMoney1 = (row.Money1 == null) ? '' : row.Money1;
+            const moneyDiv = `<div class="subtd readonly-text" value="${fmtMoney}" data-index="${index}" data-field="Money">${fmtMoney}</div>`;
+            const money1Div = `<div class="subtd readonly-text" value="${fmtMoney1}" data-index="${index}" data-field="Money1">${fmtMoney1}</div>`;
 
             return `${moneyDiv}${money1Div}`;
         }
         function format5(value, row, index) {
-            const targetNoDiv = `<div class="subtd readonly-text" value="${row.TargetNo}" data-index="${index}" data-field="TargetNo">${row.TargetNo}</div>`;
-            const targetAbbrDiv = `<div class="subtd readonly-text" value="${row.TargetAbbr}" data-index="${index}" data-field="TargetAbbr">${row.TargetAbbr}</div>`;
+            const fmtTargetNo = (row.TargetNo == null) ? '' : row.TargetNo;
+            const fmtTargetAbbr = (row.TargetAbbr == null) ? '' : row.TargetAbbr;
+            const targetNoDiv = `<div class="subtd readonly-text" value="${fmtTargetNo}" data-index="${index}" data-field="TargetNo">${fmtTargetNo}</div>`;
+            const targetAbbrDiv = `<div class="subtd readonly-text" value="${fmtTargetAbbr}" data-index="${index}" data-field="TargetAbbr">${fmtTargetAbbr}</div>`;
 
             return `${targetNoDiv}${targetAbbrDiv}`;
         }
         function format6(value, row, index) {
-            const accProfitNoDiv = `<div class="subtd readonly-text" value="${row.AccProfitNo}" data-index="${index}" data-field="AccProfitNo">${row.AccProfitNo}</div>`;
-            const accProfitNameDiv = `<div class="subtd readonly-text" value="${row.AccProfitName}" data-index="${index}" data-field="AccProfitName">${row.AccProfitName}</div>`;
+            const fmtAccProfitNo = (row.AccProfitNo == null) ? '' : row.AccProfitNo;
+            const fmtAccProfitName = (row.AccProfitName == null) ? '' : row.AccProfitName;
+            const accProfitNoDiv = `<div class="subtd readonly-text" value="${fmtAccProfitNo}" data-index="${index}" data-field="AccProfitNo">${fmtAccProfitNo}</div>`;
+            const accProfitNameDiv = `<div class="subtd readonly-text" value="${fmtAccProfitName}" data-index="${index}" data-field="AccProfitName">${fmtAccProfitName}</div>`;
 
             return `${accProfitNoDiv}${accProfitNameDiv}`;
         }
         function format7(value, row, index) {
-            const accDeptNoDiv = `<div class="subtd readonly-text" value="${row.AccDeptNo}" data-index="${index}" data-field="AccDeptNo">${row.AccDeptNo}</div>`;
-            const accDeptNameDiv = `<div class="subtd readonly-text" value="${row.AccDeptName}" data-index="${index}" data-field="AccDeptName">${row.AccDeptName}</div>`;
+            const fmtAccDeptNo = (row.AccDeptNo == null) ? '' : row.AccDeptNo;
+            const fmtAccDeptName = (row.AccDeptName == null) ? '' : row.AccDeptName;
+            const accDeptNoDiv = `<div class="subtd readonly-text" value="${fmtAccDeptNo}" data-index="${index}" data-field="AccDeptNo">${fmtAccDeptNo}</div>`;
+            const accDeptNameDiv = `<div class="subtd readonly-text" value="${fmtAccDeptName}" data-index="${index}" data-field="AccDeptName">${fmtAccDeptName}</div>`;
 
             return `${accDeptNoDiv}${accDeptNameDiv}`;
         }
         function format8(value, row, index) {
-            const payDeptNoDiv = `<div class="subtd readonly-text" value="${row.PayDeptNo}" data-index="${index}" data-field="PayDeptNo">${row.PayDeptNo}</div>`;
-            const payDeptNameDiv = `<div class="subtd readonly-text" value="${row.PayDeptName}" data-index="${index}" data-field="PayDeptName">${row.PayDeptName}</div>`;
+            const fmtPayDeptNo = (row.PayDeptNo == null) ? '' : row.PayDeptNo;
+            const fmtPayDeptName = (row.PayDeptName == null) ? '' : row.PayDeptName;
+            const payDeptNoDiv = `<div class="subtd readonly-text" value="${fmtPayDeptNo}" data-index="${index}" data-field="PayDeptNo">${fmtPayDeptNo}</div>`;
+            const payDeptNameDiv = `<div class="subtd readonly-text" value="${fmtPayDeptName}" data-index="${index}" data-field="PayDeptName">${fmtPayDeptName}</div>`;
 
             return `${payDeptNoDiv}${payDeptNameDiv}`;
         }
         function format9(value, row, index) {
-            const offsetNoDiv = `<div class="subtd readonly-text" value="${row.OffsetNo}" data-index="${index}" data-field="OffsetNo">${row.OffsetNo}</div>`;
-            const caseBillNoDiv = `<div class="subtd readonly-text" value="${row.CaseBillNo}" data-index="${index}" data-field="CaseBillNo">${row.CaseBillNo}</div>`;
+            const fmtOffsetNo = (row.OffsetNo == null) ? '' : row.OffsetNo;
+            const fmtCaseBillNo = (row.CaseBillNo == null) ? '' : row.CaseBillNo;
+            const offsetNoDiv = `<div class="subtd readonly-text" value="${fmtOffsetNo}" data-index="${index}" data-field="OffsetNo">${fmtOffsetNo}</div>`;
+            const caseBillNoDiv = `<div class="subtd readonly-text" value="${fmtCaseBillNo}" data-index="${index}" data-field="CaseBillNo">${fmtCaseBillNo}</div>`;
 
             return `${offsetNoDiv}${caseBillNoDiv}`;
         }
         function format10(value, row, index) {
-            const sourceDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${row.SourceDocSubTypeName}" data-index="${index}" data-field="SourceDocSubTypeName">${row.SourceDocSubTypeName}</div>`;
-            const sourceNoDiv = `<div class="subtd readonly-text" value="${row.SourceNo}" data-index="${index}" data-field="SourceDocSubTypeName">${row.SourceNo}</div>`;
+            const fmtSourceDocSubTypeName = (row.SourceDocSubTypeName == null) ? '' : row.SourceDocSubTypeName;
+            const fmtSourceNo = (row.SourceNo == null) ? '' : row.SourceNo;
+            const sourceDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${fmtSourceDocSubTypeName}" data-index="${index}" data-field="SourceDocSubTypeName">${fmtSourceDocSubTypeName}</div>`;
+            const sourceNoDiv = `<div class="subtd readonly-text" value="${fmtSourceNo}" data-index="${index}" data-field="SourceDocSubTypeName">${fmtSourceNo}</div>`;
 
             return `${sourceDocSubTypeNameDiv}${sourceNoDiv}`;
         }
         function format11(value, row, index) {
-            const initialDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${row.InitialDocSubTypeName}" data-index="${index}" data-field="InitialDocSubTypeName">${row.InitialDocSubTypeName}</div>`;
-            const initialNoDiv = `<div class="subtd readonly-text" value="${row.InitialNo}" data-index="${index}" data-field="InitialNo">${row.InitialNo}</div>`;
+            const fmtInitialDocSubTypeName = (row.InitialDocSubTypeName == null) ? '' : row.InitialDocSubTypeName;
+            const fmtInitialNo = (row.InitialNo == null) ? '' : row.InitialNo;
+            const initialDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${fmtInitialDocSubTypeName}" data-index="${index}" data-field="InitialDocSubTypeName">${fmtInitialDocSubTypeName}</div>`;
+            const initialNoDiv = `<div class="subtd readonly-text" value="${fmtInitialNo}" data-index="${index}" data-field="InitialNo">${fmtInitialNo}</div>`;
 
             return `${initialDocSubTypeNameDiv}${initialNoDiv}`;
         }
@@ -2710,10 +2786,10 @@
                 }
             });
             $('#moneyBox').textbox('textbox').bind('keydown', function (e) {
-                if (e.key === 'Enter') {                   
+                if (e.key === 'Enter') {
                     var remarkValue = $('#moneyBox').textbox('getValue');
                     var rowdata = itemdg.datagrid('getRows')[itemdgIndex];
-                    var Money1 = (rowdata.Rate1 != null) ? remarkValue * rowdata.Rate1 : remarkValue                    
+                    var Money1 = (rowdata.Rate1 != null) ? remarkValue * rowdata.Rate1 : remarkValue
                     itemdg.datagrid('updateRow', {
                         index: itemdgIndex,
                         row: {
@@ -2727,7 +2803,7 @@
                 }
             });
             $('#money1Box').textbox('textbox').bind('keydown', function (e) {
-                if (e.key === 'Enter') {                   
+                if (e.key === 'Enter') {
                     var remarkValue = $('#money1Box').textbox('getValue');
                     var rowdata = itemdg.datagrid('getRows')[itemdgIndex];
                     var rate1 = (rowdata.Money != null) ? remarkValue / rowdata.Money : 1
@@ -2761,7 +2837,7 @@
         });
     </script>
     <script>
-        $(document).ready(function () {  
+        $(document).ready(function () {
             //$('#btnAdd').addClass('hidden-btn');
             //$('#btnEdit').addClass('hidden-btn');
             //$('#btnSave').addClass('hidden-btn');
@@ -2775,6 +2851,10 @@
             $('#btnclose').hide();
             $('#btnunlock').hide();
             $('#btnreject').hide();
+            let msg = '@ViewBag.Msg';            
+            if (msg) {
+                $.messager.alert(msglang.Title2, msg);
+            }            
         });
-    </script>
+    </script>  
 }

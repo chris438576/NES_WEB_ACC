@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Reporting.WebForms;
+using NES_WEB_ACC.Modules;
 using NES_WEB_ACC.Report;
 using NES_WEB_ACC.Report.RDLC;
 using NES_WEB_ACC.ViewModels;
@@ -17,17 +18,18 @@ using System.Web.Mvc;
 
 namespace NES_WEB_ACC.Controllers
 {
+    [Authorize]
     public class VoucherController : Controller
     {
         public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
         private NES_WEB_ACCEntities _dbContext = new NES_WEB_ACCEntities();
-        
-        //------ 介面 ------//
+
+        //------ 介面 ------//        
         /// <summary>
         /// 介面_傳票建立
         /// </summary>
         /// <returns></returns>
-        public ActionResult VoucherCreate()
+        public ActionResult VoucherCreate(string billno, string msg)
         {
             var createInfo = new CreateInfoViewModel
             {
@@ -38,24 +40,27 @@ namespace NES_WEB_ACC.Controllers
                 DeptName = (string)Session["DeptName"],
                 CompNo = (string)Session["CompNo"],
                 CurrencySt = (string)Session["CurrencySt"]
-            };
-
+            };            
+            ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
+            ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View(createInfo);
-        }
+        }        
         /// <summary>
         /// 介面_主管審核
         /// </summary>
         /// <returns></returns>
-        public ActionResult VoucherCheck()
-        {
+        public ActionResult VoucherCheck(string msg)
+        {          
+            ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View();
-        }
+        }        
         /// <summary>
         /// 介面_傳票結案
         /// </summary>
         /// <returns></returns>
-        public ActionResult VoucherClose()
-        {
+        public ActionResult VoucherClose(string msg)
+        {           
+            ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View();
         }
         
@@ -97,7 +102,8 @@ namespace NES_WEB_ACC.Controllers
                         if (!userRoles.Contains("Admin"))
                         {
                             sql = sql + " and CreateBy = @craeteby ";
-                            param = new { roles.Name };
+                            string craeteby = roles.Name;
+                            param = new { craeteby };
                         }                                     
                         break;
                     case "check":
@@ -159,7 +165,7 @@ namespace NES_WEB_ACC.Controllers
             {              
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
-            string sql = @"select * from ACC_VoucherDetail where WebDocId = @webdocid";
+            string sql = @"select * from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
             var param = new { webdocid };
             try
             {
@@ -579,7 +585,7 @@ namespace NES_WEB_ACC.Controllers
                 #region 參數值設定
                 DateTime dateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                 var billNoCode = _dbContext.ACC_VoucherInfo.Where(v => v.BillDate == dateTime).GroupBy(v => v.BillDate).Select(g => g.Max(v => v.Code2)).FirstOrDefault();
-                string str_Code2 = string.IsNullOrEmpty(billNoCode) ? "001"  : Convert.ToInt64(billNoCode + 1).ToString("D3");
+                string str_Code2 = string.IsNullOrEmpty(billNoCode) ? "001"  : (Convert.ToInt64(billNoCode )+ 1).ToString("D3");
                 #endregion
 
                 #region 主檔寫入
@@ -645,14 +651,15 @@ namespace NES_WEB_ACC.Controllers
                         AccProfitId = item.AccProfitId,
                         AccProfitNo = item.AccProfitNo,
                         AccProfitName = item.AccProfitName,
-
+                        CreateDate = System.DateTime.Now,
+                        CreateBy = Session["EmpNo"].ToString(),
                     };
                     _dbContext.ACC_VoucherDetail.Add(infoData);
                   
                 }
                 #endregion
                 _dbContext.SaveChanges();
-                return Json(new { success = true, code = "OK", data = $"新增傳票編號：{mainData.BillNo}" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, code = "OK", data = mainData.BillNo }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {               
@@ -667,8 +674,7 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public ActionResult EditData(VoucherDataViewModel data) {
             if (data == null)
-            {
-                
+            {                
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
             Guid guidId;
@@ -720,7 +726,7 @@ namespace NES_WEB_ACC.Controllers
                         _dbContext.ACC_VoucherDetail.Add(infoData);
                     }
                     _dbContext.SaveChanges();
-                    return Json(new { success = true, code = "OK", data = $"修改傳票編號：{existdata.BillNo}" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, code = "OK", data = existdata.BillNo }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
