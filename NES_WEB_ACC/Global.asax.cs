@@ -35,7 +35,7 @@ namespace NES_WEB_ACC
         {
             // 本機測試
             string username = "NES1492";
-            string[] roles = { "User" };
+            string[] roles = { "Admin" };
             ////正式使用
             //string username = User.Identity.Name;
             //string[] roles = RoleSetting(username);

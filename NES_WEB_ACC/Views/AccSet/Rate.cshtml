@@ -418,7 +418,8 @@
         }
     </select>
     <a href="#" class="separatorbar"></a>
-    <input id="ymDatebox" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,calendar:mycalendar" style="width:200px;">
+    @*<input id="ymDatebox" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,calendar:mycalendar" style="width:200px;">*@
+    <input id="ymDatebox" />
     <a href="#" class="separatorbar"></a>
     <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('search');" data-options="iconCls:'icon-large-select',size:'large',iconAlign:'top'">搜尋</a>
     <a href="#" class="separatorbar"></a>
@@ -443,7 +444,7 @@
         var maindg = $('#maindg');
         var maindgIndex;
         var actioncode = 'view';
-        var scroll = @ViewBag.Scroll;       
+        var scroll = @ViewBag.Scroll;
         //#endregion
         //#region 多語系
         let maindglang = {
@@ -487,7 +488,10 @@
         //#region 初始化
         $(function () {
             maindgSet();
-            //maindgData();     
+            //maindgData();              
+            $('#ymDatebox').myDatebox({
+                culture: '@ViewBag.CurrentCulture' // 傳遞語言參數
+            });
         });
         $(document).ready(function() {
             let msg = '@ViewBag.Msg';
@@ -546,7 +550,7 @@
                 }
             });
         }
-        function maindgData() {           
+        function maindgData() {
             actionurl = defaultUrl + controllerurl + functionurl + 'GetRate';
             doajax("GET", actionurl,null, function (result) {
                 if (result.success) {
@@ -574,11 +578,11 @@
             let actionurl;
             switch (type) {
                 case 'edit':
-                    actioncode = 'edit';                    
+                    actioncode = 'edit';
                     maindgIndex = rowIndex;
                     maindg.datagrid('beginEdit', rowIndex);
                     break;
-                case 'save':                    
+                case 'save':
                     maindg.datagrid('endEdit', rowIndex);
                     var row = maindg.datagrid('getRows')[rowIndex];
 
@@ -607,7 +611,7 @@
                 case 'cancel':
                     maindg.datagrid('cancelEdit', rowIndex);
                     actioncode = 'view';
-                
+
                     break;
                 default:
             }
@@ -708,17 +712,17 @@
                     break;
                 case 'refresh':
                     break;
-                case 'search':                   
+                case 'search':
                     var currencyNo = $('#CurrencyNo').combobox('getValue');
-                    var currencySt = $('#CurrencySt').combobox('getValue');                   
-                    var selectedDate = $('#ymDatebox').datebox('getValue');                    
+                    var currencySt = $('#CurrencySt').combobox('getValue');
+                    var selectedDate = $('#ymDatebox').datebox('getValue');
                     var dateParts = selectedDate.split('/');
                     var rateDate = (parseInt(dateParts[2], 10) >= 1 && parseInt(dateParts[2], 10) <= 10) ? dateParts[0] + '/' + dateParts[1] + '/B' : (parseInt(dateParts[2], 10) >= 11 && parseInt(dateParts[2], 10) <= 20) ? dateParts[0] + '/' + dateParts[1] + '/M' : (parseInt(dateParts[2], 10) >=21)? dateParts[0] + '/' + dateParts[1] + '/E': null;
                     var dataSearch = {
                         currencyno: currencyNo,
                         currencyst: currencySt,
                         ratedate: rateDate
-                    }                    
+                    }
                     actionurl = defaultUrl + controllerurl + functionurl + 'GetRate';
                     doajax("GET", actionurl, dataSearch, function (result) {
                         if (result.success) {
@@ -842,7 +846,7 @@
         }
         //#endregion
     </script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         var currentCulture = '@ViewBag.CurrentCulture';
         var langToday,langClose,langWeeks, langMonths;
         switch (currentCulture) {
@@ -935,6 +939,6 @@
                 });
             }
         });
-    </script>
+    </script>*@
 }
 

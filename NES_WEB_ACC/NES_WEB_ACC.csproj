@@ -1006,6 +1006,8 @@
     <Content Include="Scripts\layui\layui.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\mycss\body_container_erp.css" />
+    <Content Include="Scripts\myjs\myMath.js" />
+    <Content Include="Scripts\myjs\myDatebox.js" />
     <Content Include="Scripts\pdfmake\pdfmake.min.js" />
     <Content Include="Scripts\pdfmake\vfs_fonts.js" />
     <Content Include="Scripts\toolbarplugin.js" />

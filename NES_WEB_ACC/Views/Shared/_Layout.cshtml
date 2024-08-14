@@ -208,8 +208,8 @@
                                 </a>
                             </li>
                             <!--<li class="dropdown">-->
-                                @*會計設定*@
-                                <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            @*會計設定*@
+                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     @Resources.Content.AccSet
                                     <span class="caret"></span>
                                 </a>
@@ -322,7 +322,7 @@
                                     <li>
                                         @*匯率設定*@
                                         <a href="@Url.Action("Rate", "AccSet")">
-                                            @Resources.Content.RateSet 
+                                            @Resources.Content.RateSet
                                         </a>
                                     </li>
                                 </ul>
@@ -369,14 +369,13 @@
                                     <span class="">
                                         @if (Session["EmpNameC"] != null)
                                         {
-                                            <span class="marquee hidden-easy xs">
-                                                @Session["EmpNameC"]
-                                            </span>
-                                        }
+                            <span class="marquee hidden-easy xs">
+                                @Session["EmpNameC"]
+                            </span>}
                                     </span>
                                 </a>
 
-                            </li>                           
+                            </li>
                             <li>
                                 <a href="/logout.aspx" class="btn-34">登出</a>
                             </li>
@@ -422,7 +421,7 @@
             let a = '@HttpContext.Current.Request.Url.Host';
             if (a != '192.168.50.8') {
                 $('#test-tip').html(testalerttip);
-            }          
+            }
         };
         // Start timers.
         function StartTimers() {
@@ -445,6 +444,7 @@
             window.location = logoutUrl;
         }
     </script>
+    <script src="~/Scripts/myjs/myDatebox.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace NES_WEB_ACC.Controllers
@@ -23,7 +24,7 @@ namespace NES_WEB_ACC.Controllers
     {
         public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
         private NES_WEB_ACCEntities _dbContext = new NES_WEB_ACCEntities();
-
+        private string currentCulture = Thread.CurrentThread.CurrentCulture.Name;
         //------ 介面 ------//        
         /// <summary>
         /// 介面_傳票建立
@@ -40,9 +41,11 @@ namespace NES_WEB_ACC.Controllers
                 DeptName = (string)Session["DeptName"],
                 CompNo = (string)Session["CompNo"],
                 CurrencySt = (string)Session["CurrencySt"]
-            };            
+            };
+            
             ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
+            ViewBag.CurrentCulture = currentCulture;
             return View(createInfo);
         }        
         /// <summary>
@@ -215,8 +218,7 @@ namespace NES_WEB_ACC.Controllers
                         return Json(new { success = true, code = "OK" , data = customerdata }, JsonRequestBehavior.AllowGet);
                     }
                     else
-                    {
-                       
+                    {                       
                         return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
                     }
                 }
