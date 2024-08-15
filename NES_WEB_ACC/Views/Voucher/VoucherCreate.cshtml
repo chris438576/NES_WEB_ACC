@@ -445,37 +445,6 @@
     </div>
     <table id="dlgdg1" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>
 </div>
-@*dialog_[編輯]摘要說明*@
-<div id="dlgEditRemark" class="easyui-dialog" data-options="modal:true,closed:true">
-    <input id="remarkBox" class="easyui-textbox" prompt="Remark..." style="width:300px">
-</div>
-@*dialog_[編輯]借貸方向*@
-<div id="dlgEditDCType" class="easyui-dialog" data-options="modal:true,closed:true">
-    <table style="width:100%;">
-        <tr>
-            <td style="width:50%">
-                <label class="radio-label">借:</label>
-                <input class="easyui-radiobutton" name="DCTpye" value="D" id="dctpyeD">
-            </td>
-            <td style="width:50%">
-                <label class="radio-label">貸:</label>
-                <input class="easyui-radiobutton" name="DCTpye" value="C" id="dctpyeC">
-            </td>
-        </tr>
-    </table>
-</div>
-@*dialog_[編輯]交易幣別_dlgdg2*@
-<div id="dlgEditCurrencyNo" class="easyui-dialog" data-options="modal:true,closed:true">
-    <table id="dlgdg2" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
-</div>
-@*dialog_[編輯]交易金額*@
-<div id="dlgEditMoney" class="easyui-dialog" data-options="modal:true,closed:true">
-    <input id="moneyBox" class="easyui-textbox" prompt="交易金額..." style="width:100%;height:100%" data-options="validType:'number'">
-</div>
-@*dialog_[編輯]記帳金額*@
-<div id="dlgEditMoney1" class="easyui-dialog" data-options="modal:true,closed:true">
-    <input id="money1Box" class="easyui-numberbox" prompt="Remark..." style="width:100%;height:100%" data-options="validType:'number'">
-</div>
 @*dialog_[編輯]對象編號_dlgdg3*@
 <div id="dlgEditTargetNo" class="easyui-dialog" data-options="modal:true,closed:true">
 
@@ -529,7 +498,8 @@
 </div>
 @*右鍵顯示div*@
 <div id="mm" class="easyui-menu" data-options="onClick:menuHandler" style="width:130px;">
-    <div data-options="name:'add',iconCls:'icon-add'">新增</div>
+    <div data-options="name:'addF',iconCls:'icon-add'">新增前一列</div>
+    <div data-options="name:'addB',iconCls:'icon-add'">新增後一列</div>
     <div data-options="name:'remove',iconCls:'icon-remove'">移除</div>
     @*<div class="menu-sep"></div>
         <div data-options="name:'addD'">新增_借</div>
@@ -593,7 +563,7 @@
         //#endregion
         //#region 資料暫存
         var objAccNo = { name: 'AccNo', data: null };
-        var objCurrencyNo = { name: 'CurrencyNo', data: null };
+        var objCurrencyNo = { name: 'CurrencyNo', data: @Html.Raw(Json.Encode(ViewData["CurrencyNo"])) };
         var objAccDept = { name: 'AccDept', data: null };
         var objTargetNo0 = { name: 'TargetNo0', data: null };
         var objTargetNo1 = { name: 'TargetNo1', data: null };
@@ -617,16 +587,13 @@
             btnEnableSet('view');
             ///-----資料填值-----///
             maindgData();
-            $('#btnreject').hide();
-            ///-----帶入值-----///
-            let billno = '@ViewBag.BillNo';
-            if (billno) {
-                selectRow(billno);
-            }
-             $('#myDatebox').myDatebox({
+            ///-----其他設定-----///
+            $('#btnreject').hide();           
+            $('#myDatebox').myDatebox({
                 culture: '@ViewBag.CurrentCulture' // 傳遞語言參數
             });
         });
+
         //#endregion
 
         //#region dg設定與填值
@@ -710,6 +677,10 @@
                         });
                     }
                     maindg.datagrid('loadData', result.data);
+                    let billno = '@ViewBag.BillNo';
+                    if (billno) {
+                        selectRow(billno);
+                    }
                 } else {
                     $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                     if (result.code == 'C0004') {
@@ -724,140 +695,207 @@
                 singleSelect: true,
                 striped: true,
                 fitColumns: true,
-                columns: [
-                    [
-                        { field: 'WebId', title: 'WebId', hidden: true, type: 'text', rowspan: 2 },
-                        { field: 'Id', title: 'Id', hidden: true, type: 'text', rowspan: 2 },
-                        { field: 'Linage', title: '行號', align: 'center', hidden: false, type: 'string', rowspan: 2 },
-                        {
-                            field: 'AccNo', title: '科目編號', width: '10%', hidden: false, type: 'string', rowspan: 2,
-                            editor: {
-                                type: 'textbox',
-                                options: {
-                                    icons: [{
-                                        iconCls: 'icon-search',
-                                        handler: function (e) {
-                                            dlgEditAccNo();
-                                        }
-                                    }]
-                                }
-                            }
-                        },
-                        { field: 'AccNameC', title: '科目名稱', width: '20%', hidden: false, type: 'string' }, //format1
-                        { field: 'DCTypeNo', title: '借貸方向', width: '8%', hidden: false, type: 'string' }, //format2
-                        { field: 'CurrencyNo', title: '交易幣別', width: '8%', align: 'center', hidden: false, type: 'string' },//format3
-                        {
-                            field: 'Rate1', title: '匯率', width: '5%', align:'center', hidden: false, type: 'string', rowspan: 2,
-                            editor: {
-                                type: 'numberbox',
-                                options: {
-                                    precision: 3,  // 保留小數點後兩位
-                                    min: 0,        // 最小值設置為 0 或其他合適的值
-                                    //max: 999999,   // 最大值設置為一個合理的數值
-                                    //groupSeparator: ',',  // 設置數字分隔符
-                                    decimalSeparator: '.', // 設置小數點分隔符
-                                    onChange: function (newValue, oldValue) {
-                                        updateMoney1(newValue);
+                columns: [[
+                    { field: 'WebId', title: 'WebId', hidden: true, type: 'text' },
+                    { field: 'Id', title: 'Id', hidden: true, type: 'text' },
+                    { field: 'Linage', title: '行號', align: 'center', hidden: false, type: 'string' },
+                    {
+                        field: 'AccNo', title: '科目編號', width: '10%', hidden: false, type: 'string',
+                        editor: {
+                            type: 'textbox',
+                            options: {
+                                icons: [{
+                                    iconCls: 'icon-search',
+                                    handler: function (e) {
+                                        dlgEditAccNo();
                                     }
-                                }
+                                }]
                             }
-                        },
-                        { field: 'Money', title: '交易金額', width: '8%', align: 'right', hidden: false, type: 'number' },//format4
-                        { field: 'TargetId', title: '對象別Id', width: '10%', hidden: true, type: 'string', rowspan: 2, },
-                        {
-                            field: 'TargetType', title: '對象別', width: '5%', hidden: false, type: 'string', rowspan: 2, formatter: formatTargetType,
-                            editor: {
-                                type: 'combogrid',
-                                options: {
-                                    panelWidth: 200,  // 可以根據需要調整寬度
-                                    idField: 'TargetType',
-                                    textField: 'TargetTypeName',
-                                    mode: 'remote',
-                                    loader: function (param, success, error) {
-                                        objdata({ name: 'TargetType' }, 'read', function (objtype) {
-                                            if (objtype.data) {
-                                                success(objtype.data);
-                                            }
-                                        });
-                                    },
-                                    columns: [[
-                                        { field: 'TargetType', title: '編號', width: 97 },
-                                        { field: 'TargetTypeName', title: '名稱', width: 97 }
-                                    ]],
-                                    panelHeight: 'auto',
-                                    onSelect: function (index, row) {
-                                        // 檢查 itemdgIndex
-                                        if (itemdgIndex === -1) {
-                                            $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
-                                            return;
-                                        }
-                                        // 更新 itemdg 中的编辑行
-                                        itemdg.datagrid('updateRow', {
-                                            index: itemdgIndex,
-                                            row: {
-                                                TargetNo: '',
-                                                TargetAbbr: ''
-                                            }
-                                        });
-                                        // 结束编辑状态
-                                        itemdg.datagrid('endEdit', itemdgIndex);
+                        }
+                    },
+                    { field: 'AccNameC', title: '科目名稱', width: '20%', hidden: false, type: 'string' },
+                    {
+                        field: 'Remark', title: '摘要說明', width: '20%', type: 'string',
+                        editor: {
+                            type: 'textbox'
+                        }
+                    },
+                    {
+                        field: 'DCTypeNo', title: '借貸方向', align: 'center', hidden: false, type: 'string',
+                        editor: {
+                            type: 'combobox',
+                            options: {
+                                valueField: 'value',       // 對應的值字段
+                                textField: 'label',        // 顯示的文本字段
+                                data: [
+                                    { label: 'D', value: 'D' },
+                                    { label: 'C', value: 'C' }
+                                ],
+                                panelHeight: 'auto'
 
-                                        // 如果需要继续编辑，可以立即重新开始编辑
-                                        itemdg.datagrid('beginEdit', itemdgIndex);
+                            }
+                        }
+                    },
+                    { field: 'DCTypeNameC', title: '借貸名稱', width: '8%', hidden: true, type: 'string' },
+                    {
+                        field: 'CurrencyNo', title: '交易幣別', width: '8%', align: 'center', hidden: false, type: 'string',
+                        editor: {
+                            type: 'combobox',
+                            options: {
+                                valueField: 'CurrencyNo',
+                                textField: 'CurrencyNo',
+                                panelHeight: 'auto',
+                                editable: false,
+                                required: true,
+                                data: objCurrencyNo.data,
+                                onChange: function (newValue, oldValue) {
+                                    updateRate('0', newValue);
+                                }
+                            }
+                        }
+                    },
+                    {
+                        field: 'Money', title: '交易金額', width: '8%', align: 'right', hidden: false, type: 'number',
+                        editor: {
+                            type: 'numberbox',
+                            options: {
+                                precision: 3,  // 保留小數點後兩位
+                                min: 0,        // 最小值設置為 0 或其他合適的值
+                                decimalSeparator: '.', // 設置小數點分隔符
+                                onChange: function (newValue, oldValue) {
+                                    updateMoney1('0',newValue);
+                                }
+                            }
+                        },
+                        formatter: function (value, row, index) {
+                            return parseFloat(value).toFixed(3);
+                        }
+                    },
+                    {
+                        field: 'Rate1', title: '匯率', width: '5%', align: 'center', hidden: false, type: 'number',
+                        editor: {
+                            type: 'numberbox',
+                            options: {
+                                precision: 3,
+                                min: 0,
+                                //groupSeparator: ',',  // 設置數字分隔符
+                                decimalSeparator: '.', // 設置小數點分隔符
+                                onChange: function (newValue, oldValue) {
+                                    updateMoney1('1',newValue);
+                                }
+                            }
+                        },
+                        formatter: function (value, row, index) {
+                            return parseFloat(value).toFixed(3);
+                        }
+                    },
+                    {field: 'CurrencySt', title: '記帳幣別', width: '8%', align: 'center', type: 'string'},
+                    {
+                        field: 'Money1', title: '記帳金額', width: '8%', align: 'right', hidden: false, type: 'number',
+                        editor: {
+                            type: 'numberbox',
+                            options: {
+                                precision: 3,  // 保留小數點後兩位
+                                min: 0,        // 最小值設置為 0 或其他合適的值
+                                //groupSeparator: ',',  // 設置數字分隔符
+                                decimalSeparator: '.', // 設置小數點分隔符
+                                onChange: function (newValue, oldValue) {
+                                    updateRate('1', newValue);
+                                }
+                            }
+                        },
+                        formatter: function (value, row, index) {
+                            return parseFloat(value).toFixed(3);
+                        }
+                    },
+                    { field: 'TargetId', title: '對象別Id', width: '10%', hidden: true, type: 'string', },
+                    {
+                        field: 'TargetType', title: '對象別', width: '5%', hidden: false, type: 'string', formatter: formatTargetType,
+                        editor: {
+                            type: 'combogrid',
+                            options: {
+                                panelWidth: 200,  // 可以根據需要調整寬度
+                                idField: 'TargetType',
+                                textField: 'TargetTypeName',
+                                mode: 'remote',
+                                loader: function (param, success, error) {
+                                    objdata({ name: 'TargetType' }, 'read', function (objtype) {
+                                        if (objtype.data) {
+                                            success(objtype.data);
+                                        }
+                                    });
+                                },
+                                columns: [[
+                                    { field: 'TargetType', title: '編號', width: 97 },
+                                    { field: 'TargetTypeName', title: '名稱', width: 97 }
+                                ]],
+                                panelHeight: 'auto',
+                                onSelect: function (index, row) {
+                                    // 檢查 itemdgIndex
+                                    if (itemdgIndex === -1) {
+                                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                                        return;
                                     }
+                                    // 更新 itemdg 中的编辑行
+                                    itemdg.datagrid('updateRow', {
+                                        index: itemdgIndex,
+                                        row: {
+                                            TargetNo: '',
+                                            TargetAbbr: ''
+                                        }
+                                    });
+                                    // 结束编辑状态
+                                    itemdg.datagrid('endEdit', itemdgIndex);
+
+                                    // 如果需要继续编辑，可以立即重新开始编辑
+                                    itemdg.datagrid('beginEdit', itemdgIndex);
                                 }
                             }
-                        },
-                        { field: 'TargetNo', title: '對象編號', width: '5%', hidden: false, type: 'string' },//format5
-                        { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'AccProfitNo', title: '會計部門編號', hidden: false, type: 'string' },//format6
-                        { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'AccDeptNo', title: '成本中心編號', hidden: false, type: 'string' }, //format7
-                        { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'PayDeptNo', title: '支付部門編號', hidden: false, type: 'string' },//format8
-                        { field: 'CheckType', title: '票據Type', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'CheckId', title: '票據Id', hidden: true, type: 'string', rowspan: 2, },
-                        {
-                            field: 'CheckNo', title: '票據編號', hidden: false, type: 'string', rowspan: 2, editor: {
-                                type: 'text',
+                        }
+                    },
+                    { field: 'TargetNo', title: '對象編號', width: '5%', hidden: false, type: 'string' },//format5
+                    { field: 'TargetAbbr', title: '對象名稱', width: '8%', hidden: false, type: 'string' },//format5
+                    { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string' },
+                    { field: 'AccProfitNo', title: '會計部門編號', hidden: false, type: 'string' },//format6
+                    { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string' },//format6
+                    { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string' },
+                    { field: 'AccDeptNo', title: '成本中心編號', hidden: false, type: 'string' }, //format7
+                    { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string' },//format7
+                    { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string' },
+                    { field: 'PayDeptNo', title: '支付部門編號', hidden: false, type: 'string' },//format8
+                    { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string' },//format8
+                    { field: 'CheckType', title: '票據Type', hidden: true, type: 'string' },
+                    { field: 'CheckId', title: '票據Id', hidden: true, type: 'string' },
+                    {
+                        field: 'CheckNo', title: '票據編號', hidden: false, type: 'string', editor: {
+                            type: 'text',
+                        }
+                    },
+                    { field: 'OffsetNo', title: '立沖編號', hidden: false, type: 'string' },//format9
+                    { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string' },//format9
+                    { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string' },
+                    { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string' },
+                    { field: 'SourceDocSubTypeName', title: '來源單別', hidden: false, type: 'string' },//format10
+                    { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string' },//format10
+                    { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string' },
+                    { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string' },
+                    { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string' },
+                    { field: 'InitialDocSubTypeName', title: '原始單別', hidden: false, type: 'string' },//format11
+                    { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string' },//format11
+                    {
+                        field: 'ActivityType', title: '活動類別', hidden: false, type: 'string',
+                        editor: {
+                            type: 'combobox',
+                            options: {
+                                panelWidth: 200,
+                                url: defaultUrl + controllerurl + functionurl + 'GetEditTableCode7',
+                                valueField: 'ActivityType',
+                                textField: 'ActivityType',
+                                mode: 'remote',
                             }
-                        },
-                        { field: 'OffsetNo', title: '立沖編號', hidden: false, type: 'string' },//format9
-                        { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'SourceDocSubTypeName', title: '來源單別', hidden: false, type: 'string' },//format10
-                        { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'InitialDocSubTypeName', title: '原始單別', hidden: false, type: 'string' },//format11
-                        {
-                            field: 'ActivityType', title: '活動類別', hidden: false, type: 'string', rowspan: 2,
-                            editor: {
-                                type: 'combobox',
-                                options: {
-                                    panelWidth: 200,
-                                    url: defaultUrl + controllerurl + functionurl +'GetEditTableCode7',
-                                    valueField: 'ActivityType',
-                                    textField: 'ActivityType',
-                                    mode: 'remote',
-                                }
-                            }
-                        },
-                    ],
-                    [
-                        { field: 'Remark', title: '摘要說明', width: '20%', type: 'string', formatter: format1 }, //format1
-                        { field: 'DCTypeNameC', title: '借貸名稱', width: '8%', type: 'string', formatter: format2 },//format2
-                        { field: 'CurrencySt', title: '記帳幣別', width: '8%', align: 'center', type: 'string', formatter: format3 },//format3
-                        { field: 'Money1', title: '記帳金額', width: '8%', align: 'right', hidden: false, type: 'number', formatter: format4 },//format4
-                        { field: 'TargetAbbr', title: '對象名稱', width: '8%', hidden: false, type: 'string', formatter: format5 },//format5
-                        { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string', formatter: format6 },//format6
-                        { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string', formatter: format7 },//format7
-                        { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string', formatter: format8 },//format8
-                        { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string', formatter: format9 },//format9
-                        { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string', formatter: format10 },//format10
-                        { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string', formatter: format11 },//format11
-                    ]
-                ],
+                        }
+                    },
+                ]],
                 onClickRow: function (index, row) {
                     if (actioncode === 'edit' || actioncode === 'add') {
                         itemdg.datagrid('beginEdit', index); //啟用編輯
@@ -882,6 +920,7 @@
                         voucherDC();
                         // 重置當前的編輯行索引
                         itemdgIndex = undefined;
+
                     }
                 },
                 onCancelEdit: function (index, row) {
@@ -960,7 +999,6 @@
                 ]],
                 fitColumns: true,
                 onClickRow: function (index, row) {
-                    fitemdgIndex = itemdgIndex;
 
                     // 將值填入itemdg並更新行
                     itemdg.datagrid('updateRow', {
@@ -970,7 +1008,7 @@
                             Rate1: row.Rate
                         }
                     });
-                    itemdgIndex = fitemdgIndex;
+
                     // 關閉對話框
                     $('#dlgEditCurrencyNo').dialog('close');
                 }
@@ -1362,7 +1400,7 @@
                                     'DCTypeNo': row.DCTypeNo,
                                     'DCTypeNameC': row.DCTypeNameC,
                                     'CurrencyNo': row.CurrencyNo,
-                                    'CurrencyNoNote': row.CurrencyNoNote,
+                                    'CurrencySt': row.CurrencySt,
                                     'Rate1': row.Rate1,
                                     'Money': row.Money,
                                     'Money1': row.Money1,
@@ -1536,8 +1574,6 @@
                                 AccGroupNameC: selectedRow.AccGroupNameC,
                                 Remark: '',
                                 DCTypeNo: selectedRow.DCTypeNo,
-                                DCTypeNameC: selectedRow.DCTypeNameC,
-
                             }
                         });
                     }
@@ -1780,19 +1816,82 @@
         }
 
         // 明細編輯
-        function updateMoney1(newRate) {
+        function updateMoney1(type, newValue) {
+            var row;
+            var newMoney1;
             if (itemdgIndex !== undefined) {
-                var row = itemdg.datagrid('getRows')[itemdgIndex];
-                var newMoney1 = row.Money *  newRate;
+                if (type == '0') {
+                    row = itemdg.datagrid('getRows')[itemdgIndex]
+                    newMoney1 = math.chain(newValue).multiply(row.Rate1).done();
+                    fitemdgIndex = itemdgIndex;
+                    itemdg.datagrid('endEdit', itemdgIndex);
+                    itemdg.datagrid('updateRow', {
+                        index: fitemdgIndex,
+                        row: {
+                            Money: newValue,
+                            Money1: newMoney1
+                        }
+                    });
+
+                }
+                if (type == '1') {
+                    row = itemdg.datagrid('getRows')[itemdgIndex]
+                    newMoney1 = math.chain(row.Money).multiply(newValue).done();
+                    fitemdgIndex = itemdgIndex;
+                    itemdg.datagrid('endEdit', itemdgIndex);
+                    itemdg.datagrid('updateRow', {
+                        index: fitemdgIndex,
+                        row: {
+                            Rate1: newValue,
+                            Money1: newMoney1
+                        }
+                    });
+                }
+
+            }
+            if (type == '2') {
+                row = itemdg.datagrid('getRows')[fitemdgIndex]
+                newMoney1 = math.chain(row.Money).multiply(newValue).done();
                 itemdg.datagrid('updateRow', {
-                    index: itemdgIndex,
+                    index: fitemdgIndex,
                     row: {
-                        Rate1: newRate,
                         Money1: newMoney1
                     }
                 });
             }
+        }
+        function updateRate(type, newValue) {
+            if (itemdgIndex !== undefined) {
+                var row = itemdg.datagrid('getRows')[itemdgIndex];
+                var newRate;
+                if (type == '0') {//combobox切換
+                    newRate = objCurrencyNo.data.find(function (item) {
+                        return item.CurrencyNo === newValue;
+                    });
 
+                    fitemdgIndex = itemdgIndex;
+                    itemdg.datagrid('endEdit', itemdgIndex);
+                    itemdg.datagrid('updateRow', {
+                        index: fitemdgIndex,
+                        row: {
+                            Rate1: newRate.Rate
+                        }
+                    });
+                    updateMoney1('2', newRate.Rate);
+                }
+                if (type == '1') {//輸入Money1
+                    newRate = math.chain(newValue).divide(row.Money).done();
+                    fitemdgIndex = itemdgIndex;
+                    itemdg.datagrid('endEdit', itemdgIndex);
+                    itemdg.datagrid('updateRow', {
+                        index: fitemdgIndex,
+                        row: {
+                            Rate1: newRate
+                        }
+                    });
+
+                }
+            }
         }
 
         // 傳票借貸合計(使用記帳金額計算)
@@ -1806,10 +1905,10 @@
                 if (rows[i].DCTypeNo === 'D') {
                     totalDMoney = math.chain(totalDMoney).add(rows[i].Money1).done();
                 } else if (rows[i].DCTypeNo === 'C') {
-                    totalCMoney = math.chain(totalCMoney).add(rows[i].Money1).done();                    
+                    totalCMoney = math.chain(totalCMoney).add(rows[i].Money1).done();
                 }
             }
-            balance = math.abs(totalDMoney - totalCMoney);
+            balance = math.abs(math.chain(totalDMoney).subtract(totalCMoney).done());
 
             // 將計算後的值填入對應的 input 元素
             $('.colMoneyD').textbox('setValue', totalDMoney);
@@ -1912,102 +2011,139 @@
                     itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
                     itemdgIndex = newIndex;
                     break;
-                case 'addD':
-                    rowCount = itemdg.datagrid('getRows').length;
-                    // Append a new row with specific fields set for '借貸方向' and '借貸名稱'
-                    itemdg.datagrid('appendRow', {
-                        Id: '',
-                        Linage: rowCount + 1,
-                        AccNo: '',
-                        AccNameC: '',
-                        DCTypeNo: 'D', // Set '借貸方向' to 'D'
-                        DCTypeNameC: '借', // Set '借貸名稱' to '借'
-                        CurrencyNo: '',
-                        Rate1: '',
-                        Money: '',
-                        TargetId: '',
-                        TargetType: '',
-                        TargetNo: '',
-                        AccProfitId: '',
-                        AccProfitNo: '',
-                        AccDeptId: '',
-                        AccDeptNo: '',
-                        PayDeptId: '',
-                        PayDeptNo: '',
-                        CheckType: '',
-                        CheckId: '',
-                        CheckNo: '',
-                        OffsetNo: '',
-                        SourceDocId: '',
-                        SourceSeqId: '',
-                        SourceDocSubTypeName: '',
-                        InitialProjectId: '',
-                        InitialDocSubType: '',
-                        InitialDocId: '',
-                        InitialDocSubTypeName: '',
-                        ActivityType: '',
-                        Remark: '',
-                        CurrencyNoNote: '',
-                        Money1: '',
-                        TargetAbbr: '',
-                        AccProfitName: '',
-                        AccDeptName: '',
-                        PayDeptName: '',
-                        CaseBillNo: '',
-                        SourceNo: '',
-                        InitialNo: ''
-                    });
-                    var newIndex = itemdg.datagrid('getRows').length - 1;
-                    itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
-                    itemdgIndex = newIndex;
+                case 'addF':
+                    if (itemdgIndex !== undefined) {
+                        itemdg.datagrid('insertRow', {
+                            index: itemdgIndex, // 指定插入到當前行之前
+                            row: {
+                                Id: '',
+                                Linage: '',
+                                AccNo: '',
+                                AccNameC: '',
+                                DCTypeNo: '',
+                                CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
+                                CurrencySt: $('.fomCurrencySt').textbox('getValue'),
+                                Rate1: $('.fomRate1').textbox('getValue'),
+                                Money: 0,
+                                TargetId: '',
+                                TargetType: '',
+                                TargetNo: '',
+                                AccProfitId: '',
+                                AccProfitNo: '',
+                                AccDeptId: '',
+                                AccDeptNo: '',
+                                PayDeptId: '',
+                                PayDeptNo: '',
+                                CheckType: '',
+                                CheckId: '',
+                                CheckNo: '',
+                                OffsetNo: '',
+                                SourceDocId: '',
+                                SourceSeqId: '',
+                                SourceDocSubTypeName: '',
+                                InitialProjectId: '',
+                                InitialDocSubType: '',
+                                InitialDocId: '',
+                                InitialDocSubTypeName: '',
+                                ActivityType: '',
+                                Remark: '',
+                                DCTypeNameC: '',
+                                CurrencyNoNote: '',
+                                Money1: 0,
+                                TargetAbbr: '',
+                                AccProfitName: '',
+                                AccDeptName: '',
+                                PayDeptName: '',
+                                CaseBillNo: '',
+                                SourceNo: '',
+                                InitialNo: ''
+                            }
+                        });
+
+                        rowCount = itemdg.datagrid('getRows').length;
+                        for (var i = 0; i < rowCount; i++) {
+                            itemdg.datagrid('updateRow', {
+                                index: i,
+                                row: {
+                                    Linage: i + 1  // Start numbering from 1
+                                }
+                            });
+                        }
+
+                        // 選擇並開始編輯新插入的行
+                        itemdg.datagrid('selectRow', rowIndex).datagrid('beginEdit', rowIndex);
+                        itemdgIndex = rowIndex; // 更新當前行索引
+                    } else {
+                        $.messager.alert(msglang.Title2, '請先選擇一行進行操作');
+                    }
+
                     break;
-                case 'addC':
-                    rowCount = itemdg.datagrid('getRows').length;
-                    itemdg.datagrid('appendRow', {
-                        Id: '',
-                        Linage: rowCount + 1,
-                        AccNo: '',
-                        AccNameC: '',
-                        DCTypeNo: 'C', // Set '借貸方向' to 'D'
-                        DCTypeNameC: '貸', // Set '借貸名稱' to '借'
-                        CurrencyNo: '',
-                        Rate1: '',
-                        Money: '',
-                        TargetId: '',
-                        TargetType: '',
-                        TargetNo: '',
-                        AccProfitId: '',
-                        AccProfitNo: '',
-                        AccDeptId: '',
-                        AccDeptNo: '',
-                        PayDeptId: '',
-                        PayDeptNo: '',
-                        CheckType: '',
-                        CheckId: '',
-                        CheckNo: '',
-                        OffsetNo: '',
-                        SourceDocId: '',
-                        SourceSeqId: '',
-                        SourceDocSubTypeName: '',
-                        InitialProjectId: '',
-                        InitialDocSubType: '',
-                        InitialDocId: '',
-                        InitialDocSubTypeName: '',
-                        ActivityType: '',
-                        Remark: '',
-                        CurrencyNoNote: '',
-                        Money1: '',
-                        TargetAbbr: '',
-                        AccProfitName: '',
-                        AccDeptName: '',
-                        PayDeptName: '',
-                        CaseBillNo: '',
-                        SourceNo: '',
-                        InitialNo: ''
-                    });
-                    var newIndex = itemdg.datagrid('getRows').length - 1;
-                    itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
-                    itemdgIndex = newIndex;
+                case 'addB':
+                    if (itemdgIndex !== undefined) {
+                        itemdg.datagrid('insertRow', {
+                            index: itemdgIndex+1, // 指定插入到當前行之前
+                            row: {
+                                Id: '',
+                                Linage: '',
+                                AccNo: '',
+                                AccNameC: '',
+                                DCTypeNo: '',
+                                CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
+                                CurrencySt: $('.fomCurrencySt').textbox('getValue'),
+                                Rate1: $('.fomRate1').textbox('getValue'),
+                                Money: 0,
+                                TargetId: '',
+                                TargetType: '',
+                                TargetNo: '',
+                                AccProfitId: '',
+                                AccProfitNo: '',
+                                AccDeptId: '',
+                                AccDeptNo: '',
+                                PayDeptId: '',
+                                PayDeptNo: '',
+                                CheckType: '',
+                                CheckId: '',
+                                CheckNo: '',
+                                OffsetNo: '',
+                                SourceDocId: '',
+                                SourceSeqId: '',
+                                SourceDocSubTypeName: '',
+                                InitialProjectId: '',
+                                InitialDocSubType: '',
+                                InitialDocId: '',
+                                InitialDocSubTypeName: '',
+                                ActivityType: '',
+                                Remark: '',
+                                DCTypeNameC: '',
+                                CurrencyNoNote: '',
+                                Money1: 0,
+                                TargetAbbr: '',
+                                AccProfitName: '',
+                                AccDeptName: '',
+                                PayDeptName: '',
+                                CaseBillNo: '',
+                                SourceNo: '',
+                                InitialNo: ''
+                            }
+                        });
+
+                        rowCount = itemdg.datagrid('getRows').length;
+                        for (var i = 0; i < rowCount; i++) {
+                            itemdg.datagrid('updateRow', {
+                                index: i,
+                                row: {
+                                    Linage: i + 1  // Start numbering from 1
+                                }
+                            });
+                        }
+
+                        // 選擇並開始編輯新插入的行
+                        itemdg.datagrid('selectRow', rowIndex).datagrid('beginEdit', rowIndex);
+                        itemdgIndex = rowIndex; // 更新當前行索引
+                    } else {
+                        $.messager.alert(msglang.Title2, '請先選擇一行進行操作');
+                    }
+
                     break;
                 case 'addReverse':
                     if (itemdgIndex == null || itemdgIndex < 0) {
@@ -2018,10 +2154,8 @@
                     // Determine the reverse values based on the current selection
                     if (currentRow.DCTypeNo === 'D') {
                         reverseDCTypeNo = 'C';
-                        reverseDCTypeName = '貸';
                     } else if (currentRow.DCTypeNo === 'C') {
                         reverseDCTypeNo = 'D';
-                        reverseDCTypeName = '借';
                     } else {
                         $.messager.alert(msglang.Title2, '當前行的借貸方向不正確');
                         return;
@@ -2075,7 +2209,7 @@
                     itemdgIndex = newIndex;
                     break;
                 case 'remove':
-                    if (itemdgIndex !== null) {
+                    if (itemdgIndex !== undefined) {
                         itemdg.datagrid('deleteRow', itemdgIndex);
                         rowCount = itemdg.datagrid('getRows').length;
                         for (var i = 0; i < rowCount; i++) {
@@ -2089,37 +2223,6 @@
                     } else {
                         $.messager.alert(msglang.Title2, '未選擇任何行刪除');
                     }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        // 編輯模式_DC快速填入與關閉視窗
-        function dctypeChecked(type) {
-            switch (type) {
-                case "C":
-                    itemdg.datagrid('updateRow', {
-                        index: itemdgIndex,
-                        row: {
-                            DCTypeNo: 'C',
-                            DCTypeNameC: '貸',
-                        }
-                    });
-
-                    $('#dlgEditDCType').dialog('close');
-                    voucherDC();
-                    break;
-                case "D":
-                    itemdg.datagrid('updateRow', {
-                        index: itemdgIndex,
-                        row: {
-                            DCTypeNo: 'D',
-                            DCTypeNameC: '借',
-                        }
-                    });
-                    $('#dlgEditDCType').dialog('close');
-                    voucherDC();
                     break;
                 default:
                     break;
@@ -2178,6 +2281,7 @@
                                 }
                                 if (callback) callback(objtype);
                             });
+
                         }
                     }
                     break;
@@ -2378,11 +2482,11 @@
 
         //
         function selectRow(billno) {
-            var rows = $('#maindg').datagrid('getRows');
+            var rows = maindg.datagrid('getRows');
+            console.log(rows);
             for (var i = 0; i < rows.length; i++) {
                 if (rows[i].BillNo === billno) {
-
-                    $('#maindg').datagrid('selectRow', i);
+                    maindg.datagrid('selectRow', i);
                     return;
                 }
             }
@@ -2405,95 +2509,6 @@
             return `${year}/${month}/${day}`;
         }
 
-        // itemdg多表頭Function
-        function format1(value, row, index) {
-            const fmtAccName = (row.AccNameC == null) ? '' : row.AccNameC;
-            const fmtRemark = (row.Remark == null) ? '' : row.Remark;
-            const accNameCDiv = `<div class="subtd readonly-text" value="${fmtAccName}" data-index="${index}" data-field="AccNameC">${fmtAccName}</div>`;
-            const remarkDiv = `<div class="subtd readonly-text" value="${fmtRemark}" data-index="${index}" data-field="Remark">${fmtRemark}</div>`;
-
-            return `${accNameCDiv}${remarkDiv}`;
-        }
-        function format2(value, row, index) {
-            const fmtTypeNo = (row.DCTypeNo == null) ? '' : row.DCTypeNo;
-            const fmtTypeNameC = (row.DCTypeNameC == null) ? '' : row.DCTypeNameC;
-            const dcTypeNoDiv = `<div class="subtd" value="${fmtTypeNo}" data-index="${index}" data-field="DCTypeNo">${fmtTypeNo}</div>`;
-            const dcTypeNameCDiv = `<div class="subtd" value="${fmtTypeNameC}" data-index="${index}" data-field="DCTypeNameC">${fmtTypeNameC}</div>`;
-
-            return `${dcTypeNoDiv}${dcTypeNameCDiv}`;
-        }
-        function format3(value, row, index) {
-            const fmtCurrencyNo = (row.CurrencyNo == null) ? '' : row.CurrencyNo;
-            const fmtCurrencySt = (row.CurrencySt == null) ? '' : row.CurrencySt;
-            const currencyNoDiv = `<div class="subtd readonly-text" value="${fmtCurrencyNo}" data-index="${index}" data-field="CurrencyNo">${fmtCurrencyNo}</div>`;
-            const currencyStDiv = `<div class="subtd readonly-text" value="${fmtCurrencySt}" data-index="${index}" data-field="CurrencySt">${fmtCurrencySt}</div>`;
-
-            return `${currencyNoDiv}${currencyStDiv}`;
-        }
-        function format4(value, row, index) {
-            const fmtMoney = (row.Money == null) ? '' : row.Money;
-            const fmtMoney1 = (row.Money1 == null) ? '' : row.Money1;
-            const moneyDiv = `<div class="subtd readonly-text" value="${fmtMoney}" data-index="${index}" data-field="Money">${fmtMoney}</div>`;
-            const money1Div = `<div class="subtd readonly-text" value="${fmtMoney1}" data-index="${index}" data-field="Money1">${fmtMoney1}</div>`;
-
-            return `${moneyDiv}${money1Div}`;
-        }
-        function format5(value, row, index) {
-            const fmtTargetNo = (row.TargetNo == null) ? '' : row.TargetNo;
-            const fmtTargetAbbr = (row.TargetAbbr == null) ? '' : row.TargetAbbr;
-            const targetNoDiv = `<div class="subtd readonly-text" value="${fmtTargetNo}" data-index="${index}" data-field="TargetNo">${fmtTargetNo}</div>`;
-            const targetAbbrDiv = `<div class="subtd readonly-text" value="${fmtTargetAbbr}" data-index="${index}" data-field="TargetAbbr">${fmtTargetAbbr}</div>`;
-
-            return `${targetNoDiv}${targetAbbrDiv}`;
-        }
-        function format6(value, row, index) {
-            const fmtAccProfitNo = (row.AccProfitNo == null) ? '' : row.AccProfitNo;
-            const fmtAccProfitName = (row.AccProfitName == null) ? '' : row.AccProfitName;
-            const accProfitNoDiv = `<div class="subtd readonly-text" value="${fmtAccProfitNo}" data-index="${index}" data-field="AccProfitNo">${fmtAccProfitNo}</div>`;
-            const accProfitNameDiv = `<div class="subtd readonly-text" value="${fmtAccProfitName}" data-index="${index}" data-field="AccProfitName">${fmtAccProfitName}</div>`;
-
-            return `${accProfitNoDiv}${accProfitNameDiv}`;
-        }
-        function format7(value, row, index) {
-            const fmtAccDeptNo = (row.AccDeptNo == null) ? '' : row.AccDeptNo;
-            const fmtAccDeptName = (row.AccDeptName == null) ? '' : row.AccDeptName;
-            const accDeptNoDiv = `<div class="subtd readonly-text" value="${fmtAccDeptNo}" data-index="${index}" data-field="AccDeptNo">${fmtAccDeptNo}</div>`;
-            const accDeptNameDiv = `<div class="subtd readonly-text" value="${fmtAccDeptName}" data-index="${index}" data-field="AccDeptName">${fmtAccDeptName}</div>`;
-
-            return `${accDeptNoDiv}${accDeptNameDiv}`;
-        }
-        function format8(value, row, index) {
-            const fmtPayDeptNo = (row.PayDeptNo == null) ? '' : row.PayDeptNo;
-            const fmtPayDeptName = (row.PayDeptName == null) ? '' : row.PayDeptName;
-            const payDeptNoDiv = `<div class="subtd readonly-text" value="${fmtPayDeptNo}" data-index="${index}" data-field="PayDeptNo">${fmtPayDeptNo}</div>`;
-            const payDeptNameDiv = `<div class="subtd readonly-text" value="${fmtPayDeptName}" data-index="${index}" data-field="PayDeptName">${fmtPayDeptName}</div>`;
-
-            return `${payDeptNoDiv}${payDeptNameDiv}`;
-        }
-        function format9(value, row, index) {
-            const fmtOffsetNo = (row.OffsetNo == null) ? '' : row.OffsetNo;
-            const fmtCaseBillNo = (row.CaseBillNo == null) ? '' : row.CaseBillNo;
-            const offsetNoDiv = `<div class="subtd readonly-text" value="${fmtOffsetNo}" data-index="${index}" data-field="OffsetNo">${fmtOffsetNo}</div>`;
-            const caseBillNoDiv = `<div class="subtd readonly-text" value="${fmtCaseBillNo}" data-index="${index}" data-field="CaseBillNo">${fmtCaseBillNo}</div>`;
-
-            return `${offsetNoDiv}${caseBillNoDiv}`;
-        }
-        function format10(value, row, index) {
-            const fmtSourceDocSubTypeName = (row.SourceDocSubTypeName == null) ? '' : row.SourceDocSubTypeName;
-            const fmtSourceNo = (row.SourceNo == null) ? '' : row.SourceNo;
-            const sourceDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${fmtSourceDocSubTypeName}" data-index="${index}" data-field="SourceDocSubTypeName">${fmtSourceDocSubTypeName}</div>`;
-            const sourceNoDiv = `<div class="subtd readonly-text" value="${fmtSourceNo}" data-index="${index}" data-field="SourceDocSubTypeName">${fmtSourceNo}</div>`;
-
-            return `${sourceDocSubTypeNameDiv}${sourceNoDiv}`;
-        }
-        function format11(value, row, index) {
-            const fmtInitialDocSubTypeName = (row.InitialDocSubTypeName == null) ? '' : row.InitialDocSubTypeName;
-            const fmtInitialNo = (row.InitialNo == null) ? '' : row.InitialNo;
-            const initialDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${fmtInitialDocSubTypeName}" data-index="${index}" data-field="InitialDocSubTypeName">${fmtInitialDocSubTypeName}</div>`;
-            const initialNoDiv = `<div class="subtd readonly-text" value="${fmtInitialNo}" data-index="${index}" data-field="InitialNo">${fmtInitialNo}</div>`;
-
-            return `${initialDocSubTypeNameDiv}${initialNoDiv}`;
-        }
         // itemdg欄位Function
         function formatTargetType(value) {
             switch (String(value)) {
@@ -2625,23 +2640,6 @@
             $('#dlgEditAccNo').dialog({ height: winheight - 50, width: winwidth - 200, title: '會計科目' });
             $('#dlgEditAccNo').dialog('open').dialog('center');
         }
-        function dlgEditRemark() {
-            $('#dlgEditRemark').dialog({ height: 71, width: 313, title: '摘要說明' });
-            $('#dlgEditRemark').dialog('open').dialog('center');
-        }
-        function dlgEditDCType() {
-            $('#dlgEditDCType').dialog({ height: 71, width: 313, title: '借貸方向' });
-            $('#dctpyeD').radiobutton('uncheck');
-            $('#dctpyeC').radiobutton('uncheck');
-            //設計選取值
-            var editDCType = itemdg.datagrid('getRows')[itemdgIndex].DCTypeNo;
-            if (editDCType === "D") {
-                $('#dctpyeD').radiobutton('check');
-            } else if (editDCType === "C") {
-                $('#dctpyeC').radiobutton('check');
-            }
-            $('#dlgEditDCType').dialog('open').dialog('center');
-        }
         function dlgEditTarget() {
             let editTargetType = itemdg.datagrid('getRows')[itemdgIndex].TargetType;
             switch (editTargetType) {
@@ -2693,19 +2691,6 @@
             $('#dlgEditTargetNo').dialog({ height: winheight - 100, width: winwidth - 200, title: '對象編號' });
             $('#dlgEditTargetNo').dialog('open').dialog('center');
         }
-        function dlgEditCurrencyNo() {
-            objdata(objCurrencyNo, 'read', function (data) {
-                if (data.data) {
-                    dlgdg2.datagrid('loadData', data.data);
-                } else {
-                    dlgdg2.datagrid('loadData', '');
-                }
-            });
-            let winheight = $(window).height();
-            let winwidth = $(window).width();
-            $('#dlgEditCurrencyNo').dialog({ height: 200, width: 80, title: '交易幣別' });
-            $('#dlgEditCurrencyNo').dialog('open').dialog('center');
-        }
         function dlgEditAccDept() {
             objdata(objAccDept, 'read', function (data) {
                 if (data.data) {
@@ -2732,129 +2717,71 @@
             $('#dlgEditPayDept').dialog({ height: winheight - 100, width: winwidth - 200, title: '支付部門' });
             $('#dlgEditPayDept').dialog('open').dialog('center');
         }
-        function dlgEditMoney() {
-            $('#dlgEditMoney').dialog({ height: 71, width: 313, title: '交易金額' });
-            $('#dlgEditMoney').dialog('open').dialog('center');
-        }
-        function dlgEditMoney1() {
-            $('#dlgEditMoney1').dialog({ height: 71, width: 313, title: '記帳金額' });
-            $('#dlgEditMoney1').dialog('open').dialog('center');
-        }
         //#endregion
     </script>
     <script>
-        // 監聽器
-        // itemdg編輯_點擊subtd
-        document.addEventListener('click', function (event) {
-            // 檢查點擊的元素是否為 .subtd
-            const target = event.target;
-
-            // 如果目標元素有類別 subtd，並且它的 data-field 屬性值為 "Remark"
-            if (actioncode === 'edit' || actioncode === 'add') {
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'Remark') {
-                    dlgEditRemark();
-                }
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'DCTypeNo') {
-                    dlgEditDCType();
-                }
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'TargetNo') {
-                    dlgEditTarget();
-                }
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'CurrencyNo') {
-                    dlgEditCurrencyNo();
-                }
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'AccProfitId') {
-
-                }
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'AccDeptNo') {
-                    dlgEditAccDept();
-                }
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'PayDeptNo') {
-                    dlgEditPayDept();
-                }
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'Money') {
-                    dlgEditMoney();
-                }
-                if (target.classList.contains('subtd') && target.getAttribute('data-field') === 'Money1') {
-                    dlgEditMoney1();
-                }
-            }
-        });
+        // 監聽器        
         // itemdg編輯_remark按下enter
-        $(document).ready(function () {
-            // 监听 #remarkBox 输入框的 keydown 事件
-            $('#remarkBox').textbox('textbox').bind('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    // 获取输入框的值
-                    var remarkValue = $('#remarkBox').textbox('getValue');
-                    // 更新 itemdg 中的编辑行
-                    itemdg.datagrid('updateRow', {
-                        index: itemdgIndex,
-                        row: {
-                            Remark: remarkValue
-                        }
-                    });
-                    $('#remarkBox').textbox('setValue', '')
-                    $('#dlgEditRemark').dialog('close');
-                    voucherDC();
-                }
-            });
-            $('#moneyBox').textbox('textbox').bind('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    var remarkValue = $('#moneyBox').textbox('getValue');
-                    var rowdata = itemdg.datagrid('getRows')[itemdgIndex];
-                    var Money1 = (rowdata.Rate1 != null) ? math.chain(remarkValue).multiply(rowdata.Rate1).done() : remarkValue
-                    itemdg.datagrid('updateRow', {
-                        index: itemdgIndex,
-                        row: {
-                            Money: remarkValue,
-                            Money1: Money1.toString()
-                        }
-                    });
-                    $('#moneyBox').textbox('setValue', '')
-                    $('#dlgEditMoney').dialog('close');
-                    voucherDC();
-                }
-            });
-            $('#money1Box').textbox('textbox').bind('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    var remarkValue = $('#money1Box').textbox('getValue');
-                    var rowdata = itemdg.datagrid('getRows')[itemdgIndex];
-                    var rate1 = (rowdata.Money != null) ? math.chain(remarkValue).divide(rowdata.Money).done() : 1
-                    itemdg.datagrid('updateRow', {
-                        index: itemdgIndex,
-                        row: {
-                            Rate1: rate1,
-                            Money1: remarkValue.toString()
-                        }
-                    });
-                    $('#money1Box').textbox('setValue', '')
-                    $('#dlgEditMoney1').dialog('close');
-                    voucherDC();
-                }
-            });
+        $(document).ready(function () {  
             $(document).keydown(function (e) {
                 if (e.key === 'Enter') {
-                    // 这里的代码会在按下 Enter 键时执行
-                    console.log('Enter 键被按下了');
+                    if (actioncode =='add' || actioncode =='edit') {
+                        rowCount = itemdg.datagrid('getRows').length;
+                        // 先檢查 itemdg 是否被正確初始化
+                        if (!itemdg) {
+                            console.error('itemdg is not initialized');
+                            return;
+                        }
+                        itemdg.datagrid('appendRow', {
+                            Id: '',
+                            Linage: rowCount + 1,
+                            AccNo: '',
+                            AccNameC: '',
+                            DCTypeNo: '',
+                            CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
+                            CurrencySt: $('.fomCurrencySt').textbox('getValue'),
+                            Rate1: $('.fomRate1').textbox('getValue'),
+                            Money: 0,
+                            TargetId: '',
+                            TargetType: '',
+                            TargetNo: '',
+                            AccProfitId: '',
+                            AccProfitNo: '',
+                            AccDeptId: '',
+                            AccDeptNo: '',
+                            PayDeptId: '',
+                            PayDeptNo: '',
+                            CheckType: '',
+                            CheckId: '',
+                            CheckNo: '',
+                            OffsetNo: '',
+                            SourceDocId: '',
+                            SourceSeqId: '',
+                            SourceDocSubTypeName: '',
+                            InitialProjectId: '',
+                            InitialDocSubType: '',
+                            InitialDocId: '',
+                            InitialDocSubTypeName: '',
+                            ActivityType: '',
+                            Remark: '',
+                            DCTypeNameC: '',
+                            CurrencyNoNote: '',
+                            Money1: 0,
+                            TargetAbbr: '',
+                            AccProfitName: '',
+                            AccDeptName: '',
+                            PayDeptName: '',
+                            CaseBillNo: '',
+                            SourceNo: '',
+                            InitialNo: ''
+                        });
+                        var newIndex = itemdg.datagrid('getRows').length - 1;
+                        itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
+                        itemdgIndex = newIndex;                        
+                    }
                 }
             });
-        });
-        // itemdg編輯_借貸選擇鈕
-        $('#dctpyeC').radiobutton({
-            onChange: function (checked) {
-                if (checked) {
-                    dctypeChecked("C");
-                }
-            }
-        });
-        $('#dctpyeD').radiobutton({
-            onChange: function (checked) {
-                if (checked) {
-                    dctypeChecked("D");
-                }
-            }
-        });
+        });       
     </script>
     <script>
         $(document).ready(function () {

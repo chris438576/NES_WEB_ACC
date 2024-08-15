@@ -4,7 +4,8 @@ using NES_WEB_ACC.Modules;
 using NES_WEB_ACC.Report;
 using NES_WEB_ACC.Report.RDLC;
 using NES_WEB_ACC.ViewModels;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq; 
+using Newtonsoft.Json; 
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -41,8 +42,10 @@ namespace NES_WEB_ACC.Controllers
                 DeptName = (string)Session["DeptName"],
                 CompNo = (string)Session["CompNo"],
                 CurrencySt = (string)Session["CurrencySt"]
-            };
-            
+            };          
+            var data = GetEditTableCode3("0");
+            ViewData["CurrencyNo"] = data.Data; // 存储 JSON 数据
+
             ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             ViewBag.CurrentCulture = currentCulture;
@@ -249,30 +252,31 @@ namespace NES_WEB_ACC.Controllers
         /// 編輯_幣別&匯率
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetEditTableCode3()
+        public JsonResult GetEditTableCode3(string askfrom)
         {
             string currencyst = (string)Session["CurrencySt"];
             string sql = @"
+               --依當前日期取的平均匯率
                 select a.CurrencyNo , a.Rate
                 from NES_WEB_ACC.dbo.ACC_Rate as a
-                    inner join (
-	                    select  
-	                    [CurrencyNo]
-	                    ,[CurrencySt]
-	                    ,MAX(ExchangeDate) as ExchangeDate
-	                    ,MAX(Rate) as Rate
-                    from (
+                    inner join (	                 
+					select * from (
 	                    select 
 		                    CurrencyNo
 		                    ,CurrencySt
-		                    ,CONCAT([ExchangeYear], '/', [ExchangeMonth],'/',  case 
+		                    ,CONCAT([ExchangeYear], '/',  RIGHT('0' + CAST([ExchangeMonth] AS varchar(2)), 2),'/',  case 
 			                    when ExchangeMonthFlag = 'B' then  '01' 
 			                    when ExchangeMonthFlag = 'M' then '11' 
 			                    when ExchangeMonthFlag = 'E' then '21' 
 		                    end ) AS ExchangeDate
 		                    ,Rate
-		                    from NES_WEB_ACC.dbo.ACC_Rate 
-	                    ) as a group by a.CurrencyNo,a.CurrencySt
+						from NES_WEB_ACC.dbo.ACC_Rate) as a 
+						where ExchangeDate = 
+							CASE 
+								WHEN DAY(GETDATE()) BETWEEN 1 AND 10 THEN CONVERT(varchar(100), DATEADD(day, 1 - DAY(GETDATE()), GETDATE()), 111)  -- 1號
+								WHEN DAY(GETDATE()) BETWEEN 11 AND 20 THEN CONVERT(varchar(100), DATEADD(day, 11 - DAY(GETDATE()), GETDATE()), 111) -- 11號
+								ELSE CONVERT(varchar(100), DATEADD(day, 21 - DAY(GETDATE()), GETDATE()), 111) -- 21號
+							END	               
                     ) as b on a.CurrencyNo = b.CurrencyNo
 	                    and a.CurrencySt = b.CurrencySt
 	                    and a.ExchangeYear = LEFT(b.[ExchangeDate], CHARINDEX('/', b.[ExchangeDate]) - 1)
@@ -290,8 +294,15 @@ namespace NES_WEB_ACC.Controllers
             {
                 resultdata = conn.Query<ACC_Rate>(sql, param).ToList();
             }
-
-            return Json(new { success = true, code = "OK", data = resultdata }, JsonRequestBehavior.AllowGet);
+            if (askfrom == "0")
+            {
+                return Json(resultdata, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true, code = "OK", data = resultdata }, JsonRequestBehavior.AllowGet);
+            }
+            
         }
         /// <summary>
         /// 編輯_表身資訊_對象編號
@@ -711,7 +722,7 @@ namespace NES_WEB_ACC.Controllers
                             AccNameMX = accTitle.AccNameMX,
                             Remark = item.Remark,
                             DCTypeNo = item.DCTypeNo,
-                            DCTypeNameC = item.DCTypeNameC,
+                            DCTypeNameC = (item.DCTypeNo == "D") ? "借方" : "貸方",
                             DCTypeNameMX = (item.DCTypeNo == "D") ? "Débito" : "Crédito",
                             CurrencyNo = item.CurrencyNo,
                             CurrencySt = item.CurrencySt,
