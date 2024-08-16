@@ -174,7 +174,7 @@
     <comment>傳票輸入作業\左側列表[財務報表]</comment>
   </data>
   <data name="FlowChart" xml:space="preserve">
-    <value>Work Flow</value>
+    <value>Workflow</value>
     <comment>_Layouyt:[作業流程圖]</comment>
   </data>
   <data name="lblMenuLanguage" xml:space="preserve">
@@ -214,7 +214,7 @@
     <comment>_Layouyt:[傳票作業]</comment>
   </data>
   <data name="Instrument" xml:space="preserve">
-    <value>Instrument</value>
+    <value>Dashboard</value>
   </data>
   <data name="AccGroupNo" xml:space="preserve">
     <value>Acc Group No</value>
@@ -229,7 +229,7 @@
     <value>Acc No By Name</value>
   </data>
   <data name="DCTypeNo" xml:space="preserve">
-    <value>DC Type No</value>
+    <value>DC Type </value>
   </data>
   <data name="DCTypeNameC" xml:space="preserve">
     <value>DC Type Name</value>
@@ -316,18 +316,150 @@
     <value>Operation code error</value>
   </data>
   <data name="MsgSes1" xml:space="preserve">
-    <value>Successfully added:</value>
+    <value>Successfully added：</value>
   </data>
   <data name="MsgSes2" xml:space="preserve">
-    <value>Successfully edited:</value>
+    <value>Successfully edited：</value>
   </data>
   <data name="MsgSes3" xml:space="preserve">
-    <value>Successfully enabled:</value>
+    <value>Successfully enabled：</value>
   </data>
   <data name="MsgSes4" xml:space="preserve">
-    <value>Successfully disable:</value>
+    <value>Successfully disable：</value>
   </data>
   <data name="RateSet" xml:space="preserve">
     <value>Rate Setting</value>
+  </data>
+  <data name="Linage" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="CurrencyNo" xml:space="preserve">
+    <value>Transaction currency</value>
+  </data>
+  <data name="CurrencySt" xml:space="preserve">
+    <value>Accounting currency</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="AccName" xml:space="preserve">
+    <value>ACC Name</value>
+  </data>
+  <data name="Aamount" xml:space="preserve">
+    <value>Accounting amount</value>
+  </data>
+  <data name="Tamount" xml:space="preserve">
+    <value>Transaction amount</value>
+  </data>
+  <data name="TargetType" xml:space="preserve">
+    <value>Target type</value>
+  </data>
+  <data name="TargetNo" xml:space="preserve">
+    <value>Target No</value>
+  </data>
+  <data name="TargetAbbr" xml:space="preserve">
+    <value>Target Name</value>
+  </data>
+  <data name="AccProfitNo" xml:space="preserve">
+    <value>Accounting department No</value>
+  </data>
+  <data name="AccProfitName" xml:space="preserve">
+    <value>Accounting department name</value>
+  </data>
+  <data name="AccDeptNo" xml:space="preserve">
+    <value>Cost center No</value>
+  </data>
+  <data name="AccDeptName" xml:space="preserve">
+    <value>Cost center name</value>
+  </data>
+  <data name="PayDeptNo" xml:space="preserve">
+    <value>Payment department No</value>
+  </data>
+  <data name="PayDeptName" xml:space="preserve">
+    <value>Payment department name</value>
+  </data>
+  <data name="CheckNo" xml:space="preserve">
+    <value>Bill No</value>
+  </data>
+  <data name="OffsetNo" xml:space="preserve">
+    <value>Offset No</value>
+  </data>
+  <data name="CaseBillNo" xml:space="preserve">
+    <value>Project No</value>
+  </data>
+  <data name="SourceDocSubTypeName" xml:space="preserve">
+    <value>Source Bill Type</value>
+  </data>
+  <data name="SourceNo" xml:space="preserve">
+    <value>Source Bill No</value>
+  </data>
+  <data name="InitialDocSubTypeName" xml:space="preserve">
+    <value>Initial Bill Type</value>
+  </data>
+  <data name="InitialNo" xml:space="preserve">
+    <value>Initial Bill No</value>
+  </data>
+  <data name="ActivityType" xml:space="preserve">
+    <value>Activity Type</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>First</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="AddPrevious" xml:space="preserve">
+    <value>Add Previous</value>
+  </data>
+  <data name="AddNext" xml:space="preserve">
+    <value>Add Next</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="MsgSes5" xml:space="preserve">
+    <value>Successfully sent：</value>
   </data>
 </root>

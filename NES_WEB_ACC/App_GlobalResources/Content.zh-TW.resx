@@ -186,7 +186,7 @@
     <comment>_Layouyt:[權限設定]</comment>
   </data>
   <data name="Remark" xml:space="preserve">
-    <value>傳票摘要</value>
+    <value>備註</value>
     <comment>傳票輸入作業\左側列表[傳票摘要]</comment>
   </data>
   <data name="SystemManagementRoles" xml:space="preserve">
@@ -238,7 +238,7 @@
     <value>科目類別</value>
   </data>
   <data name="AccNo" xml:space="preserve">
-    <value>會計科目</value>
+    <value>科目編號</value>
   </data>
   <data name="AccNameC" xml:space="preserve">
     <value>會科名稱(中文)</value>
@@ -286,10 +286,10 @@
     <value>傳票檢核作業</value>
   </data>
   <data name="AccNameE" xml:space="preserve">
-    <value>會計科目(英文)</value>
+    <value>會計名稱(英文)</value>
   </data>
   <data name="AccNameMX" xml:space="preserve">
-    <value>會計科目(西語)</value>
+    <value>會計名稱(西語)</value>
   </data>
   <data name="MsgSelectRow1" xml:space="preserve">
     <value>請先選擇需要刪除的行！</value>
@@ -329,5 +329,137 @@
   </data>
   <data name="RateSet" xml:space="preserve">
     <value>匯率設定</value>
+  </data>
+  <data name="Linage" xml:space="preserve">
+    <value>行號</value>
+  </data>
+  <data name="CurrencyNo" xml:space="preserve">
+    <value>交易幣別</value>
+  </data>
+  <data name="CurrencySt" xml:space="preserve">
+    <value>記帳幣別</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>匯率</value>
+  </data>
+  <data name="AccName" xml:space="preserve">
+    <value>會科名稱</value>
+  </data>
+  <data name="Aamount" xml:space="preserve">
+    <value>記帳金額</value>
+  </data>
+  <data name="Tamount" xml:space="preserve">
+    <value>交易金額</value>
+  </data>
+  <data name="TargetType" xml:space="preserve">
+    <value>對象別</value>
+  </data>
+  <data name="TargetNo" xml:space="preserve">
+    <value>對象編號</value>
+  </data>
+  <data name="TargetAbbr" xml:space="preserve">
+    <value>對象名稱</value>
+  </data>
+  <data name="AccProfitNo" xml:space="preserve">
+    <value>會計部門編號</value>
+  </data>
+  <data name="AccProfitName" xml:space="preserve">
+    <value>會計部門名稱</value>
+  </data>
+  <data name="AccDeptNo" xml:space="preserve">
+    <value>成本中心編號</value>
+  </data>
+  <data name="AccDeptName" xml:space="preserve">
+    <value>成本中心名稱</value>
+  </data>
+  <data name="PayDeptNo" xml:space="preserve">
+    <value>支付部門編號</value>
+  </data>
+  <data name="PayDeptName" xml:space="preserve">
+    <value>支付部門名稱</value>
+  </data>
+  <data name="CheckNo" xml:space="preserve">
+    <value>票據編號</value>
+  </data>
+  <data name="OffsetNo" xml:space="preserve">
+    <value>立沖編號</value>
+  </data>
+  <data name="CaseBillNo" xml:space="preserve">
+    <value>專案編號</value>
+  </data>
+  <data name="SourceDocSubTypeName" xml:space="preserve">
+    <value>來源單別</value>
+  </data>
+  <data name="SourceNo" xml:space="preserve">
+    <value>來源單號</value>
+  </data>
+  <data name="InitialDocSubTypeName" xml:space="preserve">
+    <value>原始單別</value>
+  </data>
+  <data name="InitialNo" xml:space="preserve">
+    <value>原始單號</value>
+  </data>
+  <data name="ActivityType" xml:space="preserve">
+    <value>活動類別</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>首筆</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>前筆</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>後筆</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>尾筆</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>查詢</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>詳細資料</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>重新整理</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>審核</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>覆核</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>結案</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>取消覆核</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>退件</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>報表</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>已結案</value>
+  </data>
+  <data name="AddPrevious" xml:space="preserve">
+    <value>新增前一列</value>
+  </data>
+  <data name="AddNext" xml:space="preserve">
+    <value>新增後一列</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="MsgSes5" xml:space="preserve">
+    <value>成功送件：</value>
   </data>
 </root>

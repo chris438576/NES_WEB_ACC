@@ -35,7 +35,7 @@ namespace NES_WEB_ACC.ViewModels
         public string WebDocId { get; set; }
         public string Linage { get; set; }
         public string AccNo { get; set; }
-        public string AccNameC { get; set; }
+        public string AccName { get; set; }
         public string DCTypeNo { get; set; }
         public string DCTypeNameC { get; set; }
         public string CurrencyNo { get; set; }
@@ -73,9 +73,19 @@ namespace NES_WEB_ACC.ViewModels
         public string Remark { get; set; }
         public string CaseBillNo { get; set; }
     }
+    public class DcData
+    {
+        public decimal Money11 { get; set; }
+        public decimal Money12 { get; set; }
+        public decimal Money21 { get; set; }
+        public decimal Money22 { get; set; }
+        public decimal Money1Dc { get; set; }
+        public decimal Money2Dc { get; set; }
+    }
     public class VoucherDataViewModel
     {
         public MainData Maindata { get; set; }
         public List<InfoData> Infodata { get; set; }
+        public DcData Dcdata { get; set; }
     }
 }

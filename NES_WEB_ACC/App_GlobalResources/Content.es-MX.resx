@@ -138,7 +138,7 @@
     <comment>_Layouyt\會計設定:[會計系統基本設定]</comment>
   </data>
   <data name="AJE" xml:space="preserve">
-    <value>AJE-mx</value>
+    <value>AJE</value>
     <comment>_Layouyt:[調整分錄]</comment>
   </data>
   <data name="BillDate" xml:space="preserve">
@@ -170,11 +170,11 @@
     <comment>_Layouyt\會計設定:[權益科目類別設定]</comment>
   </data>
   <data name="FinanceReport" xml:space="preserve">
-    <value>Finance Report-mx</value>
+    <value>Informe financiero</value>
     <comment>傳票輸入作業\左側列表[財務報表]</comment>
   </data>
   <data name="FlowChart" xml:space="preserve">
-    <value>Work Flow-mx</value>
+    <value>Flujo de trabajo</value>
     <comment>_Layouyt:[作業流程圖]</comment>
   </data>
   <data name="lblMenuLanguage" xml:space="preserve">
@@ -186,7 +186,7 @@
     <comment>_Layouyt:[權限設定]</comment>
   </data>
   <data name="Remark" xml:space="preserve">
-    <value>Remark-mx</value>
+    <value>Observación</value>
     <comment>傳票輸入作業\左側列表[傳票摘要]</comment>
   </data>
   <data name="SystemManagementRoles" xml:space="preserve">
@@ -214,7 +214,7 @@
     <comment>_Layouyt:[傳票作業]</comment>
   </data>
   <data name="Instrument" xml:space="preserve">
-    <value>Instrument-mx</value>
+    <value>Panel</value>
   </data>
   <data name="AccGroupNo" xml:space="preserve">
     <value>Acc Group No</value>
@@ -229,7 +229,7 @@
     <value>Acc No By Name</value>
   </data>
   <data name="DCTypeNo" xml:space="preserve">
-    <value>DC Type No</value>
+    <value>DC Type </value>
   </data>
   <data name="DCTypeNameC" xml:space="preserve">
     <value>DC Type Name</value>
@@ -316,18 +316,150 @@
     <value>Error de código de operación</value>
   </data>
   <data name="MsgSes1" xml:space="preserve">
-    <value>Añadida con éxito:</value>
+    <value>Añadida con éxito：</value>
   </data>
   <data name="MsgSes2" xml:space="preserve">
-    <value>Editado exitosamente</value>
+    <value>Editado exitosamente：</value>
   </data>
   <data name="MsgSes3" xml:space="preserve">
-    <value>Habilitado exitosamente:</value>
+    <value>Habilitado exitosamente：</value>
   </data>
   <data name="MsgSes4" xml:space="preserve">
-    <value>Deshabilitar exitosamente:</value>
+    <value>Deshabilitar exitosamente：</value>
   </data>
   <data name="RateSet" xml:space="preserve">
-    <value>Ajuste de la tasa</value>
+    <value>Fijacion del tipo de cambio</value>
+  </data>
+  <data name="Linage" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="CurrencyNo" xml:space="preserve">
+    <value>Moneda de transacción</value>
+  </data>
+  <data name="CurrencySt" xml:space="preserve">
+    <value>Moneda contable</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>tipo de cambio</value>
+  </data>
+  <data name="AccName" xml:space="preserve">
+    <value>Nombre ACC</value>
+  </data>
+  <data name="Aamount" xml:space="preserve">
+    <value>Monto contable</value>
+  </data>
+  <data name="Tamount" xml:space="preserve">
+    <value>Monto de la transacción</value>
+  </data>
+  <data name="TargetType" xml:space="preserve">
+    <value>Tipo de objetivo</value>
+  </data>
+  <data name="TargetNo" xml:space="preserve">
+    <value>Objetivo n.º</value>
+  </data>
+  <data name="TargetAbbr" xml:space="preserve">
+    <value>Nombre del objetivo</value>
+  </data>
+  <data name="AccProfitNo" xml:space="preserve">
+    <value>número del departamento de contabilidad</value>
+  </data>
+  <data name="AccProfitName" xml:space="preserve">
+    <value>nombre del departamento de contabilidad</value>
+  </data>
+  <data name="AccDeptNo" xml:space="preserve">
+    <value>Número del centro de costos</value>
+  </data>
+  <data name="AccDeptName" xml:space="preserve">
+    <value>Nombre del centro de costos</value>
+  </data>
+  <data name="PayDeptNo" xml:space="preserve">
+    <value>Número de departamento de pago</value>
+  </data>
+  <data name="PayDeptName" xml:space="preserve">
+    <value>Nombre del departamento de pago</value>
+  </data>
+  <data name="CheckNo" xml:space="preserve">
+    <value>Número de factura</value>
+  </data>
+  <data name="OffsetNo" xml:space="preserve">
+    <value>Número de Compensar</value>
+  </data>
+  <data name="CaseBillNo" xml:space="preserve">
+    <value>Número de proyecto</value>
+  </data>
+  <data name="SourceDocSubTypeName" xml:space="preserve">
+    <value>Fuente Tipo de factura</value>
+  </data>
+  <data name="SourceNo" xml:space="preserve">
+    <value>Fuente Bill No</value>
+  </data>
+  <data name="InitialDocSubTypeName" xml:space="preserve">
+    <value>Tipo de factura inicial</value>
+  </data>
+  <data name="InitialNo" xml:space="preserve">
+    <value>Factura inicial n.º</value>
+  </data>
+  <data name="ActivityType" xml:space="preserve">
+    <value>Tipo de actividad</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>Primero</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previa</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Próxima</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Última</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Ahorrar</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detalle</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refrescar</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>Controlar</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>Descubrir</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Rechazar</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Informe</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Cerrada</value>
+  </data>
+  <data name="AddPrevious" xml:space="preserve">
+    <value>Agregar anterior</value>
+  </data>
+  <data name="AddNext" xml:space="preserve">
+    <value>Añadir siguiente</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="MsgSes5" xml:space="preserve">
+    <value>Enviado exitosamente：</value>
   </data>
 </root>

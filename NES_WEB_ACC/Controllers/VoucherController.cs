@@ -17,6 +17,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Web.Mvc;
+using NES_WEB_ACC.ViewModels.ForM;
 
 namespace NES_WEB_ACC.Controllers
 {
@@ -44,7 +45,7 @@ namespace NES_WEB_ACC.Controllers
                 CurrencySt = (string)Session["CurrencySt"]
             };          
             var data = GetEditTableCode3("0");
-            ViewData["CurrencyNo"] = data.Data; // 存储 JSON 数据
+            ViewData["CurrencyNo"] = data.Data; 
 
             ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
@@ -55,8 +56,9 @@ namespace NES_WEB_ACC.Controllers
         /// 介面_主管審核
         /// </summary>
         /// <returns></returns>
-        public ActionResult VoucherCheck(string msg)
-        {          
+        public ActionResult VoucherCheck(string billno, string msg)
+        {
+            ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View();
         }        
@@ -64,8 +66,9 @@ namespace NES_WEB_ACC.Controllers
         /// 介面_傳票結案
         /// </summary>
         /// <returns></returns>
-        public ActionResult VoucherClose(string msg)
-        {           
+        public ActionResult VoucherClose(string billno, string msg)
+        {
+            ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View();
         }
@@ -171,13 +174,29 @@ namespace NES_WEB_ACC.Controllers
             {              
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
-            string sql = @"select * from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
+            string sql;
+            switch (currentCulture)
+            {
+                case "en":
+                    sql = @"select *,AccNameE as AccName from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
+                    break;
+                case "zh-TW":
+                    sql = @"select *,AccNameC as AccName from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
+                    break;
+                case "es-MX":
+                    sql = @"select *,AccNameMX as AccName from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
+                    break;
+                default:
+                    sql = @"select *,AccNameE as AccName from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
+                    break;
+            }
+           
             var param = new { webdocid };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<ACC_VoucherDetail> customerdata = conn.Query<ACC_VoucherDetail>(sql, param).ToList();
+                    List<ACC_VoucherDetail_ViewModel> customerdata = conn.Query<ACC_VoucherDetail_ViewModel>(sql, param).ToList();
                     if (customerdata.Count > 0)
                     {                       
                         return Json(new { success = true, code = "OK" , data = customerdata }, JsonRequestBehavior.AllowGet);
@@ -202,20 +221,57 @@ namespace NES_WEB_ACC.Controllers
             string compid = Session["CompId"].ToString();
             string compno = Session["CompNo"].ToString();
             string compabbr = Session["CompAbbr"].ToString();
-            string sql = @"
-                select AccNo,AccNameC,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
-                from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX 
-                where 1=1
-                    and CompId = @compid 
-                    and CompNo = @compno
-                    and CompAbbr = @compabbr
-            ";
+            string sql;
+            switch (currentCulture)
+            {
+                case "en":
+                    sql = @"
+                        select AccNo,AccNameE as AccName ,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
+                        from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX 
+                        where 1=1
+                            and CompId = @compid 
+                            and CompNo = @compno
+                            and CompAbbr = @compabbr
+                    ";
+                    break;
+                case "zh-TW":
+                    sql = @"
+                        select AccNo,AccNameC as AccName ,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
+                        from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX 
+                        where 1=1
+                            and CompId = @compid 
+                            and CompNo = @compno
+                            and CompAbbr = @compabbr
+                    ";
+                    break;
+                case "es-MX":
+                    sql = @"
+                        select AccNo,AccNameMX as AccName ,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
+                        from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX 
+                        where 1=1
+                            and CompId = @compid 
+                            and CompNo = @compno
+                            and CompAbbr = @compabbr
+                    ";
+                    break;
+                default:
+                    sql = @"
+                        select AccNo,AccNameE as AccName ,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
+                        from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX 
+                        where 1=1
+                            and CompId = @compid 
+                            and CompNo = @compno
+                            and CompAbbr = @compabbr
+                    ";
+                    break;
+            }
+            
             var param = new { compid, compno,compabbr };
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    List<ACC_AccTitleNo_MX> customerdata = conn.Query<ACC_AccTitleNo_MX>(sql, param).ToList();
+                    List<ACC_AccTitleNo_MX_ViewModel> customerdata = conn.Query<ACC_AccTitleNo_MX_ViewModel>(sql, param).ToList();
                     if (customerdata.Count > 0)
                     {
                         return Json(new { success = true, code = "OK" , data = customerdata }, JsonRequestBehavior.AllowGet);
@@ -227,8 +283,7 @@ namespace NES_WEB_ACC.Controllers
                 }
             }
             catch (Exception e)
-            {
-               
+            {               
                 return Json(new { success = false, code = "C0004" , err = e }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -628,6 +683,12 @@ namespace NES_WEB_ACC.Controllers
                     CurrencySt = data.Maindata.CurrencySt,
                     Rate1 = Convert.ToDecimal(data.Maindata.Rate1),
                     Rate2 = Convert.ToDecimal(data.Maindata.Rate1),
+                    Money11 = data.Dcdata.Money11,    
+                    Money12 = data.Dcdata.Money12,
+                    Money21 = data.Dcdata.Money21,
+                    Money22 = data.Dcdata.Money22,
+                    Money1Dc = data.Dcdata.Money1Dc,
+                    Money2Dc = data.Dcdata.Money2Dc,
                     CreateDate = System.DateTime.Now,
                     CreateBy= Session["EmpNo"].ToString(),
                     BillStatus = 0,
@@ -696,10 +757,17 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
             try
-            {               
+            {       
                 var existdata = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == guidId);
                 if (existdata != null)
                 {
+                    existdata.Money11 = data.Dcdata.Money11;
+                    existdata.Money12 = data.Dcdata.Money12;
+                    existdata.Money21 = data.Dcdata.Money21;
+                    existdata.Money22 = data.Dcdata.Money22;
+                    existdata.Money1Dc = data.Dcdata.Money1Dc;
+                    existdata.Money2Dc = data.Dcdata.Money2Dc;
+
                     var itemToDelete = _dbContext.ACC_VoucherDetail.Where(x => x.WebDocId == existdata.WebId).ToList();                                       
                     foreach (var item in itemToDelete)
                     {
@@ -734,7 +802,8 @@ namespace NES_WEB_ACC.Controllers
                             AccProfitId = item.AccProfitId,
                             AccProfitNo = item.AccProfitNo,
                             AccProfitName = item.AccProfitName,
-
+                            CreateDate = System.DateTime.Now,
+                            CreateBy = Session["EmpNo"].ToString(),
                         };
                         _dbContext.ACC_VoucherDetail.Add(infoData);
                     }

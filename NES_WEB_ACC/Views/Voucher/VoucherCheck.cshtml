@@ -634,52 +634,74 @@
             itemdg.datagrid({
                 singleSelect: true,
                 striped: true,
-                columns: [
-                    [
-                        { field: 'Id', title: 'Id', hidden: true, type: 'text', rowspan: 2 },
-                        { field: 'Linage', title: '行號', hidden: false, type: 'string', rowspan: 2 },
-                        { field: 'AccNo', title: '科目編號', hidden: false, type: 'string', rowspan: 2},
-                        { field: 'AccNameC', title: '科目名稱', hidden: false, type: 'string' }, //format1
-                        { field: 'DCTypeNo', title: '借貸方向', hidden: false, type: 'string' }, //format2
-                        { field: 'CurrencyNo', title: '交易幣別', hidden: false, type: 'string' },//format3
-                        { field: 'Rate1', title: '匯率', hidden: false, type: 'string', rowspan: 2},
-                        { field: 'Money', title: '交易金額', hidden: false, type: 'number' },//format4
-                        { field: 'TargetId', title: '對象別Id', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'TargetType', title: '對象別', hidden: false, type: 'string', rowspan: 2, formatter: formatTargetType},
-                        { field: 'TargetNo', title: '對象編號', hidden: false, type: 'string' },//format5
-                        { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'AccProfitNo', title: '會計部門編號', hidden: false, type: 'string' },//format6
-                        { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'AccDeptNo', title: '成本中心編號', hidden: false, type: 'string' }, //format7
-                        { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'PayDeptNo', title: '支付部門編號', hidden: false, type: 'string' },//format8
-                        { field: 'CheckType', title: '票據Type', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'CheckId', title: '票據Id', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'CheckNo', title: '票據編號', hidden: false, type: 'string', rowspan: 2,},
-                        { field: 'OffsetNo', title: '立沖編號', hidden: false, type: 'string' },//format9
-                        { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'SourceDocSubTypeName', title: '來源單別', hidden: false, type: 'string' },//format10
-                        { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string', rowspan: 2, },
-                        { field: 'InitialDocSubTypeName', title: '原始單別', hidden: false, type: 'string' },//format11
-                        { field: 'ActivityType', title: '活動類別', hidden: false, type: 'string', rowspan: 2},
-                    ],
-                    [
-                        { field: 'Remark', title: '摘要說明', type: 'string', formatter: format1 }, //format1
-                        { field: 'DCTypeNameC', title: '借貸名稱', type: 'string', formatter: format2 },//format2
-                        { field: 'CurrencySt', title: '記帳幣別', type: 'string', formatter: format3 },//format3
-                        { field: 'Money1', title: '記帳金額', hidden: false, type: 'number', formatter: format4 },//format4
-                        { field: 'TargetAbbr', title: '對象名稱', hidden: false, type: 'string', formatter: format5 },//format5
-                        { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string', formatter: format6 },//format6
-                        { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string', formatter: format7 },//format7
-                        { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string', formatter: format8 },//format8
-                        { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string', formatter: format9 },//format9
-                        { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string', formatter: format10 },//format10
-                        { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string', formatter: format11 },//format11
-                    ]
-                ],
+                fitColumns: true,
+                columns: [[
+                    { field: 'WebId', title: 'WebId', hidden: true, type: 'text' },
+                    { field: 'Id', title: 'Id', hidden: true, type: 'text' },
+                    { field: 'Linage', title: '行號', align: 'center', hidden: false, type: 'string' },
+                    {field: 'AccNo', title: '科目編號', width: '10%', hidden: false, type: 'string' },
+                    { field: 'AccNameC', title: '科目名稱', width: '20%', hidden: false, type: 'string' },
+                    {
+                        field: 'Remark', title: '摘要說明', width: '20%', type: 'string',
+                        editor: {
+                            type: 'textbox'
+                        }
+                    },
+                    {
+                        field: 'DCTypeNo', title: '借貸方向', align: 'center', hidden: false, type: 'string',
+                        editor: {
+                            type: 'combobox',
+                            options: {
+                                valueField: 'value',       // 對應的值字段
+                                textField: 'label',        // 顯示的文本字段
+                                data: [
+                                    { label: 'D', value: 'D' },
+                                    { label: 'C', value: 'C' }
+                                ],
+                                panelHeight: 'auto'
+                            }
+                        }
+                    },
+                    { field: 'DCTypeNameC', title: '借貸名稱', width: '8%', hidden: true, type: 'string' },
+                    { field: 'CurrencyNo', title: '交易幣別', width: '8%', align: 'center', hidden: false, type: 'string', },
+                    { field: 'Money', title: '交易金額', width: '8%', align: 'right', hidden: false, type: 'number', },
+                    { field: 'Rate1', title: '匯率', width: '5%', align: 'center', hidden: false, type: 'number', },
+                    { field: 'CurrencySt', title: '記帳幣別', width: '8%', align: 'center', type: 'string' },
+                    { field: 'Money1', title: '記帳金額', width: '8%', align: 'right', hidden: false, type: 'number', },
+                    { field: 'TargetId', title: '對象別Id', width: '10%', hidden: true, type: 'string', },
+                    { field: 'TargetType', title: '對象別', width: '5%', hidden: false, type: 'string', formatter: formatTargetType, },
+                    { field: 'TargetNo', title: '對象編號', width: '5%', hidden: false, type: 'string' },
+                    { field: 'TargetAbbr', title: '對象名稱', width: '8%', hidden: false, type: 'string' },
+                    { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string' },
+                    { field: 'AccProfitNo', title: '會計部門編號', hidden: false, type: 'string' },
+                    { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string' },
+                    { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string' },
+                    { field: 'AccDeptNo', title: '成本中心編號', hidden: false, type: 'string' }, 
+                    { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string' },
+                    { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string' },
+                    { field: 'PayDeptNo', title: '支付部門編號', hidden: false, type: 'string' },
+                    { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string' },
+                    { field: 'CheckType', title: '票據Type', hidden: true, type: 'string' },
+                    { field: 'CheckId', title: '票據Id', hidden: true, type: 'string' },
+                    {
+                        field: 'CheckNo', title: '票據編號', hidden: false, type: 'string',
+                        editor: {
+                            type: 'text',
+                        }
+                    },
+                    { field: 'OffsetNo', title: '立沖編號', hidden: false, type: 'string' },
+                    { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string' },
+                    { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string' },
+                    { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string' },
+                    { field: 'SourceDocSubTypeName', title: '來源單別', hidden: false, type: 'string' },
+                    { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string' },
+                    { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string' },
+                    { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string' },
+                    { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string' },
+                    { field: 'InitialDocSubTypeName', title: '原始單別', hidden: false, type: 'string' },
+                    { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string' },
+                    { field: 'ActivityType', title: '活動類別', hidden: false, type: 'string', },
+                ]],
                 onClickRow: function (index, row) {
                     if (actioncode === 'edit' || actioncode === 'add') {
                         itemdg.datagrid('beginEdit', index); //啟用編輯
@@ -704,6 +726,7 @@
                         voucherDC();
                         // 重置當前的編輯行索引
                         itemdgIndex = undefined;
+
                     }
                 },
                 onCancelEdit: function (index, row) {
@@ -795,7 +818,7 @@
                         actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=check&webid='+row.WebId;
                         doajax("POST", actionurl, null, function (result) {
                             if (result.success) {                                
-                                pageReload('已審核');
+                                pageReload(result.data, 'Check');
                             } else {
                                 $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                 if (result.code == 'C0004') {
@@ -814,7 +837,7 @@
                         actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=reject&webid=' + row.WebId;
                         doajax("POST", actionurl, null, function (result) {
                             if (result.success) {                               
-                                pageReload('已退件');
+                                pageReload(result.data,'Reject');
                             } else {
                                 $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                 if (result.code == 'C0004') {
@@ -951,8 +974,9 @@
         }
 
         // PageReload
-        function pageReload(msg) {
-            var url = new URL(window.location.href);           
+        function pageReload(billno, msg) {
+            var url = new URL(window.location.href);
+            url.searchParams.set('billno', billno);
             url.searchParams.set('msg', msg);
             window.location.href = url.toString();
         }
@@ -972,95 +996,7 @@
 
             return `${year}/${month}/${day}`;
         }
-        // itemdg多表頭Function
-        function format1(value, row, index) {
-            const fmtAccName = (row.AccNameC == null) ? '' : row.AccNameC;
-            const fmtRemark = (row.Remark == null) ? '' : row.Remark;
-            const accNameCDiv = `<div class="subtd readonly-text" value="${fmtAccName}" data-index="${index}" data-field="AccNameC">${fmtAccName}</div>`;
-            const remarkDiv = `<div class="subtd readonly-text" value="${fmtRemark}" data-index="${index}" data-field="Remark">${fmtRemark}</div>`;
-
-            return `${accNameCDiv}${remarkDiv}`;
-        }
-        function format2(value, row, index) {
-            const fmtTypeNo = (row.DCTypeNo == null) ? '' : row.DCTypeNo;
-            const fmtTypeNameC = (row.DCTypeNameC == null) ? '' : row.DCTypeNameC;
-            const dcTypeNoDiv = `<div class="subtd" value="${fmtTypeNo}" data-index="${index}" data-field="DCTypeNo">${fmtTypeNo}</div>`;
-            const dcTypeNameCDiv = `<div class="subtd" value="${fmtTypeNameC}" data-index="${index}" data-field="DCTypeNameC">${fmtTypeNameC}</div>`;
-
-            return `${dcTypeNoDiv}${dcTypeNameCDiv}`;
-        }
-        function format3(value, row, index) {
-            const fmtCurrencyNo = (row.CurrencyNo == null) ? '' : row.CurrencyNo;
-            const fmtCurrencySt = (row.CurrencySt == null) ? '' : row.CurrencySt;
-            const currencyNoDiv = `<div class="subtd readonly-text" value="${fmtCurrencyNo}" data-index="${index}" data-field="CurrencyNo">${fmtCurrencyNo}</div>`;
-            const currencyStDiv = `<div class="subtd readonly-text" value="${fmtCurrencySt}" data-index="${index}" data-field="CurrencySt">${fmtCurrencySt}</div>`;
-
-            return `${currencyNoDiv}${currencyStDiv}`;
-        }
-        function format4(value, row, index) {
-            const fmtMoney = (row.Money == null) ? '' : row.Money;
-            const fmtMoney1 = (row.Money1 == null) ? '' : row.Money1;
-            const moneyDiv = `<div class="subtd readonly-text" value="${fmtMoney}" data-index="${index}" data-field="Money">${fmtMoney}</div>`;
-            const money1Div = `<div class="subtd readonly-text" value="${fmtMoney1}" data-index="${index}" data-field="Money1">${fmtMoney1}</div>`;
-
-            return `${moneyDiv}${money1Div}`;
-        }
-        function format5(value, row, index) {
-            const fmtTargetNo = (row.TargetNo == null) ? '' : row.TargetNo;
-            const fmtTargetAbbr = (row.TargetAbbr == null) ? '' : row.TargetAbbr;
-            const targetNoDiv = `<div class="subtd readonly-text" value="${fmtTargetNo}" data-index="${index}" data-field="TargetNo">${fmtTargetNo}</div>`;
-            const targetAbbrDiv = `<div class="subtd readonly-text" value="${fmtTargetAbbr}" data-index="${index}" data-field="TargetAbbr">${fmtTargetAbbr}</div>`;
-
-            return `${targetNoDiv}${targetAbbrDiv}`;
-        }
-        function format6(value, row, index) {
-            const fmtAccProfitNo = (row.AccProfitNo == null) ? '' : row.AccProfitNo;
-            const fmtAccProfitName = (row.AccProfitName == null) ? '' : row.AccProfitName;
-            const accProfitNoDiv = `<div class="subtd readonly-text" value="${fmtAccProfitNo}" data-index="${index}" data-field="AccProfitNo">${fmtAccProfitNo}</div>`;
-            const accProfitNameDiv = `<div class="subtd readonly-text" value="${fmtAccProfitName}" data-index="${index}" data-field="AccProfitName">${fmtAccProfitName}</div>`;
-
-            return `${accProfitNoDiv}${accProfitNameDiv}`;
-        }
-        function format7(value, row, index) {
-            const fmtAccDeptNo = (row.AccDeptNo == null) ? '' : row.AccDeptNo;
-            const fmtAccDeptName = (row.AccDeptName == null) ? '' : row.AccDeptName;
-            const accDeptNoDiv = `<div class="subtd readonly-text" value="${fmtAccDeptNo}" data-index="${index}" data-field="AccDeptNo">${fmtAccDeptNo}</div>`;
-            const accDeptNameDiv = `<div class="subtd readonly-text" value="${fmtAccDeptName}" data-index="${index}" data-field="AccDeptName">${fmtAccDeptName}</div>`;
-
-            return `${accDeptNoDiv}${accDeptNameDiv}`;
-        }
-        function format8(value, row, index) {
-            const fmtPayDeptNo = (row.PayDeptNo == null) ? '' : row.PayDeptNo;
-            const fmtPayDeptName = (row.PayDeptName == null) ? '' : row.PayDeptName;
-            const payDeptNoDiv = `<div class="subtd readonly-text" value="${fmtPayDeptNo}" data-index="${index}" data-field="PayDeptNo">${fmtPayDeptNo}</div>`;
-            const payDeptNameDiv = `<div class="subtd readonly-text" value="${fmtPayDeptName}" data-index="${index}" data-field="PayDeptName">${fmtPayDeptName}</div>`;
-
-            return `${payDeptNoDiv}${payDeptNameDiv}`;
-        }
-        function format9(value, row, index) {
-            const fmtOffsetNo = (row.OffsetNo == null) ? '' : row.OffsetNo;
-            const fmtCaseBillNo = (row.CaseBillNo == null) ? '' : row.CaseBillNo;
-            const offsetNoDiv = `<div class="subtd readonly-text" value="${fmtOffsetNo}" data-index="${index}" data-field="OffsetNo">${fmtOffsetNo}</div>`;
-            const caseBillNoDiv = `<div class="subtd readonly-text" value="${fmtCaseBillNo}" data-index="${index}" data-field="CaseBillNo">${fmtCaseBillNo}</div>`;
-
-            return `${offsetNoDiv}${caseBillNoDiv}`;
-        }
-        function format10(value, row, index) {
-            const fmtSourceDocSubTypeName = (row.SourceDocSubTypeName == null) ? '' : row.SourceDocSubTypeName;
-            const fmtSourceNo = (row.SourceNo == null) ? '' : row.SourceNo;
-            const sourceDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${fmtSourceDocSubTypeName}" data-index="${index}" data-field="SourceDocSubTypeName">${fmtSourceDocSubTypeName}</div>`;
-            const sourceNoDiv = `<div class="subtd readonly-text" value="${fmtSourceNo}" data-index="${index}" data-field="SourceDocSubTypeName">${fmtSourceNo}</div>`;
-
-            return `${sourceDocSubTypeNameDiv}${sourceNoDiv}`;
-        }
-        function format11(value, row, index) {
-            const fmtInitialDocSubTypeName = (row.InitialDocSubTypeName == null) ? '' : row.InitialDocSubTypeName;
-            const fmtInitialNo = (row.InitialNo == null) ? '' : row.InitialNo;
-            const initialDocSubTypeNameDiv = `<div class="subtd readonly-text" value="${fmtInitialDocSubTypeName}" data-index="${index}" data-field="InitialDocSubTypeName">${fmtInitialDocSubTypeName}</div>`;
-            const initialNoDiv = `<div class="subtd readonly-text" value="${fmtInitialNo}" data-index="${index}" data-field="InitialNo">${fmtInitialNo}</div>`;
-
-            return `${initialDocSubTypeNameDiv}${initialNoDiv}`;
-        }
+       
         // itemdg欄位Function
         function formatTargetType(value) {
             switch (String(value)) {
@@ -1089,15 +1025,25 @@
             $('#btnCancel').addClass('hidden-btn');
             $('#btnDelete').addClass('hidden-btn');
 
-            $('#btnlock').hide();
-           /* $('#btncheck').hide();*/
-            $('#btnclose').hide();
-            $('#btnunlock').hide();
-            /*$('#btnreject').hide();*/
+            $('#btnLock').hide();
+           /* $('#btnCheck').hide();*/
+            $('#btnClose').hide();
+            $('#btnUnlock').hide();
+            /*$('#btnReject').hide();*/
 
             let msg = '@ViewBag.Msg';
+            let billno = '@ViewBag.BillNo';
             if (msg) {
-                $.messager.alert(msglang.Title2, msg);
+                switch (msg) {
+                    case 'Check':
+                        $.messager.alert(msglang.Title2, msglang.MsgSes5 + billno);
+                        break;
+                    case 'Reject':
+                        $.messager.alert(msglang.Title2, msglang.MsgSes6 + billno);
+                        break;                   
+                    default:
+                        break;
+                }
             }
         });
     </script>

@@ -498,9 +498,9 @@
 </div>
 @*右鍵顯示div*@
 <div id="mm" class="easyui-menu" data-options="onClick:menuHandler" style="width:130px;">
-    <div data-options="name:'addF',iconCls:'icon-add'">新增前一列</div>
-    <div data-options="name:'addB',iconCls:'icon-add'">新增後一列</div>
-    <div data-options="name:'remove',iconCls:'icon-remove'">移除</div>
+    <div data-options="name:'addF',iconCls:'icon-add'">@Resources.Content.AddPrevious</div>
+    <div data-options="name:'addB',iconCls:'icon-add'">@Resources.Content.AddNext</div>
+    <div data-options="name:'remove',iconCls:'icon-remove'">@Resources.Content.Remove</div>
     @*<div class="menu-sep"></div>
         <div data-options="name:'addD'">新增_借</div>
         <div data-options="name:'addC'">新增_貸</div>*@
@@ -544,7 +544,33 @@
             CompAbbr: '@Resources.Content.CompAbbr'
         };
         var itemdglang = {
-
+            Linage:'@Resources.Content.Linage',
+            AccNo: '@Resources.Content.AccNo',
+            AccName:'@Resources.Content.AccName',
+            Remark: '@Resources.Content.Remark',
+            DCTypeNo: '@Resources.Content.DCTypeNo',
+            CurrencyNo: '@Resources.Content.CurrencyNo',
+            CurrencySt: '@Resources.Content.CurrencySt',
+            Rate: '@Resources.Content.Rate',
+            Aamount:'@Resources.Content.Aamount',
+            Tamount: '@Resources.Content.Tamount',
+            TargetType: '@Resources.Content.TargetType',
+            TargetNo: '@Resources.Content.TargetType',
+            TargetAbbr: '@Resources.Content.TargetType',
+            AccProfitNo: '@Resources.Content.AccProfitNo',
+            AccProfitName: '@Resources.Content.AccProfitName',
+            AccDeptNo: '@Resources.Content.AccDeptNo',
+            AccDeptName: '@Resources.Content.AccDeptName',
+            PayDeptNo: '@Resources.Content.PayDeptNo',
+            PayDeptName: '@Resources.Content.PayDeptName',
+            CheckNo: '@Resources.Content.CheckNo',
+            OffsetNo: '@Resources.Content.OffsetNo',
+            CaseBillNo: '@Resources.Content.CaseBillNo',
+            SourceDocSubTypeName: '@Resources.Content.SourceDocSubTypeName',
+            SourceNo: '@Resources.Content.SourceNo',
+            InitialDocSubTypeName: '@Resources.Content.InitialDocSubTypeName',
+            InitialNo: '@Resources.Content.InitialNo',
+            ActivityType: '@Resources.Content.ActivityType',
         };
         var msglang = {
             Title1: '@Resources.Content.Confirm', // 確認
@@ -559,6 +585,7 @@
             MsgSes2: '@Resources.Content.MsgSes2', //成功編輯
             MsgSes3: '@Resources.Content.MsgSes3', //成功啟用
             MsgSes4: '@Resources.Content.MsgSes4', //成功停用
+            MsgSes5: '@Resources.Content.MsgSes5', //成功送審
         };
         //#endregion
         //#region 資料暫存
@@ -588,7 +615,6 @@
             ///-----資料填值-----///
             maindgData();
             ///-----其他設定-----///
-            $('#btnreject').hide();           
             $('#myDatebox').myDatebox({
                 culture: '@ViewBag.CurrentCulture' // 傳遞語言參數
             });
@@ -617,28 +643,35 @@
                     { field: 'BillStatus', title: 'BillStatus', hidden: true  }
                 ]],
                 onSelect: function (index, row) {
-                    if (actioncode === 'add' || actioncode === 'edit') {
-                        if (maindgIndex !== index) {
-                            $.messager.confirm(msglang.Title1, msglang.MsgLeave, function (r) {
-                                if (r) {
-                                    infotabs.tabs('select', 0); //表頭表單切換
-                                    advtabs.tabs('select', 0); //進階資訊切換
-                                    maindgIndex = index; // 更新目前行索引
-                                    actioncode = 'view'; // 更新行為模式
-                                    btnEnableSet(actioncode); // 更新按鈕狀態
-                                    tableHeadData(row); // 更新表頭資料
-                                    itemdgData(row.WebId); // 更新相關資料表
-                                    maindg.datagrid('selectRow', index); // 選擇新行
-                                } else {
-                                    maindg.datagrid('unselectRow', index);
-                                    maindg.datagrid('selectRow', maindgIndex); // 重新選擇原來的行
-                                }
-                            });
-                        }
+                    if (row.BillStatus == '1' || row.BillStatus == '2') {
+                        $('#btnEdit').linkbutton('disable');
+                        $('#btnLock').linkbutton('disable');
                     } else {
-                        maindgIndex = index;
-                        tableHeadData(row);
-                        itemdgData(row.WebId);
+                        $('#btnEdit').linkbutton('enable');
+                        $('#btnLock').linkbutton('enable');
+                        if (actioncode === 'add' || actioncode === 'edit') {
+                            if (maindgIndex !== index) {
+                                $.messager.confirm(msglang.Title1, msglang.MsgLeave, function (r) {
+                                    if (r) {
+                                        infotabs.tabs('select', 0); //表頭表單切換
+                                        advtabs.tabs('select', 0); //進階資訊切換
+                                        maindgIndex = index; // 更新目前行索引
+                                        actioncode = 'view'; // 更新行為模式
+                                        btnEnableSet(actioncode); // 更新按鈕狀態
+                                        tableHeadData(row); // 更新表頭資料
+                                        itemdgData(row.WebId); // 更新相關資料表
+                                        maindg.datagrid('selectRow', index); // 選擇新行
+                                    } else {
+                                        maindg.datagrid('unselectRow', index);
+                                        maindg.datagrid('selectRow', maindgIndex); // 重新選擇原來的行
+                                    }
+                                });
+                            }
+                        } else {
+                            maindgIndex = index;
+                            tableHeadData(row);
+                            itemdgData(row.WebId);
+                        }
                     }
                 },
                 rowStyler: function (index, row) {
@@ -698,9 +731,9 @@
                 columns: [[
                     { field: 'WebId', title: 'WebId', hidden: true, type: 'text' },
                     { field: 'Id', title: 'Id', hidden: true, type: 'text' },
-                    { field: 'Linage', title: '行號', align: 'center', hidden: false, type: 'string' },
+                    { field: 'Linage', title: itemdglang.Linage, align: 'center', hidden: false, type: 'string' },
                     {
-                        field: 'AccNo', title: '科目編號', width: '10%', hidden: false, type: 'string',
+                        field: 'AccNo', title: itemdglang.AccNo, width: '10%', hidden: false, type: 'string',
                         editor: {
                             type: 'textbox',
                             options: {
@@ -713,15 +746,15 @@
                             }
                         }
                     },
-                    { field: 'AccNameC', title: '科目名稱', width: '20%', hidden: false, type: 'string' },
+                    { field: 'AccName', title: itemdglang.AccName, width: '20%', hidden: false, type: 'string' },
                     {
-                        field: 'Remark', title: '摘要說明', width: '20%', type: 'string',
+                        field: 'Remark', title: itemdglang.Remark, width: '20%', type: 'string',
                         editor: {
                             type: 'textbox'
                         }
                     },
                     {
-                        field: 'DCTypeNo', title: '借貸方向', align: 'center', hidden: false, type: 'string',
+                        field: 'DCTypeNo', title: itemdglang.DCTypeNo, align: 'center', hidden: false, type: 'string',
                         editor: {
                             type: 'combobox',
                             options: {
@@ -732,13 +765,12 @@
                                     { label: 'C', value: 'C' }
                                 ],
                                 panelHeight: 'auto'
-
                             }
                         }
                     },
                     { field: 'DCTypeNameC', title: '借貸名稱', width: '8%', hidden: true, type: 'string' },
                     {
-                        field: 'CurrencyNo', title: '交易幣別', width: '8%', align: 'center', hidden: false, type: 'string',
+                        field: 'CurrencyNo', title: itemdglang.CurrencyNo, width: '8%', align: 'center', hidden: false, type: 'string',
                         editor: {
                             type: 'combobox',
                             options: {
@@ -755,7 +787,7 @@
                         }
                     },
                     {
-                        field: 'Money', title: '交易金額', width: '8%', align: 'right', hidden: false, type: 'number',
+                        field: 'Money', title: itemdglang.Tamount, width: '8%', align: 'right', hidden: false, type: 'number',
                         editor: {
                             type: 'numberbox',
                             options: {
@@ -772,7 +804,7 @@
                         }
                     },
                     {
-                        field: 'Rate1', title: '匯率', width: '5%', align: 'center', hidden: false, type: 'number',
+                        field: 'Rate1', title: itemdglang.Rate, width: '5%', align: 'center', hidden: false, type: 'number',
                         editor: {
                             type: 'numberbox',
                             options: {
@@ -789,9 +821,9 @@
                             return parseFloat(value).toFixed(3);
                         }
                     },
-                    {field: 'CurrencySt', title: '記帳幣別', width: '8%', align: 'center', type: 'string'},
+                    { field: 'CurrencySt', title: itemdglang.CurrencySt, width: '8%', align: 'center', type: 'string'},
                     {
-                        field: 'Money1', title: '記帳金額', width: '8%', align: 'right', hidden: false, type: 'number',
+                        field: 'Money1', title: itemdglang.Aamount, width: '8%', align: 'right', hidden: false, type: 'number',
                         editor: {
                             type: 'numberbox',
                             options: {
@@ -810,7 +842,7 @@
                     },
                     { field: 'TargetId', title: '對象別Id', width: '10%', hidden: true, type: 'string', },
                     {
-                        field: 'TargetType', title: '對象別', width: '5%', hidden: false, type: 'string', formatter: formatTargetType,
+                        field: 'TargetType', title: itemdglang.TargetType, width: '5%', hidden: false, type: 'string', formatter: formatTargetType,
                         editor: {
                             type: 'combogrid',
                             options: {
@@ -853,37 +885,33 @@
                             }
                         }
                     },
-                    { field: 'TargetNo', title: '對象編號', width: '5%', hidden: false, type: 'string' },//format5
-                    { field: 'TargetAbbr', title: '對象名稱', width: '8%', hidden: false, type: 'string' },//format5
-                    { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string' },
-                    { field: 'AccProfitNo', title: '會計部門編號', hidden: false, type: 'string' },//format6
-                    { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string' },//format6
-                    { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string' },
-                    { field: 'AccDeptNo', title: '成本中心編號', hidden: false, type: 'string' }, //format7
-                    { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string' },//format7
-                    { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string' },
-                    { field: 'PayDeptNo', title: '支付部門編號', hidden: false, type: 'string' },//format8
-                    { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string' },//format8
-                    { field: 'CheckType', title: '票據Type', hidden: true, type: 'string' },
-                    { field: 'CheckId', title: '票據Id', hidden: true, type: 'string' },
+                    { field: 'TargetNo', title: itemdglang.TargetNo, width: '5%', hidden: false, type: 'string' },//對象編號
+                    { field: 'TargetAbbr', title: itemdglang.TargetAbbr, width: '8%', hidden: false, type: 'string' },//對象名稱
+                    { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string' },//會計部門Id
+                    { field: 'AccProfitNo', title: itemdglang.AccProfitNo, hidden: false, type: 'string' },//會計部門編號
+                    { field: 'AccProfitName', title: itemdglang.AccProfitName, hidden: false, type: 'string' },//會計部門名稱
+                    { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string' },//成本中心Id
+                    { field: 'AccDeptNo', title: itemdglang.AccDeptNo, hidden: false, type: 'string' }, //成本中心編號
+                    { field: 'AccDeptName', title: itemdglang.AccDeptName, hidden: false, type: 'string' },//成本中心名稱
+                    { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string' },//支付部門Id
+                    { field: 'PayDeptNo', title: itemdglang.PayDeptNo, hidden: false, type: 'string' },//支付部門編號
+                    { field: 'PayDeptName', title: itemdglang.PayDeptName, hidden: false, type: 'string' },//支付部門名稱
+                    { field: 'CheckType', title: '票據Type', hidden: true, type: 'string' },//票據Type
+                    { field: 'CheckId', title: '票據Id', hidden: true, type: 'string' },//票據Id
+                    { field: 'CheckNo', title: itemdglang.CheckNo, hidden: false, type: 'string', },//票據編號
+                    { field: 'OffsetNo', title: itemdglang.OffsetNo , hidden: false, type: 'string' },//立沖編號
+                    { field: 'CaseBillNo', title: itemdglang.CaseBillNo , hidden: false, type: 'string' },//來源單DocId
+                    { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string' },//來源單DocId
+                    { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string' },//來源單SeqId
+                    { field: 'SourceDocSubTypeName', title: itemdglang.SourceDocSubTypeName, hidden: false, type: 'string' },//來源單別
+                    { field: 'SourceNo', title: itemdglang.SourceNo , hidden: false, type: 'string' },//來源單號
+                    { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string' },//原始單ProjectId
+                    { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string' },//原始單DocSubType
+                    { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string' },//原始單DocId
+                    { field: 'InitialDocSubTypeName', title: itemdglang.InitialDocSubTypeName, hidden: false, type: 'string' },//原始單別
+                    { field: 'InitialNo', title: itemdglang.InitialNo, hidden: false, type: 'string' },//原始單號
                     {
-                        field: 'CheckNo', title: '票據編號', hidden: false, type: 'string', editor: {
-                            type: 'text',
-                        }
-                    },
-                    { field: 'OffsetNo', title: '立沖編號', hidden: false, type: 'string' },//format9
-                    { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string' },//format9
-                    { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string' },
-                    { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string' },
-                    { field: 'SourceDocSubTypeName', title: '來源單別', hidden: false, type: 'string' },//format10
-                    { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string' },//format10
-                    { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string' },
-                    { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string' },
-                    { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string' },
-                    { field: 'InitialDocSubTypeName', title: '原始單別', hidden: false, type: 'string' },//format11
-                    { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string' },//format11
-                    {
-                        field: 'ActivityType', title: '活動類別', hidden: false, type: 'string',
+                        field: 'ActivityType', title: itemdglang.ActivityType, hidden: false, type: 'string',
                         editor: {
                             type: 'combobox',
                             options: {
@@ -894,7 +922,7 @@
                                 mode: 'remote',
                             }
                         }
-                    },
+                    },//活動類別
                 ]],
                 onClickRow: function (index, row) {
                     if (actioncode === 'edit' || actioncode === 'add') {
@@ -966,11 +994,11 @@
                     striped: true,
                     columns: [[
                         { field: 'AccNo', title: '科目編號', type: 'string', sortable: true },
-                        { field: 'AccNameC', title: '科目中文名稱', type: 'string', sortable: true },
-                        { field: 'AccNoBy', title: '科目分類編號', type: 'string', sortable: true },
-                        { field: 'AccNoByNameC', title: '科目分類中文名稱', type: 'string', sortable: true },
-                        { field: 'AccGroupNo', title: '科目大類編號', type: 'string', sortable: true },
-                        { field: 'AccGroupNameC', title: '科目大類中文名稱', type: 'string', sortable: true }
+                        { field: 'AccName', title: '科目中文名稱', type: 'string', sortable: true },
+                        { field: 'AccNoBy', title: '科目分類編號', hidden: true, type: 'string', sortable: true },
+                        { field: 'AccNoByNameC', title: '科目分類中文名稱', hidden: true, type: 'string', sortable: true },
+                        { field: 'AccGroupNo', title: '科目大類編號', hidden: true, type: 'string', sortable: true },
+                        { field: 'AccGroupNameC', title: '科目大類中文名稱', hidden: true, type: 'string', sortable: true }
                     ]],
                     toolbar: '#toolbar1',
                     fitColumns: true,
@@ -1258,6 +1286,7 @@
                 case 'save':
                     let maindata ; //表頭
                     let infodata = []; //表身
+                    let dcdata;
                     let data = [];
                     let dosave ; //檢查是否能存
                     let maindatadg, infodatadg;
@@ -1292,7 +1321,7 @@
                                     'Id': row.Id,
                                     'Linage': row.Linage,
                                     'AccNo': row.AccNo,
-                                    'AccNameC': row.AccNameC,
+                                    'AccName': row.AccName,
                                     'DCTypeNo': row.DCTypeNo,
                                     'DCTypeNameC': row.DCTypeNameC,
                                     'CurrencyNo': row.CurrencyNo,
@@ -1331,10 +1360,19 @@
                                     'CaseBillNo': row.CaseBillNo,
                                 };
                             });
+                            dcdata = {
+                                'Money11': $('.colMoneyD1').textbox('getValue'),
+                                'Money12': $('.colMoneyC1').textbox('getValue'),
+                                'Money21': $('.colMoneyD').textbox('getValue'),
+                                'Money22': $('.colMoneyC').textbox('getValue'),
+                                'Money1Dc': $('.colMoney1').textbox('getValue'),
+                                'Money2Dc': $('.colMoney').textbox('getValue'),
+                            };
 
                             data = {
                                 Maindata: maindata,
-                                Infodata: infodata
+                                Infodata: infodata,
+                                Dcdata: dcdata
                             };
 
                             actionurl = defaultUrl + controllerurl + functionurl + 'AddData';
@@ -1347,7 +1385,7 @@
                                 success: function (response) {
                                     if (response.success) {
                                         //$.messager.alert(msglang.Title2, '資料已成功儲存!');
-                                        pageReload(response.data, msglang.MsgSes1 + response.data);
+                                        pageReload(response.data, 'Add');
                                     } else {
                                         $.messager.alert(msglang.Title2, msglang.MsgErrCode + response.code);
                                         if (response.code == 'C0004') {
@@ -1396,7 +1434,7 @@
                                     'Id': row.Id,
                                     'Linage': row.Linage,
                                     'AccNo': row.AccNo,
-                                    'AccNameC': row.AccNameC,
+                                    'AccName': row.AccName,
                                     'DCTypeNo': row.DCTypeNo,
                                     'DCTypeNameC': row.DCTypeNameC,
                                     'CurrencyNo': row.CurrencyNo,
@@ -1436,9 +1474,18 @@
                                     'CaseBillNo': row.CaseBillNo,
                                 };
                             });
+                            dcdata = {
+                                'Money11': $('.colMoneyD1').textbox('getValue'),
+                                'Money12': $('.colMoneyC1').textbox('getValue'),
+                                'Money21': $('.colMoneyD').textbox('getValue'),
+                                'Money22': $('.colMoneyC').textbox('getValue'),
+                                'Money1Dc': $('.colMoney1').textbox('getValue'),
+                                'Money2Dc': $('.colMoney').textbox('getValue'),
+                            };
                             data = {
                                 Maindata: maindata,
-                                Infodata: infodata
+                                Infodata: infodata,
+                                Dcdata: dcdata
                             };
 
                             actionurl = defaultUrl + controllerurl + functionurl + 'EditData';
@@ -1451,7 +1498,7 @@
                                 success: function (response) {
                                     if (response.success) {
                                         //$.messager.alert(msglang.Title2, '資料已成功儲存!');
-                                        pageReload(response.data, msglang.MsgSes2 + response.data);
+                                        pageReload(response.data, 'Edit');
                                     } else {
                                         $.messager.alert(msglang.Title2, msglang.MsgErrCode + response.code);
                                         if (response.code == 'C0004') {
@@ -1528,7 +1575,7 @@
                                 doajax("POST", actionurl, null, function (result) {
                                     if (result.success) {
                                         //$.messager.alert(msglang.Title2, '單號：' + response.data + '已覆核。');
-                                        pageReload(result.data, msglang.MsgSes1 + result.data);
+                                        pageReload(result.data, 'Lock');
                                     } else {
                                         $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
                                         if (result.code == 'C0004') {
@@ -1563,16 +1610,18 @@
                     }
 
                     if (actioncode === 'add' || actioncode === 'edit') {
+                        fitemdgIndex = itemdgIndex;
+                        itemdg.datagrid('endEdit', itemdgIndex);
                         itemdg.datagrid('updateRow', {
-                            index: itemdgIndex,
+                            index: fitemdgIndex,
                             row: {
                                 AccNo: selectedRow.AccNo,
-                                AccNameC: selectedRow.AccNameC,
-                                AccNoBy: selectedRow.AccNoBy,
-                                AccNoByNameC: selectedRow.AccNoByNameC,
-                                AccGroupNo: selectedRow.AccGroupNo,
-                                AccGroupNameC: selectedRow.AccGroupNameC,
-                                Remark: '',
+                                AccName: selectedRow.AccName,
+                                //AccNoBy: selectedRow.AccNoBy,
+                                //AccNoByNameC: selectedRow.AccNoByNameC,
+                                //AccGroupNo: selectedRow.AccGroupNo,
+                                //AccGroupNameC: selectedRow.AccGroupNameC,
+                                //Remark: '',
                                 DCTypeNo: selectedRow.DCTypeNo,
                             }
                         });
@@ -1896,24 +1945,30 @@
 
         // 傳票借貸合計(使用記帳金額計算)
         function voucherDC() {
-            let totalDMoney = 0;
-            let totalCMoney = 0;
-            let balance = 0;
+            let totalDMoney = 0, totalDMoney1 = 0;
+            let totalCMoney = 0, totalCMoney1 = 0;
+            let balance = 0, balance1 = 0;
             let rows = itemdg.datagrid('getRows');
 
             for (let i = 0; i < rows.length; i++) {
                 if (rows[i].DCTypeNo === 'D') {
                     totalDMoney = math.chain(totalDMoney).add(rows[i].Money1).done();
+                    totalDMoney1 = math.chain(totalDMoney1).add(rows[i].Money).done();
                 } else if (rows[i].DCTypeNo === 'C') {
                     totalCMoney = math.chain(totalCMoney).add(rows[i].Money1).done();
+                    totalCMoney1 = math.chain(totalCMoney1).add(rows[i].Money).done();
                 }
             }
             balance = math.abs(math.chain(totalDMoney).subtract(totalCMoney).done());
+            balance1 = math.abs(math.chain(totalDMoney1).subtract(totalCMoney1).done());
 
             // 將計算後的值填入對應的 input 元素
             $('.colMoneyD').textbox('setValue', totalDMoney);
+            $('.colMoneyD1').textbox('setValue', totalDMoney1);
             $('.colMoneyC').textbox('setValue', totalCMoney);
+            $('.colMoneyC1').textbox('setValue', totalCMoney1);
             $('.colMoney').textbox('setValue', balance);
+            $('.colMoney1').textbox('setValue', balance1);
         }
 
         // addForm必填欄位
@@ -1968,7 +2023,7 @@
                         Id: '',
                         Linage: rowCount + 1,
                         AccNo: '',
-                        AccNameC: '',
+                        AccName: '',
                         DCTypeNo: '',
                         CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
                         CurrencySt: $('.fomCurrencySt').textbox('getValue'),
@@ -2019,7 +2074,7 @@
                                 Id: '',
                                 Linage: '',
                                 AccNo: '',
-                                AccNameC: '',
+                                AccName: '',
                                 DCTypeNo: '',
                                 CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
                                 CurrencySt: $('.fomCurrencySt').textbox('getValue'),
@@ -2086,7 +2141,7 @@
                                 Id: '',
                                 Linage: '',
                                 AccNo: '',
-                                AccNameC: '',
+                                AccName: '',
                                 DCTypeNo: '',
                                 CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
                                 CurrencySt: $('.fomCurrencySt').textbox('getValue'),
@@ -2165,7 +2220,7 @@
                         Id: '',
                         Linage: rowCount + 1,
                         AccNo: currentRow.AccNo,
-                        AccNameC: currentRow.AccNameC,
+                        AccName: currentRow.AccName,
                         DCTypeNo: reverseDCTypeNo, // Reverse '借貸方向'
                         DCTypeNameC: reverseDCTypeName, // Update '借貸名稱' based on '借貸方向'
                         CurrencyNo: currentRow.CurrencyNo,
@@ -2482,8 +2537,7 @@
 
         //
         function selectRow(billno) {
-            var rows = maindg.datagrid('getRows');
-            console.log(rows);
+            var rows = maindg.datagrid('getRows');            
             for (var i = 0; i < rows.length; i++) {
                 if (rows[i].BillNo === billno) {
                     maindg.datagrid('selectRow', i);
@@ -2736,7 +2790,7 @@
                             Id: '',
                             Linage: rowCount + 1,
                             AccNo: '',
-                            AccNameC: '',
+                            AccName: '',
                             DCTypeNo: '',
                             CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
                             CurrencySt: $('.fomCurrencySt').textbox('getValue'),
@@ -2793,14 +2847,27 @@
             //$('#btnCancel').addClass('hidden-btn');
             $('#btnDelete').addClass('hidden-btn');
 
-            /*$('#btnlock').hide();*/
-            $('#btncheck').hide();
-            $('#btnclose').hide();
-            $('#btnunlock').hide();
-            $('#btnreject').hide();
+            /*$('#btnLock').hide();*/
+            $('#btnCheck').hide();
+            $('#btnClose').hide();
+            $('#btnUnlock').hide();
+            $('#btnReject').hide();
             let msg = '@ViewBag.Msg';
+            let billno = '@ViewBag.BillNo';
             if (msg) {
-                $.messager.alert(msglang.Title2, msg);
+                switch (msg) {
+                    case 'Add':
+                        $.messager.alert(msglang.Title2, msglang.MsgSes1 + billno);
+                        break;
+                    case 'Edit':
+                        $.messager.alert(msglang.Title2, msglang.MsgSes2 + billno);
+                        break;
+                    case 'Lock':
+                        $.messager.alert(msglang.Title2, msglang.MsgSes3 + billno);
+                        break;
+                    default:
+                        break;
+                }                
             }
         });
     </script>

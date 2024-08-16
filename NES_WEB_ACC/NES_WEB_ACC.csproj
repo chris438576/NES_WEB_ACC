@@ -260,6 +260,8 @@
     </Compile>
     <Compile Include="ViewModels\CbxDataViewModel.cs" />
     <Compile Include="ViewModels\CreateInfoViewModel.cs" />
+    <Compile Include="ViewModels\ForM\ACC_AccTitleNo_MX_ViewModel.cs" />
+    <Compile Include="ViewModels\ForM\ACC_VoucherDetail_ViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\VoucherDataViewModel.cs" />
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
