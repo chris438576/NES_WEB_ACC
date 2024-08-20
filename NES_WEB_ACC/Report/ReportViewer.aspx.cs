@@ -34,6 +34,7 @@ namespace NES_WEB_ACC.Report
 
                     //V2.0版本_可傳入多張資料表
                     string reportPath = (string)Session["ReportPath"];
+                    string reportDocName = (string)Session["ReportDocName"];
                     var reportDataSources = (Dictionary<string, ReportDataSource>)Session["ReportDataSources"];
                     List<ReportParameter> reportParameters = Session["ReportParameters"] as List<ReportParameter>;
 
@@ -43,17 +44,17 @@ namespace NES_WEB_ACC.Report
                     foreach (var dataSource in reportDataSources)
                     {
                         RptViewer.LocalReport.DataSources.Add(dataSource.Value);
-
                     }
                     RptViewer.LocalReport.SetParameters(reportParameters);
                     RptViewer.LocalReport.Refresh();
+                    RptViewer.LocalReport.DisplayName = reportDocName;
 
                     Session["ReportPath"] = null;
                     Session["ReportDataSources"] = null;
                     Session["ReportParameters"] = null;
-                }
+                    Session["ReportDocName"] = null;
+                }                
             }
-        }
-
+        }      
     }
 }

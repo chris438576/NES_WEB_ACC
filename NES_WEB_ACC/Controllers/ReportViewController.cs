@@ -64,18 +64,18 @@ namespace NES_WEB_ACC.Controllers
         {
             string EmpNo = (string)Session["EmpNo"];            
             string sqlInfo = @"
-                select BillNo,CONVERT(varchar(100), BillDate, 111) as BillDate,EmpNo,EmpNameC from NES_WEB_ACC.dbo.ACC_VoucherInfo where WebId = @reportId
+                select BillNo,CONVERT(varchar(100), BillDate, 111) as BillDate,EmpNo,EmpNameC, StateBy, StateDate, ClosedBy, ClosedDate,Money21,Money22 from NES_WEB_ACC.dbo.ACC_VoucherInfo where WebId = @reportId
             ";
             string sqlDetail = @"
                 select Linage, AccNo, AccNameC,DCTypeNo, CurrencyNo, Money, Rate1, CurrencySt, Money1  from NES_WEB_ACC.dbo.ACC_VoucherDetail where WebDocId = @reportId
             ";
 
-            List<ACC_VoucherInfo> voucherInfo = new List<ACC_VoucherInfo>();
+            ACC_VoucherInfo voucherInfo;
             List<ACC_VoucherDetail> voucherDetail = new List<ACC_VoucherDetail>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                voucherInfo = conn.Query<ACC_VoucherInfo>(sqlInfo, new { reportId }).ToList();
+                voucherInfo = conn.QueryFirstOrDefault<ACC_VoucherInfo>(sqlInfo, new { reportId });
                 voucherDetail = conn.Query<ACC_VoucherDetail>(sqlDetail, new { reportId }).ToList();
             }                      
 
@@ -83,11 +83,11 @@ namespace NES_WEB_ACC.Controllers
             var reportParameters = new List<ReportParameter>
             {
                 new ReportParameter("ReportMaker", EmpNo),
-                 new ReportParameter("ReportId", reportId)
+                new ReportParameter("ReportId", reportId)
             };
             var reportDataSources = new Dictionary<string, ReportDataSource>
             {
-                { "VoucherBillMain", new ReportDataSource("VoucherBillMain", voucherInfo) },
+                { "VoucherBillMain", new ReportDataSource("VoucherBillMain", new List<ACC_VoucherInfo> { voucherInfo }) },
                 { "VoucherBillItem", new ReportDataSource("VoucherBillItem", voucherDetail) }
             };
 
@@ -95,7 +95,8 @@ namespace NES_WEB_ACC.Controllers
             Session["ReportPath"] = Server.MapPath("~/Report/RDLC/VoucherBillReport.rdlc");
             Session["ReportDataSources"] = reportDataSources;
             Session["ReportParameters"] = reportParameters;
-                       
+            Session["ReportDocName"] = "VoucherBill_" + voucherInfo.BillNo;
+
             return Redirect("~/Report/ReportViewer.aspx");
         }
     }
