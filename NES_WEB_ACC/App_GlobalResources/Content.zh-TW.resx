@@ -258,7 +258,7 @@
   <data name="Confirm" xml:space="preserve">
     <value>確認</value>
   </data>
-  <data name="MsgLeave" xml:space="preserve">
+  <data name="MsgCfmLeave" xml:space="preserve">
     <value>資料尚未儲存，是否離開?</value>
   </data>
   <data name="Alert" xml:space="preserve">
@@ -460,6 +460,33 @@
     <value>移除</value>
   </data>
   <data name="MsgSes5" xml:space="preserve">
-    <value>成功送件：</value>
+    <value>成功送出：</value>
+  </data>
+  <data name="MsgSes6" xml:space="preserve">
+    <value>成功退件：</value>
+  </data>
+  <data name="MsgSes7" xml:space="preserve">
+    <value>成功結案：</value>
+  </data>
+  <data name="MsgErrAja" xml:space="preserve">
+    <value>伺服器錯誤：</value>
+  </data>
+  <data name="MsgErrDc" xml:space="preserve">
+    <value>借貸不平衡。</value>
+  </data>
+  <data name="MsgCfmCancel" xml:space="preserve">
+    <value>是否要取消?</value>
+  </data>
+  <data name="MsgCfmSend" xml:space="preserve">
+    <value>是否要送出?</value>
+  </data>
+  <data name="MsgErrSaveFirst" xml:space="preserve">
+    <value>請先儲存！</value>
+  </data>
+  <data name="MsgSelectRow2" xml:space="preserve">
+    <value>請先選擇需要送出的行！</value>
+  </data>
+  <data name="MsgSelectRow3" xml:space="preserve">
+    <value>請先選擇需要填入的行！</value>
   </data>
 </root>

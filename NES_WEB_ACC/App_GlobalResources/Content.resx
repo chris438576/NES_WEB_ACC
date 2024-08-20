@@ -258,7 +258,7 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
-  <data name="MsgLeave" xml:space="preserve">
+  <data name="MsgCfmLeave" xml:space="preserve">
     <value>The data has not been saved. Do you want to leave?</value>
   </data>
   <data name="Alert" xml:space="preserve">
@@ -461,5 +461,32 @@
   </data>
   <data name="MsgSes5" xml:space="preserve">
     <value>Successfully sent：</value>
+  </data>
+  <data name="MsgSes6" xml:space="preserve">
+    <value>Successfully reject：</value>
+  </data>
+  <data name="MsgSes7" xml:space="preserve">
+    <value>Successfully closed：</value>
+  </data>
+  <data name="MsgErrAja" xml:space="preserve">
+    <value>Server Error：</value>
+  </data>
+  <data name="MsgErrDc" xml:space="preserve">
+    <value>Debit and credit imbalance.</value>
+  </data>
+  <data name="MsgCfmCancel" xml:space="preserve">
+    <value>Do you want to cancel?</value>
+  </data>
+  <data name="MsgCfmSend" xml:space="preserve">
+    <value>Do you want to send?</value>
+  </data>
+  <data name="MsgErrSaveFirst" xml:space="preserve">
+    <value>Please save first!</value>
+  </data>
+  <data name="MsgSelectRow2" xml:space="preserve">
+    <value>Please select the row to be delete first!</value>
+  </data>
+  <data name="MsgSelectRow3" xml:space="preserve">
+    <value>Please select the row to be fill in first!</value>
   </data>
 </root>

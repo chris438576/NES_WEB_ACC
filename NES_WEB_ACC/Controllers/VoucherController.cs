@@ -98,6 +98,7 @@ namespace NES_WEB_ACC.Controllers
                                 --and CompId = @compid
                                 --and CompNo = @compno
                                 --amd CompAbbr = @compabbr
+                            
                 ";
               
                 switch (type)
@@ -145,6 +146,7 @@ namespace NES_WEB_ACC.Controllers
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     List<ACC_VoucherInfo> resultdata;
+                    sql += "order by BillNo";
                     if (param == null)
                     {
                         resultdata = conn.Query<ACC_VoucherInfo>(sql).ToList();
@@ -923,6 +925,7 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult _ToolBarPartial()
         {
             return PartialView();
-        }      
+        }
+                      
     }
 }

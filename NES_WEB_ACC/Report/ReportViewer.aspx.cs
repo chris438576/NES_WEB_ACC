@@ -14,22 +14,42 @@ namespace NES_WEB_ACC.Report
         {
             if (!IsPostBack)
             {
-                if (Session["ReportPath"] != null && Session["ReportDataSource"] != null && Session["ReportParameters"] != null)
+                if (Session["ReportPath"] != null && Session["ReportDataSources"] != null && Session["ReportParameters"] != null)
                 {
-                    string reportPath = Session["ReportPath"] as string;
-                    ReportDataSource reportDataSource = Session["ReportDataSource"] as ReportDataSource;
+                    //V1.0版本_只針對單一資料表
+                    //string reportPath = Session["ReportPath"] as string;
+                    //ReportDataSource reportDataSource = Session["ReportDataSource"] as ReportDataSource;
+                    //List<ReportParameter> reportParameters = Session["ReportParameters"] as List<ReportParameter>;
+
+                    //RptViewer.ProcessingMode = ProcessingMode.Local;
+                    //RptViewer.LocalReport.ReportPath = reportPath;
+                    //RptViewer.LocalReport.DataSources.Clear();
+                    //RptViewer.LocalReport.DataSources.Add(reportDataSource);
+                    //RptViewer.LocalReport.SetParameters(reportParameters);
+                    //RptViewer.LocalReport.Refresh();
+
+                    //Session["ReportPath"] = null;
+                    //Session["ReportDataSource"] = null;
+                    //Session["ReportParameters"] = null;
+
+                    //V2.0版本_可傳入多張資料表
+                    string reportPath = (string)Session["ReportPath"];
+                    var reportDataSources = (Dictionary<string, ReportDataSource>)Session["ReportDataSources"];
                     List<ReportParameter> reportParameters = Session["ReportParameters"] as List<ReportParameter>;
 
                     RptViewer.ProcessingMode = ProcessingMode.Local;
                     RptViewer.LocalReport.ReportPath = reportPath;
-                    RptViewer.LocalReport.DataSources.Clear();
-                    RptViewer.LocalReport.DataSources.Add(reportDataSource);
+                    RptViewer.LocalReport.DataSources.Clear();                    
+                    foreach (var dataSource in reportDataSources)
+                    {
+                        RptViewer.LocalReport.DataSources.Add(dataSource.Value);
+
+                    }
                     RptViewer.LocalReport.SetParameters(reportParameters);
                     RptViewer.LocalReport.Refresh();
 
-                    // 数据使用完后清空会话变量
                     Session["ReportPath"] = null;
-                    Session["ReportDataSource"] = null;
+                    Session["ReportDataSources"] = null;
                     Session["ReportParameters"] = null;
                 }
             }

@@ -210,7 +210,7 @@
     <comment>傳票輸入作業\左側列表[傳票類別]</comment>
   </data>
   <data name="VoucherOperation" xml:space="preserve">
-    <value>Voucher Operation-mx</value>
+    <value>Operación de vouchers</value>
     <comment>_Layouyt:[傳票作業]</comment>
   </data>
   <data name="Instrument" xml:space="preserve">
@@ -258,7 +258,7 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirmar</value>
   </data>
-  <data name="MsgLeave" xml:space="preserve">
+  <data name="MsgCfmLeave" xml:space="preserve">
     <value>Los datos no se han guardado. ¿Quieres salir?</value>
   </data>
   <data name="Alert" xml:space="preserve">
@@ -461,5 +461,32 @@
   </data>
   <data name="MsgSes5" xml:space="preserve">
     <value>Enviado exitosamente：</value>
+  </data>
+  <data name="MsgSes6" xml:space="preserve">
+    <value>Rechazado exitosamente：</value>
+  </data>
+  <data name="MsgSes7" xml:space="preserve">
+    <value>Cerrado exitosamente：</value>
+  </data>
+  <data name="MsgErrAja" xml:space="preserve">
+    <value>Error del servidor：</value>
+  </data>
+  <data name="MsgErrDc" xml:space="preserve">
+    <value>Desequilibrio débito y crédito</value>
+  </data>
+  <data name="MsgCfmCancel" xml:space="preserve">
+    <value>¿Quieres cancelar?</value>
+  </data>
+  <data name="MsgCfmSend" xml:space="preserve">
+    <value>¿Quieres enviar?</value>
+  </data>
+  <data name="MsgErrSaveFirst" xml:space="preserve">
+    <value>Por favor guarde primero!</value>
+  </data>
+  <data name="MsgSelectRow2" xml:space="preserve">
+    <value>¡Seleccione la fila que desea eliminar primero!</value>
+  </data>
+  <data name="MsgSelectRow3" xml:space="preserve">
+    <value>¡Seleccione la fila que desea completar primero!</value>
   </data>
 </root>

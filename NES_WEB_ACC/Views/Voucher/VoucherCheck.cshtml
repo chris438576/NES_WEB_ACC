@@ -537,13 +537,39 @@
             CompAbbr: '@Resources.Content.CompAbbr'
         };
         var itemdglang = {
-
+            Linage:'@Resources.Content.Linage',
+            AccNo: '@Resources.Content.AccNo',
+            AccName:'@Resources.Content.AccName',
+            Remark: '@Resources.Content.Remark',
+            DCTypeNo: '@Resources.Content.DCTypeNo',
+            CurrencyNo: '@Resources.Content.CurrencyNo',
+            CurrencySt: '@Resources.Content.CurrencySt',
+            Rate: '@Resources.Content.Rate',
+            Aamount:'@Resources.Content.Aamount',
+            Tamount: '@Resources.Content.Tamount',
+            TargetType: '@Resources.Content.TargetType',
+            TargetNo: '@Resources.Content.TargetType',
+            TargetAbbr: '@Resources.Content.TargetType',
+            AccProfitNo: '@Resources.Content.AccProfitNo',
+            AccProfitName: '@Resources.Content.AccProfitName',
+            AccDeptNo: '@Resources.Content.AccDeptNo',
+            AccDeptName: '@Resources.Content.AccDeptName',
+            PayDeptNo: '@Resources.Content.PayDeptNo',
+            PayDeptName: '@Resources.Content.PayDeptName',
+            CheckNo: '@Resources.Content.CheckNo',
+            OffsetNo: '@Resources.Content.OffsetNo',
+            CaseBillNo: '@Resources.Content.CaseBillNo',
+            SourceDocSubTypeName: '@Resources.Content.SourceDocSubTypeName',
+            SourceNo: '@Resources.Content.SourceNo',
+            InitialDocSubTypeName: '@Resources.Content.InitialDocSubTypeName',
+            InitialNo: '@Resources.Content.InitialNo',
+            ActivityType: '@Resources.Content.ActivityType',
         };
         var msglang = {
             Title1: '@Resources.Content.Confirm',//確認
             Title2: '@Resources.Content.Alert',  //警告
             Title3: '@Resources.Content.Prompts',  //提示
-            MsgLeave: '@Resources.Content.MsgLeave',
+            MsgCfmLeave: '@Resources.Content.MsgCfmLeave',
             MsgErrCode: '@Resources.Content.MsgErrCode',
             MsgSelectRow: '@Resources.Content.MsgSelectRow',
         }
@@ -638,69 +664,45 @@
                 columns: [[
                     { field: 'WebId', title: 'WebId', hidden: true, type: 'text' },
                     { field: 'Id', title: 'Id', hidden: true, type: 'text' },
-                    { field: 'Linage', title: '行號', align: 'center', hidden: false, type: 'string' },
-                    {field: 'AccNo', title: '科目編號', width: '10%', hidden: false, type: 'string' },
-                    { field: 'AccNameC', title: '科目名稱', width: '20%', hidden: false, type: 'string' },
-                    {
-                        field: 'Remark', title: '摘要說明', width: '20%', type: 'string',
-                        editor: {
-                            type: 'textbox'
-                        }
-                    },
-                    {
-                        field: 'DCTypeNo', title: '借貸方向', align: 'center', hidden: false, type: 'string',
-                        editor: {
-                            type: 'combobox',
-                            options: {
-                                valueField: 'value',       // 對應的值字段
-                                textField: 'label',        // 顯示的文本字段
-                                data: [
-                                    { label: 'D', value: 'D' },
-                                    { label: 'C', value: 'C' }
-                                ],
-                                panelHeight: 'auto'
-                            }
-                        }
-                    },
+                    { field: 'Linage', title: itemdglang.Linage, align: 'center', hidden: false, type: 'string' },
+                    { field: 'AccNo', title: itemdglang.AccNo, width: '10%', hidden: false, type: 'string',},
+                    { field: 'AccName', title: itemdglang.AccName, width: '20%', hidden: false, type: 'string' },
+                    { field: 'Remark', title: itemdglang.Remark, width: '20%', type: 'string',},
+                    { field: 'DCTypeNo', title: itemdglang.DCTypeNo, align: 'center', hidden: false, type: 'string',},
                     { field: 'DCTypeNameC', title: '借貸名稱', width: '8%', hidden: true, type: 'string' },
-                    { field: 'CurrencyNo', title: '交易幣別', width: '8%', align: 'center', hidden: false, type: 'string', },
-                    { field: 'Money', title: '交易金額', width: '8%', align: 'right', hidden: false, type: 'number', },
-                    { field: 'Rate1', title: '匯率', width: '5%', align: 'center', hidden: false, type: 'number', },
-                    { field: 'CurrencySt', title: '記帳幣別', width: '8%', align: 'center', type: 'string' },
-                    { field: 'Money1', title: '記帳金額', width: '8%', align: 'right', hidden: false, type: 'number', },
+                    { field: 'CurrencyNo', title: itemdglang.CurrencyNo, width: '8%', align: 'center', hidden: false, type: 'string',},
+                    { field: 'Money', title: itemdglang.Tamount, width: '8%', align: 'right', hidden: false, type: 'number', },
+                    { field: 'Rate1', title: itemdglang.Rate, width: '5%', align: 'center', hidden: false, type: 'number',},
+                    { field: 'CurrencySt', title: itemdglang.CurrencySt, width: '8%', align: 'center', type: 'string' },
+                    { field: 'Money1', title: itemdglang.Aamount, width: '8%', align: 'right', hidden: false, type: 'number',formatter: function (value, row, index) { return parseFloat(value).toFixed(3);}},
                     { field: 'TargetId', title: '對象別Id', width: '10%', hidden: true, type: 'string', },
-                    { field: 'TargetType', title: '對象別', width: '5%', hidden: false, type: 'string', formatter: formatTargetType, },
-                    { field: 'TargetNo', title: '對象編號', width: '5%', hidden: false, type: 'string' },
-                    { field: 'TargetAbbr', title: '對象名稱', width: '8%', hidden: false, type: 'string' },
-                    { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string' },
-                    { field: 'AccProfitNo', title: '會計部門編號', hidden: false, type: 'string' },
-                    { field: 'AccProfitName', title: '會計部門名稱', hidden: false, type: 'string' },
-                    { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string' },
-                    { field: 'AccDeptNo', title: '成本中心編號', hidden: false, type: 'string' }, 
-                    { field: 'AccDeptName', title: '成本中心名稱', hidden: false, type: 'string' },
-                    { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string' },
-                    { field: 'PayDeptNo', title: '支付部門編號', hidden: false, type: 'string' },
-                    { field: 'PayDeptName', title: '支付部門名稱', hidden: false, type: 'string' },
-                    { field: 'CheckType', title: '票據Type', hidden: true, type: 'string' },
-                    { field: 'CheckId', title: '票據Id', hidden: true, type: 'string' },
-                    {
-                        field: 'CheckNo', title: '票據編號', hidden: false, type: 'string',
-                        editor: {
-                            type: 'text',
-                        }
-                    },
-                    { field: 'OffsetNo', title: '立沖編號', hidden: false, type: 'string' },
-                    { field: 'CaseBillNo', title: '專案編號', hidden: false, type: 'string' },
-                    { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string' },
-                    { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string' },
-                    { field: 'SourceDocSubTypeName', title: '來源單別', hidden: false, type: 'string' },
-                    { field: 'SourceNo', title: '來源單號', hidden: false, type: 'string' },
-                    { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string' },
-                    { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string' },
-                    { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string' },
-                    { field: 'InitialDocSubTypeName', title: '原始單別', hidden: false, type: 'string' },
-                    { field: 'InitialNo', title: '原始單號', hidden: false, type: 'string' },
-                    { field: 'ActivityType', title: '活動類別', hidden: false, type: 'string', },
+                    { field: 'TargetType', title: itemdglang.TargetType, width: '5%', hidden: false, type: 'string', formatter: formatTargetType,},
+                    { field: 'TargetNo', title: itemdglang.TargetNo, width: '5%', hidden: false, type: 'string' },//對象編號
+                    { field: 'TargetAbbr', title: itemdglang.TargetAbbr, width: '8%', hidden: false, type: 'string' },//對象名稱
+                    { field: 'AccProfitId', title: '會計部門Id', hidden: true, type: 'string' },//會計部門Id
+                    { field: 'AccProfitNo', title: itemdglang.AccProfitNo, hidden: false, type: 'string' },//會計部門編號
+                    { field: 'AccProfitName', title: itemdglang.AccProfitName, hidden: false, type: 'string' },//會計部門名稱
+                    { field: 'AccDeptId', title: '成本中心Id', hidden: true, type: 'string' },//成本中心Id
+                    { field: 'AccDeptNo', title: itemdglang.AccDeptNo, hidden: false, type: 'string' }, //成本中心編號
+                    { field: 'AccDeptName', title: itemdglang.AccDeptName, hidden: false, type: 'string' },//成本中心名稱
+                    { field: 'PayDeptId', title: '支付部門Id', hidden: true, type: 'string' },//支付部門Id
+                    { field: 'PayDeptNo', title: itemdglang.PayDeptNo, hidden: false, type: 'string' },//支付部門編號
+                    { field: 'PayDeptName', title: itemdglang.PayDeptName, hidden: false, type: 'string' },//支付部門名稱
+                    { field: 'CheckType', title: '票據Type', hidden: true, type: 'string' },//票據Type
+                    { field: 'CheckId', title: '票據Id', hidden: true, type: 'string' },//票據Id
+                    { field: 'CheckNo', title: itemdglang.CheckNo, hidden: false, type: 'string', },//票據編號
+                    { field: 'OffsetNo', title: itemdglang.OffsetNo, hidden: false, type: 'string' },//立沖編號
+                    { field: 'CaseBillNo', title: itemdglang.CaseBillNo, hidden: false, type: 'string' },//來源單DocId
+                    { field: 'SourceDocId', title: '來源單DocId', hidden: true, type: 'string' },//來源單DocId
+                    { field: 'SourceSeqId', title: '來源單SeqId', hidden: true, type: 'string' },//來源單SeqId
+                    { field: 'SourceDocSubTypeName', title: itemdglang.SourceDocSubTypeName, hidden: false, type: 'string' },//來源單別
+                    { field: 'SourceNo', title: itemdglang.SourceNo, hidden: false, type: 'string' },//來源單號
+                    { field: 'InitialProjectId', title: '原始單ProjectId', hidden: true, type: 'string' },//原始單ProjectId
+                    { field: 'InitialDocSubType', title: '原始單DocSubType', hidden: true, type: 'string' },//原始單DocSubType
+                    { field: 'InitialDocId', title: '原始單DocId', hidden: true, type: 'string' },//原始單DocId
+                    { field: 'InitialDocSubTypeName', title: itemdglang.InitialDocSubTypeName, hidden: false, type: 'string' },//原始單別
+                    { field: 'InitialNo', title: itemdglang.InitialNo, hidden: false, type: 'string' },//原始單號
+                    { field: 'ActivityType', title: itemdglang.ActivityType, hidden: false, type: 'string',},//活動類別
                 ]],
                 onClickRow: function (index, row) {
                     if (actioncode === 'edit' || actioncode === 'add') {
@@ -817,7 +819,7 @@
                     if (row != null) {
                         actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=check&webid='+row.WebId;
                         doajax("POST", actionurl, null, function (result) {
-                            if (result.success) {                                
+                            if (result.success) {
                                 pageReload(result.data, 'Check');
                             } else {
                                 $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
@@ -836,7 +838,7 @@
                     if (row != null) {
                         actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=reject&webid=' + row.WebId;
                         doajax("POST", actionurl, null, function (result) {
-                            if (result.success) {                               
+                            if (result.success) {
                                 pageReload(result.data,'Reject');
                             } else {
                                 $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
@@ -996,7 +998,7 @@
 
             return `${year}/${month}/${day}`;
         }
-       
+
         // itemdg欄位Function
         function formatTargetType(value) {
             switch (String(value)) {
@@ -1036,10 +1038,10 @@
             if (msg) {
                 switch (msg) {
                     case 'Check':
-                        $.messager.alert(msglang.Title2, msglang.MsgSes5 + billno);
+                        $.messager.alert(msglang.Title3, msglang.MsgSes5 + billno);
                         break;
                     case 'Reject':
-                        $.messager.alert(msglang.Title2, msglang.MsgSes6 + billno);
+                        $.messager.alert(msglang.Title3, msglang.MsgSes6 + billno);
                         break;                   
                     default:
                         break;

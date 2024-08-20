@@ -646,6 +646,42 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Do you want to cancel? 的當地語系化字串。
+        /// </summary>
+        public static string MsgCfmCancel {
+            get {
+                return ResourceManager.GetString("MsgCfmCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 The data has not been saved. Do you want to leave? 的當地語系化字串。
+        /// </summary>
+        public static string MsgCfmLeave {
+            get {
+                return ResourceManager.GetString("MsgCfmLeave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Do you want to send? 的當地語系化字串。
+        /// </summary>
+        public static string MsgCfmSend {
+            get {
+                return ResourceManager.GetString("MsgCfmSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Server Error： 的當地語系化字串。
+        /// </summary>
+        public static string MsgErrAja {
+            get {
+                return ResourceManager.GetString("MsgErrAja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 An error occurred, error code: 的當地語系化字串。
         /// </summary>
         public static string MsgErrCode {
@@ -655,11 +691,20 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   查詢類似 The data has not been saved. Do you want to leave? 的當地語系化字串。
+        ///   查詢類似 Debit and credit imbalance. 的當地語系化字串。
         /// </summary>
-        public static string MsgLeave {
+        public static string MsgErrDc {
             get {
-                return ResourceManager.GetString("MsgLeave", resourceCulture);
+                return ResourceManager.GetString("MsgErrDc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Please save first! 的當地語系化字串。
+        /// </summary>
+        public static string MsgErrSaveFirst {
+            get {
+                return ResourceManager.GetString("MsgErrSaveFirst", resourceCulture);
             }
         }
         
@@ -678,6 +723,24 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string MsgSelectRow1 {
             get {
                 return ResourceManager.GetString("MsgSelectRow1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Please select the row to be delete first! 的當地語系化字串。
+        /// </summary>
+        public static string MsgSelectRow2 {
+            get {
+                return ResourceManager.GetString("MsgSelectRow2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Please select the row to be fill in first! 的當地語系化字串。
+        /// </summary>
+        public static string MsgSelectRow3 {
+            get {
+                return ResourceManager.GetString("MsgSelectRow3", resourceCulture);
             }
         }
         
@@ -723,6 +786,24 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string MsgSes5 {
             get {
                 return ResourceManager.GetString("MsgSes5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Successfully reject： 的當地語系化字串。
+        /// </summary>
+        public static string MsgSes6 {
+            get {
+                return ResourceManager.GetString("MsgSes6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Successfully closed： 的當地語系化字串。
+        /// </summary>
+        public static string MsgSes7 {
+            get {
+                return ResourceManager.GetString("MsgSes7", resourceCulture);
             }
         }
         

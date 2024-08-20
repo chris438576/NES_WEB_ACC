@@ -479,7 +479,6 @@
         </div>
     </div>
 </div>
-@*dialog_[編輯]會計部門編號*@
 @*dialog_[編輯]成本中心編號_dlgdg4*@
 <div id="dlgEditAccDept" class="easyui-dialog" data-options="modal:true,closed:true">
     <div id="toolbar4">
@@ -576,16 +575,24 @@
             Title1: '@Resources.Content.Confirm', // 確認
             Title2: '@Resources.Content.Alert',  // 警告
             Title3: '@Resources.Content.Prompts',  // 提示
-            MsgLeave: '@Resources.Content.MsgLeave',
-            MsgErrCode: '@Resources.Content.MsgErrCode',
-            MsgSelectRow: '@Resources.Content.MsgSelectRow',
-            MsgSelectRow1: '@Resources.Content.MsgSelectRow1',
+            MsgCfmLeave: '@Resources.Content.MsgCfmLeave',//是否要離開?
+            MsgCfmCancel: '@Resources.Content.MsgCfmLeave',//是否要取消?
+            MsgCfmSend: '@Resources.Content.MsgCfmSend',//是否要送出?
+            MsgErrCode: '@Resources.Content.MsgErrCode',//後端回傳錯誤
+            MsgErrAja: '@Resources.Content.MsgErrAja', //伺服器錯誤
+            MsgErrDc: '@Resources.Content.MsgErrDc', //借貸不平衡
+            MsgErrSaveFirst: '@Resources.Content.MsgErrSaveFirst', //請先儲存
+            MsgSelectRow: '@Resources.Content.MsgSelectRow',//選擇行編輯
+            MsgSelectRow1: '@Resources.Content.MsgSelectRow1',//選擇行刪除
+            MsgSelectRow2: '@Resources.Content.MsgSelectRow2',//選擇行送出
+            MsgSelectRow3: '@Resources.Content.MsgSelectRow3',//選擇行填入
             MsgActionErr: '@Resources.Content.MsgActionErr', //操作碼錯誤
             MsgSes1:'@Resources.Content.MsgSes1', //成功新增
             MsgSes2: '@Resources.Content.MsgSes2', //成功編輯
             MsgSes3: '@Resources.Content.MsgSes3', //成功啟用
             MsgSes4: '@Resources.Content.MsgSes4', //成功停用
             MsgSes5: '@Resources.Content.MsgSes5', //成功送審
+
         };
         //#endregion
         //#region 資料暫存
@@ -651,7 +658,7 @@
                         $('#btnLock').linkbutton('enable');
                         if (actioncode === 'add' || actioncode === 'edit') {
                             if (maindgIndex !== index) {
-                                $.messager.confirm(msglang.Title1, msglang.MsgLeave, function (r) {
+                                $.messager.confirm(msglang.Title1, msglang.MsgCfmLeave, function (r) {
                                     if (r) {
                                         infotabs.tabs('select', 0); //表頭表單切換
                                         advtabs.tabs('select', 0); //進階資訊切換
@@ -1394,12 +1401,12 @@
                                     }
                                 },
                                 error: function (xhr, status, errorThrown) {
-                                    $.messager.alert(msglang.Title2, '儲存資料時發生錯誤!');
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrAja);
                                     console.error(status, errorThrown);
                                 }
                             });
                         } else {
-                            $.messager.alert(msglang.Title2, '請檢查欄位是否輸入或借貸平衡!');
+                            $.messager.alert(msglang.Title2, msglang.MsgErrDc);
                         }
                     }
                     if (actioncode === 'edit') {
@@ -1507,14 +1514,14 @@
                                     }
                                 },
                                 error: function (xhr, status, errorThrown) {
-                                    $.messager.alert(msglang.Title2, '儲存資料時發生錯誤!');
+                                    $.messager.alert(msglang.Title2, msglang.MsgErrAja);
                                     console.error("Status: " + status);
                                     console.error("Error: " + errorThrown);
                                     console.error("Response: " + xhr.responseText);
                                 }
                             });
                         } else {
-                            $.messager.alert(msglang.Title2, '請檢查欄位是否輸入或借貸平衡!');
+                            $.messager.alert(msglang.Title2, msglang.MsgErrDc);
                         }
                     }
                     if (actioncode != 'add' && actioncode != 'edit') {
@@ -1527,7 +1534,7 @@
                     break;
                 case 'cancel':
                     if (actioncode == 'add') {
-                        $.messager.confirm(msglang.Title1, '是否要取消?', function (r) {
+                        $.messager.confirm(msglang.Title1, msglang.MsgCfmCancel, function (r) {
                             if (r) {
                                 //addForm欄位清空
                                 $('#addForm .easyui-datebox').datebox('clear');
@@ -1546,7 +1553,7 @@
                             }
                         });
                     } else if (actioncode == 'edit') {
-                        $.messager.confirm(msglang.Title1, '是否要取消?', function (r) {
+                        $.messager.confirm(msglang.Title1, msglang.MsgCfmCancel, function (r) {
                             if (r) {
                                 //itemdg.datagrid('endEdit', itemdgIndex);
                                 actioncode = 'view';
@@ -1566,10 +1573,10 @@
                     row = maindg.datagrid('getSelected');
                     if (row != null) {
                         if (actioncode == 'add' || actioncode == 'edit') {
-                            $.messager.alert(msglang.Title2, '請先存檔，再覆核。');
+                            $.messager.alert(msglang.Title2, msglang.MsgErrSaveFirst);
                             return;
                         }
-                        $.messager.confirm(msglang.Title1, '是否覆核?', function (r) {
+                        $.messager.confirm(msglang.Title1, msglang.MsgCfmSend, function (r) {
                             if (r) {
                                 actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?webid=' + row.WebId +'&type=lock';
                                 doajax("POST", actionurl, null, function (result) {
@@ -1589,7 +1596,7 @@
                             }
                         });
                     } else {
-                        $.messager.alert(msglang.Title2, "請選擇傳票進行覆核");
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow2);
                     }
 
                     break;
@@ -1599,13 +1606,13 @@
                 case 'dlgdg1insert':
                     var selectedRow = dlgdg1.datagrid('getSelected');
                     if (!selectedRow) {
-                        $.messager.alert(msglang.Title3, '請選擇資料填入！');
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow3);
                         return;
                     }
 
                     // 檢查 itemdgIndex
                     if (itemdgIndex === -1) {
-                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow);
                         return;
                     }
 
@@ -1635,11 +1642,11 @@
                 case 'dlgdg30insert':
                     var selectedRow = dlgdg30.datagrid('getSelected');
                     if (!selectedRow) {
-                        $.messager.alert(msglang.Title3, '請選擇資料填入！');
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow3);
                         return;
                     }
                     if (itemdgIndex === -1) {
-                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow);
                         return;
                     }
                     itemdg.datagrid('updateRow', {
@@ -1654,11 +1661,11 @@
                 case 'dlgdg31insert':
                     var selectedRow = dlgdg31.datagrid('getSelected');
                     if (!selectedRow) {
-                        $.messager.alert(msglang.Title3, '請選擇資料填入！');
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow3);
                         return;
                     }
                     if (itemdgIndex === -1) {
-                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow);
                         return;
 
                     }
@@ -1674,11 +1681,11 @@
                 case 'dlgdg32insert':
                     var selectedRow = dlgdg32.datagrid('getSelected');
                     if (!selectedRow) {
-                        $.messager.alert(msglang.Title3, '請選擇資料填入！');
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow3);
                         return;
                     }
                     if (itemdgIndex === -1) {
-                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow);
                         return;
 
                     }
@@ -1694,11 +1701,11 @@
                 case 'dlgdg33insert':
                     var selectedRow = dlgdg33.datagrid('getSelected');
                     if (!selectedRow) {
-                        $.messager.alert(msglang.Title3, '請選擇資料填入！');
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow3);
                         return;
                     }
                     if (itemdgIndex === -1) {
-                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow);
                         return;
 
                     }
@@ -1717,11 +1724,11 @@
                 case 'dlgdg4insert':
                     var selectedRow = dlgdg4.datagrid('getSelected');
                     if (!selectedRow) {
-                        $.messager.alert(msglang.Title3, '請選擇資料填入！');
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow3);
                         return;
                     }
                     if (itemdgIndex === -1) {
-                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow);
                         return;
                     }
                     // 更新 itemdg 中的编辑行
@@ -1741,11 +1748,11 @@
                 case 'dlgdg5insert':
                     var selectedRow = dlgdg5.datagrid('getSelected');
                     if (!selectedRow) {
-                        $.messager.alert(msglang.Title3, '請選擇資料填入！');
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow3);
                         return;
                     }
                     if (itemdgIndex === -1) {
-                        $.messager.alert(msglang.Title3, msglang.MsgSelectRow);
+                        $.messager.alert(msglang.Title2, msglang.MsgSelectRow);
                         return;
                     }
                     // 更新 itemdg 中的编辑行
@@ -2129,7 +2136,7 @@
                         itemdg.datagrid('selectRow', rowIndex).datagrid('beginEdit', rowIndex);
                         itemdgIndex = rowIndex; // 更新當前行索引
                     } else {
-                        $.messager.alert(msglang.Title2, '請先選擇一行進行操作');
+                        $.messager.alert(msglang.Title3, '請先選擇一行進行操作');
                     }
 
                     break;
@@ -2196,13 +2203,13 @@
                         itemdg.datagrid('selectRow', rowIndex).datagrid('beginEdit', rowIndex);
                         itemdgIndex = rowIndex; // 更新當前行索引
                     } else {
-                        $.messager.alert(msglang.Title2, '請先選擇一行進行操作');
+                        $.messager.alert(msglang.Title3, '請先選擇一行進行操作');
                     }
 
                     break;
                 case 'addReverse':
                     if (itemdgIndex == null || itemdgIndex < 0) {
-                        $.messager.alert(msglang.Title2, '請先選擇一行進行操作');
+                        $.messager.alert(msglang.Title3, '請先選擇一行進行操作');
                         return;
                     }
                     currentRow = itemdg.datagrid('getRows')[itemdgIndex];
@@ -2212,7 +2219,7 @@
                     } else if (currentRow.DCTypeNo === 'C') {
                         reverseDCTypeNo = 'D';
                     } else {
-                        $.messager.alert(msglang.Title2, '當前行的借貸方向不正確');
+                        $.messager.alert(msglang.Title3, '當前行的借貸方向不正確');
                         return;
                     }
                     rowCount = itemdg.datagrid('getRows').length;
@@ -2276,7 +2283,7 @@
                             });
                         }
                     } else {
-                        $.messager.alert(msglang.Title2, '未選擇任何行刪除');
+                        $.messager.alert(msglang.Title3, '未選擇任何行刪除');
                     }
                     break;
                 default:
@@ -2537,7 +2544,7 @@
 
         //
         function selectRow(billno) {
-            var rows = maindg.datagrid('getRows');            
+            var rows = maindg.datagrid('getRows');
             for (var i = 0; i < rows.length; i++) {
                 if (rows[i].BillNo === billno) {
                     maindg.datagrid('selectRow', i);
@@ -2786,52 +2793,56 @@
                             console.error('itemdg is not initialized');
                             return;
                         }
-                        itemdg.datagrid('appendRow', {
-                            Id: '',
-                            Linage: rowCount + 1,
-                            AccNo: '',
-                            AccName: '',
-                            DCTypeNo: '',
-                            CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
-                            CurrencySt: $('.fomCurrencySt').textbox('getValue'),
-                            Rate1: $('.fomRate1').textbox('getValue'),
-                            Money: 0,
-                            TargetId: '',
-                            TargetType: '',
-                            TargetNo: '',
-                            AccProfitId: '',
-                            AccProfitNo: '',
-                            AccDeptId: '',
-                            AccDeptNo: '',
-                            PayDeptId: '',
-                            PayDeptNo: '',
-                            CheckType: '',
-                            CheckId: '',
-                            CheckNo: '',
-                            OffsetNo: '',
-                            SourceDocId: '',
-                            SourceSeqId: '',
-                            SourceDocSubTypeName: '',
-                            InitialProjectId: '',
-                            InitialDocSubType: '',
-                            InitialDocId: '',
-                            InitialDocSubTypeName: '',
-                            ActivityType: '',
-                            Remark: '',
-                            DCTypeNameC: '',
-                            CurrencyNoNote: '',
-                            Money1: 0,
-                            TargetAbbr: '',
-                            AccProfitName: '',
-                            AccDeptName: '',
-                            PayDeptName: '',
-                            CaseBillNo: '',
-                            SourceNo: '',
-                            InitialNo: ''
-                        });
-                        var newIndex = itemdg.datagrid('getRows').length - 1;
-                        itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
-                        itemdgIndex = newIndex;                        
+                        if (itemdgIndex !== undefined) {
+                            itemdg.datagrid('endEdit', itemdgIndex);
+                        } else {
+                            itemdg.datagrid('appendRow', {
+                                Id: '',
+                                Linage: rowCount + 1,
+                                AccNo: '',
+                                AccName: '',
+                                DCTypeNo: '',
+                                CurrencyNo: $('.colCurrencyNo').textbox('getValue'),
+                                CurrencySt: $('.colCurrencySt').textbox('getValue'),
+                                Rate1: $('.colRate1').textbox('getValue'),
+                                Money: 0,
+                                TargetId: '',
+                                TargetType: '',
+                                TargetNo: '',
+                                AccProfitId: '',
+                                AccProfitNo: '',
+                                AccDeptId: '',
+                                AccDeptNo: '',
+                                PayDeptId: '',
+                                PayDeptNo: '',
+                                CheckType: '',
+                                CheckId: '',
+                                CheckNo: '',
+                                OffsetNo: '',
+                                SourceDocId: '',
+                                SourceSeqId: '',
+                                SourceDocSubTypeName: '',
+                                InitialProjectId: '',
+                                InitialDocSubType: '',
+                                InitialDocId: '',
+                                InitialDocSubTypeName: '',
+                                ActivityType: '',
+                                Remark: '',
+                                DCTypeNameC: '',
+                                CurrencyNoNote: '',
+                                Money1: 0,
+                                TargetAbbr: '',
+                                AccProfitName: '',
+                                AccDeptName: '',
+                                PayDeptName: '',
+                                CaseBillNo: '',
+                                SourceNo: '',
+                                InitialNo: ''
+                            });
+                            var newIndex = itemdg.datagrid('getRows').length - 1;
+                            itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
+                            itemdgIndex = newIndex;
+                        }                                            
                     }
                 }
             });
@@ -2857,13 +2868,13 @@
             if (msg) {
                 switch (msg) {
                     case 'Add':
-                        $.messager.alert(msglang.Title2, msglang.MsgSes1 + billno);
+                        $.messager.alert(msglang.Title3, msglang.MsgSes1 + billno);
                         break;
                     case 'Edit':
-                        $.messager.alert(msglang.Title2, msglang.MsgSes2 + billno);
+                        $.messager.alert(msglang.Title3, msglang.MsgSes2 + billno);
                         break;
                     case 'Lock':
-                        $.messager.alert(msglang.Title2, msglang.MsgSes3 + billno);
+                        $.messager.alert(msglang.Title3, msglang.MsgSes5 + billno);
                         break;
                     default:
                         break;
