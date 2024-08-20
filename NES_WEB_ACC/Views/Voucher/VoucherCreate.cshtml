@@ -2783,28 +2783,29 @@
     <script>
         // 監聽器        
         // itemdg編輯_remark按下enter
-        $(document).ready(function () {  
+        $(document).ready(function () {
             $(document).keydown(function (e) {
                 if (e.key === 'Enter') {
-                    if (actioncode =='add' || actioncode =='edit') {
+                    if (actioncode == 'add' || actioncode == 'edit') {
                         rowCount = itemdg.datagrid('getRows').length;
+
                         // 先檢查 itemdg 是否被正確初始化
                         if (!itemdg) {
                             console.error('itemdg is not initialized');
                             return;
                         }
-                        if (itemdgIndex !== undefined) {
-                            itemdg.datagrid('endEdit', itemdgIndex);
-                        } else {
+
+                        // 如果 itemdg 是空的，直接新增第一列
+                        if (rowCount === 0) {
                             itemdg.datagrid('appendRow', {
                                 Id: '',
-                                Linage: rowCount + 1,
+                                Linage: 1,
                                 AccNo: '',
                                 AccName: '',
                                 DCTypeNo: '',
-                                CurrencyNo: $('.colCurrencyNo').textbox('getValue'),
-                                CurrencySt: $('.colCurrencySt').textbox('getValue'),
-                                Rate1: $('.colRate1').textbox('getValue'),
+                                CurrencyNo: (actioncode == 'add') ? $('.fomCurrencyNo').textbox('getValue') : $('.colCurrencyNo').textbox('getValue'),
+                                CurrencySt: (actioncode == 'add') ? $('.fomCurrencySt').textbox('getValue') : $('.colCurrencySt').textbox('getValue'),
+                                Rate1: (actioncode == 'add') ? $('.fomRate1').textbox('getValue') : $('.colRate1').textbox('getValue'),
                                 Money: 0,
                                 TargetId: '',
                                 TargetType: '',
@@ -2842,11 +2843,63 @@
                             var newIndex = itemdg.datagrid('getRows').length - 1;
                             itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
                             itemdgIndex = newIndex;
-                        }                                            
+                        } else {
+                            if (itemdgIndex !== undefined) {
+                                itemdg.datagrid('endEdit', itemdgIndex);
+                            } else {
+                                itemdg.datagrid('appendRow', {
+                                    Id: '',
+                                    Linage: rowCount + 1,
+                                    AccNo: '',
+                                    AccName: '',
+                                    DCTypeNo: '',
+                                    CurrencyNo: (actioncode == 'add') ? $('.fomCurrencyNo').textbox('getValue') : $('.colCurrencyNo').textbox('getValue'),
+                                    CurrencySt: (actioncode == 'add') ? $('.fomCurrencySt').textbox('getValue') : $('.colCurrencySt').textbox('getValue'),
+                                    Rate1: (actioncode == 'add') ? $('.fomRate1').textbox('getValue') : $('.colRate1').textbox('getValue'),
+                                    Money: 0,
+                                    TargetId: '',
+                                    TargetType: '',
+                                    TargetNo: '',
+                                    AccProfitId: '',
+                                    AccProfitNo: '',
+                                    AccDeptId: '',
+                                    AccDeptNo: '',
+                                    PayDeptId: '',
+                                    PayDeptNo: '',
+                                    CheckType: '',
+                                    CheckId: '',
+                                    CheckNo: '',
+                                    OffsetNo: '',
+                                    SourceDocId: '',
+                                    SourceSeqId: '',
+                                    SourceDocSubTypeName: '',
+                                    InitialProjectId: '',
+                                    InitialDocSubType: '',
+                                    InitialDocId: '',
+                                    InitialDocSubTypeName: '',
+                                    ActivityType: '',
+                                    Remark: '',
+                                    DCTypeNameC: '',
+                                    CurrencyNoNote: '',
+                                    Money1: 0,
+                                    TargetAbbr: '',
+                                    AccProfitName: '',
+                                    AccDeptName: '',
+                                    PayDeptName: '',
+                                    CaseBillNo: '',
+                                    SourceNo: '',
+                                    InitialNo: ''
+                                });
+                                var newIndex = itemdg.datagrid('getRows').length - 1;
+                                itemdg.datagrid('selectRow', newIndex).datagrid('beginEdit', newIndex);
+                                itemdgIndex = newIndex;
+                            }
+                        }
                     }
                 }
             });
-        });       
+        });
+
     </script>
     <script>
         $(document).ready(function () {
