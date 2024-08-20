@@ -1108,7 +1108,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Report\RDLC\VoucherBillReport.rdlc" />
+    <Content Include="Report\RDLC\VoucherBillReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
