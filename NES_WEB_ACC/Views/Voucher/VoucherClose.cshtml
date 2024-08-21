@@ -905,6 +905,7 @@
                     }
                     break;
                 case 'report':
+                    $.messager.progress()
                     row = maindg.datagrid('getSelected');
                     if (row != null) {
                         let winheight = $(window).height();
@@ -914,9 +915,11 @@
                         $('#reportIframe').attr('src', reportUrl);
 
                         // 打開Dialog
-                        $('#dlgReport').dialog({ height: winheight - 80, width: 800, title: '傳票報表' });
+                        $('#dlgReport').dialog({ height: winheight - 80, width: winwidth-750, title: '傳票報表' });
                         $('#dlgReport').dialog('open').dialog('center');
+                        $.messager.progress('close')
                     } else {
+                        $.messager.progress('close')
                         alert("請選擇傳票進行退件");
                     }
 

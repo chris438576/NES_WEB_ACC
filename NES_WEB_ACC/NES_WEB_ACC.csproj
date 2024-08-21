@@ -263,6 +263,7 @@
     <Compile Include="ViewModels\ForM\ACC_AccTitleNo_MX_ViewModel.cs" />
     <Compile Include="ViewModels\ForM\ACC_VoucherDetail_ViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
+    <Compile Include="ViewModels\RDLC\VoucherMainReportViewModel.cs" />
     <Compile Include="ViewModels\VoucherDataViewModel.cs" />
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />
@@ -273,7 +274,6 @@
     <Compile Include="ViewModels\VoucherCreateEditTargetNo2ViewModel.cs" />
     <Compile Include="ViewModels\VoucherCreateEditTargetNo3ViewModel.cs" />
     <Compile Include="ViewModels\VoucherCreateEditTargetNo4ViewModel.cs" />
-    <Compile Include="ViewModels\VoucherCreateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

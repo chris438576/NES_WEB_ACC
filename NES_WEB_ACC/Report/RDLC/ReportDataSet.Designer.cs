@@ -642,21 +642,39 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             private global::System.Data.DataColumn columnBillDate;
             
-            private global::System.Data.DataColumn columnEmpNo;
+            private global::System.Data.DataColumn columnCreateBy;
             
-            private global::System.Data.DataColumn columnEmpNameC;
+            private global::System.Data.DataColumn columnCreateByName;
+            
+            private global::System.Data.DataColumn columnCreateDate;
+            
+            private global::System.Data.DataColumn columnCheckBy;
+            
+            private global::System.Data.DataColumn columnCheckByName;
+            
+            private global::System.Data.DataColumn columnCheckDate;
             
             private global::System.Data.DataColumn columnStateBy;
+            
+            private global::System.Data.DataColumn columnStateByName;
             
             private global::System.Data.DataColumn columnStateDate;
             
             private global::System.Data.DataColumn columnClosedBy;
             
+            private global::System.Data.DataColumn columnClosedByName;
+            
             private global::System.Data.DataColumn columnClosedDate;
+            
+            private global::System.Data.DataColumn columnCurrencyNo;
+            
+            private global::System.Data.DataColumn columnCurrencySt;
             
             private global::System.Data.DataColumn columnMoney21;
             
             private global::System.Data.DataColumn columnMoney22;
+            
+            private global::System.Data.DataColumn columnRemark;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -709,17 +727,49 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn EmpNoColumn {
+            public global::System.Data.DataColumn CreateByColumn {
                 get {
-                    return this.columnEmpNo;
+                    return this.columnCreateBy;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn EmpNameCColumn {
+            public global::System.Data.DataColumn CreateByNameColumn {
                 get {
-                    return this.columnEmpNameC;
+                    return this.columnCreateByName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CreateDateColumn {
+                get {
+                    return this.columnCreateDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CheckByColumn {
+                get {
+                    return this.columnCheckBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CheckByNameColumn {
+                get {
+                    return this.columnCheckByName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CheckDateColumn {
+                get {
+                    return this.columnCheckDate;
                 }
             }
             
@@ -728,6 +778,14 @@ namespace NES_WEB_ACC.Report.RDLC {
             public global::System.Data.DataColumn StateByColumn {
                 get {
                     return this.columnStateBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn StateByNameColumn {
+                get {
+                    return this.columnStateByName;
                 }
             }
             
@@ -749,9 +807,33 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ClosedByNameColumn {
+                get {
+                    return this.columnClosedByName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn ClosedDateColumn {
                 get {
                     return this.columnClosedDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CurrencyNoColumn {
+                get {
+                    return this.columnCurrencyNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CurrencyStColumn {
+                get {
+                    return this.columnCurrencySt;
                 }
             }
             
@@ -768,6 +850,14 @@ namespace NES_WEB_ACC.Report.RDLC {
             public global::System.Data.DataColumn Money22Column {
                 get {
                     return this.columnMoney22;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn RemarkColumn {
+                get {
+                    return this.columnRemark;
                 }
             }
             
@@ -808,19 +898,47 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public VoucherMainReportRow AddVoucherMainReportRow(string BillNo, string BillDate, string EmpNo, string EmpNameC, string StateBy, string StateDate, string ClosedBy, string ClosedDate, string Money21, string Money22) {
+            public VoucherMainReportRow AddVoucherMainReportRow(
+                        string BillNo, 
+                        string BillDate, 
+                        string CreateBy, 
+                        string CreateByName, 
+                        string CreateDate, 
+                        string CheckBy, 
+                        string CheckByName, 
+                        string CheckDate, 
+                        string StateBy, 
+                        string StateByName, 
+                        string StateDate, 
+                        string ClosedBy, 
+                        string ClosedByName, 
+                        string ClosedDate, 
+                        string CurrencyNo, 
+                        string CurrencySt, 
+                        string Money21, 
+                        string Money22, 
+                        string Remark) {
                 VoucherMainReportRow rowVoucherMainReportRow = ((VoucherMainReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         BillNo,
                         BillDate,
-                        EmpNo,
-                        EmpNameC,
+                        CreateBy,
+                        CreateByName,
+                        CreateDate,
+                        CheckBy,
+                        CheckByName,
+                        CheckDate,
                         StateBy,
+                        StateByName,
                         StateDate,
                         ClosedBy,
+                        ClosedByName,
                         ClosedDate,
+                        CurrencyNo,
+                        CurrencySt,
                         Money21,
-                        Money22};
+                        Money22,
+                        Remark};
                 rowVoucherMainReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVoucherMainReportRow);
                 return rowVoucherMainReportRow;
@@ -845,14 +963,23 @@ namespace NES_WEB_ACC.Report.RDLC {
             internal void InitVars() {
                 this.columnBillNo = base.Columns["BillNo"];
                 this.columnBillDate = base.Columns["BillDate"];
-                this.columnEmpNo = base.Columns["EmpNo"];
-                this.columnEmpNameC = base.Columns["EmpNameC"];
+                this.columnCreateBy = base.Columns["CreateBy"];
+                this.columnCreateByName = base.Columns["CreateByName"];
+                this.columnCreateDate = base.Columns["CreateDate"];
+                this.columnCheckBy = base.Columns["CheckBy"];
+                this.columnCheckByName = base.Columns["CheckByName"];
+                this.columnCheckDate = base.Columns["CheckDate"];
                 this.columnStateBy = base.Columns["StateBy"];
+                this.columnStateByName = base.Columns["StateByName"];
                 this.columnStateDate = base.Columns["StateDate"];
                 this.columnClosedBy = base.Columns["ClosedBy"];
+                this.columnClosedByName = base.Columns["ClosedByName"];
                 this.columnClosedDate = base.Columns["ClosedDate"];
+                this.columnCurrencyNo = base.Columns["CurrencyNo"];
+                this.columnCurrencySt = base.Columns["CurrencySt"];
                 this.columnMoney21 = base.Columns["Money21"];
                 this.columnMoney22 = base.Columns["Money22"];
+                this.columnRemark = base.Columns["Remark"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -862,22 +989,40 @@ namespace NES_WEB_ACC.Report.RDLC {
                 base.Columns.Add(this.columnBillNo);
                 this.columnBillDate = new global::System.Data.DataColumn("BillDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBillDate);
-                this.columnEmpNo = new global::System.Data.DataColumn("EmpNo", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmpNo);
-                this.columnEmpNameC = new global::System.Data.DataColumn("EmpNameC", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmpNameC);
+                this.columnCreateBy = new global::System.Data.DataColumn("CreateBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCreateBy);
+                this.columnCreateByName = new global::System.Data.DataColumn("CreateByName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCreateByName);
+                this.columnCreateDate = new global::System.Data.DataColumn("CreateDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCreateDate);
+                this.columnCheckBy = new global::System.Data.DataColumn("CheckBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCheckBy);
+                this.columnCheckByName = new global::System.Data.DataColumn("CheckByName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCheckByName);
+                this.columnCheckDate = new global::System.Data.DataColumn("CheckDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCheckDate);
                 this.columnStateBy = new global::System.Data.DataColumn("StateBy", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStateBy);
+                this.columnStateByName = new global::System.Data.DataColumn("StateByName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStateByName);
                 this.columnStateDate = new global::System.Data.DataColumn("StateDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStateDate);
                 this.columnClosedBy = new global::System.Data.DataColumn("ClosedBy", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnClosedBy);
+                this.columnClosedByName = new global::System.Data.DataColumn("ClosedByName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnClosedByName);
                 this.columnClosedDate = new global::System.Data.DataColumn("ClosedDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnClosedDate);
+                this.columnCurrencyNo = new global::System.Data.DataColumn("CurrencyNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCurrencyNo);
+                this.columnCurrencySt = new global::System.Data.DataColumn("CurrencySt", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCurrencySt);
                 this.columnMoney21 = new global::System.Data.DataColumn("Money21", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMoney21);
                 this.columnMoney22 = new global::System.Data.DataColumn("Money22", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMoney22);
+                this.columnRemark = new global::System.Data.DataColumn("Remark", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRemark);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1015,7 +1160,7 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             private global::System.Data.DataColumn columnAccNo;
             
-            private global::System.Data.DataColumn columnAccNameC;
+            private global::System.Data.DataColumn columnAccName;
             
             private global::System.Data.DataColumn columnDCTypeNo;
             
@@ -1028,6 +1173,8 @@ namespace NES_WEB_ACC.Report.RDLC {
             private global::System.Data.DataColumn columnMoney1;
             
             private global::System.Data.DataColumn columnCurrencySt;
+            
+            private global::System.Data.DataColumn columnRemark;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -1080,9 +1227,9 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn AccNameCColumn {
+            public global::System.Data.DataColumn AccNameColumn {
                 get {
-                    return this.columnAccNameC;
+                    return this.columnAccName;
                 }
             }
             
@@ -1136,6 +1283,14 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn RemarkColumn {
+                get {
+                    return this.columnRemark;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1171,18 +1326,19 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public VoucherItemReportRow AddVoucherItemReportRow(string Linage, string AccNo, string AccNameC, string DCTypeNo, string CurrencyNo, string Money, string Rate1, string Money1, string CurrencySt) {
+            public VoucherItemReportRow AddVoucherItemReportRow(string Linage, string AccNo, string AccName, string DCTypeNo, string CurrencyNo, string Money, string Rate1, string Money1, string CurrencySt, string Remark) {
                 VoucherItemReportRow rowVoucherItemReportRow = ((VoucherItemReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Linage,
                         AccNo,
-                        AccNameC,
+                        AccName,
                         DCTypeNo,
                         CurrencyNo,
                         Money,
                         Rate1,
                         Money1,
-                        CurrencySt};
+                        CurrencySt,
+                        Remark};
                 rowVoucherItemReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVoucherItemReportRow);
                 return rowVoucherItemReportRow;
@@ -1207,13 +1363,14 @@ namespace NES_WEB_ACC.Report.RDLC {
             internal void InitVars() {
                 this.columnLinage = base.Columns["Linage"];
                 this.columnAccNo = base.Columns["AccNo"];
-                this.columnAccNameC = base.Columns["AccNameC"];
+                this.columnAccName = base.Columns["AccName"];
                 this.columnDCTypeNo = base.Columns["DCTypeNo"];
                 this.columnCurrencyNo = base.Columns["CurrencyNo"];
                 this.columnMoney = base.Columns["Money"];
                 this.columnRate1 = base.Columns["Rate1"];
                 this.columnMoney1 = base.Columns["Money1"];
                 this.columnCurrencySt = base.Columns["CurrencySt"];
+                this.columnRemark = base.Columns["Remark"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1223,8 +1380,8 @@ namespace NES_WEB_ACC.Report.RDLC {
                 base.Columns.Add(this.columnLinage);
                 this.columnAccNo = new global::System.Data.DataColumn("AccNo", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAccNo);
-                this.columnAccNameC = new global::System.Data.DataColumn("AccNameC", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAccNameC);
+                this.columnAccName = new global::System.Data.DataColumn("AccName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccName);
                 this.columnDCTypeNo = new global::System.Data.DataColumn("DCTypeNo", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDCTypeNo);
                 this.columnCurrencyNo = new global::System.Data.DataColumn("CurrencyNo", typeof(string), null, global::System.Data.MappingType.Element);
@@ -1237,6 +1394,8 @@ namespace NES_WEB_ACC.Report.RDLC {
                 base.Columns.Add(this.columnMoney1);
                 this.columnCurrencySt = new global::System.Data.DataColumn("CurrencySt", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCurrencySt);
+                this.columnRemark = new global::System.Data.DataColumn("Remark", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRemark);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1538,33 +1697,97 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string EmpNo {
+            public string CreateBy {
                 get {
                     try {
-                        return ((string)(this[this.tableVoucherMainReport.EmpNoColumn]));
+                        return ((string)(this[this.tableVoucherMainReport.CreateByColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'EmpNo\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'CreateBy\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableVoucherMainReport.EmpNoColumn] = value;
+                    this[this.tableVoucherMainReport.CreateByColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string EmpNameC {
+            public string CreateByName {
                 get {
                     try {
-                        return ((string)(this[this.tableVoucherMainReport.EmpNameCColumn]));
+                        return ((string)(this[this.tableVoucherMainReport.CreateByNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'EmpNameC\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'CreateByName\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableVoucherMainReport.EmpNameCColumn] = value;
+                    this[this.tableVoucherMainReport.CreateByNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CreateDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.CreateDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'CreateDate\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.CreateDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CheckBy {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.CheckByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'CheckBy\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.CheckByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CheckByName {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.CheckByNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'CheckByName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.CheckByNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CheckDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.CheckDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'CheckDate\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.CheckDateColumn] = value;
                 }
             }
             
@@ -1581,6 +1804,22 @@ namespace NES_WEB_ACC.Report.RDLC {
                 }
                 set {
                     this[this.tableVoucherMainReport.StateByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string StateByName {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.StateByNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'StateByName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.StateByNameColumn] = value;
                 }
             }
             
@@ -1618,6 +1857,22 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string ClosedByName {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.ClosedByNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'ClosedByName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.ClosedByNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string ClosedDate {
                 get {
                     try {
@@ -1629,6 +1884,38 @@ namespace NES_WEB_ACC.Report.RDLC {
                 }
                 set {
                     this[this.tableVoucherMainReport.ClosedDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CurrencyNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.CurrencyNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'CurrencyNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.CurrencyNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CurrencySt {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.CurrencyStColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'CurrencySt\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.CurrencyStColumn] = value;
                 }
             }
             
@@ -1666,6 +1953,22 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Remark {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.RemarkColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'Remark\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.RemarkColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsBillNoNull() {
                 return this.IsNull(this.tableVoucherMainReport.BillNoColumn);
             }
@@ -1690,26 +1993,74 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsEmpNoNull() {
-                return this.IsNull(this.tableVoucherMainReport.EmpNoColumn);
+            public bool IsCreateByNull() {
+                return this.IsNull(this.tableVoucherMainReport.CreateByColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetEmpNoNull() {
-                this[this.tableVoucherMainReport.EmpNoColumn] = global::System.Convert.DBNull;
+            public void SetCreateByNull() {
+                this[this.tableVoucherMainReport.CreateByColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsEmpNameCNull() {
-                return this.IsNull(this.tableVoucherMainReport.EmpNameCColumn);
+            public bool IsCreateByNameNull() {
+                return this.IsNull(this.tableVoucherMainReport.CreateByNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetEmpNameCNull() {
-                this[this.tableVoucherMainReport.EmpNameCColumn] = global::System.Convert.DBNull;
+            public void SetCreateByNameNull() {
+                this[this.tableVoucherMainReport.CreateByNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCreateDateNull() {
+                return this.IsNull(this.tableVoucherMainReport.CreateDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCreateDateNull() {
+                this[this.tableVoucherMainReport.CreateDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCheckByNull() {
+                return this.IsNull(this.tableVoucherMainReport.CheckByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCheckByNull() {
+                this[this.tableVoucherMainReport.CheckByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCheckByNameNull() {
+                return this.IsNull(this.tableVoucherMainReport.CheckByNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCheckByNameNull() {
+                this[this.tableVoucherMainReport.CheckByNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCheckDateNull() {
+                return this.IsNull(this.tableVoucherMainReport.CheckDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCheckDateNull() {
+                this[this.tableVoucherMainReport.CheckDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1722,6 +2073,18 @@ namespace NES_WEB_ACC.Report.RDLC {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetStateByNull() {
                 this[this.tableVoucherMainReport.StateByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsStateByNameNull() {
+                return this.IsNull(this.tableVoucherMainReport.StateByNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetStateByNameNull() {
+                this[this.tableVoucherMainReport.StateByNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1750,6 +2113,18 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsClosedByNameNull() {
+                return this.IsNull(this.tableVoucherMainReport.ClosedByNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetClosedByNameNull() {
+                this[this.tableVoucherMainReport.ClosedByNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsClosedDateNull() {
                 return this.IsNull(this.tableVoucherMainReport.ClosedDateColumn);
             }
@@ -1758,6 +2133,30 @@ namespace NES_WEB_ACC.Report.RDLC {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetClosedDateNull() {
                 this[this.tableVoucherMainReport.ClosedDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCurrencyNoNull() {
+                return this.IsNull(this.tableVoucherMainReport.CurrencyNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCurrencyNoNull() {
+                this[this.tableVoucherMainReport.CurrencyNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCurrencyStNull() {
+                return this.IsNull(this.tableVoucherMainReport.CurrencyStColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCurrencyStNull() {
+                this[this.tableVoucherMainReport.CurrencyStColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1782,6 +2181,18 @@ namespace NES_WEB_ACC.Report.RDLC {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetMoney22Null() {
                 this[this.tableVoucherMainReport.Money22Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsRemarkNull() {
+                return this.IsNull(this.tableVoucherMainReport.RemarkColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetRemarkNull() {
+                this[this.tableVoucherMainReport.RemarkColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1833,17 +2244,17 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string AccNameC {
+            public string AccName {
                 get {
                     try {
-                        return ((string)(this[this.tableVoucherItemReport.AccNameCColumn]));
+                        return ((string)(this[this.tableVoucherItemReport.AccNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherItemReport\' 中資料行 \'AccNameC\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherItemReport\' 中資料行 \'AccName\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableVoucherItemReport.AccNameCColumn] = value;
+                    this[this.tableVoucherItemReport.AccNameColumn] = value;
                 }
             }
             
@@ -1945,6 +2356,22 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Remark {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherItemReport.RemarkColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherItemReport\' 中資料行 \'Remark\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherItemReport.RemarkColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsLinageNull() {
                 return this.IsNull(this.tableVoucherItemReport.LinageColumn);
             }
@@ -1969,14 +2396,14 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsAccNameCNull() {
-                return this.IsNull(this.tableVoucherItemReport.AccNameCColumn);
+            public bool IsAccNameNull() {
+                return this.IsNull(this.tableVoucherItemReport.AccNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetAccNameCNull() {
-                this[this.tableVoucherItemReport.AccNameCColumn] = global::System.Convert.DBNull;
+            public void SetAccNameNull() {
+                this[this.tableVoucherItemReport.AccNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2049,6 +2476,18 @@ namespace NES_WEB_ACC.Report.RDLC {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetCurrencyStNull() {
                 this[this.tableVoucherItemReport.CurrencyStColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsRemarkNull() {
+                return this.IsNull(this.tableVoucherItemReport.RemarkColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetRemarkNull() {
+                this[this.tableVoucherItemReport.RemarkColumn] = global::System.Convert.DBNull;
             }
         }
         

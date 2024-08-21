@@ -1,5 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Reporting.WebForms;
+using NES_WEB_ACC.ViewModels.ForM;
+using NES_WEB_ACC.ViewModels.RDLC;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -12,7 +14,8 @@ namespace NES_WEB_ACC.Controllers
     {
         public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
         private NES_WEB_ACCEntities _dbContext = new NES_WEB_ACCEntities();
-        
+
+        //------ 介面 ------// 
         /// <summary>
         /// 測試View
         /// </summary>
@@ -55,6 +58,8 @@ namespace NES_WEB_ACC.Controllers
             // 導向ReportViewer.aspx
             return Redirect("~/Report/ReportViewer.aspx");
         }
+
+        //------ Data to ASPX ------// 
         /// <summary>
         /// 對應aspx的V2.0版，可傳多張資料表
         /// </summary>
@@ -64,19 +69,31 @@ namespace NES_WEB_ACC.Controllers
         {
             string EmpNo = (string)Session["EmpNo"];            
             string sqlInfo = @"
-                select BillNo,CONVERT(varchar(100), BillDate, 111) as BillDate,EmpNo,EmpNameC, StateBy, StateDate, ClosedBy, ClosedDate,Money21,Money22 from NES_WEB_ACC.dbo.ACC_VoucherInfo where WebId = @reportId
+                select 
+	                a.BillNo
+	                ,CONVERT(varchar(100), a.BillDate, 111) as BillDate
+	                ,a.EmpNo as CreateBy ,a.EmpNameC as CreateByName	, a.CreateDate
+	                ,a.CheckBy			, d.EmpNameC as CheckByName		, a.CheckDate
+	                ,a.StateBy			, b.EmpNameC as StateByName		, a.StateDate
+	                ,a.ClosedBy			, c.EmpNameC as ClosedByName	, a.ClosedDate
+	                , a.CurrencyNo, a.CurrencySt ,a.Money21,a.Money22, a.Remark 
+                from NES_WEB_ACC.dbo.ACC_VoucherInfo as a
+                left join NES_WEB.dbo.NES_EmployeeInfo as b on b.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.StateBy 
+                left join NES_WEB.dbo.NES_EmployeeInfo as c on c.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.ClosedBy
+                left join NES_WEB.dbo.NES_EmployeeInfo as d on d.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.CheckBy
+                where WebId = @reportId
             ";
             string sqlDetail = @"
-                select Linage, AccNo, AccNameC,DCTypeNo, CurrencyNo, Money, Rate1, CurrencySt, Money1  from NES_WEB_ACC.dbo.ACC_VoucherDetail where WebDocId = @reportId
+                select Linage, AccNo, AccNameC as AccName,Remark,DCTypeNo, CurrencyNo, Money, Rate1, CurrencySt, Money1  from NES_WEB_ACC.dbo.ACC_VoucherDetail where WebDocId = @reportId order by Linage
             ";
 
-            ACC_VoucherInfo voucherInfo;
-            List<ACC_VoucherDetail> voucherDetail = new List<ACC_VoucherDetail>();
+            VoucherMainReportViewModel voucherInfo;
+            List<ACC_VoucherDetail_ViewModel> voucherDetail = new List<ACC_VoucherDetail_ViewModel>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                voucherInfo = conn.QueryFirstOrDefault<ACC_VoucherInfo>(sqlInfo, new { reportId });
-                voucherDetail = conn.Query<ACC_VoucherDetail>(sqlDetail, new { reportId }).ToList();
+                voucherInfo = conn.QueryFirstOrDefault<VoucherMainReportViewModel>(sqlInfo, new { reportId });
+                voucherDetail = conn.Query<ACC_VoucherDetail_ViewModel>(sqlDetail, new { reportId }).ToList();
             }                      
 
             // 報表參數設定
@@ -87,7 +104,7 @@ namespace NES_WEB_ACC.Controllers
             };
             var reportDataSources = new Dictionary<string, ReportDataSource>
             {
-                { "VoucherBillMain", new ReportDataSource("VoucherBillMain", new List<ACC_VoucherInfo> { voucherInfo }) },
+                { "VoucherBillMain", new ReportDataSource("VoucherBillMain", new List<VoucherMainReportViewModel> { voucherInfo }) },
                 { "VoucherBillItem", new ReportDataSource("VoucherBillItem", voucherDetail) }
             };
 
