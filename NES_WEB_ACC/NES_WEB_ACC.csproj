@@ -241,12 +241,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReportDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Report\ReportViewer.aspx.cs">
-      <DependentUpon>ReportViewer.aspx</DependentUpon>
+    <Compile Include="Report\ReportViewer_V1.aspx.cs">
+      <DependentUpon>ReportViewer_V1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Report\ReportViewer.aspx.designer.cs">
-      <DependentUpon>ReportViewer.aspx</DependentUpon>
+    <Compile Include="Report\ReportViewer_V1.aspx.designer.cs">
+      <DependentUpon>ReportViewer_V1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportViewer_V3.aspx.cs">
+      <DependentUpon>ReportViewer_V3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReportViewer_V3.aspx.designer.cs">
+      <DependentUpon>ReportViewer_V3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportViewer_V2.aspx.cs">
+      <DependentUpon>ReportViewer_V2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ReportViewer_V2.aspx.designer.cs">
+      <DependentUpon>ReportViewer_V2.aspx</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="SYS_Permissions.cs">
@@ -264,6 +278,8 @@
     <Compile Include="ViewModels\ForM\ACC_VoucherDetail_ViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\RDLC\VoucherMainReportViewModel.cs" />
+    <Compile Include="ViewModels\RDLC\VoucherReportViewModel.cs" />
+    <Compile Include="ViewModels\SearchDateViewModel.cs" />
     <Compile Include="ViewModels\VoucherDataViewModel.cs" />
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />
@@ -294,7 +310,9 @@
       <DependentUpon>NES_WEB_ACC.edmx</DependentUpon>
       <LastGenOutput>NES_WEB_ACC.cs</LastGenOutput>
     </Content>
-    <Content Include="Report\ReportViewer.aspx" />
+    <Content Include="Report\ReportViewer_V1.aspx" />
+    <Content Include="Report\ReportViewer_V3.aspx" />
+    <Content Include="Report\ReportViewer_V2.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\easyui\datagrid-cellediting.js" />
@@ -302,6 +320,7 @@
     <Content Include="Scripts\easyui\jquery.edatagrid.js" />
     <Content Include="Scripts\easyui\plugins\jquery.calendar" />
     <Content Include="Scripts\easyui\themes\icons\copy.png" />
+    <Content Include="Scripts\easyui\themes\icons\icons8-report.png" />
     <Content Include="Scripts\easyui\themes\icons\icons8-start.png" />
     <Content Include="Scripts\easyui\themes\icons\icons8-stop.png" />
     <Content Include="Scripts\easyui\themes\icons\icons8-synchronize.png" />
@@ -1055,13 +1074,17 @@
     <Content Include="Views\Shared\_VoucherTableInfoPartial.cshtml" />
     <Content Include="Views\Shared\_VoucherDCShowPartial.cshtml" />
     <Content Include="Views\Shared\_VoucherTableAdvPartial.cshtml" />
-    <Content Include="Views\ReportView\AccReport.cshtml" />
     <Content Include="Views\Voucher\VoucherCheck.cshtml" />
     <Content Include="Views\AccSet\AccTitle.cshtml" />
     <Content Include="Views\Home\Workflow.cshtml" />
     <Content Include="Views\Shared\_ToolBar2Partial.cshtml" />
     <Content Include="Views\Voucher\VoucherClose.cshtml" />
     <Content Include="Views\AccSet\Rate.cshtml" />
+    <Content Include="Views\ReportView\Journal.cshtml" />
+    <Content Include="Views\ReportView\Voucher.cshtml" />
+    <Content Include="Views\ReportView\AccReport.cshtml" />
+    <Content Include="Views\ReportView\BalanceSheet.cshtml" />
+    <Content Include="Views\ReportView\IncomeStatement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1109,6 +1132,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Report\RDLC\VoucherBillReport.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Report\RDLC\VoucherReportItem.rdlc" />
+    <Content Include="Report\RDLC\VoucherReportMain.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

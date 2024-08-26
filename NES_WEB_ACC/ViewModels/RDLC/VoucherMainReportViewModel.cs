@@ -7,6 +7,7 @@ namespace NES_WEB_ACC.ViewModels.RDLC
 {
     public class VoucherMainReportViewModel
     {
+        public Guid WebId { get; set; }
         public string BillNo { get; set; }
         public DateTime BillDate { get; set; }
         public string CreateBy { get; set; }

@@ -329,26 +329,31 @@
     <div class="row flowcontent">
         <!--Header-->
         <div class="row flow-header">
-            <div class="col-md-4 header-fix-1">
+            <div class="col-md-3 header-fix-1">
                 <div class="col-header">
                     <label>墨西哥部門</label>
                 </div>
             </div>
-            <div class="col-md-4 header-fix-1">
+            <div class="col-md-3 header-fix-1">
                 <div class="col-header">
                     <label>主管</label>
                 </div>
             </div>
-            <div class="col-md-4 header-fix-3">
+            <div class="col-md-3 header-fix-3">
                 <div class="col-header">
                     <label>台灣部門</label>
+                </div>
+            </div>
+            <div class="col-md-3 header-fix-3">
+                <div class="col-header">
+                    <label>報表</label>
                 </div>
             </div>
         </div>
         <!--Body-->
         <div class="row flow-body">
-            <!--Left-->
-            <div class="col-md-4 header-fix-1 clearpad">
+            <!--墨西哥部門-->
+            <div class="col-md-3 header-fix-1 clearpad">
                 <!--Row 1-->
                 <div class="row row-first">
                     <div class="col-md-3 clearpad"></div>
@@ -364,10 +369,10 @@
                         <div class="chart-left"></div>
                     </div>
                 </div>
-              
+
             </div>
-            <!--Middle-->
-            <div class="col-md-4 header-fix-1 clearpad">
+            <!--主管-->
+            <div class="col-md-3 header-fix-1 clearpad">
                 <!--Row 1-->
                 <div class="row row-first">
                     <div class="col-md-3">
@@ -396,8 +401,8 @@
                 <div class="row row-space2"></div>
 
             </div>
-            <!--Right-->
-            <div class="col-md-4 header-fix-3 clearpad">
+            <!--台灣部門-->
+            <div class="col-md-3 header-fix-3 clearpad">
                 <!--Row 1-->
                 <div class="row row-first">
                     <div class="col-md-3">
@@ -442,13 +447,13 @@
 
                 <div class="row row-space1">
                     @*<div class="row clearpad">
-                        <div class="col-md-1 clearpad"></div>
-                        <div class="col-md-5 chart-down"></div>
-                    </div>
-                    <div class="row clearpad">
-                        <div class="col-md-1 clearpad"></div>
-                        <div class="arrow-down"></div>
-                    </div>*@
+                    <div class="col-md-1 clearpad"></div>
+                    <div class="col-md-5 chart-down"></div>
+                </div>
+                <div class="row clearpad">
+                    <div class="col-md-1 clearpad"></div>
+                    <div class="arrow-down"></div>
+                </div>*@
                 </div>
                 <!--Row 3-->
                 <div class="row row-top-fix">
@@ -467,6 +472,84 @@
                     </div>
                 </div>
 
+            </div>
+            <!--報表-->
+            <div class="col-md-3 header-fix-3 clearpad">
+                <!--Row 1-->
+                <div class="row row-first">
+                    <div class="col-md-3">
+                       
+                    </div>
+                    <div class="col-md-7 clearpad3">
+                        <div class="flow-container">
+                            <a class="flowrow-lg flow-default flow3 btn" href="@Url.Content("~/ReportView/Journal")">
+                                <span style="width:100%;height:100%;">日記帳</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+
+                    </div>
+                </div>
+
+                <div class="row row-space1"></div>
+
+                <!--Row 2-->
+                <div class="row row-top-fix">
+                    <div class="col-md-3 ">
+
+                    </div>
+                    <div class="col-md-7 clearpad3">
+                        <div class="flow-container">
+                            <a class="flowrow-lg flow-default flow3 btn" href="@Url.Content("~/ReportView/Voucher")">
+                                <span style="width:100%;height:100%;">傳票報表</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+
+                    </div>
+                </div>
+
+                <div class="row row-space1"></div>
+
+                <!--Row 3-->
+                <div class="row row-top-fix">
+                    <div class="col-md-3 ">
+
+                    </div>
+                    <div class="col-md-7 clearpad3">
+                        <div class="flow-container">
+                            <a class="flowrow-lg flow-default flow3 btn" href="@Url.Content("~/ReportView/BalanceSheet")">
+                                <span style="width:100%;height:100%;">資產負債表</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+
+                    </div>
+                </div>
+
+                <div class="row row-space1"></div>
+
+                <!--Row 4-->
+                <div class="row row-top-fix">
+                    <div class="col-md-3 ">
+
+                    </div>
+                    <div class="col-md-7 clearpad3">
+                        <div class="flow-container">
+                            <a class="flowrow-lg flow-default flow3 btn" href="@Url.Content("~/ReportView/IncomeStatement")">
+                                <span style="width:100%;height:100%;">損益表</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+
+                    </div>
+                </div>
+
+                <div class="row row-space1"></div>
             </div>
         </div>
     </div>

@@ -11,7 +11,7 @@ namespace NES_WEB_ACC.Report
 {
 
 
-    public partial class ReportViewer
+    public partial class ReportViewer_V1
     {
 
         /// <summary>

@@ -30,6 +30,8 @@ namespace NES_WEB_ACC.Report.RDLC {
         
         private VoucherItemReportDataTable tableVoucherItemReport;
         
+        private VoucherReportDataTable tableVoucherReport;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -66,6 +68,9 @@ namespace NES_WEB_ACC.Report.RDLC {
                 }
                 if ((ds.Tables["VoucherItemReport"] != null)) {
                     base.Tables.Add(new VoucherItemReportDataTable(ds.Tables["VoucherItemReport"]));
+                }
+                if ((ds.Tables["VoucherReport"] != null)) {
+                    base.Tables.Add(new VoucherReportDataTable(ds.Tables["VoucherReport"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -112,6 +117,16 @@ namespace NES_WEB_ACC.Report.RDLC {
         public VoucherItemReportDataTable VoucherItemReport {
             get {
                 return this.tableVoucherItemReport;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public VoucherReportDataTable VoucherReport {
+            get {
+                return this.tableVoucherReport;
             }
         }
         
@@ -191,6 +206,9 @@ namespace NES_WEB_ACC.Report.RDLC {
                 if ((ds.Tables["VoucherItemReport"] != null)) {
                     base.Tables.Add(new VoucherItemReportDataTable(ds.Tables["VoucherItemReport"]));
                 }
+                if ((ds.Tables["VoucherReport"] != null)) {
+                    base.Tables.Add(new VoucherReportDataTable(ds.Tables["VoucherReport"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -242,6 +260,12 @@ namespace NES_WEB_ACC.Report.RDLC {
                     this.tableVoucherItemReport.InitVars();
                 }
             }
+            this.tableVoucherReport = ((VoucherReportDataTable)(base.Tables["VoucherReport"]));
+            if ((initTable == true)) {
+                if ((this.tableVoucherReport != null)) {
+                    this.tableVoucherReport.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -258,6 +282,8 @@ namespace NES_WEB_ACC.Report.RDLC {
             base.Tables.Add(this.tableVoucherMainReport);
             this.tableVoucherItemReport = new VoucherItemReportDataTable();
             base.Tables.Add(this.tableVoucherItemReport);
+            this.tableVoucherReport = new VoucherReportDataTable();
+            base.Tables.Add(this.tableVoucherReport);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -275,6 +301,12 @@ namespace NES_WEB_ACC.Report.RDLC {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private bool ShouldSerializeVoucherItemReport() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeVoucherReport() {
             return false;
         }
         
@@ -341,6 +373,9 @@ namespace NES_WEB_ACC.Report.RDLC {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public delegate void VoucherItemReportRowChangeEventHandler(object sender, VoucherItemReportRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void VoucherReportRowChangeEventHandler(object sender, VoucherReportRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -676,6 +711,8 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             private global::System.Data.DataColumn columnRemark;
             
+            private global::System.Data.DataColumn columnWebId;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public VoucherMainReportDataTable() {
@@ -863,6 +900,14 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn WebIdColumn {
+                get {
+                    return this.columnWebId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -917,7 +962,8 @@ namespace NES_WEB_ACC.Report.RDLC {
                         string CurrencySt, 
                         string Money21, 
                         string Money22, 
-                        string Remark) {
+                        string Remark, 
+                        string WebId) {
                 VoucherMainReportRow rowVoucherMainReportRow = ((VoucherMainReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         BillNo,
@@ -938,7 +984,8 @@ namespace NES_WEB_ACC.Report.RDLC {
                         CurrencySt,
                         Money21,
                         Money22,
-                        Remark};
+                        Remark,
+                        WebId};
                 rowVoucherMainReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVoucherMainReportRow);
                 return rowVoucherMainReportRow;
@@ -980,6 +1027,7 @@ namespace NES_WEB_ACC.Report.RDLC {
                 this.columnMoney21 = base.Columns["Money21"];
                 this.columnMoney22 = base.Columns["Money22"];
                 this.columnRemark = base.Columns["Remark"];
+                this.columnWebId = base.Columns["WebId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1023,6 +1071,8 @@ namespace NES_WEB_ACC.Report.RDLC {
                 base.Columns.Add(this.columnMoney22);
                 this.columnRemark = new global::System.Data.DataColumn("Remark", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRemark);
+                this.columnWebId = new global::System.Data.DataColumn("WebId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWebId);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1176,6 +1226,8 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             private global::System.Data.DataColumn columnRemark;
             
+            private global::System.Data.DataColumn columnWebDocId;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public VoucherItemReportDataTable() {
@@ -1291,6 +1343,14 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn WebDocIdColumn {
+                get {
+                    return this.columnWebDocId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1326,7 +1386,7 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public VoucherItemReportRow AddVoucherItemReportRow(string Linage, string AccNo, string AccName, string DCTypeNo, string CurrencyNo, string Money, string Rate1, string Money1, string CurrencySt, string Remark) {
+            public VoucherItemReportRow AddVoucherItemReportRow(string Linage, string AccNo, string AccName, string DCTypeNo, string CurrencyNo, string Money, string Rate1, string Money1, string CurrencySt, string Remark, string WebDocId) {
                 VoucherItemReportRow rowVoucherItemReportRow = ((VoucherItemReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Linage,
@@ -1338,7 +1398,8 @@ namespace NES_WEB_ACC.Report.RDLC {
                         Rate1,
                         Money1,
                         CurrencySt,
-                        Remark};
+                        Remark,
+                        WebDocId};
                 rowVoucherItemReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVoucherItemReportRow);
                 return rowVoucherItemReportRow;
@@ -1371,6 +1432,7 @@ namespace NES_WEB_ACC.Report.RDLC {
                 this.columnMoney1 = base.Columns["Money1"];
                 this.columnCurrencySt = base.Columns["CurrencySt"];
                 this.columnRemark = base.Columns["Remark"];
+                this.columnWebDocId = base.Columns["WebDocId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1396,6 +1458,8 @@ namespace NES_WEB_ACC.Report.RDLC {
                 base.Columns.Add(this.columnCurrencySt);
                 this.columnRemark = new global::System.Data.DataColumn("Remark", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRemark);
+                this.columnWebDocId = new global::System.Data.DataColumn("WebDocId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWebDocId);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1482,6 +1546,614 @@ namespace NES_WEB_ACC.Report.RDLC {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "VoucherItemReportDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class VoucherReportDataTable : global::System.Data.TypedTableBase<VoucherReportRow> {
+            
+            private global::System.Data.DataColumn columnBillNo;
+            
+            private global::System.Data.DataColumn columnBillDate;
+            
+            private global::System.Data.DataColumn columnCreateBy;
+            
+            private global::System.Data.DataColumn columnCreateByName;
+            
+            private global::System.Data.DataColumn columnCreateDate;
+            
+            private global::System.Data.DataColumn columnCheckBy;
+            
+            private global::System.Data.DataColumn columnCheckByName;
+            
+            private global::System.Data.DataColumn columnCheckDate;
+            
+            private global::System.Data.DataColumn columnStateBy;
+            
+            private global::System.Data.DataColumn columnStateByName;
+            
+            private global::System.Data.DataColumn columnStateDate;
+            
+            private global::System.Data.DataColumn columnClosedBy;
+            
+            private global::System.Data.DataColumn columnClosedByName;
+            
+            private global::System.Data.DataColumn columnClosedDate;
+            
+            private global::System.Data.DataColumn columnCurrencyNo;
+            
+            private global::System.Data.DataColumn columnCurrencySt;
+            
+            private global::System.Data.DataColumn columnMoney21;
+            
+            private global::System.Data.DataColumn columnMoney22;
+            
+            private global::System.Data.DataColumn columnBillRemark;
+            
+            private global::System.Data.DataColumn columnLinage;
+            
+            private global::System.Data.DataColumn columnAccNo;
+            
+            private global::System.Data.DataColumn columnAccName;
+            
+            private global::System.Data.DataColumn columnDCTypeNo;
+            
+            private global::System.Data.DataColumn columnMoney1;
+            
+            private global::System.Data.DataColumn columnAccRemark;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public VoucherReportDataTable() {
+                this.TableName = "VoucherReport";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal VoucherReportDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected VoucherReportDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BillNoColumn {
+                get {
+                    return this.columnBillNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BillDateColumn {
+                get {
+                    return this.columnBillDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CreateByColumn {
+                get {
+                    return this.columnCreateBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CreateByNameColumn {
+                get {
+                    return this.columnCreateByName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CreateDateColumn {
+                get {
+                    return this.columnCreateDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CheckByColumn {
+                get {
+                    return this.columnCheckBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CheckByNameColumn {
+                get {
+                    return this.columnCheckByName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CheckDateColumn {
+                get {
+                    return this.columnCheckDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn StateByColumn {
+                get {
+                    return this.columnStateBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn StateByNameColumn {
+                get {
+                    return this.columnStateByName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn StateDateColumn {
+                get {
+                    return this.columnStateDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ClosedByColumn {
+                get {
+                    return this.columnClosedBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ClosedByNameColumn {
+                get {
+                    return this.columnClosedByName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ClosedDateColumn {
+                get {
+                    return this.columnClosedDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CurrencyNoColumn {
+                get {
+                    return this.columnCurrencyNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CurrencyStColumn {
+                get {
+                    return this.columnCurrencySt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Money21Column {
+                get {
+                    return this.columnMoney21;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Money22Column {
+                get {
+                    return this.columnMoney22;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BillRemarkColumn {
+                get {
+                    return this.columnBillRemark;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn LinageColumn {
+                get {
+                    return this.columnLinage;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AccNoColumn {
+                get {
+                    return this.columnAccNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AccNameColumn {
+                get {
+                    return this.columnAccName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DCTypeNoColumn {
+                get {
+                    return this.columnDCTypeNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Money1Column {
+                get {
+                    return this.columnMoney1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AccRemarkColumn {
+                get {
+                    return this.columnAccRemark;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public VoucherReportRow this[int index] {
+                get {
+                    return ((VoucherReportRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event VoucherReportRowChangeEventHandler VoucherReportRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event VoucherReportRowChangeEventHandler VoucherReportRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event VoucherReportRowChangeEventHandler VoucherReportRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event VoucherReportRowChangeEventHandler VoucherReportRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void AddVoucherReportRow(VoucherReportRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public VoucherReportRow AddVoucherReportRow(
+                        string BillNo, 
+                        string BillDate, 
+                        string CreateBy, 
+                        string CreateByName, 
+                        string CreateDate, 
+                        string CheckBy, 
+                        string CheckByName, 
+                        string CheckDate, 
+                        string StateBy, 
+                        string StateByName, 
+                        string StateDate, 
+                        string ClosedBy, 
+                        string ClosedByName, 
+                        string ClosedDate, 
+                        string CurrencyNo, 
+                        string CurrencySt, 
+                        string Money21, 
+                        string Money22, 
+                        string BillRemark, 
+                        string Linage, 
+                        string AccNo, 
+                        string AccName, 
+                        string DCTypeNo, 
+                        string Money1, 
+                        string AccRemark) {
+                VoucherReportRow rowVoucherReportRow = ((VoucherReportRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        BillNo,
+                        BillDate,
+                        CreateBy,
+                        CreateByName,
+                        CreateDate,
+                        CheckBy,
+                        CheckByName,
+                        CheckDate,
+                        StateBy,
+                        StateByName,
+                        StateDate,
+                        ClosedBy,
+                        ClosedByName,
+                        ClosedDate,
+                        CurrencyNo,
+                        CurrencySt,
+                        Money21,
+                        Money22,
+                        BillRemark,
+                        Linage,
+                        AccNo,
+                        AccName,
+                        DCTypeNo,
+                        Money1,
+                        AccRemark};
+                rowVoucherReportRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowVoucherReportRow);
+                return rowVoucherReportRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                VoucherReportDataTable cln = ((VoucherReportDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new VoucherReportDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnBillNo = base.Columns["BillNo"];
+                this.columnBillDate = base.Columns["BillDate"];
+                this.columnCreateBy = base.Columns["CreateBy"];
+                this.columnCreateByName = base.Columns["CreateByName"];
+                this.columnCreateDate = base.Columns["CreateDate"];
+                this.columnCheckBy = base.Columns["CheckBy"];
+                this.columnCheckByName = base.Columns["CheckByName"];
+                this.columnCheckDate = base.Columns["CheckDate"];
+                this.columnStateBy = base.Columns["StateBy"];
+                this.columnStateByName = base.Columns["StateByName"];
+                this.columnStateDate = base.Columns["StateDate"];
+                this.columnClosedBy = base.Columns["ClosedBy"];
+                this.columnClosedByName = base.Columns["ClosedByName"];
+                this.columnClosedDate = base.Columns["ClosedDate"];
+                this.columnCurrencyNo = base.Columns["CurrencyNo"];
+                this.columnCurrencySt = base.Columns["CurrencySt"];
+                this.columnMoney21 = base.Columns["Money21"];
+                this.columnMoney22 = base.Columns["Money22"];
+                this.columnBillRemark = base.Columns["BillRemark"];
+                this.columnLinage = base.Columns["Linage"];
+                this.columnAccNo = base.Columns["AccNo"];
+                this.columnAccName = base.Columns["AccName"];
+                this.columnDCTypeNo = base.Columns["DCTypeNo"];
+                this.columnMoney1 = base.Columns["Money1"];
+                this.columnAccRemark = base.Columns["AccRemark"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnBillNo = new global::System.Data.DataColumn("BillNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBillNo);
+                this.columnBillDate = new global::System.Data.DataColumn("BillDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBillDate);
+                this.columnCreateBy = new global::System.Data.DataColumn("CreateBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCreateBy);
+                this.columnCreateByName = new global::System.Data.DataColumn("CreateByName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCreateByName);
+                this.columnCreateDate = new global::System.Data.DataColumn("CreateDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCreateDate);
+                this.columnCheckBy = new global::System.Data.DataColumn("CheckBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCheckBy);
+                this.columnCheckByName = new global::System.Data.DataColumn("CheckByName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCheckByName);
+                this.columnCheckDate = new global::System.Data.DataColumn("CheckDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCheckDate);
+                this.columnStateBy = new global::System.Data.DataColumn("StateBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStateBy);
+                this.columnStateByName = new global::System.Data.DataColumn("StateByName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStateByName);
+                this.columnStateDate = new global::System.Data.DataColumn("StateDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStateDate);
+                this.columnClosedBy = new global::System.Data.DataColumn("ClosedBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnClosedBy);
+                this.columnClosedByName = new global::System.Data.DataColumn("ClosedByName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnClosedByName);
+                this.columnClosedDate = new global::System.Data.DataColumn("ClosedDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnClosedDate);
+                this.columnCurrencyNo = new global::System.Data.DataColumn("CurrencyNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCurrencyNo);
+                this.columnCurrencySt = new global::System.Data.DataColumn("CurrencySt", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCurrencySt);
+                this.columnMoney21 = new global::System.Data.DataColumn("Money21", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMoney21);
+                this.columnMoney22 = new global::System.Data.DataColumn("Money22", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMoney22);
+                this.columnBillRemark = new global::System.Data.DataColumn("BillRemark", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBillRemark);
+                this.columnLinage = new global::System.Data.DataColumn("Linage", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLinage);
+                this.columnAccNo = new global::System.Data.DataColumn("AccNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccNo);
+                this.columnAccName = new global::System.Data.DataColumn("AccName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccName);
+                this.columnDCTypeNo = new global::System.Data.DataColumn("DCTypeNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDCTypeNo);
+                this.columnMoney1 = new global::System.Data.DataColumn("Money1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMoney1);
+                this.columnAccRemark = new global::System.Data.DataColumn("AccRemark", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccRemark);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public VoucherReportRow NewVoucherReportRow() {
+                return ((VoucherReportRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new VoucherReportRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(VoucherReportRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.VoucherReportRowChanged != null)) {
+                    this.VoucherReportRowChanged(this, new VoucherReportRowChangeEvent(((VoucherReportRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.VoucherReportRowChanging != null)) {
+                    this.VoucherReportRowChanging(this, new VoucherReportRowChangeEvent(((VoucherReportRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.VoucherReportRowDeleted != null)) {
+                    this.VoucherReportRowDeleted(this, new VoucherReportRowChangeEvent(((VoucherReportRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.VoucherReportRowDeleting != null)) {
+                    this.VoucherReportRowDeleting(this, new VoucherReportRowChangeEvent(((VoucherReportRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void RemoveVoucherReportRow(VoucherReportRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                ReportDataSet ds = new ReportDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "VoucherReportDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -1969,6 +2641,22 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string WebId {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherMainReport.WebIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherMainReport\' 中資料行 \'WebId\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherMainReport.WebIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsBillNoNull() {
                 return this.IsNull(this.tableVoucherMainReport.BillNoColumn);
             }
@@ -2194,6 +2882,18 @@ namespace NES_WEB_ACC.Report.RDLC {
             public void SetRemarkNull() {
                 this[this.tableVoucherMainReport.RemarkColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsWebIdNull() {
+                return this.IsNull(this.tableVoucherMainReport.WebIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetWebIdNull() {
+                this[this.tableVoucherMainReport.WebIdColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -2372,6 +3072,22 @@ namespace NES_WEB_ACC.Report.RDLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string WebDocId {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherItemReport.WebDocIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherItemReport\' 中資料行 \'WebDocId\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherItemReport.WebDocIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsLinageNull() {
                 return this.IsNull(this.tableVoucherItemReport.LinageColumn);
             }
@@ -2489,6 +3205,733 @@ namespace NES_WEB_ACC.Report.RDLC {
             public void SetRemarkNull() {
                 this[this.tableVoucherItemReport.RemarkColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsWebDocIdNull() {
+                return this.IsNull(this.tableVoucherItemReport.WebDocIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetWebDocIdNull() {
+                this[this.tableVoucherItemReport.WebDocIdColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class VoucherReportRow : global::System.Data.DataRow {
+            
+            private VoucherReportDataTable tableVoucherReport;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal VoucherReportRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableVoucherReport = ((VoucherReportDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BillNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.BillNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'BillNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.BillNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BillDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.BillDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'BillDate\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.BillDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CreateBy {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.CreateByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'CreateBy\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.CreateByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CreateByName {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.CreateByNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'CreateByName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.CreateByNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CreateDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.CreateDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'CreateDate\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.CreateDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CheckBy {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.CheckByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'CheckBy\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.CheckByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CheckByName {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.CheckByNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'CheckByName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.CheckByNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CheckDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.CheckDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'CheckDate\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.CheckDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string StateBy {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.StateByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'StateBy\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.StateByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string StateByName {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.StateByNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'StateByName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.StateByNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string StateDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.StateDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'StateDate\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.StateDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string ClosedBy {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.ClosedByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'ClosedBy\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.ClosedByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string ClosedByName {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.ClosedByNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'ClosedByName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.ClosedByNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string ClosedDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.ClosedDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'ClosedDate\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.ClosedDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CurrencyNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.CurrencyNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'CurrencyNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.CurrencyNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CurrencySt {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.CurrencyStColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'CurrencySt\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.CurrencyStColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Money21 {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.Money21Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'Money21\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.Money21Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Money22 {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.Money22Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'Money22\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.Money22Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BillRemark {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.BillRemarkColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'BillRemark\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.BillRemarkColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Linage {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.LinageColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'Linage\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.LinageColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string AccNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.AccNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'AccNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.AccNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string AccName {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.AccNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'AccName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.AccNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DCTypeNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.DCTypeNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'DCTypeNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.DCTypeNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Money1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.Money1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'Money1\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.Money1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string AccRemark {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucherReport.AccRemarkColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'VoucherReport\' 中資料行 \'AccRemark\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucherReport.AccRemarkColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBillNoNull() {
+                return this.IsNull(this.tableVoucherReport.BillNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBillNoNull() {
+                this[this.tableVoucherReport.BillNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBillDateNull() {
+                return this.IsNull(this.tableVoucherReport.BillDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBillDateNull() {
+                this[this.tableVoucherReport.BillDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCreateByNull() {
+                return this.IsNull(this.tableVoucherReport.CreateByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCreateByNull() {
+                this[this.tableVoucherReport.CreateByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCreateByNameNull() {
+                return this.IsNull(this.tableVoucherReport.CreateByNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCreateByNameNull() {
+                this[this.tableVoucherReport.CreateByNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCreateDateNull() {
+                return this.IsNull(this.tableVoucherReport.CreateDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCreateDateNull() {
+                this[this.tableVoucherReport.CreateDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCheckByNull() {
+                return this.IsNull(this.tableVoucherReport.CheckByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCheckByNull() {
+                this[this.tableVoucherReport.CheckByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCheckByNameNull() {
+                return this.IsNull(this.tableVoucherReport.CheckByNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCheckByNameNull() {
+                this[this.tableVoucherReport.CheckByNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCheckDateNull() {
+                return this.IsNull(this.tableVoucherReport.CheckDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCheckDateNull() {
+                this[this.tableVoucherReport.CheckDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsStateByNull() {
+                return this.IsNull(this.tableVoucherReport.StateByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetStateByNull() {
+                this[this.tableVoucherReport.StateByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsStateByNameNull() {
+                return this.IsNull(this.tableVoucherReport.StateByNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetStateByNameNull() {
+                this[this.tableVoucherReport.StateByNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsStateDateNull() {
+                return this.IsNull(this.tableVoucherReport.StateDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetStateDateNull() {
+                this[this.tableVoucherReport.StateDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsClosedByNull() {
+                return this.IsNull(this.tableVoucherReport.ClosedByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetClosedByNull() {
+                this[this.tableVoucherReport.ClosedByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsClosedByNameNull() {
+                return this.IsNull(this.tableVoucherReport.ClosedByNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetClosedByNameNull() {
+                this[this.tableVoucherReport.ClosedByNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsClosedDateNull() {
+                return this.IsNull(this.tableVoucherReport.ClosedDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetClosedDateNull() {
+                this[this.tableVoucherReport.ClosedDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCurrencyNoNull() {
+                return this.IsNull(this.tableVoucherReport.CurrencyNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCurrencyNoNull() {
+                this[this.tableVoucherReport.CurrencyNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCurrencyStNull() {
+                return this.IsNull(this.tableVoucherReport.CurrencyStColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCurrencyStNull() {
+                this[this.tableVoucherReport.CurrencyStColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMoney21Null() {
+                return this.IsNull(this.tableVoucherReport.Money21Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMoney21Null() {
+                this[this.tableVoucherReport.Money21Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMoney22Null() {
+                return this.IsNull(this.tableVoucherReport.Money22Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMoney22Null() {
+                this[this.tableVoucherReport.Money22Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBillRemarkNull() {
+                return this.IsNull(this.tableVoucherReport.BillRemarkColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBillRemarkNull() {
+                this[this.tableVoucherReport.BillRemarkColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsLinageNull() {
+                return this.IsNull(this.tableVoucherReport.LinageColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetLinageNull() {
+                this[this.tableVoucherReport.LinageColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsAccNoNull() {
+                return this.IsNull(this.tableVoucherReport.AccNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetAccNoNull() {
+                this[this.tableVoucherReport.AccNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsAccNameNull() {
+                return this.IsNull(this.tableVoucherReport.AccNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetAccNameNull() {
+                this[this.tableVoucherReport.AccNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsDCTypeNoNull() {
+                return this.IsNull(this.tableVoucherReport.DCTypeNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetDCTypeNoNull() {
+                this[this.tableVoucherReport.DCTypeNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMoney1Null() {
+                return this.IsNull(this.tableVoucherReport.Money1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMoney1Null() {
+                this[this.tableVoucherReport.Money1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsAccRemarkNull() {
+                return this.IsNull(this.tableVoucherReport.AccRemarkColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetAccRemarkNull() {
+                this[this.tableVoucherReport.AccRemarkColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -2579,6 +4022,40 @@ namespace NES_WEB_ACC.Report.RDLC {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public VoucherItemReportRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class VoucherReportRowChangeEvent : global::System.EventArgs {
+            
+            private VoucherReportRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public VoucherReportRowChangeEvent(VoucherReportRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public VoucherReportRow Row {
                 get {
                     return this.eventRow;
                 }

@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "IncomeStatement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="aa" class="easyui-accordion" style="width:100%;height:100%;">
+    <div title="查詢條件-損益表" data-options="iconCls:'icon-search'" style="overflow:auto;padding:10px;">
+        @* 欄位 *@
+        <div class="row">
+            <div class=" col-md-1">條件</div>
+            <div class=" col-md-3">or/and</div>
+            <div class=" col-md-2">欄位</div>
+            <div class=" col-md-3">篩選</div>
+            <div class=" col-md-2">篩選資料</div>
+            <div class=" col-md-1"></div>
+        </div>
+        @* 條件一 *@
+        <div class="row">
+            <div class=" col-md-1">條件一</div>
+            <div class=" col-md-2">
+                <select id="colLogicalOperator1" class="easyui-combobox" style="width:200px;">
+                    <option value=" and "> and </option>
+                    <option value=" or "> or </option>
+                </select>
+            </div>
+            <div class=" col-md-3">
+                <select id="colColumnName1" class="easyui-combobox" style="width:200px;">
+                    @*<option value="BillDate">傳票日期</option>
+                        <option value="BillNo">傳票編號</option>*@
+                </select>
+            </div>
+            <div class=" col-md-2">
+                <select id="colComparisonOperator1" class="easyui-combobox" style="width:200px;">
+                    <option value=" > "> > </option>
+                    <option value=" < "> < </option>
+                    <option value=" = "> = </option>
+                    <option value=" >= "> >= </option>
+                    <option value=" <= "> <= </option>
+                    <option value=" != "> != </option>
+                    <option value=" like "> like </option>
+                </select>
+            </div>
+            <div class=" col-md-3"><select id="ColumnValue1" class="easyui-textbox" style="width:200px;"></select></div>
+            <div class=" col-md-1"><a id="btn" href="#" class="easyui-linkbutton" onclick="btnClick();" data-options="iconCls:'icon-search'">查詢</a></div>
+        </div>
+        @* 條件二 *@
+        <div class="row">
+            <div class=" col-md-1">條件二</div>
+            <div class=" col-md-2">
+                <select id="colLogicalOperator2" class="easyui-combobox" style="width:200px;">
+                    <option value=" and "> and </option>
+                    <option value=" or "> or </option>
+                </select>
+            </div>
+            <div class=" col-md-3">
+                <select id="colColumnName2" class="easyui-combobox" style="width:200px;">
+                    @*<option value="BillDate">傳票日期</option>
+                        <option value="BillNo">傳票編號</option>*@
+                </select>
+            </div>
+            <div class=" col-md-2">
+                <select id="colComparisonOperator2" class="easyui-combobox" style="width:200px;">
+                    <option value=" > "> > </option>
+                    <option value=" < "> < </option>
+                    <option value=" = "> = </option>
+                    <option value=" >= "> >= </option>
+                    <option value=" <= "> <= </option>
+                    <option value=" != "> != </option>
+                    <option value=" like "> like </option>
+                </select>
+            </div>
+            <div class=" col-md-3"><select id="ColumnValue2" class="easyui-textbox" style="width:200px;"></select></div>
+            <div class=" col-md-1"></div>
+        </div>
+        @* 條件三 *@
+        <div class="row">
+            <div class=" col-md-1">條件三</div>
+            <div class=" col-md-2">
+                <select id="colLogicalOperator3" class="easyui-combobox" style="width:200px;">
+                    <option value=" and "> and </option>
+                    <option value=" or "> or </option>
+                </select>
+            </div>
+            <div class=" col-md-3">
+                <select id="colColumnName3" class="easyui-combobox" style="width:200px;">
+                    @*<option value="BillDate">傳票日期</option>
+                        <option value="BillNo">傳票編號</option>*@
+                </select>
+            </div>
+            <div class=" col-md-2">
+                <select id="colComparisonOperator3" class="easyui-combobox" style="width:200px;">
+                    <option value=" > "> > </option>
+                    <option value=" < "> < </option>
+                    <option value=" = "> = </option>
+                    <option value=" >= "> >= </option>
+                    <option value=" <= "> <= </option>
+                    <option value=" != "> != </option>
+                    <option value=" like "> like </option>
+                </select>
+            </div>
+            <div class=" col-md-3"><select id="ColumnValue3" class="easyui-textbox" style="width:200px;"></select></div>
+            <div class=" col-md-1"></div>
+        </div>
+    </div>
+    <div title="報表" data-options="iconCls:'icons8-report'" style="overflow:auto;padding:10px;">
+        <iframe id="reportIframe" src="" style="width:100%; height:98%;" frameborder="0"></iframe>
+    </div>
+</div>
+

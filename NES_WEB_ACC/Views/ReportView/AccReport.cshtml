@@ -13,23 +13,24 @@
 
 @*<a href="javascript:void(0)" class="easyui-linkbutton" onclick="showReportDialog()">顯示報表</a>
 
- Dialog 
-<div id="reportDlg" class="easyui-dialog" title="報表" style="width:800px;height:600px;padding:10px"
-     data-options="closed:true,modal:true">
-    <iframe id="reportFrame" src="" width="100%" height="100%" frameborder="0"></iframe>
-</div>
+     Dialog
+    <div id="reportDlg" class="easyui-dialog" title="報表" style="width:800px;height:600px;padding:10px"
+         data-options="closed:true,modal:true">
+        <iframe id="reportFrame" src="" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
 
 
-@section Scripts {
-    <script>
-    function showReportDialog() {
-        // 動態設置 iframe 的 src 以便加載報表
-        var reportUrl = '@Url.Action("AccReportASPX", "ReportView")'; // 將 YourControllerName 替換為您的控制器名稱
-        $('#reportFrame').attr('src', reportUrl);
+    @section Scripts {
+        <script>
+        function showReportDialog() {
+            // 動態設置 iframe 的 src 以便加載報表
+            var reportUrl = '@Url.Action("AccReportASPX", "ReportView")'; // 將 YourControllerName 替換為您的控制器名稱
+            $('#reportFrame').attr('src', reportUrl);
 
-        // 打開Dialog
-        $('#reportDlg').dialog('open');
-    }
+            // 打開Dialog
+            $('#reportDlg').dialog('open');
+        }
 
-    </script>
-}*@
+        </script>
+    }*@
+

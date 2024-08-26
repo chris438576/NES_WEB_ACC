@@ -72,6 +72,11 @@ namespace NES_WEB_ACC.Controllers
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View();
         }
+
+        public ActionResult VoucherBegining()
+        {
+            return View();
+        }
         
         //------ 資料讀取 ------//
         public ActionResult GetVoucherInfo(string type)

@@ -1291,7 +1291,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!StateByName.Value, "VoucherBillMain")</Value>
+                      <Value />
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1343,7 +1343,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>會計</Value>
+                      <Value>覆核</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1393,7 +1393,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!ClosedByName.Value, "VoucherBillMain")</Value>
+                      <Value>=First(Fields!CheckByName.Value, "VoucherBillMain")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1445,7 +1445,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>覆核</Value>
+                      <Value>出納</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1495,7 +1495,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!CheckByName.Value, "VoucherBillMain")</Value>
+                      <Value />
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1547,7 +1547,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>出納</Value>
+                      <Value>主管</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1597,7 +1597,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value />
+                      <Value>=First(Fields!StateByName.Value, "VoucherBillMain")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1647,7 +1647,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>登帳</Value>
+                      <Value>會計</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1697,7 +1697,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value />
+                      <Value>=First(Fields!ClosedByName.Value, "VoucherBillMain")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
