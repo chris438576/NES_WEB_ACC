@@ -277,6 +277,9 @@
     <Compile Include="ViewModels\ForM\ACC_AccTitleNo_MX_ViewModel.cs" />
     <Compile Include="ViewModels\ForM\ACC_VoucherDetail_ViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
+    <Compile Include="ViewModels\RDLC\BalanceSheetReportViewModel.cs" />
+    <Compile Include="ViewModels\RDLC\IncomeStatementViewModel.cs" />
+    <Compile Include="ViewModels\RDLC\JournalReportViewModel.cs" />
     <Compile Include="ViewModels\RDLC\VoucherMainReportViewModel.cs" />
     <Compile Include="ViewModels\RDLC\VoucherReportViewModel.cs" />
     <Compile Include="ViewModels\SearchDateViewModel.cs" />
@@ -1136,6 +1139,11 @@
   <ItemGroup>
     <Content Include="Report\RDLC\VoucherReportItem.rdlc" />
     <Content Include="Report\RDLC\VoucherReportMain.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Report\RDLC\BalanceSheetReport.rdlc" />
+    <EmbeddedResource Include="Report\RDLC\IncomeStatementReport.rdlc" />
+    <EmbeddedResource Include="Report\RDLC\JournalReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

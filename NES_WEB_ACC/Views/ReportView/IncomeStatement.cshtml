@@ -108,3 +108,83 @@
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        ///-----基本參數-----///
+        //#region 基本參數
+        var controllerurl = '/ReportView', functionurl = "/", actionurl = "";
+        //#endregion
+
+        //#region 多語系
+        var msglang = {
+        }
+        //#endregion
+
+
+        //#region 初始化
+        $(function () {
+            $('.myDatebox').myDatebox({
+                culture: '@ViewBag.CurrentCulture' // 傳遞語言參數
+            });
+        });
+        //#endregion
+
+        function btnClick() {
+            var sqlSeache = "";
+            //var startDate = $('.colStartDate').textbox('getValue');
+            //var endDate = $('.colEndDate').textbox('getValue');
+
+            var condition1 = {
+                LogicalOperator: $('#colLogicalOperator1').combobox('getValue'),
+                ColumnName: $('#colColumnName1').combobox('getValue'),
+                ComparisonOperator: $('#colComparisonOperator1').combobox('getValue'),
+                ColumnValue: $('#ColumnValue1').textbox('getValue')
+            };
+
+            var condition2 = {
+                LogicalOperator: $('#colLogicalOperator2').combobox('getValue'),
+                ColumnName: $('#colColumnName2').combobox('getValue'),
+                ComparisonOperator: $('#colComparisonOperator2').combobox('getValue'),
+                ColumnValue: $('#ColumnValue2').textbox('getValue')
+            };
+
+            var condition3 = {
+                LogicalOperator: $('#colLogicalOperator3').combobox('getValue'),
+                ColumnName: $('#colColumnName3').combobox('getValue'),
+                ComparisonOperator: $('#colComparisonOperator3').combobox('getValue'),
+                ColumnValue: $('#ColumnValue3').textbox('getValue')
+            };
+
+            if (condition1.ColumnName && condition1.ComparisonOperator && condition1.ColumnValue) {
+                sqlSeache += ` ${condition1.LogicalOperator} ${condition1.ColumnName} ${condition1.ComparisonOperator} '${condition1.ColumnValue}' `;
+            }
+
+            if (condition2.ColumnName && condition2.ComparisonOperator && condition2.ColumnValue) {
+                sqlSeache += ` ${condition2.LogicalOperator} ${condition2.ColumnName} ${condition2.ComparisonOperator} '${condition2.ColumnValue}' `;
+            }
+
+            if (condition3.ColumnName && condition3.ComparisonOperator && condition3.ColumnValue) {
+                sqlSeache += ` ${condition3.LogicalOperator} ${condition3.ColumnName} ${condition3.ComparisonOperator} '${condition3.ColumnValue}' `;
+            }
+
+            @*if (startDate && endDate) {
+                var reportUrl = '@Url.Action("JournalReport", "ReportView")' + '?sqlSeache=' + encodeURIComponent(sqlSeache.trim()) + '&startdate=' + encodeURIComponent(startDate.trim()) + '&enddate=' + encodeURIComponent(endDate.trim());
+
+                $('#aa').accordion('select', 1);
+
+                $('#reportIframe').attr('src', reportUrl);
+
+            } else {
+                alert("請輸入必填條件！");
+            }*@
+
+            var reportUrl = '@Url.Action("IncomeStatementReport", "ReportView")';
+
+                $('#aa').accordion('select', 1);
+
+                $('#reportIframe').attr('src', reportUrl);
+
+        }
+
+    </script>
+}
