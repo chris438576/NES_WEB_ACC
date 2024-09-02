@@ -28,6 +28,10 @@ namespace NES_WEB_ACC.Controllers
                 ViewBag.Message = TempData["Message"].ToString();
             }
 
+            //儀錶板資料
+            string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
+            string sql = @"";
+
             return View();
         }      
         /// <summary>

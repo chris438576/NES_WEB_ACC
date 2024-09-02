@@ -1,11 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "BalanceSheet";
+    ViewBag.Title = "SubsidiaryLedger";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div id="aa" class="easyui-accordion" style="width:100%;height:100%;">
-    <div title="查詢條件-資產負債表" data-options="iconCls:'icon-search'" style="overflow:auto;padding:10px;">
+    <div title="查詢條件-明細分類帳" data-options="iconCls:'icon-search'" style="overflow:auto;padding:10px;">
         <div class="row">
             <div class="col-md-3">必要條件：</div>
             <div class="col-md-3"><input class="easyui-datebox colStartDate myDatebox" style="width:90%;" required /></div>
@@ -32,7 +32,7 @@
             <div class=" col-md-3">
                 <select id="colColumnName1" class="easyui-combobox" style="width:200px;">
                     @*<option value="BillDate">傳票日期</option>
-                    <option value="BillNo">傳票編號</option>*@
+                        <option value="BillNo">傳票編號</option>*@
                 </select>
             </div>
             <div class=" col-md-2">
@@ -61,7 +61,7 @@
             <div class=" col-md-3">
                 <select id="colColumnName2" class="easyui-combobox" style="width:200px;">
                     @*<option value="BillDate">傳票日期</option>
-                    <option value="BillNo">傳票編號</option>*@
+                        <option value="BillNo">傳票編號</option>*@
                 </select>
             </div>
             <div class=" col-md-2">
@@ -90,7 +90,7 @@
             <div class=" col-md-3">
                 <select id="colColumnName3" class="easyui-combobox" style="width:200px;">
                     @*<option value="BillDate">傳票日期</option>
-                    <option value="BillNo">傳票編號</option>*@
+                        <option value="BillNo">傳票編號</option>*@
                 </select>
             </div>
             <div class=" col-md-2">
@@ -173,7 +173,7 @@
             }
 
             if (startDate && endDate) {
-                var reportUrl = '@Url.Action("BalanceSheetReport", "ReportView")' + '?sqlSeache=' + encodeURIComponent(sqlSeache.trim()) + '&startdate=' + encodeURIComponent(startDate.trim()) + '&enddate=' + encodeURIComponent(endDate.trim());
+                var reportUrl = '@Url.Action("SubsidiaryLedgerReport", "ReportView")' + '?sqlSeache=' + encodeURIComponent(sqlSeache.trim()) + '&startdate=' + encodeURIComponent(startDate.trim()) + '&enddate=' + encodeURIComponent(endDate.trim());
 
                 $('#aa').accordion('select', 1);
 
@@ -181,12 +181,9 @@
 
             } else {
                 alert("請輸入必填條件！");
-            }
-
-           
+            }                       
 
         }
 
     </script>
 }
-

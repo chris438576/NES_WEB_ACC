@@ -489,4 +489,7 @@
   <data name="MsgSelectRow3" xml:space="preserve">
     <value>¡Seleccione la fila que desea completar primero!</value>
   </data>
+  <data name="VoucherBeginning" xml:space="preserve">
+    <value>Bono de inicio</value>
+  </data>
 </root>

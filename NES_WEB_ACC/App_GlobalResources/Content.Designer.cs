@@ -1033,6 +1033,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Voucher Beginning 的當地語系化字串。
+        /// </summary>
+        public static string VoucherBeginning {
+            get {
+                return ResourceManager.GetString("VoucherBeginning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Voucher Check 的當地語系化字串。
         /// </summary>
         public static string VoucherCheck {

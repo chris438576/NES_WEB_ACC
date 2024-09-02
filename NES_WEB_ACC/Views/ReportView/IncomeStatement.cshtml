@@ -6,6 +6,11 @@
 
 <div id="aa" class="easyui-accordion" style="width:100%;height:100%;">
     <div title="查詢條件-損益表" data-options="iconCls:'icon-search'" style="overflow:auto;padding:10px;">
+        <div class="row">
+            <div class="col-md-3">必要條件：</div>
+            <div class="col-md-3"><input class="easyui-datebox colStartDate myDatebox" style="width:90%;" required /></div>
+            <div class="col-md-3"><input class="easyui-datebox colEndDate myDatebox" style="width:90%;" required /></div>
+        </div>
         @* 欄位 *@
         <div class="row">
             <div class=" col-md-1">條件</div>
@@ -27,7 +32,7 @@
             <div class=" col-md-3">
                 <select id="colColumnName1" class="easyui-combobox" style="width:200px;">
                     @*<option value="BillDate">傳票日期</option>
-                        <option value="BillNo">傳票編號</option>*@
+                    <option value="BillNo">傳票編號</option>*@
                 </select>
             </div>
             <div class=" col-md-2">
@@ -56,7 +61,7 @@
             <div class=" col-md-3">
                 <select id="colColumnName2" class="easyui-combobox" style="width:200px;">
                     @*<option value="BillDate">傳票日期</option>
-                        <option value="BillNo">傳票編號</option>*@
+                    <option value="BillNo">傳票編號</option>*@
                 </select>
             </div>
             <div class=" col-md-2">
@@ -85,7 +90,7 @@
             <div class=" col-md-3">
                 <select id="colColumnName3" class="easyui-combobox" style="width:200px;">
                     @*<option value="BillDate">傳票日期</option>
-                        <option value="BillNo">傳票編號</option>*@
+                    <option value="BillNo">傳票編號</option>*@
                 </select>
             </div>
             <div class=" col-md-2">
@@ -131,8 +136,8 @@
 
         function btnClick() {
             var sqlSeache = "";
-            //var startDate = $('.colStartDate').textbox('getValue');
-            //var endDate = $('.colEndDate').textbox('getValue');
+            var startDate = $('.colStartDate').textbox('getValue');
+            var endDate = $('.colEndDate').textbox('getValue');
 
             var condition1 = {
                 LogicalOperator: $('#colLogicalOperator1').combobox('getValue'),
@@ -167,8 +172,8 @@
                 sqlSeache += ` ${condition3.LogicalOperator} ${condition3.ColumnName} ${condition3.ComparisonOperator} '${condition3.ColumnValue}' `;
             }
 
-            @*if (startDate && endDate) {
-                var reportUrl = '@Url.Action("JournalReport", "ReportView")' + '?sqlSeache=' + encodeURIComponent(sqlSeache.trim()) + '&startdate=' + encodeURIComponent(startDate.trim()) + '&enddate=' + encodeURIComponent(endDate.trim());
+            if (startDate && endDate) {
+                var reportUrl = '@Url.Action("IncomeStatementReport", "ReportView")' + '?sqlSeache=' + encodeURIComponent(sqlSeache.trim()) + '&startdate=' + encodeURIComponent(startDate.trim()) + '&enddate=' + encodeURIComponent(endDate.trim());
 
                 $('#aa').accordion('select', 1);
 
@@ -176,14 +181,8 @@
 
             } else {
                 alert("請輸入必填條件！");
-            }*@
-
-            var reportUrl = '@Url.Action("IncomeStatementReport", "ReportView")';
-
-                $('#aa').accordion('select', 1);
-
-                $('#reportIframe').attr('src', reportUrl);
-
+            }
+                      
         }
 
     </script>

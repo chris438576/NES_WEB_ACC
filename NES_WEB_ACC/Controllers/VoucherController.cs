@@ -72,10 +72,30 @@ namespace NES_WEB_ACC.Controllers
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View();
         }
-
-        public ActionResult VoucherBegining()
+        /// <summary>
+        /// 介面_期初傳票
+        /// </summary>
+        /// <returns></returns>
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult VoucherBeginning(string billno, string msg)
         {
-            return View();
+            var createInfo = new CreateInfoViewModel
+            {
+                EmpId = Session["EmpId"].ToString(),
+                EmpNo = (string)Session["EmpNo"],
+                EmpNameC = (string)Session["EmpNameC"],
+                DeptNo = (string)Session["DeptNo"],
+                DeptName = (string)Session["DeptName"],
+                CompNo = (string)Session["CompNo"],
+                CurrencySt = (string)Session["CurrencySt"]
+            };
+            var data = GetEditTableCode3("0");
+            ViewData["CurrencyNo"] = data.Data;
+
+            ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
+            ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
+            ViewBag.CurrentCulture = currentCulture;
+            return View(createInfo);
         }
         
         //------ 資料讀取 ------//
@@ -134,6 +154,13 @@ namespace NES_WEB_ACC.Controllers
                             and Isnull(IsChecked,0) = 1   --已覆核
                             and Isnull(IsState,0) = 1     --主管已審核
                             --and Isnull(IsClosed,0) = 0    --未結案
+                        ";
+                        sql = sql + sqlwhere;
+                        break;
+                    case "begin":
+                        sqlwhere = @"
+                            and DocType = 'V2'
+                            and DocSubType = 'B'
                         ";
                         sql = sql + sqlwhere;
                         break;
@@ -649,16 +676,22 @@ namespace NES_WEB_ACC.Controllers
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost]       
-        public ActionResult AddData(VoucherDataViewModel data)
+        public ActionResult AddData(VoucherDataViewModel data, string type)
         {
+            string voucherDocType = "";
             if (data == null)
             {               
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
+            voucherDocType = (type == "begin") ? (data.Maindata.DocSubType == "B") ? "V2" : "false" : (data.Maindata.DocSubType == "B") ? "false" : "V1";
+            if (voucherDocType == "false")
+            {
+                return Json(new { success = false, code = "C0005" }, JsonRequestBehavior.AllowGet);
+            }
             try
             {
                 #region 參數值設定
-                DateTime dateTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
+                DateTime dateTime = Convert.ToDateTime(data.Maindata.BillDate);
                 var billNoCode = _dbContext.ACC_VoucherInfo.Where(v => v.BillDate == dateTime).GroupBy(v => v.BillDate).Select(g => g.Max(v => v.Code2)).FirstOrDefault();
                 string str_Code2 = string.IsNullOrEmpty(billNoCode) ? "001"  : (Convert.ToInt64(billNoCode )+ 1).ToString("D3");
                 #endregion
@@ -670,7 +703,7 @@ namespace NES_WEB_ACC.Controllers
                     CompId = data.Maindata.CompId,
                     CompNo = data.Maindata.CompNo,
                     CompAbbr = data.Maindata.CompAbbr,
-                    DocType = "V1",
+                    DocType = voucherDocType,
                     DocSubType = data.Maindata.DocSubType,
                     DocSubTypeName = data.Maindata.DocSubTypeName,
                     BillDate = dateTime,
@@ -753,7 +786,7 @@ namespace NES_WEB_ACC.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditData(VoucherDataViewModel data) {
+        public ActionResult EditData(VoucherDataViewModel data, string type) {
             if (data == null)
             {                
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);

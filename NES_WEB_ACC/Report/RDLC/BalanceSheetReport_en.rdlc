@@ -126,7 +126,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>金額</Value>
+                                  <Value>Amount</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -166,7 +166,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>金額</Value>
+                                  <Value>Amount</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -426,7 +426,7 @@
                                 <TextRun>
                                   <Value>=Fields!TotalMoney.Value</Value>
                                   <Style>
-                                    <Format>0.000;(0.000)</Format>
+                                    <Format>0.000</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -554,7 +554,7 @@
                                 <TextRun>
                                   <Value>=Sum(Fields!TotalMoney.Value)</Value>
                                   <Style>
-                                    <Format>0.000;(0.000)</Format>
+                                    <Format>0.000</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -648,7 +648,7 @@
                                 <TextRun>
                                   <Value>=Sum(Fields!TotalMoney.Value)</Value>
                                   <Style>
-                                    <Format>0.000;(0.000)</Format>
+                                    <Format>0.000</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -749,7 +749,7 @@
                                 <TextRun>
                                   <Value>=Sum(IIF(Fields!AccGroupNo.Value = 2 or Fields!AccGroupNo.Value = 3, CDbl(Fields!TotalMoney.Value), 0))</Value>
                                   <Style>
-                                    <Format>0.000;(0.000)</Format>
+                                    <Format>0.000</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -798,7 +798,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>會計科目</Value>
+                                <Value>Accounting account</Value>
                                 <Style />
                               </TextRun>
                             </TextRuns>
@@ -1036,7 +1036,7 @@
                                     </Style>
                                   </TextRun>
                                   <TextRun>
-                                    <Value>　類總額</Value>
+                                    <Value>　Total</Value>
                                     <Style>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
@@ -1072,7 +1072,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>負債類＋資金（股本）類總額</Value>
+                                <Value>Liabilities + Equity Total</Value>
                                 <Style>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
@@ -1126,7 +1126,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>資產負債表</Value>
+                      <Value>Balance Sheet</Value>
                       <Style>
                         <FontSize>24pt</FontSize>
                       </Style>
@@ -1157,7 +1157,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>日期區間：</Value>
+                      <Value>Date range：</Value>
                       <Style />
                     </TextRun>
                     <TextRun>

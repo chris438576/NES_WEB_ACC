@@ -1,8 +1,9 @@
 ﻿@model NES_WEB_ACC.ViewModels.CreateInfoViewModel
 @{
-    ViewBag.Title = @Resources.Content.VoucherCreate;
+    ViewBag.Title = @Resources.Content.VoucherBeginning;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section css {
     <link rel="stylesheet" type="text/css" href="~/Scripts/mycss/body_container_erp.css" />
     <style>
@@ -409,7 +410,6 @@
 }
 
 @{ Html.RenderAction("_ToolBarPartial"); }
-
 <div id="body-container">
     <div class="easyui-layout body-layout">
         <div data-options="region:'west',collapsible:false" title="" style="width:25%;height:100%;">
@@ -506,6 +506,7 @@
     <div class="menu-sep"></div>
     <div data-options="name:'adds',iconCls:'icon-reload'">新增...</div>
 </div>
+
 @section Scripts {
     <script src="~/Scripts/easyui/jquery.edatagrid.js"></script>
     <script src="~/Scripts/easyui/datagrid-filter.js"></script>
@@ -706,7 +707,7 @@
             });
         }
         function maindgData() {
-            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo?type=create';
+            actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo?type=begin';
             doajax("GET", actionurl, null, function (result) {
                 if (result.success) {
                     if (Array.isArray(result.data)) {
@@ -1298,116 +1299,123 @@
                     let data = [];
                     let dosave ; //檢查是否能存
                     let maindatadg, infodatadg;
+                    let rows = maindg.datagrid('getRows');
 
                     if (actioncode === 'add') {
-                        dosave = saveCheck(actioncode);
-                        if (dosave) {
-                            maindata = {
-                                'BillDate': $('.fomBillDate').textbox('getValue'),
-                                'DocSubType': $('.fomDocSubType').textbox('getValue'),
-                                'DocSubTypeName': $('.fomDocSubTypeName').textbox('getValue'),
-                                'CompId': $('.fomCompNo').textbox('getValue'),
-                                'CompNo': $('.fomCompNo').textbox('getText'),
-                                'CompAbbr': $('.fomCompAbbr').textbox('getValue'),
-                                'VoucherType': $('.fomVoucherType').textbox('getValue'),
-                                'VoucherNameC': $('.fomVoucherNameC').textbox('getValue'),
-                                'EmpNo': $('.fomEmpNo').textbox('getValue'),
-                                'EmpNameC': $('.fomEmpNameC').textbox('getValue'),
-                                'DeptNo': $('.fomDeptNo').textbox('getValue'),
-                                'DeptName': $('.fomDeptName').textbox('getValue'),
-                                'BillNo': $('.fomBillNo').textbox('getValue'),
-                                'CurrencyNo': $('.fomCurrencyNo').textbox('getValue'),
-                                'CurrencySt': $('.fomCurrencySt').textbox('getValue'),
-                                'Rate1': $('.fomRate1').textbox('getValue'),
-                               /* 'Currency2': $('.fomCurrency2').textbox('getValue'),*/
-                                /*'Rate2': $('.fomRate2').textbox('getValue'),*/
-                                'TargetNo': $('.fomTargetNo').textbox('getValue')
-                            };
-                            infodatadg = itemdg.datagrid('getRows')
-                            infodata = infodatadg.map(function (row) {
-                                return {
-                                    'Id': row.Id,
-                                    'Linage': row.Linage,
-                                    'AccNo': row.AccNo,
-                                    'AccName': row.AccName,
-                                    'DCTypeNo': row.DCTypeNo,
-                                    'DCTypeNameC': row.DCTypeNameC,
-                                    'CurrencyNo': row.CurrencyNo,
-                                    'CurrencySt': row.CurrencySt,
-                                    'Rate1': row.Rate1,
-                                    'Money': row.Money,
-                                    'Money1': row.Money1,
-                                    'TargetId': row.TargetId,
-                                    'TargetType': row.TargetType,
-                                    'TargetNo': row.TargetNo,
-                                    'TargetAbbr': row.TargetAbbr,
-                                    'AccProfitId': row.AccProfitId,
-                                    'AccProfitNo': row.AccProfitNo,
-                                    'AccProfitName': row.AccProfitName,
-                                    'AccDeptId': row.AccDeptId,
-                                    'AccDeptNo': row.AccDeptNo,
-                                    'AccDeptName': row.AccDeptName,
-                                    'PayDeptId': row.PayDeptId,
-                                    'PayDeptNo': row.PayDeptNo,
-                                    'PayDeptName': row.PayDeptName,
-                                    'CheckType': row.CheckType,
-                                    'CheckId': row.CheckId,
-                                    'CheckNo': row.CheckNo,
-                                    'OffsetNo': row.OffsetNo,
-                                    'SourceDocId': row.SourceDocId,
-                                    'SourceSeqId': row.SourceSeqId,
-                                    'SourceDocSubTypeName': row.SourceDocSubTypeName,
-                                    'SourceNo': row.SourceNo,
-                                    'InitialProjectId': row.InitialProjectId,
-                                    'InitialDocSubType': row.InitialDocSubType,
-                                    'InitialDocId': row.InitialDocId,
-                                    'InitialDocSubTypeName': row.InitialDocSubTypeName,
-                                    'InitialNo': row.InitialNo,
-                                    'ActivityType': row.ActivityType,
-                                    'Remark': row.Remark,
-                                    'CaseBillNo': row.CaseBillNo,
-                                };
-                            });
-                            dcdata = {
-                                'Money11': $('.colMoneyD1').textbox('getValue'),
-                                'Money12': $('.colMoneyC1').textbox('getValue'),
-                                'Money21': $('.colMoneyD').textbox('getValue'),
-                                'Money22': $('.colMoneyC').textbox('getValue'),
-                                'Money1Dc': $('.colMoney1').textbox('getValue'),
-                                'Money2Dc': $('.colMoney').textbox('getValue'),
-                            };
+                        if (rows.length > 1) {
+                            $.messager.confirm('提醒', '已有期出傳票是否新增?', function (r) {
+                                if (r) {
+                                    dosave = saveCheck(actioncode);
+                                    if (dosave) {
+                                        maindata = {
+                                            'BillDate': $('.fomBillDate').textbox('getValue'),
+                                            'DocSubType': $('.fomDocSubType').textbox('getValue'),
+                                            'DocSubTypeName': $('.fomDocSubTypeName').textbox('getValue'),
+                                            'CompId': $('.fomCompNo').textbox('getValue'),
+                                            'CompNo': $('.fomCompNo').textbox('getText'),
+                                            'CompAbbr': $('.fomCompAbbr').textbox('getValue'),
+                                            'VoucherType': $('.fomVoucherType').textbox('getValue'),
+                                            'VoucherNameC': $('.fomVoucherNameC').textbox('getValue'),
+                                            'EmpNo': $('.fomEmpNo').textbox('getValue'),
+                                            'EmpNameC': $('.fomEmpNameC').textbox('getValue'),
+                                            'DeptNo': $('.fomDeptNo').textbox('getValue'),
+                                            'DeptName': $('.fomDeptName').textbox('getValue'),
+                                            'BillNo': $('.fomBillNo').textbox('getValue'),
+                                            'CurrencyNo': $('.fomCurrencyNo').textbox('getValue'),
+                                            'CurrencySt': $('.fomCurrencySt').textbox('getValue'),
+                                            'Rate1': $('.fomRate1').textbox('getValue'),
+                                            /* 'Currency2': $('.fomCurrency2').textbox('getValue'),*/
+                                            /*'Rate2': $('.fomRate2').textbox('getValue'),*/
+                                            'TargetNo': $('.fomTargetNo').textbox('getValue')
+                                        };
+                                        infodatadg = itemdg.datagrid('getRows')
+                                        infodata = infodatadg.map(function (row) {
+                                            return {
+                                                'Id': row.Id,
+                                                'Linage': row.Linage,
+                                                'AccNo': row.AccNo,
+                                                'AccName': row.AccName,
+                                                'DCTypeNo': row.DCTypeNo,
+                                                'DCTypeNameC': row.DCTypeNameC,
+                                                'CurrencyNo': row.CurrencyNo,
+                                                'CurrencySt': row.CurrencySt,
+                                                'Rate1': row.Rate1,
+                                                'Money': row.Money,
+                                                'Money1': row.Money1,
+                                                'TargetId': row.TargetId,
+                                                'TargetType': row.TargetType,
+                                                'TargetNo': row.TargetNo,
+                                                'TargetAbbr': row.TargetAbbr,
+                                                'AccProfitId': row.AccProfitId,
+                                                'AccProfitNo': row.AccProfitNo,
+                                                'AccProfitName': row.AccProfitName,
+                                                'AccDeptId': row.AccDeptId,
+                                                'AccDeptNo': row.AccDeptNo,
+                                                'AccDeptName': row.AccDeptName,
+                                                'PayDeptId': row.PayDeptId,
+                                                'PayDeptNo': row.PayDeptNo,
+                                                'PayDeptName': row.PayDeptName,
+                                                'CheckType': row.CheckType,
+                                                'CheckId': row.CheckId,
+                                                'CheckNo': row.CheckNo,
+                                                'OffsetNo': row.OffsetNo,
+                                                'SourceDocId': row.SourceDocId,
+                                                'SourceSeqId': row.SourceSeqId,
+                                                'SourceDocSubTypeName': row.SourceDocSubTypeName,
+                                                'SourceNo': row.SourceNo,
+                                                'InitialProjectId': row.InitialProjectId,
+                                                'InitialDocSubType': row.InitialDocSubType,
+                                                'InitialDocId': row.InitialDocId,
+                                                'InitialDocSubTypeName': row.InitialDocSubTypeName,
+                                                'InitialNo': row.InitialNo,
+                                                'ActivityType': row.ActivityType,
+                                                'Remark': row.Remark,
+                                                'CaseBillNo': row.CaseBillNo,
+                                            };
+                                        });
+                                        dcdata = {
+                                            'Money11': $('.colMoneyD1').textbox('getValue'),
+                                            'Money12': $('.colMoneyC1').textbox('getValue'),
+                                            'Money21': $('.colMoneyD').textbox('getValue'),
+                                            'Money22': $('.colMoneyC').textbox('getValue'),
+                                            'Money1Dc': $('.colMoney1').textbox('getValue'),
+                                            'Money2Dc': $('.colMoney').textbox('getValue'),
+                                        };
 
-                            data = {
-                                Maindata: maindata,
-                                Infodata: infodata,
-                                Dcdata: dcdata
-                            };
+                                        data = {
+                                            Maindata: maindata,
+                                            Infodata: infodata,
+                                            Dcdata: dcdata
+                                        };
 
-                            actionurl = defaultUrl + controllerurl + functionurl + 'AddData';
-                            $.ajax({
-                                type: "POST",
-                                url: actionurl,
-                                data: JSON.stringify(data),
-                                contentType: "application/json",
-                                dataType: "json",
-                                success: function (response) {
-                                    if (response.success) {
-                                        //$.messager.alert(msglang.Title2, '資料已成功儲存!');
-                                        pageReload(response.data, 'Add');
+                                        actionurl = defaultUrl + controllerurl + functionurl + 'AddData?type=begin';
+                                        $.ajax({
+                                            type: "POST",
+                                            url: actionurl,
+                                            data: JSON.stringify(data),
+                                            contentType: "application/json",
+                                            dataType: "json",
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    //$.messager.alert(msglang.Title2, '資料已成功儲存!');
+                                                    pageReload(response.data, 'Add');
+                                                } else {
+                                                    $.messager.alert(msglang.Title2, msglang.MsgErrCode + response.code);
+                                                    if (response.code == 'C0004') {
+                                                        console.log(response.err);
+                                                    }
+                                                }
+                                            },
+                                            error: function (xhr, status, errorThrown) {
+                                                $.messager.alert(msglang.Title2, msglang.MsgErrAja);
+                                                console.error(status, errorThrown);
+                                            }
+                                        });
                                     } else {
-                                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + response.code);
-                                        if (response.code == 'C0004') {
-                                            console.log(response.err);
-                                        }
+                                        $.messager.alert(msglang.Title2, msglang.MsgErrDc);
                                     }
-                                },
-                                error: function (xhr, status, errorThrown) {
-                                    $.messager.alert(msglang.Title2, msglang.MsgErrAja);
-                                    console.error(status, errorThrown);
                                 }
                             });
-                        } else {
-                            $.messager.alert(msglang.Title2, msglang.MsgErrDc);
                         }
                     }
                     if (actioncode === 'edit') {
@@ -2782,7 +2790,7 @@
         //#endregion
     </script>
     <script>
-        // 監聽器        
+        // 監聽器
         // itemdg編輯_remark按下enter
         $(document).ready(function () {
             $(document).keydown(function (e) {
@@ -2904,35 +2912,33 @@
     </script>
     <script>
         $(document).ready(function () {
-            //$('#btnAdd').addClass('hidden-btn');
-            //$('#btnEdit').addClass('hidden-btn');
-            //$('#btnSave').addClass('hidden-btn');
-            //$('#btnDetail').addClass('hidden-btn');
+            /*$('#btnAdd').addClass('hidden-btn');*/
+           /* $('#btnEdit').addClass('hidden-btn');*/
+            /*$('#btnSave').addClass('hidden-btn');*/
+            $('#btnDetail').addClass('hidden-btn');
             $('#btnRefresh').addClass('hidden-btn');
-            //$('#btnCancel').addClass('hidden-btn');
+            /*$('#btnCancel').addClass('hidden-btn');*/
             $('#btnDelete').addClass('hidden-btn');
 
-            /*$('#btnLock').hide();*/
+            $('#btnLock').hide();
             $('#btnCheck').hide();
             $('#btnClose').hide();
             $('#btnUnlock').hide();
             $('#btnReject').hide();
+
             let msg = '@ViewBag.Msg';
             let billno = '@ViewBag.BillNo';
             if (msg) {
                 switch (msg) {
                     case 'Add':
-                        $.messager.alert(msglang.Title3, msglang.MsgSes1 + billno);
+                        $.messager.alert(msglang.Title3, msglang.MsgSes7 + billno);
                         break;
-                    case 'Edit':
-                        $.messager.alert(msglang.Title3, msglang.MsgSes2 + billno);
-                        break;
-                    case 'Lock':
-                        $.messager.alert(msglang.Title3, msglang.MsgSes5 + billno);
+                    case 'Save':
+                        $.messager.alert(msglang.Title3, msglang.MsgSes6 + billno);
                         break;
                     default:
                         break;
-                }                
+                }
             }
         });
     </script>

@@ -140,6 +140,24 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="SubsidiaryLedgerReport" msprop:Generator_TableClassName="SubsidiaryLedgerReportDataTable" msprop:Generator_TableVarName="tableSubsidiaryLedgerReport" msprop:Generator_RowChangedName="SubsidiaryLedgerReportRowChanged" msprop:Generator_TablePropName="SubsidiaryLedgerReport" msprop:Generator_RowDeletingName="SubsidiaryLedgerReportRowDeleting" msprop:Generator_RowChangingName="SubsidiaryLedgerReportRowChanging" msprop:Generator_RowEvHandlerName="SubsidiaryLedgerReportRowChangeEventHandler" msprop:Generator_RowDeletedName="SubsidiaryLedgerReportRowDeleted" msprop:Generator_RowClassName="SubsidiaryLedgerReportRow" msprop:Generator_UserTableName="SubsidiaryLedgerReport" msprop:Generator_RowEvArgName="SubsidiaryLedgerReportRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AccGroupNo" msprop:Generator_ColumnVarNameInTable="columnAccGroupNo" msprop:Generator_ColumnPropNameInRow="AccGroupNo" msprop:Generator_ColumnPropNameInTable="AccGroupNoColumn" msprop:Generator_UserColumnName="AccGroupNo" type="xs:string" minOccurs="0" />
+              <xs:element name="AccNo" msprop:Generator_ColumnVarNameInTable="columnAccNo" msprop:Generator_ColumnPropNameInRow="AccNo" msprop:Generator_ColumnPropNameInTable="AccNoColumn" msprop:Generator_UserColumnName="AccNo" type="xs:string" minOccurs="0" />
+              <xs:element name="AccName" msprop:Generator_ColumnVarNameInTable="columnAccName" msprop:Generator_ColumnPropNameInRow="AccName" msprop:Generator_ColumnPropNameInTable="AccNameColumn" msprop:Generator_UserColumnName="AccName" type="xs:string" minOccurs="0" />
+              <xs:element name="DCTypeNo" msprop:Generator_ColumnVarNameInTable="columnDCTypeNo" msprop:Generator_ColumnPropNameInRow="DCTypeNo" msprop:Generator_ColumnPropNameInTable="DCTypeNoColumn" msprop:Generator_UserColumnName="DCTypeNo" type="xs:string" minOccurs="0" />
+              <xs:element name="BeginMoney" msprop:Generator_ColumnVarNameInTable="columnBeginMoney" msprop:Generator_ColumnPropNameInRow="BeginMoney" msprop:Generator_ColumnPropNameInTable="BeginMoneyColumn" msprop:Generator_UserColumnName="BeginMoney" type="xs:string" minOccurs="0" />
+              <xs:element name="BillDate" msprop:Generator_ColumnVarNameInTable="columnBillDate" msprop:Generator_ColumnPropNameInRow="BillDate" msprop:Generator_ColumnPropNameInTable="BillDateColumn" msprop:Generator_UserColumnName="BillDate" type="xs:string" minOccurs="0" />
+              <xs:element name="BillMonth" msprop:Generator_ColumnVarNameInTable="columnBillMonth" msprop:Generator_ColumnPropNameInRow="BillMonth" msprop:Generator_ColumnPropNameInTable="BillMonthColumn" msprop:Generator_UserColumnName="BillMonth" type="xs:string" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" type="xs:string" minOccurs="0" />
+              <xs:element name="BillDCTypeNo" msprop:Generator_ColumnVarNameInTable="columnBillDCTypeNo" msprop:Generator_ColumnPropNameInRow="BillDCTypeNo" msprop:Generator_ColumnPropNameInTable="BillDCTypeNoColumn" msprop:Generator_UserColumnName="BillDCTypeNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Money1" msprop:Generator_ColumnVarNameInTable="columnMoney1" msprop:Generator_ColumnPropNameInRow="Money1" msprop:Generator_ColumnPropNameInTable="Money1Column" msprop:Generator_UserColumnName="Money1" type="xs:string" minOccurs="0" />
+              <xs:element name="BillNo" msprop:Generator_ColumnVarNameInTable="columnBillNo" msprop:Generator_ColumnPropNameInRow="BillNo" msprop:Generator_ColumnPropNameInTable="BillNoColumn" msprop:Generator_UserColumnName="BillNo" type="xs:string" minOccurs="0" />
+              <xs:element name="BillLast" msprop:Generator_ColumnVarNameInTable="columnBillLast" msprop:Generator_ColumnPropNameInRow="BillLast" msprop:Generator_ColumnPropNameInTable="BillLastColumn" msprop:Generator_UserColumnName="BillLast" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

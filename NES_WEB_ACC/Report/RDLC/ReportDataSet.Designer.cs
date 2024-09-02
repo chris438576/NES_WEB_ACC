@@ -38,6 +38,8 @@ namespace NES_WEB_ACC.Report.RDLC {
         
         private IncomeStatementReportDataTable tableIncomeStatementReport;
         
+        private SubsidiaryLedgerReportDataTable tableSubsidiaryLedgerReport;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -86,6 +88,9 @@ namespace NES_WEB_ACC.Report.RDLC {
                 }
                 if ((ds.Tables["IncomeStatementReport"] != null)) {
                     base.Tables.Add(new IncomeStatementReportDataTable(ds.Tables["IncomeStatementReport"]));
+                }
+                if ((ds.Tables["SubsidiaryLedgerReport"] != null)) {
+                    base.Tables.Add(new SubsidiaryLedgerReportDataTable(ds.Tables["SubsidiaryLedgerReport"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -177,6 +182,16 @@ namespace NES_WEB_ACC.Report.RDLC {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public SubsidiaryLedgerReportDataTable SubsidiaryLedgerReport {
+            get {
+                return this.tableSubsidiaryLedgerReport;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -263,6 +278,9 @@ namespace NES_WEB_ACC.Report.RDLC {
                 if ((ds.Tables["IncomeStatementReport"] != null)) {
                     base.Tables.Add(new IncomeStatementReportDataTable(ds.Tables["IncomeStatementReport"]));
                 }
+                if ((ds.Tables["SubsidiaryLedgerReport"] != null)) {
+                    base.Tables.Add(new SubsidiaryLedgerReportDataTable(ds.Tables["SubsidiaryLedgerReport"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -338,6 +356,12 @@ namespace NES_WEB_ACC.Report.RDLC {
                     this.tableIncomeStatementReport.InitVars();
                 }
             }
+            this.tableSubsidiaryLedgerReport = ((SubsidiaryLedgerReportDataTable)(base.Tables["SubsidiaryLedgerReport"]));
+            if ((initTable == true)) {
+                if ((this.tableSubsidiaryLedgerReport != null)) {
+                    this.tableSubsidiaryLedgerReport.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -362,6 +386,8 @@ namespace NES_WEB_ACC.Report.RDLC {
             base.Tables.Add(this.tableBalanceSheetReport);
             this.tableIncomeStatementReport = new IncomeStatementReportDataTable();
             base.Tables.Add(this.tableIncomeStatementReport);
+            this.tableSubsidiaryLedgerReport = new SubsidiaryLedgerReportDataTable();
+            base.Tables.Add(this.tableSubsidiaryLedgerReport);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -403,6 +429,12 @@ namespace NES_WEB_ACC.Report.RDLC {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private bool ShouldSerializeIncomeStatementReport() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeSubsidiaryLedgerReport() {
             return false;
         }
         
@@ -481,6 +513,9 @@ namespace NES_WEB_ACC.Report.RDLC {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public delegate void IncomeStatementReportRowChangeEventHandler(object sender, IncomeStatementReportRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void SubsidiaryLedgerReportRowChangeEventHandler(object sender, SubsidiaryLedgerReportRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -3363,6 +3398,407 @@ namespace NES_WEB_ACC.Report.RDLC {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class SubsidiaryLedgerReportDataTable : global::System.Data.TypedTableBase<SubsidiaryLedgerReportRow> {
+            
+            private global::System.Data.DataColumn columnAccGroupNo;
+            
+            private global::System.Data.DataColumn columnAccNo;
+            
+            private global::System.Data.DataColumn columnAccName;
+            
+            private global::System.Data.DataColumn columnDCTypeNo;
+            
+            private global::System.Data.DataColumn columnBeginMoney;
+            
+            private global::System.Data.DataColumn columnBillDate;
+            
+            private global::System.Data.DataColumn columnBillMonth;
+            
+            private global::System.Data.DataColumn columnRemark;
+            
+            private global::System.Data.DataColumn columnBillDCTypeNo;
+            
+            private global::System.Data.DataColumn columnMoney1;
+            
+            private global::System.Data.DataColumn columnBillNo;
+            
+            private global::System.Data.DataColumn columnBillLast;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public SubsidiaryLedgerReportDataTable() {
+                this.TableName = "SubsidiaryLedgerReport";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal SubsidiaryLedgerReportDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected SubsidiaryLedgerReportDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AccGroupNoColumn {
+                get {
+                    return this.columnAccGroupNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AccNoColumn {
+                get {
+                    return this.columnAccNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AccNameColumn {
+                get {
+                    return this.columnAccName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DCTypeNoColumn {
+                get {
+                    return this.columnDCTypeNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BeginMoneyColumn {
+                get {
+                    return this.columnBeginMoney;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BillDateColumn {
+                get {
+                    return this.columnBillDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BillMonthColumn {
+                get {
+                    return this.columnBillMonth;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn RemarkColumn {
+                get {
+                    return this.columnRemark;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BillDCTypeNoColumn {
+                get {
+                    return this.columnBillDCTypeNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Money1Column {
+                get {
+                    return this.columnMoney1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BillNoColumn {
+                get {
+                    return this.columnBillNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn BillLastColumn {
+                get {
+                    return this.columnBillLast;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public SubsidiaryLedgerReportRow this[int index] {
+                get {
+                    return ((SubsidiaryLedgerReportRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event SubsidiaryLedgerReportRowChangeEventHandler SubsidiaryLedgerReportRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event SubsidiaryLedgerReportRowChangeEventHandler SubsidiaryLedgerReportRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event SubsidiaryLedgerReportRowChangeEventHandler SubsidiaryLedgerReportRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event SubsidiaryLedgerReportRowChangeEventHandler SubsidiaryLedgerReportRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void AddSubsidiaryLedgerReportRow(SubsidiaryLedgerReportRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public SubsidiaryLedgerReportRow AddSubsidiaryLedgerReportRow(string AccGroupNo, string AccNo, string AccName, string DCTypeNo, string BeginMoney, string BillDate, string BillMonth, string Remark, string BillDCTypeNo, string Money1, string BillNo, string BillLast) {
+                SubsidiaryLedgerReportRow rowSubsidiaryLedgerReportRow = ((SubsidiaryLedgerReportRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        AccGroupNo,
+                        AccNo,
+                        AccName,
+                        DCTypeNo,
+                        BeginMoney,
+                        BillDate,
+                        BillMonth,
+                        Remark,
+                        BillDCTypeNo,
+                        Money1,
+                        BillNo,
+                        BillLast};
+                rowSubsidiaryLedgerReportRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowSubsidiaryLedgerReportRow);
+                return rowSubsidiaryLedgerReportRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                SubsidiaryLedgerReportDataTable cln = ((SubsidiaryLedgerReportDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new SubsidiaryLedgerReportDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnAccGroupNo = base.Columns["AccGroupNo"];
+                this.columnAccNo = base.Columns["AccNo"];
+                this.columnAccName = base.Columns["AccName"];
+                this.columnDCTypeNo = base.Columns["DCTypeNo"];
+                this.columnBeginMoney = base.Columns["BeginMoney"];
+                this.columnBillDate = base.Columns["BillDate"];
+                this.columnBillMonth = base.Columns["BillMonth"];
+                this.columnRemark = base.Columns["Remark"];
+                this.columnBillDCTypeNo = base.Columns["BillDCTypeNo"];
+                this.columnMoney1 = base.Columns["Money1"];
+                this.columnBillNo = base.Columns["BillNo"];
+                this.columnBillLast = base.Columns["BillLast"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnAccGroupNo = new global::System.Data.DataColumn("AccGroupNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccGroupNo);
+                this.columnAccNo = new global::System.Data.DataColumn("AccNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccNo);
+                this.columnAccName = new global::System.Data.DataColumn("AccName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccName);
+                this.columnDCTypeNo = new global::System.Data.DataColumn("DCTypeNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDCTypeNo);
+                this.columnBeginMoney = new global::System.Data.DataColumn("BeginMoney", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBeginMoney);
+                this.columnBillDate = new global::System.Data.DataColumn("BillDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBillDate);
+                this.columnBillMonth = new global::System.Data.DataColumn("BillMonth", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBillMonth);
+                this.columnRemark = new global::System.Data.DataColumn("Remark", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRemark);
+                this.columnBillDCTypeNo = new global::System.Data.DataColumn("BillDCTypeNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBillDCTypeNo);
+                this.columnMoney1 = new global::System.Data.DataColumn("Money1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMoney1);
+                this.columnBillNo = new global::System.Data.DataColumn("BillNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBillNo);
+                this.columnBillLast = new global::System.Data.DataColumn("BillLast", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBillLast);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public SubsidiaryLedgerReportRow NewSubsidiaryLedgerReportRow() {
+                return ((SubsidiaryLedgerReportRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new SubsidiaryLedgerReportRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(SubsidiaryLedgerReportRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.SubsidiaryLedgerReportRowChanged != null)) {
+                    this.SubsidiaryLedgerReportRowChanged(this, new SubsidiaryLedgerReportRowChangeEvent(((SubsidiaryLedgerReportRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.SubsidiaryLedgerReportRowChanging != null)) {
+                    this.SubsidiaryLedgerReportRowChanging(this, new SubsidiaryLedgerReportRowChangeEvent(((SubsidiaryLedgerReportRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.SubsidiaryLedgerReportRowDeleted != null)) {
+                    this.SubsidiaryLedgerReportRowDeleted(this, new SubsidiaryLedgerReportRowChangeEvent(((SubsidiaryLedgerReportRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.SubsidiaryLedgerReportRowDeleting != null)) {
+                    this.SubsidiaryLedgerReportRowDeleting(this, new SubsidiaryLedgerReportRowChangeEvent(((SubsidiaryLedgerReportRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void RemoveSubsidiaryLedgerReportRow(SubsidiaryLedgerReportRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                ReportDataSet ds = new ReportDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "SubsidiaryLedgerReportDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class AccCodeReportRow : global::System.Data.DataRow {
@@ -5876,6 +6312,357 @@ namespace NES_WEB_ACC.Report.RDLC {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class SubsidiaryLedgerReportRow : global::System.Data.DataRow {
+            
+            private SubsidiaryLedgerReportDataTable tableSubsidiaryLedgerReport;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal SubsidiaryLedgerReportRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableSubsidiaryLedgerReport = ((SubsidiaryLedgerReportDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string AccGroupNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.AccGroupNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'AccGroupNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.AccGroupNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string AccNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.AccNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'AccNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.AccNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string AccName {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.AccNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'AccName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.AccNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DCTypeNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.DCTypeNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'DCTypeNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.DCTypeNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BeginMoney {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.BeginMoneyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'BeginMoney\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.BeginMoneyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BillDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.BillDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'BillDate\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.BillDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BillMonth {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.BillMonthColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'BillMonth\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.BillMonthColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Remark {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.RemarkColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'Remark\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.RemarkColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BillDCTypeNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.BillDCTypeNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'BillDCTypeNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.BillDCTypeNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Money1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.Money1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'Money1\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.Money1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BillNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.BillNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'BillNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.BillNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string BillLast {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubsidiaryLedgerReport.BillLastColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SubsidiaryLedgerReport\' 中資料行 \'BillLast\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSubsidiaryLedgerReport.BillLastColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsAccGroupNoNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.AccGroupNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetAccGroupNoNull() {
+                this[this.tableSubsidiaryLedgerReport.AccGroupNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsAccNoNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.AccNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetAccNoNull() {
+                this[this.tableSubsidiaryLedgerReport.AccNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsAccNameNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.AccNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetAccNameNull() {
+                this[this.tableSubsidiaryLedgerReport.AccNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsDCTypeNoNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.DCTypeNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetDCTypeNoNull() {
+                this[this.tableSubsidiaryLedgerReport.DCTypeNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBeginMoneyNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.BeginMoneyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBeginMoneyNull() {
+                this[this.tableSubsidiaryLedgerReport.BeginMoneyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBillDateNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.BillDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBillDateNull() {
+                this[this.tableSubsidiaryLedgerReport.BillDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBillMonthNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.BillMonthColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBillMonthNull() {
+                this[this.tableSubsidiaryLedgerReport.BillMonthColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsRemarkNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.RemarkColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetRemarkNull() {
+                this[this.tableSubsidiaryLedgerReport.RemarkColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBillDCTypeNoNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.BillDCTypeNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBillDCTypeNoNull() {
+                this[this.tableSubsidiaryLedgerReport.BillDCTypeNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMoney1Null() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.Money1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMoney1Null() {
+                this[this.tableSubsidiaryLedgerReport.Money1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBillNoNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.BillNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBillNoNull() {
+                this[this.tableSubsidiaryLedgerReport.BillNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsBillLastNull() {
+                return this.IsNull(this.tableSubsidiaryLedgerReport.BillLastColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetBillLastNull() {
+                this[this.tableSubsidiaryLedgerReport.BillLastColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -6099,6 +6886,40 @@ namespace NES_WEB_ACC.Report.RDLC {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public IncomeStatementReportRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class SubsidiaryLedgerReportRowChangeEvent : global::System.EventArgs {
+            
+            private SubsidiaryLedgerReportRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public SubsidiaryLedgerReportRowChangeEvent(SubsidiaryLedgerReportRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public SubsidiaryLedgerReportRow Row {
                 get {
                     return this.eventRow;
                 }

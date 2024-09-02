@@ -65,7 +65,14 @@ namespace NES_WEB_ACC.Controllers
             ViewBag.CurrentCulture = currentCulture;
             return View(model);
         }
-
+        /// <summary>
+        /// 明細分類帳
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SubsidiaryLedger()
+        {
+            return View();
+        }
         //------ 其他 ------// 
         public string SqlSeache(SearchDateViewModel searche )
         {
@@ -168,7 +175,19 @@ namespace NES_WEB_ACC.Controllers
                 where WebId = @reportId
             ";
             string sqlDetail = @"
-                select Linage, AccNo, AccNameC as AccName,Remark,DCTypeNo, CurrencyNo, Money, Rate1, CurrencySt, Money1  from NES_WEB_ACC.dbo.ACC_VoucherDetail where WebDocId = @reportId order by Linage
+                select 
+                    Linage, AccNo
+                    ,case
+                        when @currentCulture = 'en' then a.AccNameE
+                        when @currentCulture = 'zh-TW' then a.AccNameC
+                        when @currentCulture = 'es-MX' then a.AccNameMX
+                        else a.AccNameE
+                    end as AccName
+                    ,Remark,DCTypeNo
+                    ,CurrencyNo, Money, Rate1
+                    ,CurrencySt, Money1  
+                from NES_WEB_ACC.dbo.ACC_VoucherDetail 
+                where WebDocId = @reportId order by Linage
             ";
 
             VoucherMainReportViewModel voucherInfo;
@@ -176,7 +195,7 @@ namespace NES_WEB_ACC.Controllers
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                voucherInfo = conn.QueryFirstOrDefault<VoucherMainReportViewModel>(sqlInfo, new { reportId });
+                voucherInfo = conn.QueryFirstOrDefault<VoucherMainReportViewModel>(sqlInfo, new { currentCulture, reportId });
                 voucherDetail = conn.Query<ACC_VoucherDetail_ViewModel>(sqlDetail, new { reportId }).ToList();
             }
 
@@ -233,7 +252,19 @@ namespace NES_WEB_ACC.Controllers
 		            Drop Table #Temp
                 select WebId into #Tmp from NES_WEB_ACC.dbo.ACC_VoucherInfo  where 1=1 {sqlseache}           
 
-                select WebDocId, Linage, AccNo, AccNameC as AccName,Remark,DCTypeNo, CurrencyNo, Money, Rate1, CurrencySt, Money1  from NES_WEB_ACC.dbo.ACC_VoucherDetail 
+                select 
+                    WebDocId,Linage,AccNo
+                    ,case
+                        when @currentCulture = 'en' then AccNameE
+                        when @currentCulture = 'zh-TW' then AccNameC
+                        when @currentCulture = 'es-MX' then AccNameMX
+                        else AccNameE
+                    end as AccName
+                    ,Remark,DCTypeNo
+                    ,CurrencyNo
+                    ,Money,Rate1
+                    ,CurrencySt,Money1  
+                from NES_WEB_ACC.dbo.ACC_VoucherDetail 
                 where WebDocId in    (select * from #Tmp)  
                 order by Linage
 
@@ -247,7 +278,7 @@ namespace NES_WEB_ACC.Controllers
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 voucherInfo = conn.Query<VoucherMainReportViewModel>(sqlInfo).ToList();
-                voucherDetail = conn.Query<ACC_VoucherDetail_ViewModel>(sqlDetail).ToList();
+                voucherDetail = conn.Query<ACC_VoucherDetail_ViewModel>(sqlDetail,new { currentCulture }).ToList();
             }
 
             // 報表參數設定
@@ -278,7 +309,14 @@ namespace NES_WEB_ACC.Controllers
                 select  
                  CONVERT(varchar(100), a.BillDate, 111) as BillDate
                  ,a.BillNo,a.CurrencySt,a.IsChecked,a.IsState,a.IsClosed
-                 ,b.Linage,b.AccNo,b.AccNameC as AccName ,b.Remark,b.DCTypeNo,b.Money1
+                 ,b.Linage,b.AccNo                
+                 ,case
+                    when @currentCulture = 'en' then b.AccNameE
+                    when @currentCulture = 'zh-TW' then b.AccNameC
+                    when @currentCulture = 'es-MX' then b.AccNameMX
+                    else b.AccNameE
+                 end as AccName
+                 ,b.Remark,b.DCTypeNo,b.Money1
 
                 from NES_WEB_ACC.dbo.ACC_VoucherDetail as b
                 left join NES_WEB_ACC.dbo.ACC_VoucherInfo as a on a.WebId = b.WebDocId
@@ -289,7 +327,7 @@ namespace NES_WEB_ACC.Controllers
                 and a.BillDate >= @startdate
                 and a.BillDate <= @enddate
             ";
-            var param = new { startdate, enddate };
+            var param = new { currentCulture,startdate, enddate };
             List<JournalReportViewModel> journalReport = new List<JournalReportViewModel>();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -322,6 +360,26 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult BalanceSheetReport(string sqlseache, string startdate, string enddate)
         {
             string EmpNo = (string)Session["EmpNo"];
+            string rdlcPath, rdlcDocName;
+            switch (currentCulture)
+            {
+                case "en":
+                    rdlcPath = "~/Report/RDLC/BalanceSheetReport_en.rdlc";
+                    rdlcDocName = "BalanceSheetReport_" + System.DateTime.Now.ToString("yyyyMMdd"); ;
+                    break;
+                case "zh-TW":
+                    rdlcPath = "~/Report/RDLC/BalanceSheetReport_zh-TW.rdlc";
+                    rdlcDocName = "資產負債表_" + System.DateTime.Now.ToString("yyyyMMdd"); 
+                    break;
+                case "es-MX":
+                    rdlcPath = "~/Report/RDLC/BalanceSheetReport_es-MX.rdlc";
+                    rdlcDocName = "Informe de balance general_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                default:
+                    rdlcPath = "~/Report/RDLC/BalanceSheetReport_en.rdlc";
+                    rdlcDocName = "BalanceSheetReport_" + System.DateTime.Now.ToString("yyyyMMdd"); ;
+                    break;
+            }
             string sql = @"
                	IF OBJECT_ID ('tempdb..#TmpAcc') IS NOT NULL
 		            Drop Table #TmpAcc
@@ -330,9 +388,28 @@ namespace NES_WEB_ACC.Controllers
 
                 select * into #TmpAcc from (
 	                select
-		                a.AccGroupNo,a.AccGroupNameC as AccGroupName
-		                ,b.AccNo as AccControlNo,b.AccNameC as AccControlName 
-		                ,a.AccNo,a.AccNameC as AccName
+		                a.AccGroupNo                        
+                        ,case
+                            when @currentCulture = 'en' then a.AccGroupNameE 
+                            when @currentCulture = 'zh-TW' then a.AccGroupNameC 
+                            when @currentCulture = 'es-MX' then a.AccGroupNameMX 
+                            else a.AccGroupNameE 
+                         end as AccGroupName
+		                ,b.AccNo as AccControlNo                        
+                        ,case
+                            when @currentCulture = 'en' then b.AccNameE
+                            when @currentCulture = 'zh-TW' then b.AccNameC
+                            when @currentCulture = 'es-MX' then b.AccNameMX
+                            else b.AccNameE
+                         end as AccControlName
+		                ,a.AccNo                       
+                        ,case
+                            when @currentCulture = 'en' then a.AccNameE
+                            when @currentCulture = 'zh-TW' then a.AccNameC
+                            when @currentCulture = 'es-MX' then a.AccNameMX
+                            else a.AccNameE
+                         end as AccName
+                        
 	                from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as a
 	                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX  as b on CONCAT(LEFT(a.AccNo, 3), '-00-000') = b.AccNo
 	                where 1 = 1
@@ -378,7 +455,7 @@ namespace NES_WEB_ACC.Controllers
 	                IF OBJECT_ID ('tempdb..#TmpVoucher') IS NOT NULL
 		                Drop Table #TmpVoucher
             ";
-            var param = new { startdate, enddate };
+            var param = new { currentCulture,startdate, enddate };
             List<BalanceSheetReportViewModel> balanceSheetReport = new List<BalanceSheetReportViewModel>();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -389,17 +466,17 @@ namespace NES_WEB_ACC.Controllers
             var reportParameters = new List<ReportParameter>
             {
                 new ReportParameter("ReportMaker", EmpNo),
-                //new ReportParameter("StartDate", startdate),
-                //new ReportParameter("EndDate", enddate),
-                new ReportParameter("StartDate", "2024/08/01"),
-                new ReportParameter("EndDate", "2024/08/31"),
+                new ReportParameter("StartDate", startdate),
+                new ReportParameter("EndDate", enddate),
+                //new ReportParameter("StartDate", "2024/08/01"),
+                //new ReportParameter("EndDate", "2024/08/31"),
             };
 
-            // Session設定，給ReportViewer使用
-            Session["ReportPath"] = Server.MapPath("~/Report/RDLC/BalanceSheetReport.rdlc");
+            // Session設定，給ReportViewer使用            
+            Session["ReportPath"] = Server.MapPath(rdlcPath);
             Session["ReportDataSource"] = new ReportDataSource("BalanceSheetRdlc", balanceSheetReport);
             Session["ReportParameters"] = reportParameters;
-            Session["ReportDocName"] = "BalanceSheetReport_" + System.DateTime.Now.ToString("yyyyMMdd");
+            Session["ReportDocName"] = rdlcDocName;
 
             return Redirect("~/Report/ReportViewer_V1.aspx");
         }
@@ -413,6 +490,26 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult IncomeStatementReport(string sqlseache, string startdate, string enddate)
         {
             string EmpNo = (string)Session["EmpNo"];
+            string rdlcPath, rdlcDocName;
+            switch (currentCulture)
+            {
+                case "en":
+                    rdlcPath = "~/Report/RDLC/IncomeStatementReport_en.rdlc";
+                    rdlcDocName = "IncomeStatementReport_" + System.DateTime.Now.ToString("yyyyMMdd"); 
+                    break;
+                case "zh-TW":
+                    rdlcPath = "~/Report/RDLC/IncomeStatementReport_zh-TW.rdlc";
+                    rdlcDocName = "損益表_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                case "es-MX":
+                    rdlcPath = "~/Report/RDLC/IncomeStatementReport_es-MX.rdlc";
+                    rdlcDocName = "Informe de estado de resultados_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                default:
+                    rdlcPath = "~/Report/RDLC/IncomeStatementReport_en.rdlc";
+                    rdlcDocName = "IncomeStatementReport_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+            }
             string sql = @"
                	IF OBJECT_ID ('tempdb..#TmpAcc') IS NOT NULL
 		            Drop Table #TmpAcc
@@ -421,9 +518,27 @@ namespace NES_WEB_ACC.Controllers
 
                 select * into #TmpAcc from (
 	                select
-		                a.AccGroupNo,a.AccGroupNameC as AccGroupName
-		                ,b.AccNo as AccControlNo,b.AccNameC as AccControlName 
-		                ,a.AccNo,a.AccNameC as AccName
+		                a.AccGroupNo                       
+                        ,case
+                            when @currentCulture = 'en' then a.AccGroupNameE 
+                            when @currentCulture = 'zh-TW' then a.AccGroupNameC 
+                            when @currentCulture = 'es-MX' then a.AccGroupNameMX 
+                            else a.AccGroupNameE 
+                         end as AccGroupName
+		                ,b.AccNo as AccControlNo                        
+                        ,case
+                            when @currentCulture = 'en' then b.AccNameE
+                            when @currentCulture = 'zh-TW' then b.AccNameC
+                            when @currentCulture = 'es-MX' then b.AccNameMX
+                            else b.AccNameE
+                         end as AccControlName
+		                ,a.AccNo                       
+                        ,case
+                            when @currentCulture = 'en' then a.AccNameE
+                            when @currentCulture = 'zh-TW' then a.AccNameC
+                            when @currentCulture = 'es-MX' then a.AccNameMX
+                            else a.AccNameE
+                         end as AccName
 	                from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as a
 	                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX  as b on CONCAT(LEFT(a.AccNo, 3), '-00-000') = b.AccNo
 	                where 1 = 1
@@ -469,7 +584,7 @@ namespace NES_WEB_ACC.Controllers
 	                IF OBJECT_ID ('tempdb..#TmpVoucher') IS NOT NULL
 		                Drop Table #TmpVoucher
             ";
-            var param = new { startdate, enddate };
+            var param = new { currentCulture,startdate, enddate };
             List<IncomeStatementViewModel> balanceSheetReport = new List<IncomeStatementViewModel>();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -480,17 +595,190 @@ namespace NES_WEB_ACC.Controllers
             var reportParameters = new List<ReportParameter>
             {
                 new ReportParameter("ReportMaker", EmpNo),
-                //new ReportParameter("StartDate", startdate),
-                //new ReportParameter("EndDate", enddate),
-                new ReportParameter("StartDate", "2024/08/01"),
-                new ReportParameter("EndDate", "2024/08/31"),
+                new ReportParameter("StartDate", startdate),
+                new ReportParameter("EndDate", enddate),
+                //new ReportParameter("StartDate", "2024/08/01"),
+                //new ReportParameter("EndDate", "2024/08/31"),
             };
 
             // Session設定，給ReportViewer使用
-            Session["ReportPath"] = Server.MapPath("~/Report/RDLC/IncomeStatementReport.rdlc");
+            Session["ReportPath"] = Server.MapPath(rdlcPath);
             Session["ReportDataSource"] = new ReportDataSource("IncomeStatementRdlc", balanceSheetReport);
             Session["ReportParameters"] = reportParameters;
-            Session["ReportDocName"] = "IncomeStatementReport_" + System.DateTime.Now.ToString("yyyyMMdd");
+            Session["ReportDocName"] = rdlcDocName;
+
+            return Redirect("~/Report/ReportViewer_V1.aspx");
+        }
+        /// <summary>
+        /// 明細分類帳
+        /// </summary>
+        /// <param name="sqlseache"></param>
+        /// <param name="startdate"></param>
+        /// <param name="enddate"></param>
+        /// <returns></returns>
+        public ActionResult SubsidiaryLedgerReport(string sqlseache, string startdate, string enddate)
+        {
+            string EmpNo = (string)Session["EmpNo"];
+            string rdlcPath, rdlcDocName;
+            switch (currentCulture)
+            {
+                case "en":
+                    rdlcPath = "~/Report/RDLC/SubsidiaryLedgerReport_en.rdlc";
+                    rdlcDocName = "SubsidiaryLedgerReport_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                case "zh-TW":
+                    rdlcPath = "~/Report/RDLC/SubsidiaryLedgerReport_zh-TW.rdlc";
+                    rdlcDocName = "明細分類帳_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                case "es-MX":
+                    rdlcPath = "~/Report/RDLC/SubsidiaryLedgerReport_es-MX.rdlc";
+                    rdlcDocName = "Libro mayor subsidiario_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                default:
+                    rdlcPath = "~/Report/RDLC/SubsidiaryLedgerReport_en.rdlc";
+                    rdlcDocName = "SubsidiaryLedgerReport_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+            }
+            string sql = @"               
+             	IF OBJECT_ID ('tempdb..#TmpBegin') IS NOT NULL
+		             Drop Table #TmpBegin
+	            IF OBJECT_ID ('tempdb..#TmpBegin2') IS NOT NULL
+		            Drop Table #TmpBegin2
+	            IF OBJECT_ID ('tempdb..#TmpVoucherBefore') IS NOT NULL
+		            Drop Table #TmpVoucherBefore
+	            IF OBJECT_ID ('tempdb..#TmpVoucher') IS NOT NULL
+		            Drop Table #TmpVoucher
+				IF OBJECT_ID ('tempdb..#TmpShow') IS NOT NULL
+		            Drop Table #TmpShow
+
+	            /****** 會計科目&期初傳票 ******/
+	            select * into #TmpBegin from (
+		            select
+			             a.AccGroupNo,a.AccNo                        
+                         ,case
+                            when @currentCulture = 'en' then a.AccNameE
+                            when @currentCulture = 'zh-TW' then a.AccNameC
+                            when @currentCulture = 'es-MX' then a.AccNameMX
+                            else a.AccNameE
+                          end as AccName
+                         ,a.DCTypeNo  
+			             ,case	
+				            when a.DCTypeNo = 'D' then
+					            case 
+						            when b.DCTypeNo = 'D' then NULLIF(b.Money1,0)
+						            else 0-NULLIF(b.Money1,0)
+					            end
+				            else 
+					            case	
+						            when b.DCTypeNo = 'C' then NULLIF(b.Money1,0)
+						            else 0-NULLIF(b.Money1,0)
+					            end
+			            end as BeginMoney
+		            from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as a
+		            left join (
+			            select b.AccNo,b.DCTypeNo,b.Money1 
+			            from NES_WEB_ACC.dbo.ACC_VoucherDetail as b
+				            inner join (
+					            select top(1) * from NES_WEB_ACC.dbo.ACC_VoucherInfo where DocType = 'V2' order by CreateDate
+				            ) as a on a.WebId = b.WebDocId
+			            ) as b  on a.AccNo = b.AccNo
+	            ) as a
+	            /****** 查詢區間前資料 ******/
+	            select  * into #TmpVoucherBefore from (
+		            select a.BillNo,b.AccNo,b.Remark,b.DCTypeNo,b.Money1 
+		            from NES_WEB_ACC.dbo.ACC_VoucherDetail as b
+			            left join NES_WEB_ACC.dbo.ACC_VoucherInfo as a on a.WebId = b.WebDocId
+		            where 1=1	
+			            and a.DocType = 'V1'
+			            and a.BillNo is not null
+			            and a.BillDate < @startdate
+			            --and a.BillDate < '2024/08/10'
+	            ) as a;
+	            /****** 查詢區間資料 ******/
+	            select  * into #TmpVoucher from (
+		            select a.BillNo,a.BillDate,b.AccNo,b.Remark,b.DCTypeNo,b.Money1 
+		            from NES_WEB_ACC.dbo.ACC_VoucherDetail as b
+			            left join NES_WEB_ACC.dbo.ACC_VoucherInfo as a on a.WebId = b.WebDocId
+		            where 1=1	
+			            and a.DocType = 'V1'
+			            and a.BillNo is not null
+			            and a.BillDate >= @startdate
+			            and a.BillDate <= @enddate
+			            --and a.BillDate >= '2024/08/10'
+			            --and a.BillDate <= '2024/08/31'
+	            ) as a;
+	            /****** 會計科目&期初傳票(含查詢區間前傳票) ******/
+	            select * into #TmpBegin2 from (
+		            select 
+			            a.AccGroupNo,a.AccNo,a.AccName,a.DCTypeNo
+			            ,case	
+				            when a.DCTypeNo = 'D' then
+					            sum( case when b.DCTypeNo = 'D' then b.Money1 else 0 end) -sum(case when b.DCTypeNo = 'C' then b.Money1 else 0 end)
+				            else 
+					             sum( case when b.DCTypeNo = 'C' then b.Money1 else 0 end) -sum(case when b.DCTypeNo = 'D' then b.Money1 else 0 end)
+			            end as BeginMoney
+		            from #TmpBegin as a
+		            left join #TmpVoucherBefore as b on a.AccNo = b.AccNo
+		            group by a.AccGroupNo,a.AccNo,a.AccName,a.DCTypeNo
+	            ) as a;
+
+	            /****** For Show ******/
+				select * into #TmpShow from (				
+		            select 
+			            a.* 
+			            ,b.BillDate
+			            , FORMAT(b.BillDate, 'yyyy-MM') AS BillMonth
+			            ,b.BillNo
+			            ,b.Remark
+			            ,b.DCTypeNo as BillDCTypeNo
+			            ,b.Money1	 
+		            from #TmpBegin2 as a
+		            left join #TmpVoucher as b on a.AccNo = b.AccNo
+				)a				
+				/****** 顯示 ******/
+				select 
+					* 
+					,case 
+						when DCTypeNo = BillDCTypeNo 
+						then BeginMoney + SUM(Money1) OVER (PARTITION BY AccNo ORDER BY BillDate, BillNo)
+						else BeginMoney - SUM(Money1) OVER (PARTITION BY AccNo ORDER BY BillDate, BillNo)					
+					end AS BillLast
+				from #TmpShow
+				order by 1,2
+				
+
+
+	            IF OBJECT_ID ('tempdb..#TmpBegin') IS NOT NULL
+		             Drop Table #TmpBegin
+	            IF OBJECT_ID ('tempdb..#TmpBegin2') IS NOT NULL
+		            Drop Table #TmpBegin2
+	            IF OBJECT_ID ('tempdb..#TmpVoucherBefore') IS NOT NULL
+		            Drop Table #TmpVoucherBefore
+	            IF OBJECT_ID ('tempdb..#TmpVoucher') IS NOT NULL
+		            Drop Table #TmpVoucher
+				IF OBJECT_ID ('tempdb..#TmpShow') IS NOT NULL
+		            Drop Table #TmpShow
+            ";
+            var param = new { currentCulture, startdate, enddate };
+            List<SubsidiaryLedgerViewModel> subsidiaryLedgerReport = new List<SubsidiaryLedgerViewModel>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                subsidiaryLedgerReport = conn.Query<SubsidiaryLedgerViewModel>(sql, param).ToList();
+            }
+
+            // 報表參數設定
+            var reportParameters = new List<ReportParameter>
+            {
+                new ReportParameter("ReportMaker", EmpNo),
+                new ReportParameter("StartDate", startdate),
+                new ReportParameter("EndDate", enddate),               
+            };
+
+            // Session設定，給ReportViewer使用
+            Session["ReportPath"] = Server.MapPath(rdlcPath);
+            Session["ReportDataSource"] = new ReportDataSource("SubsidiaryLedgerRdlc", subsidiaryLedgerReport);
+            Session["ReportParameters"] = reportParameters;
+            Session["ReportDocName"] = rdlcDocName;
 
             return Redirect("~/Report/ReportViewer_V1.aspx");
         }

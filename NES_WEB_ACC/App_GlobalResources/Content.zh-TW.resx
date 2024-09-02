@@ -489,4 +489,7 @@
   <data name="MsgSelectRow3" xml:space="preserve">
     <value>請先選擇需要填入的行！</value>
   </data>
+  <data name="VoucherBeginning" xml:space="preserve">
+    <value>傳票期初作業</value>
+  </data>
 </root>

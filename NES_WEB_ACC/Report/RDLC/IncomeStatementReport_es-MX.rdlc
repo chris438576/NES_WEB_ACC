@@ -126,7 +126,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>金額</Value>
+                                  <Value>Cantidad</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -168,7 +168,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>金額</Value>
+                                  <Value>Cantidad</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -430,7 +430,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!TotalMoney.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -551,7 +553,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(Fields!TotalMoney.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -648,7 +652,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=sum(Fields!TotalMoney.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -696,7 +702,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>會計科目</Value>
+                                <Value>Cuenta contable</Value>
                                 <Style />
                               </TextRun>
                             </TextRuns>
@@ -923,7 +929,7 @@
                                     <Style />
                                   </TextRun>
                                   <TextRun>
-                                    <Value>總額</Value>
+                                    <Value> Total</Value>
                                     <Style />
                                   </TextRun>
                                 </TextRuns>
@@ -975,7 +981,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>損益表</Value>
+                      <Value>Estado de resultados</Value>
                       <Style>
                         <FontSize>24pt</FontSize>
                       </Style>
@@ -1006,7 +1012,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>日期區間：</Value>
+                      <Value>Rango de fechas：</Value>
                       <Style />
                     </TextRun>
                     <TextRun>
