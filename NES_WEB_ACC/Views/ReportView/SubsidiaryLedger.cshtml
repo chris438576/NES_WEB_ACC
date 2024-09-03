@@ -1,11 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "SubsidiaryLedger";
+    ViewBag.Title = @Resources.Content.SubsidiaryLedger;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@*明細分類帳*@
 <div id="aa" class="easyui-accordion" style="width:100%;height:100%;">
-    <div title="查詢條件-明細分類帳" data-options="iconCls:'icon-search'" style="overflow:auto;padding:10px;">
+    <div title="@Resources.Content.QueryConditions-@Resources.Content.SubsidiaryLedger" data-options="iconCls:'icon-search'" style="overflow:auto;padding:10px;">
         <div class="row">
             <div class="col-md-3">必要條件：</div>
             <div class="col-md-3"><input class="easyui-datebox colStartDate myDatebox" style="width:90%;" required /></div>

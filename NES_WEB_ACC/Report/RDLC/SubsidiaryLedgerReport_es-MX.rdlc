@@ -735,7 +735,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>期初金額：</Value>
+                                                <Value>Monto inicial：</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -864,7 +864,9 @@
                                                             <TextRuns>
                                                               <TextRun>
                                                                 <Value>=Fields!BeginMoney.Value</Value>
-                                                                <Style />
+                                                                <Style>
+                                                                  <Format>0.000</Format>
+                                                                </Style>
                                                               </TextRun>
                                                             </TextRuns>
                                                             <Style />

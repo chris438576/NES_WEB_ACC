@@ -313,6 +313,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Balance Sheet 的當地語系化字串。
+        /// </summary>
+        public static string BalanceSheet {
+            get {
+                return ResourceManager.GetString("BalanceSheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Voucher Date 的當地語系化字串。
         /// </summary>
         public static string BillDate {
@@ -547,6 +556,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Income Statement 的當地語系化字串。
+        /// </summary>
+        public static string IncomeStatement {
+            get {
+                return ResourceManager.GetString("IncomeStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Initial Bill Type 的當地語系化字串。
         /// </summary>
         public static string InitialDocSubTypeName {
@@ -588,6 +606,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string IsEnable {
             get {
                 return ResourceManager.GetString("IsEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Journal 的當地語系化字串。
+        /// </summary>
+        public static string Journal {
+            get {
+                return ResourceManager.GetString("Journal", resourceCulture);
             }
         }
         
@@ -862,6 +889,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Query conditions 的當地語系化字串。
+        /// </summary>
+        public static string QueryConditions {
+            get {
+                return ResourceManager.GetString("QueryConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Rate 的當地語系化字串。
         /// </summary>
         public static string Rate {
@@ -957,6 +993,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string SourceNo {
             get {
                 return ResourceManager.GetString("SourceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Subsidiary Ledger 的當地語系化字串。
+        /// </summary>
+        public static string SubsidiaryLedger {
+            get {
+                return ResourceManager.GetString("SubsidiaryLedger", resourceCulture);
             }
         }
         
@@ -1092,6 +1137,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string VoucherOperation {
             get {
                 return ResourceManager.GetString("VoucherOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Voucher Report 的當地語系化字串。
+        /// </summary>
+        public static string VoucherReport {
+            get {
+                return ResourceManager.GetString("VoucherReport", resourceCulture);
             }
         }
         

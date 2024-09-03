@@ -444,9 +444,6 @@
   <data name="Reject" xml:space="preserve">
     <value>Reject</value>
   </data>
-  <data name="Report" xml:space="preserve">
-    <value>Report</value>
-  </data>
   <data name="Closed" xml:space="preserve">
     <value>Closed</value>
   </data>
@@ -491,5 +488,26 @@
   </data>
   <data name="VoucherBeginning" xml:space="preserve">
     <value>Voucher Beginning</value>
+  </data>
+  <data name="VoucherReport" xml:space="preserve">
+    <value>Voucher Report</value>
+  </data>
+  <data name="Journal" xml:space="preserve">
+    <value>Journal</value>
+  </data>
+  <data name="SubsidiaryLedger" xml:space="preserve">
+    <value>Subsidiary Ledger</value>
+  </data>
+  <data name="BalanceSheet" xml:space="preserve">
+    <value>Balance Sheet</value>
+  </data>
+  <data name="IncomeStatement" xml:space="preserve">
+    <value>Income Statement</value>
+  </data>
+  <data name="QueryConditions" xml:space="preserve">
+    <value>Query conditions</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
   </data>
 </root>

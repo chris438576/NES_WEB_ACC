@@ -303,15 +303,47 @@
                                 <ul class="dropdown-menu">
                                 </ul>
                             </li>-->
-                            <!--<li class="dropdown">-->
+                            <li class="dropdown">
                             @* 報表 *@
-                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     @Resources.Content.FinanceReport
                                     <span class="caret"></span>
                                 </a>
-                                <ul class="dropdown-menu">
-                                </ul>
-                            </li>-->
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @*傳票報表*@
+                                    <a href="@Url.Action("Voucher", "ReportView")">
+                                        @Resources.Content.VoucherReport
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    @*日記帳*@
+                                    <a href="@Url.Action("Journal", "ReportView")">
+                                        @Resources.Content.Journal
+                                    </a>
+                                </li>
+                                <li>
+                                    @*明細分類帳*@
+                                    <a href="@Url.Action("SubsidiaryLedger", "ReportView")">
+                                        @Resources.Content.SubsidiaryLedger
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    @*資產負債表*@
+                                    <a href="@Url.Action("BalanceSheet", "ReportView")">
+                                        @Resources.Content.BalanceSheet
+                                    </a>
+                                </li>
+                                <li>
+                                    @*損益表*@
+                                    <a href="@Url.Action("IncomeStatement", "ReportView")">
+                                        @Resources.Content.IncomeStatement
+                                    </a>
+                                </li>
+                            </ul>
+                            </li>
                             <li class="dropdown">
                                 @* 系統設定 *@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "JournalReport";
+    ViewBag.Title = @Resources.Content.Journal;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
@@ -8,9 +8,9 @@
        
     </style>
 }
-
+@*日記帳*@
 <div id="aa" class="easyui-accordion" style="width:100%;height:100%;">
-    <div title="查詢條件-日記帳" data-options="iconCls:'icon-search'" style="overflow:auto;padding:10px;">
+    <div title="@Resources.Content.QueryConditions-@Resources.Content.Journal" data-options="iconCls:'icon-search'" style="overflow:auto;padding:10px;">
         <div class="row">
             <div class="col-md-3">必要條件：</div>
             <div class="col-md-3"><input class="easyui-datebox colStartDate myDatebox" style="width:90%;" required /></div>
