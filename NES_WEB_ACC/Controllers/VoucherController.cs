@@ -929,6 +929,45 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
             }
         }
+        [CustomAuthorize(Roles = "Admin")]
+        [HttpDelete]
+        public ActionResult DeleteData(string webid)
+        {
+            if (String.IsNullOrEmpty(webid))
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            Guid guidId;
+            if (!Guid.TryParse(webid, out guidId))
+            {
+                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                var existdataInfo = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == guidId);
+                var existdataDetail = _dbContext.ACC_VoucherDetail.Where(x => x.WebDocId == guidId).ToList(); ;
+                if (existdataInfo == null || existdataDetail == null)
+                {
+                    return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    _dbContext.ACC_VoucherInfo.Remove(existdataInfo);
+                    foreach (var item in existdataDetail)
+                    {
+                        _dbContext.ACC_VoucherDetail.Remove(item);
+                    }
+                    _dbContext.SaveChanges();
+                    return Json(new { success = true, code = "OK", data = existdataInfo.BillNo }, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
 
         //------ 部分檢視 ------//

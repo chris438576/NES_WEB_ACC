@@ -510,4 +510,7 @@
   <data name="Report" xml:space="preserve">
     <value>Informe</value>
   </data>
+  <data name="MsgSes8" xml:space="preserve">
+    <value>Eliminado exitosamente:</value>
+  </data>
 </root>

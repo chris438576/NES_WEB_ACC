@@ -440,8 +440,13 @@ namespace NES_WEB_ACC.Controllers
                         END
                     ) AS TotalMoney
 	                FROM 
-		                NES_WEB_ACC.dbo.ACC_VoucherDetail as a	 
-		                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as b on a.AccNo = b.AccNo 	 
+		                NES_WEB_ACC.dbo.ACC_VoucherDetail as a	
+                        left join NES_WEB_ACC.dbo.ACC_VoucherInfo as c on c.WebId = a.WebDocId
+		                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as b on a.AccNo = b.AccNo 
+                    where 1=1
+                        and c.IsClosed = '1' --已結案   
+                        and c.BillDate >= @startdate
+                        and c.BillDate <= @enddate
 	                GROUP BY 
 		                a.[AccNo]
 	                ) as a
@@ -570,7 +575,12 @@ namespace NES_WEB_ACC.Controllers
                     ) AS TotalMoney
 	                FROM 
 		                NES_WEB_ACC.dbo.ACC_VoucherDetail as a	 
-		                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as b on a.AccNo = b.AccNo 	 
+                        left join NES_WEB_ACC.dbo.ACC_VoucherInfo as c on c.WebId = a.WebDocId
+		                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as b on a.AccNo = b.AccNo 
+                    where 1=1
+                        and c.IsClosed = '1' --已結案   
+                        and c.BillDate >= @startdate
+                        and c.BillDate <= @enddate
 	                GROUP BY 
 		                a.[AccNo]
 	                ) as a
@@ -691,6 +701,7 @@ namespace NES_WEB_ACC.Controllers
 		            where 1=1	
 			            and a.DocType = 'V1'
 			            and a.BillNo is not null
+                        and a.IsClosed = true --已結案
 			            and a.BillDate < @startdate
 			            --and a.BillDate < '2024/08/10'
 	            ) as a;
@@ -702,6 +713,7 @@ namespace NES_WEB_ACC.Controllers
 		            where 1=1	
 			            and a.DocType = 'V1'
 			            and a.BillNo is not null
+                        and a.IsClosed = true --已結案
 			            and a.BillDate >= @startdate
 			            and a.BillDate <= @enddate
 			            --and a.BillDate >= '2024/08/10'

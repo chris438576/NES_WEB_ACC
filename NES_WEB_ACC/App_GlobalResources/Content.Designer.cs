@@ -835,6 +835,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Successfully delete： 的當地語系化字串。
+        /// </summary>
+        public static string MsgSes8 {
+            get {
+                return ResourceManager.GetString("MsgSes8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Next 的當地語系化字串。
         /// </summary>
         public static string Next {
