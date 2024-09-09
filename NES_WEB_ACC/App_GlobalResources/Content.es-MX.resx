@@ -513,4 +513,7 @@
   <data name="MsgSes8" xml:space="preserve">
     <value>Eliminado exitosamente:</value>
   </data>
+  <data name="BalanceSheetAcc" xml:space="preserve">
+    <value>Cuenta de balance</value>
+  </data>
 </root>

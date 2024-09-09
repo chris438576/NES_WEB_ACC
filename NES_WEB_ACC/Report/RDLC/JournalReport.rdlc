@@ -911,7 +911,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1086,6 +1085,13 @@
                             <SortExpression>
                               <Value>=Fields!BillNo.Value</Value>
                             </SortExpression>
+                            <SortExpression>
+                              <Value>=Fields!DCTypeNo.Value</Value>
+                              <Direction>Descending</Direction>
+                            </SortExpression>
+                            <SortExpression>
+                              <Value>=Fields!Linage.Value</Value>
+                            </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
                             <Size>2.5cm</Size>
@@ -1222,6 +1228,15 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>JournalRdlc</DataSetName>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!DCTypeNo.Value</Value>
+                <Direction>Descending</Direction>
+              </SortExpression>
+              <SortExpression>
+                <Value>=Fields!Linage.Value</Value>
+              </SortExpression>
+            </SortExpressions>
             <Height>2.4cm</Height>
             <Width>18cm</Width>
             <Style>

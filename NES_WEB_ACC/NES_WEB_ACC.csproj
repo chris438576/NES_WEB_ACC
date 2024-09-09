@@ -277,6 +277,7 @@
     <Compile Include="ViewModels\ForM\ACC_AccTitleNo_MX_ViewModel.cs" />
     <Compile Include="ViewModels\ForM\ACC_VoucherDetail_ViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
+    <Compile Include="ViewModels\RDLC\BalanceSheetAccReportViewModel.cs" />
     <Compile Include="ViewModels\RDLC\BalanceSheetReportViewModel.cs" />
     <Compile Include="ViewModels\RDLC\SubsidiaryLedgerViewModel.cs" />
     <Compile Include="ViewModels\RDLC\IncomeStatementViewModel.cs" />
@@ -1091,6 +1092,7 @@
     <Content Include="Views\ReportView\IncomeStatement.cshtml" />
     <Content Include="Views\Voucher\VoucherBeginning.cshtml" />
     <Content Include="Views\ReportView\SubsidiaryLedger.cshtml" />
+    <Content Include="Views\ReportView\BalanceSheetAcc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1154,6 +1156,11 @@
     <Content Include="Report\RDLC\SubsidiaryLedgerReport_es-MX.rdlc" />
     <Content Include="Report\RDLC\SubsidiaryLedgerReport_en.rdlc" />
     <Content Include="Report\RDLC\SubsidiaryLedgerReport_zh-TW.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Report\RDLC\BalanceSheetAccReport_es-MX.rdlc" />
+    <EmbeddedResource Include="Report\RDLC\BalanceSheetAccReport_en.rdlc" />
+    <EmbeddedResource Include="Report\RDLC\BalanceSheetAccReport_zh-TW.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

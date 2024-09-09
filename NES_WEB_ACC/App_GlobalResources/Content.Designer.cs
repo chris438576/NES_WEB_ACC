@@ -322,6 +322,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Balance Sheet Account 的當地語系化字串。
+        /// </summary>
+        public static string BalanceSheetAcc {
+            get {
+                return ResourceManager.GetString("BalanceSheetAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Voucher Date 的當地語系化字串。
         /// </summary>
         public static string BillDate {

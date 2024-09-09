@@ -55,6 +55,17 @@ namespace NES_WEB_ACC.Controllers
             return View(model);
         }
         /// <summary>
+        /// 資產負債表-帳戶式
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult BalanceSheetAcc()
+        {
+            var result = GetCbxData("balancesheetacc");
+            var model = result.Data as CbxDataViewModel;
+            ViewBag.CurrentCulture = currentCulture;
+            return View(model);
+        }
+        /// <summary>
         /// 損益表
         /// </summary>
         /// <returns></returns>
@@ -109,6 +120,13 @@ namespace NES_WEB_ACC.Controllers
                     };
                     break;
                 case "balancesheet":
+                    columnName = new List<ListViewModel>
+                    {
+                        new ListViewModel { Id = "BillDate", Name = "傳票日期" },
+                        new ListViewModel { Id = "BillNo", Name = "傳票編號" }
+                    };
+                    break;
+                case "balancesheetacc":
                     columnName = new List<ListViewModel>
                     {
                         new ListViewModel { Id = "BillDate", Name = "傳票日期" },
@@ -486,6 +504,214 @@ namespace NES_WEB_ACC.Controllers
             return Redirect("~/Report/ReportViewer_V1.aspx");
         }
         /// <summary>
+       /// 資產負債表-帳戶式
+       /// </summary>
+       /// <param name="sqlseache"></param>
+       /// <param name="startdate"></param>
+       /// <param name="enddate"></param>
+       /// <returns></returns>
+        public ActionResult BalanceSheetAccReport(string sqlseache, string startdate, string enddate)
+        {
+            string EmpNo = (string)Session["EmpNo"];
+            string rdlcPath, rdlcDocName;
+            switch (currentCulture)
+            {
+                case "en":
+                    rdlcPath = "~/Report/RDLC/BalanceSheetAccReport_en.rdlc";
+                    rdlcDocName = "BalanceSheetAccReport_" + System.DateTime.Now.ToString("yyyyMMdd"); ;
+                    break;
+                case "zh-TW":
+                    rdlcPath = "~/Report/RDLC/BalanceSheetAccReport_zh-TW.rdlc";
+                    rdlcDocName = "資產負債表-帳戶式_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                case "es-MX":
+                    rdlcPath = "~/Report/RDLC/BalanceSheetAccReport_es-MX.rdlc";
+                    rdlcDocName = "Cuentas del balance general_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                default:
+                    rdlcPath = "~/Report/RDLC/BalanceSheetAccReport_en.rdlc";
+                    rdlcDocName = "BalanceSheetAccReport_" + System.DateTime.Now.ToString("yyyyMMdd"); ;
+                    break;
+            }
+            string sql = @"
+                --declare @currentCulture as nvarchar(50);
+                --declare @startdate as nvarchar(10);
+                --declare @enddate as nvarchar(10);
+                --set @currentCulture='en'
+                --set @startdate='2024-09-01'
+                --set @enddate='2024-09-30'
+
+                IF OBJECT_ID ('tempdb..#Temp') IS NOT NULL
+	                Drop Table #Temp  
+                IF OBJECT_ID ('tempdb..#TmpBeforeData') IS NOT NULL
+	                Drop Table #TmpBeforeData
+                IF OBJECT_ID ('tempdb..#TmpSearchData') IS NOT NULL
+	                Drop Table #TmpSearchData
+
+
+                CREATE TABLE #Temp (
+                    AccGroupNo nvarchar(50),
+                    AccGroupName NVARCHAR(255),
+                    AccControlNo NVARCHAR(50),
+                    AccControlName NVARCHAR(255),
+                    AccNo NVARCHAR(50),
+                    AccName NVARCHAR(255),
+	                TotalAmount DECIMAL(18,3),
+	                SearchAmount DECIMAL(18,3),
+                );
+
+                INSERT INTO #Temp (AccGroupNo, AccGroupName, AccControlNo, AccControlName, AccNo, AccName)
+                select
+	                a.AccGroupNo                        
+                    ,case
+                        when @currentCulture = 'en' then a.AccGroupNameE 
+                        when @currentCulture = 'zh-TW' then a.AccGroupNameC 
+                        when @currentCulture = 'es-MX' then a.AccGroupNameMX 
+                        else a.AccGroupNameE 
+                        end as AccGroupName
+	                ,b.AccNo as AccControlNo                        
+                    ,case
+                        when @currentCulture = 'en' then b.AccNameE
+                        when @currentCulture = 'zh-TW' then b.AccNameC
+                        when @currentCulture = 'es-MX' then b.AccNameMX
+                        else b.AccNameE
+                        end as AccControlName
+	                ,a.AccNo                       
+                    ,case
+                        when @currentCulture = 'en' then a.AccNameE
+                        when @currentCulture = 'zh-TW' then a.AccNameC
+                        when @currentCulture = 'es-MX' then a.AccNameMX
+                        else a.AccNameE
+                        end as AccName                        
+                from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as a
+                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX  as b on CONCAT(LEFT(a.AccNo, 3), '-00-000') = b.AccNo
+                where 1 = 1
+	                and a.AccNo not like '%00-00-000'
+	                and a.AccGroupNo in (1,2,3);
+
+                SELECT * into #TmpBeforeData from (
+	                select
+		                a.[AccNo]
+		                ,SUM(
+		                CASE	
+			                WHEN b.DCTypeNo = 'D' THEN
+				                CASE 
+					                WHEN a.[DCTypeNo] = 'D' THEN [Money1]
+					                WHEN a.[DCTypeNo] = 'C' THEN -[Money1]
+					                ELSE 0
+				                END
+			                WHEN b.DCTypeNo = 'C' THEN
+				                CASE 
+					                WHEN a.[DCTypeNo] = 'D' THEN -[Money1]
+					                WHEN a.[DCTypeNo] = 'C' THEN [Money1]
+					                ELSE 0
+				                END
+			                ELSE 0
+		                END
+	                ) AS TotalMoney
+	                FROM 
+		                NES_WEB_ACC.dbo.ACC_VoucherDetail as a	
+		                left join NES_WEB_ACC.dbo.ACC_VoucherInfo as c on c.WebId = a.WebDocId
+		                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as b on a.AccNo = b.AccNo 
+	                where 1=1
+		                and c.IsClosed = '1' --已結案   
+		                and c.BillDate < @startdate
+                       
+	                GROUP BY 
+		                a.[AccNo]
+                ) as a
+                SELECT * into #TmpSearchData from (
+	                select
+		                a.[AccNo]
+		                ,SUM(
+		                CASE	
+			                WHEN b.DCTypeNo = 'D' THEN
+				                CASE 
+					                WHEN a.[DCTypeNo] = 'D' THEN [Money1]
+					                WHEN a.[DCTypeNo] = 'C' THEN -[Money1]
+					                ELSE 0
+				                END
+			                WHEN b.DCTypeNo = 'C' THEN
+				                CASE 
+					                WHEN a.[DCTypeNo] = 'D' THEN -[Money1]
+					                WHEN a.[DCTypeNo] = 'C' THEN [Money1]
+					                ELSE 0
+				                END
+			                ELSE 0
+		                END
+	                ) AS TotalMoney
+	                FROM 
+		                NES_WEB_ACC.dbo.ACC_VoucherDetail as a	
+		                left join NES_WEB_ACC.dbo.ACC_VoucherInfo as c on c.WebId = a.WebDocId
+		                left join NES_WEB_ACC.dbo.ACC_AccTitleNo_MX as b on a.AccNo = b.AccNo 
+	                where 1=1
+		                and c.IsClosed = '1' --已結案   
+		                and c.BillDate >= @startdate
+		                and c.BillDate <= @enddate
+	                GROUP BY 
+		                a.[AccNo]
+                ) as a
+
+                UPDATE T1
+                SET 
+                    T1.TotalAmount = T2.TotalMoney
+	                --T1.SearchAmount = T3.TotalMoney
+                FROM #Temp T1
+                INNER JOIN #TmpBeforeData T2 ON T1.AccNo COLLATE Chinese_Taiwan_Stroke_CI_AS  = T2.AccNo
+                --INNER JOIN #TmpSearchData T3 ON T1.AccNo COLLATE Chinese_Taiwan_Stroke_CI_AS  = T3.AccNo;
+
+                UPDATE T1
+                SET 
+                    --T1.TotalAmount = T2.TotalMoney
+	                T1.SearchAmount = T3.TotalMoney
+                FROM #Temp T1
+                --INNER JOIN #TmpBeforeData T2 ON T1.AccNo COLLATE Chinese_Taiwan_Stroke_CI_AS  = T2.AccNo
+                INNER JOIN #TmpSearchData T3 ON T1.AccNo COLLATE Chinese_Taiwan_Stroke_CI_AS  = T3.AccNo;
+                select  
+	                AccGroupNo, AccGroupName, AccControlNo, AccControlName, AccNo, AccName 
+	                ,case 
+		                when TotalAmount is null then 0
+		                else TotalAmount
+	                end as TotalAmount
+	                ,case 
+		                when SearchAmount is null then 0
+		                else SearchAmount
+	                end as SearchAmount
+                from #Temp
+
+                IF OBJECT_ID ('tempdb..#Temp') IS NOT NULL
+	                Drop Table #Temp  
+                IF OBJECT_ID ('tempdb..#TmpBeforeData') IS NOT NULL
+	                Drop Table #TmpBeforeData
+                IF OBJECT_ID ('tempdb..#TmpSearchData') IS NOT NULL
+	                Drop Table #TmpSearchData
+            ";
+            var param = new { currentCulture, startdate, enddate };
+            List<BalanceSheetAccReportViewModel> balanceSheetReport = new List<BalanceSheetAccReportViewModel>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                balanceSheetReport = conn.Query<BalanceSheetAccReportViewModel>(sql, param).ToList();
+            }
+
+            // 報表參數設定
+            var reportParameters = new List<ReportParameter>
+            {
+                new ReportParameter("ReportMaker", EmpNo),
+                new ReportParameter("StartDate", startdate),
+                new ReportParameter("EndDate", enddate),
+                //new ReportParameter("StartDate", "2024/08/01"),
+                //new ReportParameter("EndDate", "2024/08/31"),
+            };
+
+            // Session設定，給ReportViewer使用            
+            Session["ReportPath"] = Server.MapPath(rdlcPath);
+            Session["ReportDataSource"] = new ReportDataSource("BalanceSheetAccRdlc", balanceSheetReport);
+            Session["ReportParameters"] = reportParameters;
+            Session["ReportDocName"] = rdlcDocName;
+
+            return Redirect("~/Report/ReportViewer_V1.aspx");
+        }
+        /// <summary>
         /// 損益表
         /// </summary>
         /// <param name="sqlseache"></param>
@@ -701,7 +927,7 @@ namespace NES_WEB_ACC.Controllers
 		            where 1=1	
 			            and a.DocType = 'V1'
 			            and a.BillNo is not null
-                        and a.IsClosed = true --已結案
+                        and a.IsClosed = '1' --已結案
 			            and a.BillDate < @startdate
 			            --and a.BillDate < '2024/08/10'
 	            ) as a;
@@ -713,7 +939,7 @@ namespace NES_WEB_ACC.Controllers
 		            where 1=1	
 			            and a.DocType = 'V1'
 			            and a.BillNo is not null
-                        and a.IsClosed = true --已結案
+                        and a.IsClosed = '1' --已結案
 			            and a.BillDate >= @startdate
 			            and a.BillDate <= @enddate
 			            --and a.BillDate >= '2024/08/10'

@@ -957,6 +957,9 @@
             <DataSetName>IncomeStatementRdlc</DataSetName>
             <Height>3.6cm</Height>
             <Width>18cm</Width>
+            <Visibility>
+              <Hidden>=IIF(Fields!TotalMoney.Value=0,true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
