@@ -587,13 +587,14 @@
             MsgSelectRow2: '@Resources.Content.MsgSelectRow2',//選擇行送出
             MsgSelectRow3: '@Resources.Content.MsgSelectRow3',//選擇行填入
             MsgActionErr: '@Resources.Content.MsgActionErr', //操作碼錯誤
-            MsgSes1:'@Resources.Content.MsgSes1', //成功新增
+            MsgSes1: '@Resources.Content.MsgSes1', //成功新增
             MsgSes2: '@Resources.Content.MsgSes2', //成功編輯
             MsgSes3: '@Resources.Content.MsgSes3', //成功啟用
             MsgSes4: '@Resources.Content.MsgSes4', //成功停用
             MsgSes5: '@Resources.Content.MsgSes5', //成功送審
             MsgSes6: '@Resources.Content.MsgSes6', //成功退件
             MsgSes7: '@Resources.Content.MsgSes7', //成功結案
+            MsgSes8: '@Resources.Content.MsgSes8', //成功刪除
         };
         //#endregion
         //#region 資料暫存
@@ -1568,7 +1569,28 @@
                     }
 
                     break;
-                case 'delete':
+                case 'delete':/*測試階段使用，後續移除*/
+                    row = maindg.datagrid('getSelected');
+                    if (row != null) {
+                        $.messager.confirm('提醒', '是否刪除期初傳票?', function (r) {
+                            if (r) {
+                                actionurl = defaultUrl + controllerurl + functionurl + 'DeleteData?webid=' + row.WebId;
+                                doajax("Delete", actionurl, null, function (result) {
+                                    if (result.success) {
+                                        pageReload(result.data, 'Delete');
+                                    } else {
+                                        $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                        if (result.code == 'C0004') {
+                                            console.log(result.err);
+                                        }
+                                        itemdg.datagrid('loadData', '');
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        alert("請選擇傳票進行編輯");
+                    }
                     break;
                 case 'lock':
                     row = maindg.datagrid('getSelected');
@@ -1782,7 +1804,7 @@
                     $('#btnDetail').linkbutton('disable');
                     $('#btnRefresh').linkbutton('enable');
                     $('#btnCancel').linkbutton('disable');
-                    $('#btnDelete').linkbutton('disable');
+                    $('#btnDelete').linkbutton('enable');
                     break;
                 case 'add':
                     $('#btnAdd').linkbutton('disable');
@@ -1811,7 +1833,7 @@
                     $('#btnDetail').linkbutton('disable');
                     $('#btnRefresh').linkbutton('enable');
                     $('#btnCancel').linkbutton('disable');
-                    $('#btnDelete').linkbutton('disable');
+                    $('#btnDelete').linkbutton('enable');
 
 
             }
@@ -2910,7 +2932,7 @@
             //$('#btnDetail').addClass('hidden-btn');
             $('#btnRefresh').addClass('hidden-btn');
             //$('#btnCancel').addClass('hidden-btn');
-            $('#btnDelete').addClass('hidden-btn');
+            /*$('#btnDelete').addClass('hidden-btn');*/
 
             /*$('#btnLock').hide();*/
             $('#btnCheck').hide();
@@ -2929,6 +2951,9 @@
                         break;
                     case 'Lock':
                         $.messager.alert(msglang.Title3, msglang.MsgSes5 + billno);
+                        break;
+                    case 'Delete':
+                        $.messager.alert(msglang.Title3, msglang.MsgSes8 + billno);
                         break;
                     default:
                         break;

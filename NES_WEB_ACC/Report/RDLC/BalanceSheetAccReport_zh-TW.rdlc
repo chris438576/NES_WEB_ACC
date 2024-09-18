@@ -309,6 +309,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -454,7 +455,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!TotalAmount.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -483,7 +486,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!SearchAmount.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -551,7 +556,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=sum(Fields!TotalAmount.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -590,7 +597,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=sum(Fields!SearchAmount.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -672,7 +681,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(Fields!TotalAmount.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -706,7 +717,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(Fields!SearchAmount.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1174,7 +1187,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!TotalAmount.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1203,7 +1218,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!SearchAmount.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1266,7 +1283,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=sum(Fields!TotalAmount.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1305,7 +1324,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(Fields!SearchAmount.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1382,7 +1403,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(Fields!TotalAmount.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1411,7 +1434,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(Fields!SearchAmount.Value)</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1574,7 +1599,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=sum(IIF(Fields!AccGroupNo.Value= 1,CDbl(Fields!TotalAmount.Value),0))</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1586,12 +1613,10 @@
                               <Style>None</Style>
                             </Border>
                             <TopBorder>
-                              <Color>Black</Color>
                               <Style>Double</Style>
                               <Width>1.5pt</Width>
                             </TopBorder>
                             <BottomBorder>
-                              <Color>Black</Color>
                               <Style>Double</Style>
                               <Width>2.25pt</Width>
                             </BottomBorder>
@@ -1613,7 +1638,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=sum(IIF(Fields!AccGroupNo.Value= 1,CDbl(Fields!SearchAmount.Value),0))</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1625,19 +1652,15 @@
                               <Style>None</Style>
                             </Border>
                             <TopBorder>
-                              <Color>Black</Color>
                               <Style>Double</Style>
                               <Width>1.5pt</Width>
                             </TopBorder>
                             <BottomBorder>
-                              <Color>Black</Color>
                               <Style>Double</Style>
                               <Width>2.25pt</Width>
                             </BottomBorder>
                             <RightBorder>
-                              <Color>Black</Color>
                               <Style>Double</Style>
-                              <Width>1pt</Width>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1686,7 +1709,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=sum(IIF(Fields!AccGroupNo.Value= 2 or Fields!AccGroupNo.Value= 3,CDbl(Fields!TotalAmount.Value),0))</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1725,7 +1750,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=sum(IIF(Fields!AccGroupNo.Value= 2 or Fields!AccGroupNo.Value= 3,CDbl(Fields!SearchAmount.Value),0))</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />

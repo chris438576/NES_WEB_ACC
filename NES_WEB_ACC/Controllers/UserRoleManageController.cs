@@ -475,5 +475,37 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, message = $"儲存失敗：{ex.Message}" });
             }
         }
+        [HttpPost]
+        public JsonResult RenameRole(Guid roleid, string rolenewname)
+        {            
+            if (roleid == Guid.Empty || string.IsNullOrEmpty(rolenewname))
+            {
+                return Json(new { success = false, code = "C0001", message = "Role ID is invalid. Or new role name cannot be empty." }, JsonRequestBehavior.AllowGet);
+            }
+
+            try
+            {
+                var existdata = _dbContext.SYS_Roles.FirstOrDefault(x => x.RoleId == roleid);
+                var existdataname = _dbContext.SYS_Roles.FirstOrDefault(x => x.RoleName == rolenewname);
+                if (existdataname != null)
+                {
+                    return Json(new { success = false, code = "C0002", message = "New role name already have." }, JsonRequestBehavior.AllowGet);
+                }
+                if (existdata != null)
+                {
+                    existdata.RoleName = rolenewname;
+                    _dbContext.SaveChanges();
+                    return Json(new { success = true, message = "Rename Success." }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, code = "C0003", message = "No exist data for rename." }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception err)
+            {
+                return Json(new { success = false, code = "C0004", message = $"An error occurred while the server was executing. Error message:{err}" }, JsonRequestBehavior.AllowGet);
+            }  
+        }
     }
 }

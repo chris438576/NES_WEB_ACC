@@ -1152,15 +1152,21 @@
     <Content Include="Report\RDLC\IncomeStatementReport_es-MX.rdlc" />
     <Content Include="Report\RDLC\IncomeStatementReport_en.rdlc" />
     <Content Include="Report\RDLC\IncomeStatementReport_zh-TW.rdlc" />
-    <Content Include="Report\RDLC\JournalReport.rdlc" />
+    <Content Include="Report\RDLC\JournalReport_zh-TW.rdlc" />
     <Content Include="Report\RDLC\SubsidiaryLedgerReport_es-MX.rdlc" />
     <Content Include="Report\RDLC\SubsidiaryLedgerReport_en.rdlc" />
     <Content Include="Report\RDLC\SubsidiaryLedgerReport_zh-TW.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Report\RDLC\BalanceSheetAccReport_es-MX.rdlc" />
-    <EmbeddedResource Include="Report\RDLC\BalanceSheetAccReport_en.rdlc" />
-    <EmbeddedResource Include="Report\RDLC\BalanceSheetAccReport_zh-TW.rdlc" />
+    <Content Include="Report\RDLC\BalanceSheetAccReport_es-MX.rdlc" />
+    <Content Include="Report\RDLC\BalanceSheetAccReport_en.rdlc" />
+    <Content Include="Report\RDLC\BalanceSheetAccReport_zh-TW.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Report\RDLC\JournalReport_en.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Report\RDLC\JournalReport_es-MX.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

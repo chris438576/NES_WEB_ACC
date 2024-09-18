@@ -32,6 +32,7 @@ namespace NES_WEB_ACC.Controllers
         /// 介面_傳票建立
         /// </summary>
         /// <returns></returns>
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
         public ActionResult VoucherCreate(string billno, string msg)
         {
             var createInfo = new CreateInfoViewModel
@@ -51,21 +52,23 @@ namespace NES_WEB_ACC.Controllers
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             ViewBag.CurrentCulture = currentCulture;
             return View(createInfo);
-        }        
+        }
         /// <summary>
         /// 介面_主管審核
         /// </summary>
         /// <returns></returns>
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
         public ActionResult VoucherCheck(string billno, string msg)
         {
             ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
             ViewBag.Msg = (String.IsNullOrEmpty(msg)) ? null : msg;
             return View();
-        }        
+        }
         /// <summary>
         /// 介面_傳票結案
         /// </summary>
         /// <returns></returns>
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
         public ActionResult VoucherClose(string billno, string msg)
         {
             ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
@@ -675,7 +678,8 @@ namespace NES_WEB_ACC.Controllers
         /// <param name="data"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        [HttpPost]       
+        [HttpPost]
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
         public ActionResult AddData(VoucherDataViewModel data, string type)
         {
             string voucherDocType = "";
@@ -787,6 +791,7 @@ namespace NES_WEB_ACC.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
         public ActionResult EditData(VoucherDataViewModel data, string type) {
             if (data == null)
             {                
@@ -862,6 +867,7 @@ namespace NES_WEB_ACC.Controllers
             }
         }
         [HttpPost]
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
         public ActionResult VoucherStatus(string webid, string type)
         {
             if (String.IsNullOrEmpty(webid))
@@ -929,9 +935,9 @@ namespace NES_WEB_ACC.Controllers
             {
                 return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
             }
-        }
-        [CustomAuthorize(Roles = "Admin")]
+        }        
         [HttpDelete]
+        [CustomAuthorize(Roles = "Admin")]
         public ActionResult DeleteData(string webid)
         {
             if (String.IsNullOrEmpty(webid))

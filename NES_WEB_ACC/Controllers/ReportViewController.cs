@@ -323,6 +323,26 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult JournalReport(string sqlseache, string startdate, string enddate)
         {
             string EmpNo = (string)Session["EmpNo"];
+            string rdlcPath, rdlcDocName;
+            switch (currentCulture)
+            {
+                case "en":
+                    rdlcPath = "~/Report/RDLC/JournalReport_en.rdlc";
+                    rdlcDocName = "JournalReport_" + System.DateTime.Now.ToString("yyyyMMdd"); ;
+                    break;
+                case "zh-TW":
+                    rdlcPath = "~/Report/RDLC/JournalReport_zh-TW.rdlc";
+                    rdlcDocName = "日記帳_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                case "es-MX":
+                    rdlcPath = "~/Report/RDLC/JournalReport_es-MX.rdlc";
+                    rdlcDocName = "Informe de revista_" + System.DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                default:
+                    rdlcPath = "~/Report/RDLC/JournalReport_en.rdlc";
+                    rdlcDocName = "JournalReport_" + System.DateTime.Now.ToString("yyyyMMdd"); ;
+                    break;
+            }
             string sql = @"
                 select  
                  CONVERT(varchar(100), a.BillDate, 111) as BillDate
@@ -361,10 +381,10 @@ namespace NES_WEB_ACC.Controllers
             };
 
             // Session設定，給ReportViewer使用
-            Session["ReportPath"] = Server.MapPath("~/Report/RDLC/JournalReport.rdlc");            
+            Session["ReportPath"] = Server.MapPath(rdlcPath);            
             Session["ReportDataSource"] = new ReportDataSource("JournalRdlc", journalReport);           
             Session["ReportParameters"] = reportParameters;
-            Session["ReportDocName"] = "JournalReport_" + System.DateTime.Now.ToString("yyyyMMdd");
+            Session["ReportDocName"] = rdlcDocName;
 
             return Redirect("~/Report/ReportViewer_V1.aspx");
         }       

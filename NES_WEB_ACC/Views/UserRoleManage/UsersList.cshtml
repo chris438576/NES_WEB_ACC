@@ -408,7 +408,7 @@
         isAction = false;
         personalEmpId = empId.substring(2);
         $.ajax({
-            url: '@Url.Action("GetPersonalRolesList", "UserRoleManage")',  // 替換成你的Controller的路徑
+            url: '@Url.Action("GetPersonalRolesList", "UserRoleManage")', 
             type: 'GET',
             data: { empId: personalEmpId },
             success: function (data) {
@@ -428,9 +428,7 @@
                         row += '<td>' + role.RoleName + '</td>';
                         row += '<td>';
                         row += '<label class="switch">';
-                        row += '<input type="checkbox" data-empId="' + empId + '" id="' + role.RoleId + '" class="checkbox-switch-personal" ' + (role.PersnalRoleStatus ? 'checked' : '') + '>';
-                        console.log('Checkbox created with data-empId: ' + empId);
-                        console.log('Checkbox created with PersonalRoleStatus: ' + role.PersonalRoleStatus);
+                        row += '<input type="checkbox" data-empId="' + empId + '" id="' + role.RoleId + '" class="checkbox-switch-personal" ' + (role.PersnalRoleStatus ? 'checked' : '') + '>';                      
                         row += '<span class="slider round"></span>';
                         row += '</label>';
                         row += '</td>';
