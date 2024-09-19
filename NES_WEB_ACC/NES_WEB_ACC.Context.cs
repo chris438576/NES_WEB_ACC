@@ -42,5 +42,6 @@ namespace NES_WEB_ACC
         public virtual DbSet<ACC_VoucherDetail> ACC_VoucherDetail { get; set; }
         public virtual DbSet<ACC_VoucherInfo> ACC_VoucherInfo { get; set; }
         public virtual DbSet<ACC_Rate> ACC_Rate { get; set; }
+        public virtual DbSet<SYS_OperationHistory> SYS_OperationHistory { get; set; }
     }
 }

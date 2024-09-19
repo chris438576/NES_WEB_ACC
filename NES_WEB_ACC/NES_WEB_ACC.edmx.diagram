@@ -22,6 +22,7 @@
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherDetail" Width="1.5" PointX="2.75" PointY="15.375" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_VoucherInfo" Width="1.5" PointX="4.75" PointY="15.375" />
         <EntityTypeShape EntityType="NES_WEB_ACCModel.ACC_Rate" Width="1.5" PointX="0.5" PointY="29" />
+        <EntityTypeShape EntityType="NES_WEB_ACCModel.SYS_OperationHistory" Width="1.5" PointX="8.75" PointY="0.5" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

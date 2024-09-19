@@ -263,6 +263,9 @@
       <DependentUpon>ReportViewer_V2.aspx</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="SYS_OperationHistory.cs">
+      <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
+    </Compile>
     <Compile Include="SYS_Permissions.cs">
       <DependentUpon>NES_WEB_ACC.tt</DependentUpon>
     </Compile>
@@ -1113,9 +1116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Report\RDLC\AccCodeReport.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Content.resx">

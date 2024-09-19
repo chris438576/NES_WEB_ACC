@@ -101,6 +101,8 @@ namespace NES_WEB_ACC.Controllers
                     }
                     existdata.StateBy = Session["EmpNo"].ToString();
                     existdata.StateDate = System.DateTime.Now;
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(existdata, "2", mnid, "2");
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data= existdata.AccNo }, JsonRequestBehavior.AllowGet);
                 }
@@ -137,6 +139,8 @@ namespace NES_WEB_ACC.Controllers
                     existdata.DCTypeNo = data.DCTypeNo;
                     existdata.StateBy = Session["EmpNo"].ToString();
                     existdata.StateDate = System.DateTime.Now;
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(existdata, "2", mnid, "2");
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data = existdata.AccNo }, JsonRequestBehavior.AllowGet);
                 }
@@ -185,6 +189,8 @@ namespace NES_WEB_ACC.Controllers
                         CreateDate = System.DateTime.Now
                     };
                     _dbContext.ACC_AccTitleNo_MX.Add(insertdata);
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(insertdata, "1", mnid, "1");
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data = insertdata.AccNo }, JsonRequestBehavior.AllowGet);
                 }
@@ -321,6 +327,8 @@ namespace NES_WEB_ACC.Controllers
                     existdata.UpdateEmpId = Session["EmpId"].ToString();
                     existdata.UpdateEmpNo = Session["EmpNo"].ToString();
                     existdata.UpdateDate = System.DateTime.Now;
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(existdata, "2", mnid, "2");
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data = $"{existdata.ExchangeYear}/{existdata.ExchangeMonth}/{existdata.ExchangeMonthFlag}" }, JsonRequestBehavior.AllowGet);
                 }
@@ -369,6 +377,8 @@ namespace NES_WEB_ACC.Controllers
                         CreatEmpDate = System.DateTime.Now
                     };
                     _dbContext.ACC_Rate.Add(insrtdata);
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(insrtdata, "1", mnid, "1");
                     return Json(new { success = true, code = "OK", data = $"{existdata.ExchangeYear}/{existdata.ExchangeMonth}/{existdata.ExchangeMonthFlag}" }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -415,6 +425,53 @@ namespace NES_WEB_ACC.Controllers
         public ActionResult _ToolBar2Partial()
         {
             return PartialView();
+        }
+
+        /// <summary>
+        /// 異動記錄
+        /// </summary>
+        public void MnDataSave(object list, string mntype, Guid mnid, string modeltype)
+        {
+            Type modelname;
+            string tablename = "";
+            modelname = list.GetType();
+            tablename = modelname.Name.ToString();
+            SYS_OperationHistory mndata = new SYS_OperationHistory();
+            string EntityColumns = "", EntityData = "", mnstatus = "";
+            foreach (var prop in modelname.GetProperties())
+            {
+                EntityColumns += "✏" + prop.Name;
+                if (prop.GetValue(list) != null)
+                {
+                    EntityData += "✏" + prop.GetValue(list).ToString();
+                }
+                else
+                {
+                    EntityData += "✏" + " ";
+                }
+            }
+            switch (mntype)
+            {
+                case "1":
+                    mnstatus = "ADD";
+                    break;
+                case "2":
+                    mnstatus = "EDIT";
+                    break;
+                case "3":
+                    mnstatus = "DEL";
+                    break;
+            }
+            mndata.MnId = mnid;
+            mndata.OperationType = mntype;
+            mndata.OperationStatus = mnstatus;
+            mndata.TableName = tablename;
+            mndata.EntityColumns = EntityColumns;
+            mndata.EntityData = EntityData;
+            mndata.EditEmpId = Convert.ToInt64(Session["EmpId"].ToString());
+            mndata.EditBy = Session["EmpNo"].ToString();
+            mndata.EditDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            _dbContext.SYS_OperationHistory.Add(mndata);
         }
     }
 }

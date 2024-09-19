@@ -484,6 +484,21 @@
           <Property Name="UpdateBy" Type="nvarchar" MaxLength="20" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="SYS_OperationHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MnId" Type="uniqueidentifier" />
+          <Property Name="OperationType" Type="varchar" MaxLength="1" />
+          <Property Name="OperationStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="TableName" Type="varchar" MaxLength="100" />
+          <Property Name="EntityColumns" Type="nvarchar(max)" />
+          <Property Name="EntityData" Type="nvarchar(max)" />
+          <Property Name="EditEmpId" Type="bigint" />
+          <Property Name="EditBy" Type="varchar" MaxLength="50" />
+          <Property Name="EditDate" Type="varchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="SYS_Permissions">
           <Key>
             <PropertyRef Name="PermissionId" />
@@ -546,6 +561,7 @@
           <EntitySet Name="ACC_VoucherKind" EntityType="Self.ACC_VoucherKind" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LNK_RolePermissions" EntityType="Self.LNK_RolePermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LNK_UserRole" EntityType="Self.LNK_UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_OperationHistory" EntityType="Self.SYS_OperationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Permissions" EntityType="Self.SYS_Permissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Roles" EntityType="Self.SYS_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Users" EntityType="Self.SYS_Users" Schema="dbo" store:Type="Tables" />
@@ -649,6 +665,7 @@
           <EntitySet Name="ACC_VoucherDetail" EntityType="NES_WEB_ACCModel.ACC_VoucherDetail" />
           <EntitySet Name="ACC_VoucherInfo" EntityType="NES_WEB_ACCModel.ACC_VoucherInfo" />
           <EntitySet Name="ACC_Rate" EntityType="NES_WEB_ACCModel.ACC_Rate" />
+          <EntitySet Name="SYS_OperationHistory" EntityType="NES_WEB_ACCModel.SYS_OperationHistory" />
           </EntityContainer>
         <EntityType Name="ACC_AccCode1">
           <Key>
@@ -1098,6 +1115,21 @@
           <Property Name="UpdateEmpId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="UpdateEmpNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SYS_OperationHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MnId" Type="Guid" />
+          <Property Name="OperationType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="OperationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TableName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EntityColumns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntityData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EditEmpId" Type="Int64" />
+          <Property Name="EditBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EditDate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1645,6 +1677,22 @@
                 <ScalarProperty Name="CurrencySt" ColumnName="CurrencySt" />
                 <ScalarProperty Name="CurrencyNo" ColumnName="CurrencyNo" />
                 <ScalarProperty Name="WebId" ColumnName="WebId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_OperationHistory">
+            <EntityTypeMapping TypeName="NES_WEB_ACCModel.SYS_OperationHistory">
+              <MappingFragment StoreEntitySet="SYS_OperationHistory">
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="EditEmpId" ColumnName="EditEmpId" />
+                <ScalarProperty Name="EntityData" ColumnName="EntityData" />
+                <ScalarProperty Name="EntityColumns" ColumnName="EntityColumns" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="OperationStatus" ColumnName="OperationStatus" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="MnId" ColumnName="MnId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

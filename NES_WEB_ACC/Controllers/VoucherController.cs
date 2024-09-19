@@ -738,7 +738,9 @@ namespace NES_WEB_ACC.Controllers
                     IsClosed = (type == "begin") ? true : false,
                     BillStatus = 0,
                 };
-                _dbContext.ACC_VoucherInfo.Add(mainData);               
+                _dbContext.ACC_VoucherInfo.Add(mainData);
+                Guid mnid = Guid.NewGuid();
+                MnDataSave(mainData,"1", mnid,"1");
                 #endregion
                 #region 明細寫入
                 foreach (var item in data.Infodata)
@@ -774,7 +776,7 @@ namespace NES_WEB_ACC.Controllers
                         CreateBy = Session["EmpNo"].ToString(),
                     };
                     _dbContext.ACC_VoucherDetail.Add(infoData);
-                  
+                    MnDataSave(infoData, "1", mnid, "1");
                 }
                 #endregion
                 _dbContext.SaveChanges();
@@ -803,7 +805,8 @@ namespace NES_WEB_ACC.Controllers
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
             try
-            {       
+            {
+                Guid mnid = Guid.NewGuid();                
                 var existdata = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == guidId);
                 if (existdata != null)
                 {
@@ -813,11 +816,12 @@ namespace NES_WEB_ACC.Controllers
                     existdata.Money22 = data.Dcdata.Money22;
                     existdata.Money1Dc = data.Dcdata.Money1Dc;
                     existdata.Money2Dc = data.Dcdata.Money2Dc;
-
+                    MnDataSave(existdata, "2", mnid, "2");
                     var itemToDelete = _dbContext.ACC_VoucherDetail.Where(x => x.WebDocId == existdata.WebId).ToList();                                       
                     foreach (var item in itemToDelete)
                     {
                         _dbContext.ACC_VoucherDetail.Remove(item);
+                        MnDataSave(item, "3", mnid, "3");
                     }
                     foreach (var item in data.Infodata)
                     {
@@ -852,6 +856,7 @@ namespace NES_WEB_ACC.Controllers
                             CreateBy = Session["EmpNo"].ToString(),
                         };
                         _dbContext.ACC_VoucherDetail.Add(infoData);
+                        MnDataSave(infoData, "2", mnid, "2");
                     }
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data = existdata.BillNo }, JsonRequestBehavior.AllowGet);
@@ -882,6 +887,7 @@ namespace NES_WEB_ACC.Controllers
 
             try
             {
+                Guid mnid = Guid.NewGuid();
                 var existdata = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == guidId);
                 if (existdata != null)
                 {
@@ -923,6 +929,7 @@ namespace NES_WEB_ACC.Controllers
                     }
                     existdata.SignDate = System.DateTime.Now;
                     existdata.SignBy = Session["EmpNo"].ToString();
+                    MnDataSave(existdata, "2", mnid, "2");
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data = existdata.BillNo }, JsonRequestBehavior.AllowGet);
                 }
@@ -951,6 +958,7 @@ namespace NES_WEB_ACC.Controllers
             }
             try
             {
+                Guid mnid = Guid.NewGuid();
                 var existdataInfo = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.WebId == guidId);
                 var existdataDetail = _dbContext.ACC_VoucherDetail.Where(x => x.WebDocId == guidId).ToList(); ;
                 if (existdataInfo == null || existdataDetail == null)
@@ -960,19 +968,20 @@ namespace NES_WEB_ACC.Controllers
                 else
                 {
                     _dbContext.ACC_VoucherInfo.Remove(existdataInfo);
+                    MnDataSave(existdataInfo, "3", mnid, "3");
                     foreach (var item in existdataDetail)
                     {
                         _dbContext.ACC_VoucherDetail.Remove(item);
+                        MnDataSave(item, "3", mnid, "3");
                     }
                     _dbContext.SaveChanges();
                     return Json(new { success = true, code = "OK", data = existdataInfo.BillNo }, JsonRequestBehavior.AllowGet);
                 }
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -1010,6 +1019,52 @@ namespace NES_WEB_ACC.Controllers
         {
             return PartialView();
         }
-                      
+
+        /// <summary>
+        /// 異動記錄
+        /// </summary>
+        public void MnDataSave(object list, string mntype, Guid mnid, string modeltype)
+        {
+            Type modelname;
+            string tablename = "";
+            modelname = list.GetType();
+            tablename = modelname.Name.ToString();
+            SYS_OperationHistory mndata = new SYS_OperationHistory();
+            string EntityColumns = "", EntityData = "", mnstatus = "";
+            foreach (var prop in modelname.GetProperties())
+            {
+                EntityColumns += "✏" + prop.Name;
+                if (prop.GetValue(list) != null)
+                {
+                    EntityData += "✏" + prop.GetValue(list).ToString();
+                }
+                else
+                {
+                    EntityData += "✏" + " ";
+                }
+            }
+            switch (mntype)
+            {
+                case "1":
+                    mnstatus = "ADD";
+                    break;
+                case "2":
+                    mnstatus = "EDIT";
+                    break;
+                case "3":
+                    mnstatus = "DEL";
+                    break;
+            }
+            mndata.MnId = mnid;
+            mndata.OperationType = mntype;
+            mndata.OperationStatus = mnstatus;
+            mndata.TableName = tablename;
+            mndata.EntityColumns = EntityColumns;
+            mndata.EntityData = EntityData;
+            mndata.EditEmpId = Convert.ToInt64(Session["EmpId"].ToString());
+            mndata.EditBy = Session["EmpNo"].ToString();
+            mndata.EditDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            _dbContext.SYS_OperationHistory.Add(mndata);
+        }
     }
 }

@@ -11,7 +11,8 @@ using System.Web.Mvc;
 
 namespace NES_WEB_ACC.Controllers
 {
-    [Authorize]    
+    [Authorize]
+    [CustomAuthorize(Roles = "Admin")]
     public class UserRoleManageController : Controller
     {
         public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
@@ -20,8 +21,7 @@ namespace NES_WEB_ACC.Controllers
         /// <summary>
         /// UsersList權限列表-主畫面View
         /// </summary>
-        /// <returns></returns>
-        [CustomAuthorize(Roles = "Admin")]
+        /// <returns></returns>       
         public ActionResult UsersList()
         {       
             List<UsersListViewModel> users = new List<UsersListViewModel>();
@@ -202,29 +202,36 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult UpdateUsersStatus(string empNo, bool isStatus)
         {
-            //檢查權限
-            //IsAction(); ---未完成
-            var user = _dbContext.SYS_Users.FirstOrDefault(u => u.EmpNo == empNo);
-            if (user != null)
+            if (string.IsNullOrEmpty(empNo))
             {
-                // 設定[更新日期、更新人員]欄位資料
-                DateTime updateDate = DateTime.Now;
-                // string updateBy = Session["EmpId"]?.ToString();
-                string updateBy = Session["EmpNo"]?.ToString();
-                user.Status = isStatus;
-                //user.UpdateEmpId = updaetEmpId;
-                user.UpdateBy = updateBy;
-                user.UpdateDate = updateDate;
-
-                // 儲存變更到資料庫
-                _dbContext.SaveChanges();
-
-                //Log寫入---未完成
-
-                // 返回JSON格式的成功訊息
-                return Json(new { success = true, message = "Data updated successfully" });
+                return Json(new { success = false,code = "C0001", message = "Empty parameters for program." });
             }
-            return Json(new { success = true, message = "有問題" });
+            try
+            {
+                var user = _dbContext.SYS_Users.FirstOrDefault(u => u.EmpNo == empNo);
+                if (user != null)
+                {
+                    DateTime updateDate = DateTime.Now;
+                    string updateBy = Session["EmpNo"]?.ToString();
+                    user.Status = isStatus;
+                    user.UpdateBy = updateBy;
+                    user.UpdateDate = updateDate;
+
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(user, "2", mnid, "2");
+                    _dbContext.SaveChanges();
+
+                    return Json(new { success = true, message = "Data updated successfully" });
+                }
+                else
+                {
+                    return Json(new { success = false, code = "C0003", message = "No exist data for operation." });
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", message = $"An error occurred while the server was executing. Error message:{e}" });
+            }     
         }
         /// <summary>
         /// UsersList權限列表-Actio[個人編輯]_更新個人角色狀態
@@ -236,7 +243,12 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult UpdateUserRoleStatus(string empId, string roleId, bool isStatus)
         {
-            if (Guid.TryParse(roleId, out var roleIdGuid))
+            Guid roleIdGuid;
+            if (!Guid.TryParse(roleId, out roleIdGuid) || string.IsNullOrEmpty(empId))
+            {
+                return Json(new { success = false, code = "C0001", message = "The program parameters are wrong." });
+            }
+            try
             {
                 // 在這裡使用 roleIdGuid
                 Int64 empIdInt64 = Convert.ToInt64(empId);
@@ -250,24 +262,27 @@ namespace NES_WEB_ACC.Controllers
                     user.UpdateBy = updateBy;
                     user.UpdateDate = updateDate;
 
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(user, "2", mnid, "2");
                     // 儲存變更到資料庫
                     _dbContext.SaveChanges();
 
-                    //Log寫入---未完成
-
-                    // 返回JSON格式的成功訊息
                     return Json(new { success = true, message = "Data updated successfully" });
                 }
-                return Json(new { success = false, message = "寫入出現問題" });
+                else
+                {
+                    return Json(new { success = false,code="C0003", message = "No exist data for operation." });
+                }                
             }
-            else
+            catch (Exception e)
             {
-                // 處理轉換失敗的情況，例如拋出異常或進行其他處理
-                return Json(new { success = false, message = "Guid轉換出現問題" });
+                return Json(new { success = false, code = "C0004", message = $"An error occurred while the server was executing. Error message:{e}" });
             }
+           
         }
         /// <summary>
         /// UsersList權限列表-Action[User匯入]_新增User資料列
+        /// 這裡使用AddRange的方式新增資料，要記錄每筆異動要使用迴圈，需要修改
         /// </summary>
         /// <param name="rows"></param>
         /// <returns></returns>
@@ -286,8 +301,7 @@ namespace NES_WEB_ACC.Controllers
                     foreach (var row in rows)
                     {
                         if (_dbContext.SYS_Users.Any(u => u.EmpNo == row.EmpNo))
-                        {
-                            // 如果 EmpNo 已存在，可以採取適當的處理，例如返回失敗的 JSON 回應
+                        {                           
                             return Json(new { success = false, message = $"EmpNo: {row.EmpNo} 已存在於資料庫中" });
                         }
 
@@ -315,6 +329,7 @@ namespace NES_WEB_ACC.Controllers
         }
         /// <summary>
         /// UsersList權限列表-Action[個人編輯]_使用者綁定角色
+        /// 這裡使用AddRange的方式新增資料，要記錄每筆異動要使用迴圈，需要修改
         /// </summary>
         /// <param name="empId"></param>
         /// <param name="rows"></param>
@@ -334,8 +349,7 @@ namespace NES_WEB_ACC.Controllers
                     foreach (var row in rows)
                     {
                         if (_dbContext.LNK_UserRole.Any(u => u.EmpId == row.EmpId && u.RoleId == row.RoleId))
-                        {
-                            // 如果 EmpNo 已存在，可以採取適當的處理，例如返回失敗的 JSON 回應
+                        {                            
                             return Json(new { success = false, message = $"EmpId: {row.EmpId}、 RoleId: {row.RoleId}已存在於資料庫中" });
                         }
                         Int64 empIdInt64 = Convert.ToInt64(empId);
@@ -367,8 +381,7 @@ namespace NES_WEB_ACC.Controllers
         /// <summary>
         /// RolesList-權限列表-主畫面View
         /// </summary>
-        /// <returns></returns>
-        [CustomAuthorize(Roles = "Admin")]
+        /// <returns></returns>       
         public ActionResult RolesList()
         {
             string sql = @"select RoleId, RoleName , Status as 'RoleStatus' from NES_WEB_ACC.dbo.SYS_Roles
@@ -404,8 +417,12 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult UpdateRolesStatus(string roleId, bool isStatus)
         {
-            Guid roleIdGuid;
-            if (Guid.TryParse(roleId, out roleIdGuid))
+            Guid roleIdGuid;           
+            if (!Guid.TryParse(roleId, out roleIdGuid))
+            {
+                return Json(new { success = false, code = "C0001", message = "The program parameters are wrong." });
+            }
+            try
             {
                 var role = _dbContext.SYS_Roles.FirstOrDefault(u => u.RoleId == roleIdGuid);
                 if (role != null)
@@ -417,23 +434,22 @@ namespace NES_WEB_ACC.Controllers
                     role.UpdateBy = updateBy;
                     role.UpdateDate = updateDate;
 
-                    // 儲存變更到資料庫
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(role, "2", mnid, "2");
                     _dbContext.SaveChanges();
-
-                    //Log寫入---未完成
 
                     // 返回JSON格式的成功訊息
                     return Json(new { success = true, message = "Data updated successfully" });
                 }
                 else
                 {
-                    return Json(new { success = true, message = "Guid 轉換失敗" });
+                    return Json(new { success = false, code = "C0003", message = "No exist data for update." });
                 }
             }
-            else
+            catch (Exception e)
             {
-                return Json(new { success = true, message = "Data updated fales" });
-            }
+                return Json(new { success = false, code = "C0004", message = $"An error occurred while the server was executing. Error message:{e}" }, JsonRequestBehavior.AllowGet);
+            }           
 
         }
         /// <summary>
@@ -444,13 +460,16 @@ namespace NES_WEB_ACC.Controllers
         [HttpPost]
         public JsonResult InsertToSYS_Roles(string roleName)
         {
+            if (string.IsNullOrEmpty(roleName))
+            {
+                return Json(new { success = false, code = "C0001", message = "Empty parameters for program." });
+            }
             try
             {
                 // 檢查資料庫中是否已存在相同的 RoleName
                 if (_dbContext.SYS_Roles.Any(r => r.RoleName == roleName))
                 {
-                    // 如果存在，返回失敗的 JSON 回應
-                    return Json(new { success = false, message = "儲存失敗：相同的角色名稱已存在" });
+                    return Json(new { success = false, code = "C0002", message = "Already have same data." });
                 }
                 // 建立新的 SYS_Roles 物件
                 SYS_Roles newRole = new SYS_Roles
@@ -464,15 +483,16 @@ namespace NES_WEB_ACC.Controllers
 
                 // 將新角色加入資料庫
                 _dbContext.SYS_Roles.Add(newRole);
+                Guid mnid = Guid.NewGuid();
+                MnDataSave(newRole, "1", mnid, "1");
                 _dbContext.SaveChanges();
 
                 // 返回成功的 JSON 回應
                 return Json(new { success = true, message = "儲存成功" });
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                // 返回失敗的 JSON 回應
-                return Json(new { success = false, message = $"儲存失敗：{ex.Message}" });
+                return Json(new { success = false, code = "C0004", message = $"An error occurred while the server was executing. Error message:{e}" }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
@@ -480,32 +500,80 @@ namespace NES_WEB_ACC.Controllers
         {            
             if (roleid == Guid.Empty || string.IsNullOrEmpty(rolenewname))
             {
-                return Json(new { success = false, code = "C0001", message = "Role ID is invalid. Or new role name cannot be empty." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, code = "C0001", message = "The program parameters are wrong." });
             }
 
             try
-            {
+            {                
                 var existdata = _dbContext.SYS_Roles.FirstOrDefault(x => x.RoleId == roleid);
                 var existdataname = _dbContext.SYS_Roles.FirstOrDefault(x => x.RoleName == rolenewname);
                 if (existdataname != null)
                 {
-                    return Json(new { success = false, code = "C0002", message = "New role name already have." }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false, code = "C0002", message = "Already have same data." });
                 }
                 if (existdata != null)
                 {
                     existdata.RoleName = rolenewname;
+                    Guid mnid = Guid.NewGuid();
+                    MnDataSave(existdata, "2", mnid, "2");
                     _dbContext.SaveChanges();
-                    return Json(new { success = true, message = "Rename Success." }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Rename Success." });
                 }
                 else
                 {
-                    return Json(new { success = false, code = "C0003", message = "No exist data for rename." }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false, code = "C0003", message = "No exist data for rename." });
                 }
             }
-            catch (Exception err)
+            catch (Exception e)
             {
-                return Json(new { success = false, code = "C0004", message = $"An error occurred while the server was executing. Error message:{err}" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, code = "C0004", message = $"An error occurred while the server was executing. Error message:{e}" }, JsonRequestBehavior.AllowGet);
             }  
+        }
+        /// <summary>
+        /// 異動記錄
+        /// </summary>
+        public void MnDataSave(object list, string mntype, Guid mnid, string modeltype)
+        {
+            Type modelname;
+            string tablename = "";
+            modelname = list.GetType();
+            tablename = modelname.Name.ToString();
+            SYS_OperationHistory mndata = new SYS_OperationHistory();
+            string EntityColumns = "", EntityData = "", mnstatus = "";
+            foreach (var prop in modelname.GetProperties())
+            {
+                EntityColumns += "✏" + prop.Name;
+                if (prop.GetValue(list) != null)
+                {
+                    EntityData += "✏" + prop.GetValue(list).ToString();
+                }
+                else
+                {
+                    EntityData += "✏" + " ";
+                }
+            }
+            switch (mntype)
+            {
+                case "1":
+                    mnstatus = "ADD";
+                    break;
+                case "2":
+                    mnstatus = "EDIT";
+                    break;
+                case "3":
+                    mnstatus = "DEL";
+                    break;
+            }
+            mndata.MnId = mnid;
+            mndata.OperationType = mntype;
+            mndata.OperationStatus = mnstatus;
+            mndata.TableName = tablename;
+            mndata.EntityColumns = EntityColumns;
+            mndata.EntityData = EntityData;
+            mndata.EditEmpId = Convert.ToInt64(Session["EmpId"].ToString());
+            mndata.EditBy = Session["EmpNo"].ToString();
+            mndata.EditDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            _dbContext.SYS_OperationHistory.Add(mndata);
         }
     }
 }
