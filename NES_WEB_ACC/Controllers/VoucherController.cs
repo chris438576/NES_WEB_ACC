@@ -79,7 +79,7 @@ namespace NES_WEB_ACC.Controllers
         /// 介面_期初傳票
         /// </summary>
         /// <returns></returns>
-        [CustomAuthorize(Roles = "Admin")]
+        [CustomAuthorize(Roles = "Admin,AccManager")]
         public ActionResult VoucherBeginning(string billno, string msg)
         {
             var createInfo = new CreateInfoViewModel
@@ -682,6 +682,13 @@ namespace NES_WEB_ACC.Controllers
         [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
         public ActionResult AddData(VoucherDataViewModel data, string type)
         {
+            if (type == "begin")
+            {
+                if (!User.IsInRole("Admin") && !User.IsInRole("AccManager"))               
+                {
+                    return Json(new { success = false, code = "C0005" }, JsonRequestBehavior.AllowGet);
+                }
+            }
             string voucherDocType = "";
             if (data == null)
             {               
@@ -727,6 +734,7 @@ namespace NES_WEB_ACC.Controllers
                     CurrencySt = data.Maindata.CurrencySt,
                     Rate1 = Convert.ToDecimal(data.Maindata.Rate1),
                     Rate2 = Convert.ToDecimal(data.Maindata.Rate1),
+                    Remark = data.Maindata.Remark,
                     Money11 = data.Dcdata.Money11,
                     Money12 = data.Dcdata.Money12,
                     Money21 = data.Dcdata.Money21,
@@ -900,25 +908,51 @@ namespace NES_WEB_ACC.Controllers
                             existdata.BillStatus = 1;
                             break;
                         case "check":
-                            existdata.IsState = true;
-                            existdata.StateDate = System.DateTime.Now;
-                            existdata.StateBy = Session["EmpNo"].ToString();
-                            existdata.BillStatus = 2;
+                            if (User.IsInRole("Admin") || User.IsInRole("AccManager") || User.IsInRole("AccPm")) {
+                                existdata.IsState = true;
+                                existdata.StateDate = System.DateTime.Now;
+                                existdata.StateBy = Session["EmpNo"].ToString();
+                                existdata.BillStatus = 2;
+                            } else
+                            {
+                                return Json(new { success = false, code = "C0005" }, JsonRequestBehavior.AllowGet);
+                            }
                             break;
                         case "close":
-                            existdata.IsClosed = true;
-                            existdata.ClosedDate = System.DateTime.Now;
-                            existdata.ClosedBy = Session["EmpNo"].ToString();
-                            existdata.BillStatus = 3;
+                            if (User.IsInRole("Admin") || User.IsInRole("AccManager"))
+                            {
+                                existdata.IsClosed = true;
+                                existdata.ClosedDate = System.DateTime.Now;
+                                existdata.ClosedBy = Session["EmpNo"].ToString();
+                                existdata.BillStatus = 3;
+                            }
+                            else
+                            {
+                                return Json(new { success = false, code = "C0005" }, JsonRequestBehavior.AllowGet);
+                            }                            
                             break;
                         case "reject":
-                            existdata.IsChecked = false;                          
-                            existdata.BillStatus = 4;
+                            if (User.IsInRole("Admin") || User.IsInRole("AccManager") || User.IsInRole("AccPm"))
+                            {
+                                existdata.IsChecked = false;
+                                existdata.BillStatus = 4;
+                            }
+                            else
+                            {
+                                return Json(new { success = false, code = "C0005" }, JsonRequestBehavior.AllowGet);
+                            }                            
                             break;
                         case "reject2":
-                            existdata.IsChecked = false;
-                            existdata.IsState = false;
-                            existdata.BillStatus = 5;
+                            if (User.IsInRole("Admin") || User.IsInRole("AccManager"))
+                            {
+                                existdata.IsChecked = false;
+                                existdata.IsState = false;
+                                existdata.BillStatus = 5;
+                            }
+                            else
+                            {
+                                return Json(new { success = false, code = "C0005" }, JsonRequestBehavior.AllowGet);
+                            }                           
                             break;
                         case "scrap":
                             existdata.IsClosed = true;
@@ -944,7 +978,7 @@ namespace NES_WEB_ACC.Controllers
             }
         }        
         [HttpDelete]
-        [CustomAuthorize(Roles = "Admin")]
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
         public ActionResult DeleteData(string webid)
         {
             if (String.IsNullOrEmpty(webid))

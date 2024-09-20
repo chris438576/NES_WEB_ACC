@@ -25,7 +25,7 @@ namespace NES_WEB_ACC.ViewModels
         public string CurrencySt { get; set; }
         public string Rate1 { get; set; }        
         public string Rate2 { get; set; }
-        public string TargetNo { get; set; }
+        public string Remark { get; set; }        
     }
     public class InfoData
     {       
