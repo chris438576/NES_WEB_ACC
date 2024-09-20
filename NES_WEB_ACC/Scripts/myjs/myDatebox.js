@@ -22,7 +22,7 @@
                 break;
             case 'es-MX':
                 langToday = 'Hoy';
-                langClose = 'Cerca';
+                langClose = 'Cerrar';
                 langWeeks = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
                 langMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
                 break;

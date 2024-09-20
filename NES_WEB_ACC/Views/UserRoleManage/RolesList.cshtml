@@ -219,8 +219,8 @@
             var insertRoleName = $('#roleName').val();
             if (insertRoleName != null && insertRoleName != '') {
                 $.ajax({
-                    type: 'POST',
-                    url: '/UserRoleManage/InsertToSYS_Roles',
+                    type: 'POST',                    
+                    url: '@Url.Action("InsertToSYS_Roles", "UserRoleManage")',
                     data: { roleName: insertRoleName },  // 將行數據作為 JSON 物件傳遞給後端
                     success: function (response) {
                         if (response.message == '儲存成功') {
@@ -267,7 +267,7 @@
                 //修改資料庫的資料
                 $.ajax({
                     type: 'POST',
-                    url: '/UserRoleManage/UpdateRolesStatus',
+                    url: '@Url.Action("UpdateRolesStatus", "UserRoleManage")',
                     data: JSON.stringify({ roleId: checkboxId, isStatus: isChecked }),
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
@@ -282,16 +282,16 @@
             });
         });
 
-        function renameRole(roleid,roleoldname) {           
-            $('#renameRoleWin').window('open');                      
+        function renameRole(roleid,roleoldname) {
+            $('#renameRoleWin').window('open');
             $('#renameRoleWin').window('setTitle', '重新命名角色 - ' + roleoldname);
-                       
+
             $('#roleId').textbox('setValue', roleid);
             $('#roleOldName').textbox('setValue', roleoldname);
         }
         function submitForm() {
             $('#ff').form('submit', {
-                url: '/UserRoleManage/RenameRole',
+                url: '@Url.Action("RenameRole", "UserRoleManage")',
                 onSubmit: function () {
                     // 檢查 roleOldName 和 roleNewName 是否相同
                     var roleOldName = $('#roleOldName').textbox('getValue');
@@ -304,21 +304,21 @@
 
                     // 如果驗證通過，繼續進行表單驗證
                     return $(this).form('validate');
-                  
+
                 },
-                success: function (response) {                    
+                success: function (response) {
                     var data = JSON.parse(response);
 
-                    if (data.success) {                      
-                        $.messager.alert('Success', data.message, 'info', function () {                            
+                    if (data.success) {
+                        $.messager.alert('Success', data.message, 'info', function () {
                             // 成功後重新載入頁面
                             location.reload();
                         });
-                    } else {                      
+                    } else {
                         $.messager.alert('Error', data.message, 'error');
                     }
                 },
-                error: function (xhr, status, error) {                   
+                error: function (xhr, status, error) {
                     $.messager.alert('Error', 'An unexpected error occurred: ' + error, 'error');
                 }
             });

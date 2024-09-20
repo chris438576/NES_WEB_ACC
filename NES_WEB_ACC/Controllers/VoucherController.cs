@@ -57,7 +57,7 @@ namespace NES_WEB_ACC.Controllers
         /// 介面_主管審核
         /// </summary>
         /// <returns></returns>
-        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm")]
         public ActionResult VoucherCheck(string billno, string msg)
         {
             ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;
@@ -68,7 +68,7 @@ namespace NES_WEB_ACC.Controllers
         /// 介面_傳票結案
         /// </summary>
         /// <returns></returns>
-        [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
+        [CustomAuthorize(Roles = "Admin,AccManager,AccPm")]
         public ActionResult VoucherClose(string billno, string msg)
         {
             ViewBag.BillNo = (String.IsNullOrEmpty(billno)) ? null : billno;

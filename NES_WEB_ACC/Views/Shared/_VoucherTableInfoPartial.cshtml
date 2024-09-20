@@ -3,29 +3,29 @@
     <div title="ShowTable">@*顯示表單*@
         <table style="width:100%;">
             <tr>
-                <th class="formtext">傳票日期</th>
+                <th class="formtext">@Resources.Content.BillDate</th>
                 <td class="formimport" colspan=2>
                     <input class="easyui-textbox colBillDate" style="width:90%;" readonly />
 
                 </td>
-                <th class="formtext">單據類別</th>
+                <th class="formtext">@Resources.Content.BillType</th>
                 <td class="formimport" colspan=2>
                     <input class="easyui-textbox colDocSubType" style="width:45%;" readonly />
                     <input class="easyui-textbox colDocSubTypeName" style="width:45%;" readonly />
                 </td>
-                <th class="formtext">公司編號</th>
+                <th class="formtext">@Resources.Content.CompNo</th>
                 <td class="formimport" colspan=2>
                     <input class="easyui-textbox colCompNo" style="width:45%;" readonly />
                     <input class="easyui-textbox colCompAbbr" style="width:45%;" readonly />
                 </td>
             </tr>
             <tr>
-                <th class="formtext">傳票類別</th>
+                <th class="formtext">@Resources.Content.VoucherType</th>
                 <td class="formimport" colspan=2>
                     <input class="easyui-textbox colVoucherType" style="width:45%;" readonly />
                     <input class="easyui-textbox colVoucherNameC" style="width:45%;" readonly />
                 </td>
-                <th class="formtext">負責會計</th>
+                <th class="formtext">@Resources.Content.EmpNo</th>
                 <td class="formimport" colspan=5>
                     <input class="easyui-textbox colEmpNo" style="width:23%;" readonly />
                     <input class="easyui-textbox colEmpNameC" style="width:23%;" readonly />
@@ -34,11 +34,11 @@
                 </td>
             </tr>
             <tr>
-                <th class="formtext">傳票編號</th>
+                <th class="formtext">@Resources.Content.VoucherNo</th>
                 <td class="formimport" colspan=2>
                     <input class="easyui-textbox colBillNo" style="width:90%;" readonly />
                 </td>
-                <th class="formtext">交易幣別</th>
+                <th class="formtext">@Resources.Content.CurrencyNo</th>
                 <td class="formimport" colspan=5>
                     <input class="easyui-textbox colCurrencyNo" style="width:18%;" readonly />
                     =
@@ -50,7 +50,7 @@
                 </td>
             </tr>
             <tr>
-                <th class="formtext">傳票摘要</th>
+                <th class="formtext">@Resources.Content.VoucherSummary</th>
                 <td class="formimport" colspan="8">
                     <input class="easyui-textbox colTargetNo" style="width:90%;" readonly />
                 </td>
@@ -61,29 +61,29 @@
         <form id="addForm">
             <table style="width:100%;">
                 <tr>
-                    <th class="formtext">傳票日期</th>
+                    <th class="formtext">@Resources.Content.BillDate</th>
                     <td class="formimport" colspan=2>
                         @*<input class="easyui-datebox fomBillDate" style="width:90%;" required />*@     
                         <input class="easyui-datebox fomBillDate" id="myDatebox" style="width:90%;" required />
                     </td>
-                    <th class="formtext">單據類別</th>
+                    <th class="formtext">@Resources.Content.BillType</th>
                     <td class="formimport" colspan=2>
                         <input class="easyui-combogrid fomDocSubType" style="width:45%;" required />
                         <input class="easyui-textbox fomDocSubTypeName" style="width:45%;" readonly />
                     </td>
-                    <th class="formtext">公司編號</th>
+                    <th class="formtext">@Resources.Content.CompNo</th>
                     <td class="formimport" colspan=2>
                         <input class="easyui-combogrid fomCompNo" style="width:45%;"  required/>
                         <input class="easyui-textbox fomCompAbbr" style="width:45%;" readonly />
                     </td>
                 </tr>
                 <tr>
-                    <th class="formtext">傳票類別</th>
+                    <th class="formtext">@Resources.Content.VoucherType</th>
                     <td class="formimport" colspan=2>
                         <input class="easyui-combogrid fomVoucherType" style="width:45%;"  required/>
                         <input class="easyui-textbox fomVoucherNameC" style="width:45%;" readonly />
                     </td>
-                    <th class="formtext">負責會計</th>
+                    <th class="formtext">@Resources.Content.EmpNo</th>
                     <td class="formimport" colspan=5>
                         <input class="easyui-textbox fomEmpNo" style="width:23%;" readonly />
                         <input class="easyui-textbox fomEmpNameC" style="width:23%;" readonly />
@@ -92,11 +92,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="formtext">傳票編號</th>
+                    <th class="formtext">@Resources.Content.VoucherNo</th>
                     <td class="formimport" colspan=2>
                         <input class="easyui-textbox fomBillNo" style="width:90%;" readonly />
                     </td>
-                    <th class="formtext">交易幣別</th>
+                    <th class="formtext">@Resources.Content.CurrencyNo</th>
                     <td class="formimport" colspan=5>
                         <input class="easyui-textbox fomCurrencyNo" style="width:18%;"  />
                         =
@@ -108,7 +108,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="formtext">傳票摘要</th>
+                    <th class="formtext">@Resources.Content.VoucherSummary</th>
                     <td class="formimport" colspan="8">
                         <input class="easyui-textbox fomTargetNo" style="width:90%;"  />
                     </td>

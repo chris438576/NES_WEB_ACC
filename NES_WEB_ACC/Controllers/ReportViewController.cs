@@ -176,66 +176,136 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult VoucherBillReport(string reportId)
         {
+            //string EmpNo = (string)Session["EmpNo"];
+            //string sqlInfo = @"
+            //    select 
+            //     a.BillNo
+            //     ,CONVERT(varchar(100), a.BillDate, 111) as BillDate
+            //     ,a.EmpNo as CreateBy ,a.EmpNameC as CreateByName	, a.CreateDate
+            //     ,a.CheckBy			, d.EmpNameC as CheckByName		, a.CheckDate
+            //     ,a.StateBy			, b.EmpNameC as StateByName		, a.StateDate
+            //     ,a.ClosedBy			, c.EmpNameC as ClosedByName	, a.ClosedDate
+            //     , a.CurrencyNo, a.CurrencySt ,a.Money21,a.Money22, a.Remark 
+            //    from NES_WEB_ACC.dbo.ACC_VoucherInfo as a
+            //    left join NES_WEB.dbo.NES_EmployeeInfo as b on b.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.StateBy 
+            //    left join NES_WEB.dbo.NES_EmployeeInfo as c on c.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.ClosedBy
+            //    left join NES_WEB.dbo.NES_EmployeeInfo as d on d.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.CheckBy
+            //    where WebId = @reportId
+            //";
+            //string sqlDetail = @"
+            //    select 
+            //        Linage, AccNo
+            //        ,case
+            //            when @currentCulture = 'en' then a.AccNameE
+            //            when @currentCulture = 'zh-TW' then a.AccNameC
+            //            when @currentCulture = 'es-MX' then a.AccNameMX
+            //            else a.AccNameE
+            //        end as AccName
+            //        ,Remark,DCTypeNo
+            //        ,CurrencyNo, Money, Rate1
+            //        ,CurrencySt, Money1  
+            //    from NES_WEB_ACC.dbo.ACC_VoucherDetail 
+            //    where WebDocId = @reportId order by Linage
+            //";
+
+            //VoucherMainReportViewModel voucherInfo;
+            //List<ACC_VoucherDetail_ViewModel> voucherDetail = new List<ACC_VoucherDetail_ViewModel>();
+
+            //using (SqlConnection conn = new SqlConnection(connectionString))
+            //{
+            //    voucherInfo = conn.QueryFirstOrDefault<VoucherMainReportViewModel>(sqlInfo, new { currentCulture, reportId });
+            //    voucherDetail = conn.Query<ACC_VoucherDetail_ViewModel>(sqlDetail, new { reportId }).ToList();
+            //}
+
+            //// 報表參數設定
+            //var reportParameters = new List<ReportParameter>
+            //{
+            //    new ReportParameter("ReportMaker", EmpNo),
+            //    new ReportParameter("ReportId", reportId)
+            //};
+            //var reportDataSources = new Dictionary<string, ReportDataSource>
+            //{
+            //    { "VoucherBillMain", new ReportDataSource("VoucherBillMain", new List<VoucherMainReportViewModel> { voucherInfo }) },
+            //    { "VoucherBillItem", new ReportDataSource("VoucherBillItem", voucherDetail) }
+            //};
+
+            //// Session設定，給ReportViewer使用
+            //Session["ReportPath"] = Server.MapPath("~/Report/RDLC/VoucherBillReport.rdlc");
+            //Session["ReportDataSources"] = reportDataSources;
+            //Session["ReportParameters"] = reportParameters;
+            //Session["ReportDocName"] = "VoucherBill_" + voucherInfo.BillNo;
+
+            //return Redirect("~/Report/ReportViewer_V2.aspx");
             string EmpNo = (string)Session["EmpNo"];
             string sqlInfo = @"
-                select 
-	                a.BillNo
-	                ,CONVERT(varchar(100), a.BillDate, 111) as BillDate
-	                ,a.EmpNo as CreateBy ,a.EmpNameC as CreateByName	, a.CreateDate
-	                ,a.CheckBy			, d.EmpNameC as CheckByName		, a.CheckDate
-	                ,a.StateBy			, b.EmpNameC as StateByName		, a.StateDate
-	                ,a.ClosedBy			, c.EmpNameC as ClosedByName	, a.ClosedDate
-	                , a.CurrencyNo, a.CurrencySt ,a.Money21,a.Money22, a.Remark 
-                from NES_WEB_ACC.dbo.ACC_VoucherInfo as a
-                left join NES_WEB.dbo.NES_EmployeeInfo as b on b.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.StateBy 
-                left join NES_WEB.dbo.NES_EmployeeInfo as c on c.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.ClosedBy
-                left join NES_WEB.dbo.NES_EmployeeInfo as d on d.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.CheckBy
-                where WebId = @reportId
+				select * from (
+					select 
+						a.WebId,a.BillNo
+						,CONVERT(varchar(100), a.BillDate, 111) as BillDate
+						,a.EmpNo as CreateBy ,a.EmpNameC as CreateByName	, a.CreateDate
+						,a.CheckBy			, d.EmpNameC as CheckByName		, a.CheckDate
+						,a.StateBy			, b.EmpNameC as StateByName		, a.StateDate
+						,a.ClosedBy			, c.EmpNameC as ClosedByName	, a.ClosedDate
+						, a.CurrencyNo, a.CurrencySt ,a.Money21,a.Money22, a.Remark 
+					from NES_WEB_ACC.dbo.ACC_VoucherInfo as a
+					left join NES_WEB.dbo.NES_EmployeeInfo as b on b.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.StateBy 
+					left join NES_WEB.dbo.NES_EmployeeInfo as c on c.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.ClosedBy
+					left join NES_WEB.dbo.NES_EmployeeInfo as d on d.EmpNo COLLATE Chinese_Taiwan_Stroke_CI_AS = a.CheckBy
+					where 1=1
+						and  a.IsClosed = 1
+				) as a
+				where 1=1
+                and WebId = @reportId
             ";
-            string sqlDetail = @"
+            string sqlDetail = $@"
+                IF OBJECT_ID ('tempdb..#Temp') IS NOT NULL
+		            Drop Table #Temp
+                select WebId into #Tmp from NES_WEB_ACC.dbo.ACC_VoucherInfo  where 1=1 and WebId = @reportId           
+
                 select 
-                    Linage, AccNo
+                    WebDocId,Linage,AccNo
                     ,case
-                        when @currentCulture = 'en' then a.AccNameE
-                        when @currentCulture = 'zh-TW' then a.AccNameC
-                        when @currentCulture = 'es-MX' then a.AccNameMX
-                        else a.AccNameE
+                        when @currentCulture = 'en' then AccNameE
+                        when @currentCulture = 'zh-TW' then AccNameC
+                        when @currentCulture = 'es-MX' then AccNameMX
+                        else AccNameE
                     end as AccName
                     ,Remark,DCTypeNo
-                    ,CurrencyNo, Money, Rate1
-                    ,CurrencySt, Money1  
+                    ,CurrencyNo
+                    ,Money,Rate1
+                    ,CurrencySt,Money1  
                 from NES_WEB_ACC.dbo.ACC_VoucherDetail 
-                where WebDocId = @reportId order by Linage
-            ";
+                where WebDocId in    (select * from #Tmp)  
+                order by Linage
 
-            VoucherMainReportViewModel voucherInfo;
+                IF OBJECT_ID ('tempdb..#Temp') IS NOT NULL
+		            Drop Table #Temp
+            ";
+            var param = new { currentCulture, reportId };
+            List<VoucherMainReportViewModel> voucherInfo = new List<VoucherMainReportViewModel>();
             List<ACC_VoucherDetail_ViewModel> voucherDetail = new List<ACC_VoucherDetail_ViewModel>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                voucherInfo = conn.QueryFirstOrDefault<VoucherMainReportViewModel>(sqlInfo, new { currentCulture, reportId });
-                voucherDetail = conn.Query<ACC_VoucherDetail_ViewModel>(sqlDetail, new { reportId }).ToList();
+                voucherInfo = conn.Query<VoucherMainReportViewModel>(sqlInfo, param).ToList();
+                voucherDetail = conn.Query<ACC_VoucherDetail_ViewModel>(sqlDetail, param).ToList();
             }
 
             // 報表參數設定
             var reportParameters = new List<ReportParameter>
             {
                 new ReportParameter("ReportMaker", EmpNo),
-                new ReportParameter("ReportId", reportId)
-            };
-            var reportDataSources = new Dictionary<string, ReportDataSource>
-            {
-                { "VoucherBillMain", new ReportDataSource("VoucherBillMain", new List<VoucherMainReportViewModel> { voucherInfo }) },
-                { "VoucherBillItem", new ReportDataSource("VoucherBillItem", voucherDetail) }
+                //new ReportParameter("ReportId", reportId)
             };
 
             // Session設定，給ReportViewer使用
-            Session["ReportPath"] = Server.MapPath("~/Report/RDLC/VoucherBillReport.rdlc");
-            Session["ReportDataSources"] = reportDataSources;
+            Session["ReportPath"] = Server.MapPath("~/Report/RDLC/VoucherReportMain.rdlc");
+            Session["ReportDataSourceMain"] = new ReportDataSource("VoucherBillMain", voucherInfo);
+            Session["ReportDataSourceItem"] = new ReportDataSource("VoucherBillItem", voucherDetail);
             Session["ReportParameters"] = reportParameters;
-            Session["ReportDocName"] = "VoucherBill_" + voucherInfo.BillNo;
+            Session["ReportDocName"] = "VoucherReport_" + System.DateTime.Now.ToString("yyyyMMdd");
 
-            return Redirect("~/Report/ReportViewer_V2.aspx");
+            return Redirect("~/Report/ReportViewer_V3.aspx");
         }
         /// <summary>
         /// 傳票報表

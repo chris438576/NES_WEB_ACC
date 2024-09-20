@@ -516,4 +516,76 @@
   <data name="BalanceSheetAcc" xml:space="preserve">
     <value>Cuenta de balance</value>
   </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Entregar</value>
+  </data>
+  <data name="SyncData" xml:space="preserve">
+    <value>Sincronizar datos</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Año</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Mes</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>Principio/Medio/Fin (de mes)</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Acción</value>
+  </data>
+  <data name="CoworkMX" xml:space="preserve">
+    <value>Usuario mexicano</value>
+  </data>
+  <data name="CoworkTW" xml:space="preserve">
+    <value>Usuario de Taiwán</value>
+  </data>
+  <data name="Supervisor" xml:space="preserve">
+    <value>Supervisora</value>
+  </data>
+  <data name="SysWorkflow" xml:space="preserve">
+    <value>Proceso de operación del sistema</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contacto</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>¡Atención, has estado inactivo durante demasiado tiempo y serás desconectado del sistema en 1 minuto!</value>
+  </data>
+  <data name="BillType" xml:space="preserve">
+    <value>Tipo de factura</value>
+  </data>
+  <data name="VoucherType" xml:space="preserve">
+    <value>Tipo de cupón</value>
+  </data>
+  <data name="VoucherNo" xml:space="preserve">
+    <value>Número de cupón</value>
+  </data>
+  <data name="VoucherSummary" xml:space="preserve">
+    <value>Resumen del cupón</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Avanzada</value>
+  </data>
+  <data name="AccBookType" xml:space="preserve">
+    <value>Tipo de libro de cuentas</value>
+  </data>
+  <data name="AdjustmentAccount" xml:space="preserve">
+    <value>Cuenta de ajuste</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="TotalDebits" xml:space="preserve">
+    <value>Débitos totales</value>
+  </data>
+  <data name="TotalCredit" xml:space="preserve">
+    <value>Crédito total</value>
+  </data>
+  <data name="Difference" xml:space="preserve">
+    <value>Diferencia</value>
+  </data>
 </root>

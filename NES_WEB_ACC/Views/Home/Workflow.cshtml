@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Workflow";
+    ViewBag.Title = @Resources.Content.Workflow;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -324,29 +324,29 @@
 <div class="rectangle" data-options="region:'center'">
 
     <div class="row flowtitle">
-        <label><span>總帳系統作業流程圖</span><span class="bg-green" style="margin-left:50px;width:25px;height:25px;"></span></label>
+        <label><span>@Resources.Content.SysWorkflow</span><span class="bg-green" style="margin-left:50px;width:25px;height:25px;"></span></label>
     </div>
     <div class="row flowcontent">
         <!--Header-->
         <div class="row flow-header">
             <div class="col-md-3 header-fix-1">
                 <div class="col-header">
-                    <label>墨西哥部門</label>
+                    <label>@Resources.Content.CoworkMX</label>
                 </div>
             </div>
             <div class="col-md-3 header-fix-1">
                 <div class="col-header">
-                    <label>主管</label>
+                    <label>@Resources.Content.Supervisor</label>
                 </div>
             </div>
             <div class="col-md-3 header-fix-3">
                 <div class="col-header">
-                    <label>台灣部門</label>
+                    <label>@Resources.Content.CoworkTW</label>
                 </div>
             </div>
             <div class="col-md-3 header-fix-3">
                 <div class="col-header">
-                    <label>報表</label>
+                    <label>@Resources.Content.Report</label>
                 </div>
             </div>
         </div>
@@ -361,7 +361,7 @@
                     <div class="col-md-7 clearpad">
                         <div class="flow-container">
                             <a class="flowrow flow-default flow1 btn" href="@Url.Content("~/Voucher/VoucherCreate")">
-                                <span style="width:100%;height:100%;">傳票作業</span>
+                                <span style="width:100%;height:100%;">@Resources.Content.VoucherCreate</span>
                             </a>
                         </div>
                     </div>
@@ -389,7 +389,7 @@
                     <div class="col-md-7 clearpad">
                         <div class="flow-container">
                             <a class="flowrow flow-default flow1 btn" href="@Url.Content("~/Voucher/VoucherCheck")">
-                                <span style="width:100%;height:100%;">傳票審核</span>
+                                <span style="width:100%;height:100%;">@Resources.Content.VoucherReview</span>
                             </a>
                         </div>
                     </div>
@@ -419,7 +419,7 @@
                     <div class="col-md-7 clearpad">
                         <div class="flow-container">
                             <a class="flowrow flow-default flow1 btn" href="@Url.Content("~/Voucher/VoucherClose")">
-                                <span style="width:100%;height:100%;">傳票關帳</span>
+                                <span style="width:100%;height:100%;">@Resources.Content.VoucherClose</span>
                             </a>
                         </div>
                     </div>
@@ -437,7 +437,7 @@
                     <div class="col-md-7 clearpad">
                         <div class="flow-container">
                             <a class="flowrow flow-default flow1 btn" href="@Url.Content("~/Voucher/VoucherBeginning")">
-                                <span style="width:100%;height:100%;">期初傳票</span>
+                                <span style="width:100%;height:100%;">@Resources.Content.VoucherBeginning</span>
                             </a>
                         </div>
                     </div>
@@ -454,7 +454,7 @@
                     <div class="col-md-7 clearpad3">
                         <div class="flow-container">
                             <a class="flowrow-lg flow-default flow2 btn" href="@Url.Content("~/AccSet/AccTitle")">
-                                <span style="width:100%;height:100%;">會科設定</span>
+                                <span style="width:100%;height:100%;">@Resources.Content.AccCodeSet</span>
                             </a>
                         </div>
                     </div>
@@ -481,7 +481,7 @@
                     <div class="col-md-7 clearpad3">
                         <div class="flow-container">
                             <a class="flowrow-lg flow-default flow2 btn" href="@Url.Content("~/AccSet/Rate")">
-                                <span style="width:100%;height:100%;">匯率設定</span>
+                                <span style="width:100%;height:100%;">@Resources.Content.RateSet</span>
                             </a>
                         </div>
                     </div>

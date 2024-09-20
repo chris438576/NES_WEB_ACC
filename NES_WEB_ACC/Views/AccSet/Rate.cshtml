@@ -405,13 +405,13 @@
     </style>
 }
 <div class="header-toolbar">
-    <select class="easyui-combobox" id="CurrencyNo" label="CurrencyNo:" labelPosition="left" labelWidth="100px" style="width:15%;">
+    <select class="easyui-combobox" id="CurrencyNo" label="@Resources.Content.CurrencyNo :" labelPosition="left" labelWidth="150px" style="width: 15%;">
         @foreach (var item in Model.CurrencyNo)
         {
             <option value="@item.Id">@item.Name</option>
         }
     </select>
-    <select class="easyui-combobox" id="CurrencySt" label="CurrencySt:" labelPosition="left" labelWidth="100px" style="width:15%;">
+    <select class="easyui-combobox" id="CurrencySt" label="@Resources.Content.CurrencySt :" labelPosition="left" labelWidth="150px" style="width: 15%;">
         @foreach (var item in Model.CurrencySt)
         {
             <option value="@item.Id">@item.Name</option>
@@ -421,11 +421,11 @@
     @*<input id="ymDatebox" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,calendar:mycalendar" style="width:200px;">*@
     <input id="ymDatebox" />
     <a href="#" class="separatorbar"></a>
-    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('search');" data-options="iconCls:'icon-large-select',size:'large',iconAlign:'top'">搜尋</a>
+    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('search');" data-options="iconCls:'icon-large-select',size:'large',iconAlign:'top'">@Resources.Content.Search</a>
     <a href="#" class="separatorbar"></a>
-    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('synch');" data-options="iconCls:'icons8-synchronize',size:'large',iconAlign:'top'">更新匯率</a>
+    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('synch');" data-options="iconCls:'icons8-synchronize',size:'large',iconAlign:'top'">@Resources.Content.SyncData</a>
     <a href="#" class="separatorbar"></a>
-    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('report');" data-options="iconCls:'icon-large-report',size:'large',iconAlign:'top'">報表</a>
+    <a href="#" class="easyui-linkbutton linkbtn2" onclick="btnClick('report');" data-options="iconCls:'icon-large-report',size:'large',iconAlign:'top'">@Resources.Content.Report</a>
 </div>
 
 <div id="body-container">
@@ -448,22 +448,13 @@
         //#endregion
         //#region 多語系
         let maindglang = {
-            OrderId: 'Id',
-            OrderDate: '下單日',
-            OrderExportDays: '下單至出貨天數',
-            OrderWorkDays: '出貨工作天數',
-            ShippingDate: '訂單交期',
-            ItemNo: '總項次',
-            TargetProdNo: '客戶料號',
-            ProdNo: '廠內料號',
-            OrderProdNo: '排程生產料號',
-            Remark1: '量/研',
-            OrderNum: '訂單數量',
-            Remark2: '訂單備註',
-            SetSchedulerNum: '排程量',
-            ScheduledNum: '已排量',
-            SurplusNum: '未排量',
-            SchedulerFinishNum: '已完工數量'
+            CurrencyNo: '@Resources.Content.CurrencyNo',
+            CurrencySt: '@Resources.Content.CurrencySt',
+            ExchangeYear: '@Resources.Content.Year',
+            ExchangeMonth: '@Resources.Content.Month',
+            ExchangeMonthFlag: '@Resources.Content.Flag',
+            Rate: '@Resources.Content.Rate',
+            Action:'@Resources.Content.Action',
         };
         var msglang = {
             Title1: '@Resources.Content.Confirm', // 確認
@@ -488,7 +479,7 @@
         //#region 初始化
         $(function () {
             maindgSet();
-            //maindgData();              
+            //maindgData();
             $('#ymDatebox').myDatebox({
                 culture: '@ViewBag.CurrentCulture' // 傳遞語言參數
             });
@@ -509,13 +500,13 @@
                 rownumbers: true,
                 columns: [[
                     { field: 'WebId', title: 'WebId', width: 100, hidden: true },
-                    { field: 'CurrencyNo', title: '交易幣別', width: 100 },
-                    { field: 'CurrencySt', title: '記帳幣別', width: 100 },
-                    { field: 'ExchangeYear', title: '年', width: 100 },
-                    { field: 'ExchangeMonth', title: '月', width: 100 },
-                    { field: 'ExchangeMonthFlag', title: 'Flag', width: 100 },
+                    { field: 'CurrencyNo', title: maindglang.CurrencyNo, width: 100, align: 'center' },
+                    { field: 'CurrencySt', title: maindglang.CurrencySt, width: 100, align: 'center' },
+                    { field: 'ExchangeYear', title: maindglang.ExchangeYear, width: 100, align: 'center' },
+                    { field: 'ExchangeMonth', title: maindglang.ExchangeMonth, width: 100, align: 'center' },
+                    { field: 'ExchangeMonthFlag', title: maindglang.ExchangeMonthFlag, width: 200, align: 'center' },
                     {
-                        field: 'Rate', title: '匯率', width: 100, align: 'center', editor: {
+                        field: 'Rate', title: maindglang.Rate, width: 100, align: 'center', editor: {
                             type: 'numberbox',
                             options: {
                                 precision: 3
@@ -531,7 +522,7 @@
                             return value.toFixed(3);
                         }
                     },
-                    { field: 'action', title: '操作', width: 100, align: 'center', formatter: formatAction }
+                    { field: 'action', title: maindglang.Action, width: 100, align: 'center', formatter: formatAction }
                 ]],
                 onDblClickRow: function (index, row) {
                     $(this).datagrid('beginEdit', index);
@@ -566,11 +557,11 @@
         }
         function formatAction(value, row, index) {
             if (row.editing) {
-                var s = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'save\', ' + index + ')" value="儲存" /> ';
-                var c = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'cancel\', ' + index + ')" value="取消" /> ';
+                var s = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'save\', ' + index + ')" value="'+ '@Resources.Content.Save' +'" /> ';
+                var c = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'cancel\', ' + index + ')" value="' + '@Resources.Content.Cancel' +'" /> ';
                 return s + c;
             } else {
-                var e = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'edit\', ' + index + ')" value="編輯" /> ';
+                var e = '<input type="button" class="btn-xs btn-primary" onclick="dgCRUD(\'edit\', ' + index + ')" value="' + '@Resources.Content.Edit' +'" /> ';
                 return e;
             }
         }
@@ -845,100 +836,6 @@
             window.location.href = url.toString();
         }
         //#endregion
-    </script>
-    @*<script type="text/javascript">
-        var currentCulture = '@ViewBag.CurrentCulture';
-        var langToday,langClose,langWeeks, langMonths;
-        switch (currentCulture) {
-            case 'en':
-                langToday = 'Today';
-                langClose = 'Close';
-                langWeeks = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-                langMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                break;
-            case 'zh-TW':
-                langToday = '今天';
-                langClose = '關閉';
-                langWeeks = ['日', '一', '二', '三', '四', '五', '六'];
-                langMonths = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
-                break;
-            case 'es-MX':
-                langToday = 'Hoy';
-                langClose = 'Cerca';
-                langWeeks = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
-                langMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-                break;
-            default:
-                langToday = 'Today';
-                langClose = 'Close';
-                langWeeks = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-                langMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                break;
-        }
-
-        function myformatter(date) {
-            if (!date) return '';
-            var y = date.getFullYear();
-            var m = date.getMonth() + 1;
-            var d = date.getDate();
-            var suffix = '';
-
-            if (d >= 1 && d <= 10) {
-                suffix = 'B';
-            } else if (d >= 11 && d <= 20) {
-                suffix = 'M';
-            } else if (d >= 21) {
-                suffix = 'E';
-            }
-            return y + '/' + (m < 10 ? ('0' + m) : m) + '/' + (d < 10 ? ('0' + d) : d) ;
-            //return y + '/' + (m < 10 ? ('0' + m) : m) + '/' + (d < 10 ? ('0' + d) : d) + '/' + suffix;
-        }
-
-        // 解析函數，將選擇的年月解析為日期對象
-        function myparser(s) {
-            if (!s) return new Date();
-            var ss = s.split('/');
-            var y = parseInt(ss[0], 10);
-            var m = parseInt(ss[1], 10);
-            var d = parseInt(ss[2], 10);
-            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
-                return new Date(y, m - 1, d);
-            } else {
-                return new Date();
-            }
-        }
-
-        function mycalendar(target) {
-            var opts = $(target).datebox('options');
-            $(target).datebox('calendar').calendar({
-                validator: function (date) {
-                    return true;
-                },
-                firstDay: opts.firstDay,               
-                onSelect: function (date) {
-                    $(target).datebox('hidePanel');
-                    var value = opts.formatter.call(target, date);
-                    $(target).datebox('setText', value).datebox('setValue', value);
-                }
-            });
-
-        }
-
-        // 初始化 datebox
-        $('#ymDatebox').datebox({
-            formatter: myformatter,
-            parser: myparser,
-            calendar: mycalendar,
-            closeText: langClose,
-            currentText: langToday,
-            onShowPanel: function () {
-                var c = $('#ymDatebox').datebox('calendar');
-                c.calendar({
-                    weeks: langWeeks,
-                    months: langMonths,
-                });
-            }
-        });
-    </script>*@
+    </script> 
 }
 
