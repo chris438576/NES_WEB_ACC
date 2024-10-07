@@ -118,35 +118,35 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccCodeSet" xml:space="preserve">
-    <value>AccCodeSet</value>
+    <value>Configuración de la cuenta contable</value>
     <comment>_Layouyt\會計設定:[會計科目設定]</comment>
   </data>
   <data name="AccGroupNoSet" xml:space="preserve">
-    <value>AccGroupNoSet</value>
+    <value>Configuración de categoría de cuenta contable</value>
     <comment>_Layouyt\會計設定:[科目類別設定]</comment>
   </data>
   <data name="AccReport" xml:space="preserve">
-    <value>AccReport</value>
+    <value>Lista de cuenta contable</value>
     <comment>_Layouyt\會計設定:[會計項目一覽表]</comment>
   </data>
   <data name="AccSet" xml:space="preserve">
-    <value>AccSet</value>
+    <value>Configuración  contabilidad</value>
     <comment>_Layouyt:[會計設定]</comment>
   </data>
   <data name="AccSysCodeSet" xml:space="preserve">
-    <value>AccSysCodeSet</value>
+    <value>Configuraciones básicas del sistema contable.</value>
     <comment>_Layouyt\會計設定:[會計系統基本設定]</comment>
   </data>
   <data name="AJE" xml:space="preserve">
-    <value>AJE</value>
+    <value>Ajuste de asientos</value>
     <comment>_Layouyt:[調整分錄]</comment>
   </data>
   <data name="BillDate" xml:space="preserve">
-    <value>Fecha del bono</value>
+    <value>Fecha de citación</value>
     <comment>傳票輸入作業\左側列表[傳票日期]</comment>
   </data>
   <data name="BillNo" xml:space="preserve">
-    <value>Número de vale</value>
+    <value>Número de citación</value>
     <comment>傳票輸入作業\左側列表[傳票編號]</comment>
   </data>
   <data name="CompAbbr" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>傳票輸入作業\左側列表[公司簡稱]</comment>
   </data>
   <data name="CompNo" xml:space="preserve">
-    <value>Número de empresa</value>
+    <value>No. de empresa</value>
     <comment>傳票輸入作業\左側列表[公司編號]</comment>
   </data>
   <data name="EmpNameC" xml:space="preserve">
@@ -162,19 +162,19 @@
     <comment>傳票輸入作業\左側列表[會計姓名]</comment>
   </data>
   <data name="EmpNo" xml:space="preserve">
-    <value>Contadora no</value>
+    <value>No. Contadora</value>
     <comment>傳票輸入作業\左側列表[負責會計]</comment>
   </data>
   <data name="EquityCodeSet" xml:space="preserve">
-    <value>EquityCodeSet-mx</value>
+    <value>Configuración derecho del categoría de  cuenta </value>
     <comment>_Layouyt\會計設定:[權益科目類別設定]</comment>
   </data>
   <data name="FinanceReport" xml:space="preserve">
-    <value>Informe financiero</value>
+    <value>Estados financieros</value>
     <comment>傳票輸入作業\左側列表[財務報表]</comment>
   </data>
   <data name="FlowChart" xml:space="preserve">
-    <value>Flujo de trabajo</value>
+    <value>Diagrama flujo de trabajo</value>
     <comment>_Layouyt:[作業流程圖]</comment>
   </data>
   <data name="lblMenuLanguage" xml:space="preserve">
@@ -182,7 +182,7 @@
     <comment>_Layouyt:[語系]</comment>
   </data>
   <data name="lblPermissionSetting" xml:space="preserve">
-    <value>Configuración de permisos</value>
+    <value>Configuración de Derecho</value>
     <comment>_Layouyt:[權限設定]</comment>
   </data>
   <data name="Remark" xml:space="preserve">
@@ -190,7 +190,7 @@
     <comment>傳票輸入作業\左側列表[傳票摘要]</comment>
   </data>
   <data name="SystemManagementRoles" xml:space="preserve">
-    <value>Configuración de permisos</value>
+    <value>Configuración de Derecho</value>
     <comment>_Layouyt\權限設定:[權限設定-Roles]</comment>
   </data>
   <data name="SystemManagementUsers" xml:space="preserve">
@@ -198,62 +198,62 @@
     <comment>_Layouyt\權限設定:[權限設定-User]</comment>
   </data>
   <data name="VoucherCodeSet" xml:space="preserve">
-    <value>VoucherCodeSet-mx</value>
+    <value>Configuración  tipo de citación</value>
     <comment>_Layouyt\會計設定:[傳票類別設定]</comment>
   </data>
   <data name="VoucherCreate" xml:space="preserve">
-    <value>Crear Vale</value>
+    <value>Ingreso de citación</value>
     <comment>_Layouyt\傳票作業:[傳票輸入作業]</comment>
   </data>
   <data name="VoucherNameC" xml:space="preserve">
-    <value>VoucherNameC-mx</value>
+    <value>Categoría de citación</value>
     <comment>傳票輸入作業\左側列表[傳票類別]</comment>
   </data>
   <data name="VoucherOperation" xml:space="preserve">
-    <value>Operación de vouchers</value>
+    <value>Operación de citación</value>
     <comment>_Layouyt:[傳票作業]</comment>
   </data>
   <data name="Instrument" xml:space="preserve">
     <value>Panel</value>
   </data>
   <data name="AccGroupNo" xml:space="preserve">
-    <value>Acc Group No</value>
+    <value>Número de Categoria</value>
   </data>
   <data name="AccGroupNameC" xml:space="preserve">
-    <value>Acc Group Name</value>
+    <value>Nombre de Categoria</value>
   </data>
   <data name="AccNoBy" xml:space="preserve">
-    <value>Acc No By</value>
+    <value>No, de clasificación</value>
   </data>
   <data name="AccNoByNameC" xml:space="preserve">
-    <value>Acc No By Name</value>
+    <value>Nombre de Clasificación</value>
   </data>
   <data name="DCTypeNo" xml:space="preserve">
-    <value>DC Type </value>
+    <value>Debe or Haber</value>
   </data>
   <data name="DCTypeNameC" xml:space="preserve">
-    <value>DC Type Name</value>
+    <value>Nombre de Prestamo</value>
   </data>
   <data name="AccNoType" xml:space="preserve">
-    <value>Acc No Type</value>
+    <value>Tipo de Cuenta</value>
   </data>
   <data name="AccNo" xml:space="preserve">
-    <value>Acc No</value>
+    <value>No. Cuenta</value>
   </data>
   <data name="AccNameC" xml:space="preserve">
-    <value>Nombre ACC (chino)</value>
+    <value>Nombre contable </value>
   </data>
   <data name="IsControl" xml:space="preserve">
-    <value>Is Control</value>
+    <value>Conciliación de cuentas</value>
   </data>
   <data name="AccCode" xml:space="preserve">
-    <value>Acc Code</value>
+    <value>Partidas contables</value>
   </data>
   <data name="AccGroupNameE" xml:space="preserve">
-    <value>Acc Group NameE</value>
+    <value>Categoría de cuenta (En ingles)</value>
   </data>
   <data name="VoucherClose" xml:space="preserve">
-    <value>Cerrar Vale</value>
+    <value>Cierre de  citación</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirmar</value>
@@ -268,70 +268,70 @@
     <value>Configuración del sistema</value>
   </data>
   <data name="VoucherReview" xml:space="preserve">
-    <value>Revisión del cupón</value>
+    <value>Revisión del Citación por Supervisor</value>
   </data>
   <data name="Workflow" xml:space="preserve">
     <value>Flujo de trabajo</value>
   </data>
   <data name="MsgErrCode" xml:space="preserve">
-    <value>Se produjo un error, código de error:</value>
+    <value>Ocurrió un error, código de error</value>
   </data>
   <data name="Prompts" xml:space="preserve">
     <value>Indicaciones</value>
   </data>
   <data name="MsgSelectRow" xml:space="preserve">
-    <value>¡Seleccione la fila que desea editar primero!</value>
+    <value>¡Seleccione la fila que desea editar!</value>
   </data>
   <data name="VoucherCheck" xml:space="preserve">
-    <value>Cheque Vale</value>
+    <value>Verificacion de Citación</value>
   </data>
   <data name="AccNameE" xml:space="preserve">
-    <value>Nombre ACC (en inglés)</value>
+    <value>Nombre de la cuenta (Ingles)</value>
   </data>
   <data name="AccNameMX" xml:space="preserve">
-    <value>Nombre ACC (español)</value>
+    <value>Nombre de la cuenta  (español)</value>
   </data>
   <data name="MsgSelectRow1" xml:space="preserve">
-    <value>¡Seleccione primero la fila que desea eliminar!</value>
+    <value>¡Seleccione la fila que desea eliminar!</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Adicionar </value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Editar</value>
+    <value>Modificar</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Borrar</value>
+    <value>Suprimir</value>
   </data>
   <data name="Enable" xml:space="preserve">
-    <value>Permitir</value>
+    <value>Admitir</value>
   </data>
   <data name="Disable" xml:space="preserve">
-    <value>Desactivar</value>
+    <value>desactivar </value>
   </data>
   <data name="IsEnable" xml:space="preserve">
-    <value>está habilitado</value>
+    <value>Admitir o no</value>
   </data>
   <data name="MsgActionErr" xml:space="preserve">
     <value>Error de código de operación</value>
   </data>
   <data name="MsgSes1" xml:space="preserve">
-    <value>Añadida con éxito：</value>
+    <value>Añadir con éxito：</value>
   </data>
   <data name="MsgSes2" xml:space="preserve">
-    <value>Editado exitosamente：</value>
+    <value>Editarcon éxito：</value>
   </data>
   <data name="MsgSes3" xml:space="preserve">
-    <value>Habilitado exitosamente：</value>
+    <value>Admitir con éxito：</value>
   </data>
   <data name="MsgSes4" xml:space="preserve">
-    <value>Deshabilitar exitosamente：</value>
+    <value>desactivar con éxito</value>
   </data>
   <data name="RateSet" xml:space="preserve">
-    <value>Fijacion del tipo de cambio</value>
+    <value>Configuración del tipo de cambio</value>
   </data>
   <data name="Linage" xml:space="preserve">
-    <value>No</value>
+    <value>No. De Linea</value>
   </data>
   <data name="CurrencyNo" xml:space="preserve">
     <value>Moneda de transacción</value>
@@ -340,10 +340,10 @@
     <value>Moneda contable</value>
   </data>
   <data name="Rate" xml:space="preserve">
-    <value>tipo de cambio</value>
+    <value>Tipo de cambio</value>
   </data>
   <data name="AccName" xml:space="preserve">
-    <value>Nombre ACC</value>
+    <value>Nombre contable</value>
   </data>
   <data name="Aamount" xml:space="preserve">
     <value>Monto contable</value>
@@ -355,49 +355,49 @@
     <value>Tipo de objetivo</value>
   </data>
   <data name="TargetNo" xml:space="preserve">
-    <value>Objetivo n.º</value>
+    <value>No. Objetivo</value>
   </data>
   <data name="TargetAbbr" xml:space="preserve">
     <value>Nombre del objetivo</value>
   </data>
   <data name="AccProfitNo" xml:space="preserve">
-    <value>número del departamento de contabilidad</value>
+    <value>No. departamento de  contabilidad</value>
   </data>
   <data name="AccProfitName" xml:space="preserve">
     <value>nombre del departamento de contabilidad</value>
   </data>
   <data name="AccDeptNo" xml:space="preserve">
-    <value>Número del centro de costos</value>
+    <value>No. del centro de costos</value>
   </data>
   <data name="AccDeptName" xml:space="preserve">
     <value>Nombre del centro de costos</value>
   </data>
   <data name="PayDeptNo" xml:space="preserve">
-    <value>Número de departamento de pago</value>
+    <value>No. departamento de pago</value>
   </data>
   <data name="PayDeptName" xml:space="preserve">
     <value>Nombre del departamento de pago</value>
   </data>
   <data name="CheckNo" xml:space="preserve">
-    <value>Número de factura</value>
+    <value>No. de  factura</value>
   </data>
   <data name="OffsetNo" xml:space="preserve">
-    <value>Número de Compensar</value>
+    <value>No. de balance</value>
   </data>
   <data name="CaseBillNo" xml:space="preserve">
-    <value>Número de proyecto</value>
+    <value>No. de proyecto</value>
   </data>
   <data name="SourceDocSubTypeName" xml:space="preserve">
-    <value>Fuente Tipo de factura</value>
+    <value>Tipo de fuente</value>
   </data>
   <data name="SourceNo" xml:space="preserve">
-    <value>Fuente Bill No</value>
+    <value>No.de fuente </value>
   </data>
   <data name="InitialDocSubTypeName" xml:space="preserve">
     <value>Tipo de factura inicial</value>
   </data>
   <data name="InitialNo" xml:space="preserve">
-    <value>Factura inicial n.º</value>
+    <value>No. de factura inicial </value>
   </data>
   <data name="ActivityType" xml:space="preserve">
     <value>Tipo de actividad</value>
@@ -418,10 +418,10 @@
     <value>Buscar</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Ahorrar</value>
+    <value>Guardar </value>
   </data>
   <data name="Detail" xml:space="preserve">
-    <value>Detalle</value>
+    <value>Detalles</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refrescar</value>
@@ -430,40 +430,40 @@
     <value>Cancelar</value>
   </data>
   <data name="Check" xml:space="preserve">
-    <value>Controlar</value>
+    <value>re-revisar</value>
   </data>
   <data name="Lock" xml:space="preserve">
-    <value>Cerrar</value>
+    <value>Revisar</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Cerca</value>
+    <value>Cerrar el caso</value>
   </data>
   <data name="Unlock" xml:space="preserve">
-    <value>Descubrir</value>
+    <value>Cancelar re-revision</value>
   </data>
   <data name="Reject" xml:space="preserve">
     <value>Rechazar</value>
   </data>
   <data name="Closed" xml:space="preserve">
-    <value>Cerrada</value>
+    <value>Caso Cerrado</value>
   </data>
   <data name="AddPrevious" xml:space="preserve">
-    <value>Agregar anterior</value>
+    <value>Añadir columna anterior</value>
   </data>
   <data name="AddNext" xml:space="preserve">
-    <value>Añadir siguiente</value>
+    <value>Añadir columna posterior</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Eliminar</value>
   </data>
   <data name="MsgSes5" xml:space="preserve">
-    <value>Enviado exitosamente：</value>
+    <value>Envio con éxito</value>
   </data>
   <data name="MsgSes6" xml:space="preserve">
-    <value>Rechazado exitosamente：</value>
+    <value>Rechazo con éxito</value>
   </data>
   <data name="MsgSes7" xml:space="preserve">
-    <value>Cerrado exitosamente：</value>
+    <value>Cerrar con éxito</value>
   </data>
   <data name="MsgErrAja" xml:space="preserve">
     <value>Error del servidor：</value>
@@ -481,16 +481,16 @@
     <value>Por favor guarde primero!</value>
   </data>
   <data name="MsgSelectRow2" xml:space="preserve">
-    <value>¡Seleccione la fila que desea eliminar primero!</value>
+    <value>¡Seleccione la columna que desea eliminar !</value>
   </data>
   <data name="MsgSelectRow3" xml:space="preserve">
-    <value>¡Seleccione la fila que desea completar primero!</value>
+    <value>¡Seleccione la columna que desea completar !</value>
   </data>
   <data name="VoucherBeginning" xml:space="preserve">
-    <value>Bono de inicio</value>
+    <value>Apertura de citación</value>
   </data>
   <data name="VoucherReport" xml:space="preserve">
-    <value>Informe de vales</value>
+    <value>Reporte de Citación</value>
   </data>
   <data name="Journal" xml:space="preserve">
     <value>Diario</value>
@@ -508,16 +508,16 @@
     <value>Condiciones de consulta</value>
   </data>
   <data name="Report" xml:space="preserve">
-    <value>Informe</value>
+    <value>Reporte </value>
   </data>
   <data name="MsgSes8" xml:space="preserve">
-    <value>Eliminado exitosamente:</value>
+    <value>Elimir con éxito :</value>
   </data>
   <data name="BalanceSheetAcc" xml:space="preserve">
-    <value>Cuenta de balance</value>
+    <value>Balance general: tipo de cuenta</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Entregar</value>
+    <value>Enviar </value>
   </data>
   <data name="SyncData" xml:space="preserve">
     <value>Sincronizar datos</value>
@@ -547,28 +547,28 @@
     <value>Proceso de operación del sistema</value>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value>Cerrar sesión</value>
+    <value>Salir de sistema</value>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>Contacto</value>
   </data>
   <data name="Notes" xml:space="preserve">
-    <value>¡Atención, has estado inactivo durante demasiado tiempo y serás desconectado del sistema en 1 minuto!</value>
+    <value>¡Atención, has estado inactivo durante un tiempo y serás desconectado del sistema en 1 minuto!</value>
   </data>
   <data name="BillType" xml:space="preserve">
     <value>Tipo de factura</value>
   </data>
   <data name="VoucherType" xml:space="preserve">
-    <value>Tipo de cupón</value>
+    <value>Tipo de citación</value>
   </data>
   <data name="VoucherNo" xml:space="preserve">
-    <value>Número de cupón</value>
+    <value>No. Citación</value>
   </data>
   <data name="VoucherSummary" xml:space="preserve">
-    <value>Resumen del cupón</value>
+    <value>Resumen del citación</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>Avanzada</value>
+    <value>Información avanzada</value>
   </data>
   <data name="AccBookType" xml:space="preserve">
     <value>Tipo de libro de cuentas</value>
@@ -580,12 +580,27 @@
     <value>Total</value>
   </data>
   <data name="TotalDebits" xml:space="preserve">
-    <value>Débitos totales</value>
+    <value>Total débitos</value>
   </data>
   <data name="TotalCredit" xml:space="preserve">
-    <value>Crédito total</value>
+    <value>Total crédito</value>
   </data>
   <data name="Difference" xml:space="preserve">
     <value>Diferencia</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Divisa</value>
+  </data>
+  <data name="OptIn" xml:space="preserve">
+    <value>Optar por participar</value>
+  </data>
+  <data name="Leave" xml:space="preserve">
+    <value>Dejar</value>
+  </data>
+  <data name="VoucherTypeNo" xml:space="preserve">
+    <value>Número de tipo de citación</value>
+  </data>
+  <data name="VoucherTypeName" xml:space="preserve">
+    <value>Nombre de tipo de citación</value>
   </data>
 </root>

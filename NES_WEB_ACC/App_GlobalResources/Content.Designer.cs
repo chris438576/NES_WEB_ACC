@@ -19,7 +19,7 @@ namespace NES_WEB_ACC.App_GlobalResources {
     // 類別透過 ResGen 或 Visual Studio 這類工具。
     // 若要加入或移除成員，請編輯您的 .ResX 檔，然後重新執行 ResGen
     // (利用 /str 選項)，或重建您的 VS 專案。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Content {
@@ -502,6 +502,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Currency 的當地語系化字串。
+        /// </summary>
+        public static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Transaction currency 的當地語系化字串。
         /// </summary>
         public static string CurrencyNo {
@@ -745,6 +754,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Leave 的當地語系化字串。
+        /// </summary>
+        public static string Leave {
+            get {
+                return ResourceManager.GetString("Leave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 No 的當地語系化字串。
         /// </summary>
         public static string Linage {
@@ -984,6 +1002,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string OffsetNo {
             get {
                 return ResourceManager.GetString("OffsetNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Opt in 的當地語系化字串。
+        /// </summary>
+        public static string OptIn {
+            get {
+                return ResourceManager.GetString("OptIn", resourceCulture);
             }
         }
         
@@ -1380,6 +1407,24 @@ namespace NES_WEB_ACC.App_GlobalResources {
         public static string VoucherType {
             get {
                 return ResourceManager.GetString("VoucherType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Voucher Type Name 的當地語系化字串。
+        /// </summary>
+        public static string VoucherTypeName {
+            get {
+                return ResourceManager.GetString("VoucherTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Voucher Type No 的當地語系化字串。
+        /// </summary>
+        public static string VoucherTypeNo {
+            get {
+                return ResourceManager.GetString("VoucherTypeNo", resourceCulture);
             }
         }
         

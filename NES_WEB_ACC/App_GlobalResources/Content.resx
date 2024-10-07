@@ -588,4 +588,19 @@
   <data name="Difference" xml:space="preserve">
     <value>Difference</value>
   </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="OptIn" xml:space="preserve">
+    <value>Opt in</value>
+  </data>
+  <data name="Leave" xml:space="preserve">
+    <value>Leave</value>
+  </data>
+  <data name="VoucherTypeNo" xml:space="preserve">
+    <value>Voucher Type No</value>
+  </data>
+  <data name="VoucherTypeName" xml:space="preserve">
+    <value>Voucher Type Name</value>
+  </data>
 </root>

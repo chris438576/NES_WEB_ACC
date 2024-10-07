@@ -213,16 +213,14 @@ namespace NES_WEB_ACC.Controllers
             }
             string sql;
             switch (currentCulture)
-            {
-                case "en":
-                    sql = @"select *,AccNameE as AccName from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
-                    break;
+            {                
                 case "zh-TW":
                     sql = @"select *,AccNameC as AccName from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
                     break;
                 case "es-MX":
                     sql = @"select *,AccNameMX as AccName from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
                     break;
+                case "en":
                 default:
                     sql = @"select *,AccNameE as AccName from ACC_VoucherDetail where WebDocId = @webdocid order by Linage";
                     break;
@@ -260,17 +258,7 @@ namespace NES_WEB_ACC.Controllers
             string compabbr = Session["CompAbbr"].ToString();
             string sql;
             switch (currentCulture)
-            {
-                case "en":
-                    sql = @"
-                        select AccNo,AccNameE as AccName ,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
-                        from NES_WEB_ACC.dbo.ACC_AccTitleNo_MX 
-                        where 1=1
-                            and CompId = @compid 
-                            and CompNo = @compno
-                            and CompAbbr = @compabbr
-                    ";
-                    break;
+            {                
                 case "zh-TW":
                     sql = @"
                         select AccNo,AccNameC as AccName ,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
@@ -291,6 +279,7 @@ namespace NES_WEB_ACC.Controllers
                             and CompAbbr = @compabbr
                     ";
                     break;
+                case "en":
                 default:
                     sql = @"
                         select AccNo,AccNameE as AccName ,AccNoBy,AccNoByNameC,AccGroupNo,AccGroupNameC,DCTypeNo,DCTypeNameC  
@@ -329,14 +318,39 @@ namespace NES_WEB_ACC.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult GetEditTableCode2()
-        {            
-            var dataList = new List<object>
-            {
-            new { TargetType = "15", TargetTypeName = "廠商" },
-            new { TargetType = "14", TargetTypeName = "客戶" },
-            new { TargetType = "12", TargetTypeName = "員工" },
-            new { TargetType = "65", TargetTypeName = "銀行" },
-            };
+        {
+            List<object> dataList;
+            switch (currentCulture)
+            {                
+                case "zh-TW":
+                    dataList = new List<object>
+                    {
+                        new { TargetType = "15", TargetTypeName = "廠商" },
+                        new { TargetType = "14", TargetTypeName = "客戶" },
+                        new { TargetType = "12", TargetTypeName = "員工" },
+                        new { TargetType = "65", TargetTypeName = "銀行" },
+                    };
+                    break;
+                case "es-MX":
+                    dataList = new List<object>
+                    {
+                        new { TargetType = "15", TargetTypeName = "Fabricante" },
+                        new { TargetType = "14", TargetTypeName = "Cliente" },
+                        new { TargetType = "12", TargetTypeName = "Empleada" },
+                        new { TargetType = "65", TargetTypeName = "Banco" },
+                    };
+                    break;
+                case "en":
+                default:
+                    dataList = new List<object>
+                    {
+                        new { TargetType = "15", TargetTypeName = "Manufacturer" },
+                        new { TargetType = "14", TargetTypeName = "Customer" },
+                        new { TargetType = "12", TargetTypeName = "Employee" },
+                        new { TargetType = "65", TargetTypeName = "Bank" },
+                    };
+                    break;
+            }          
             
             return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
@@ -579,14 +593,39 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult GetAddInfoCode()
         {
-            var dataList = new List<object>
-            {
-                new { DocSubType = "A", DocSubTypeName = "一般傳票" },
-                new { DocSubType = "B", DocSubTypeName = "特殊傳票" },
-                new { DocSubType = "C", DocSubTypeName = "其他傳票" },
-                new { DocSubType = "E", DocSubTypeName = "年結傳票" },
-            };
-            return Json(dataList, JsonRequestBehavior.AllowGet);
+            List<object> dataList;
+            switch (currentCulture)
+            {               
+                case "zh-TW":
+                    dataList = new List<object>
+                    {
+                        new { DocSubType = "A", DocSubTypeName = "一般傳票" },
+                        new { DocSubType = "B", DocSubTypeName = "特殊傳票" },
+                        //new { DocSubType = "C", DocSubTypeName = "其他傳票" },
+                        //new { DocSubType = "E", DocSubTypeName = "年結傳票" },
+                    };
+                    break;
+                case "es-MX":
+                    dataList = new List<object>
+                    {
+                        new { DocSubType = "A", DocSubTypeName = "Citación" },
+                        new { DocSubType = "B", DocSubTypeName = "Especial Citación" },
+                        //new { DocSubType = "C", DocSubTypeName = "Otra Citación" },
+                        //new { DocSubType = "E", DocSubTypeName = "Año Citación" },
+                    };
+                    break;
+                case "en":                   
+                default:
+                    dataList = new List<object>
+                    {
+                        new { DocSubType = "A", DocSubTypeName = "Voucher" },
+                        new { DocSubType = "B", DocSubTypeName = "Special Voucher" },
+                        //new { DocSubType = "C", DocSubTypeName = "Other Voucher" },
+                        //new { DocSubType = "E", DocSubTypeName = "Year Voucher" },
+                    };
+                    break;
+            }
+                        return Json(dataList, JsonRequestBehavior.AllowGet);
             //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -614,10 +653,30 @@ namespace NES_WEB_ACC.Controllers
         /// <returns></returns>
         public ActionResult GetAddInfoCode3()
         {
-            var dataList = new List<object>
+            List<object> dataList;
+
+            switch (currentCulture)
             {
-                new { VoucherType = "1", VoucherNameC = "轉帳傳票" }
-            };
+                case "zh-TW":
+                    dataList = new List<object>
+                    {
+                        new { VoucherType = "1", VoucherName = "轉帳傳票" }
+                    };
+                    break;
+                case "es-MX":
+                    dataList = new List<object>
+                    {
+                        new { VoucherType = "1", VoucherName = "Transferir Citación" }
+                    };
+                    break;
+                case "en":
+                default:
+                    dataList = new List<object>
+                    {
+                        new { VoucherType = "1", VoucherName = "Transfer Voucher" }
+                    };
+                    break;
+            }
             return Json(dataList, JsonRequestBehavior.AllowGet);
             //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
@@ -746,6 +805,8 @@ namespace NES_WEB_ACC.Controllers
                     IsClosed = (type == "begin") ? true : false,
                     BillStatus = 0,
                 };
+                var billNo = _dbContext.ACC_VoucherInfo.FirstOrDefault(x => x.BillNo == mainData.BillNo);
+                if (billNo != null) return Json(new { success = false, code = "C0002" }, JsonRequestBehavior.AllowGet);
                 _dbContext.ACC_VoucherInfo.Add(mainData);
                 Guid mnid = Guid.NewGuid();
                 MnDataSave(mainData,"1", mnid,"1");

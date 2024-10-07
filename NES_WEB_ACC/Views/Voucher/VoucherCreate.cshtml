@@ -77,7 +77,7 @@
         }
 
         .header-toolbar .linkbtn2 {
-            width: 60px;
+            width: 70px;
         }
 
         .header-toolbar .linkbtn3 {
@@ -440,8 +440,8 @@
 <div id="dlgEditAccNo" class="easyui-dialog" data-options="modal:true,closed:true">
     <div id="toolbar1">
         @*<a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg1search')">Search</a>*@
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg1insert')">選入</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg1exit')">離開</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg1insert')">@Resources.Content.OptIn</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg1exit')">@Resources.Content.Leave</a>
     </div>
     <table id="dlgdg1" class="datagrid easyui-maindg" style="width:100%;height:100%;"></table>
 </div>
@@ -451,29 +451,29 @@
     <div id="dlgtabs" class="easyui-tabs" style="width:100%;height:100%;">
         <div title="廠商">
             <div id="toolbar30">
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg30insert')">選入</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg30insert')">@Resources.Content.OptIn</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">@Resources.Content.Leave</a>
             </div>
             <table id="dlgdg30" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
         </div>
         <div title="客戶">
             <div id="toolbar31">
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg31insert')">選入</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg31insert')">@Resources.Content.OptIn</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">@Resources.Content.Leave</a>
             </div>
             <table id="dlgdg31" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
         </div>
         <div title="員工">
             <div id="toolbar32">
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg32insert')">選入</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg32insert')">@Resources.Content.OptIn</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">@Resources.Content.Leave</a>
             </div>
             <table id="dlgdg32" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
         </div>
         <div title="銀行">
             <div id="toolbar33">
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg33insert')">選入</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">離開</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg33insert')">@Resources.Content.OptIn</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg3exit')">@Resources.Content.Leave</a>
             </div>
             <table id="dlgdg33" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
         </div>
@@ -482,16 +482,16 @@
 @*dialog_[編輯]成本中心編號_dlgdg4*@
 <div id="dlgEditAccDept" class="easyui-dialog" data-options="modal:true,closed:true">
     <div id="toolbar4">
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg4insert')">選入</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg4exit')">離開</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg4insert')">@Resources.Content.OptIn</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg4exit')">@Resources.Content.Leave</a>
     </div>
     <table id="dlgdg4" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
 </div>
 @*dialog_[編輯]支付部門編號_dlgdg5*@
 <div id="dlgEditPayDept" class="easyui-dialog" data-options="modal:true,closed:true">
     <div id="toolbar5">
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg5insert')">選入</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg5exit')">離開</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg5insert')">@Resources.Content.OptIn</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgdg5exit')">@Resources.Content.Leave</a>
     </div>
     <table id="dlgdg5" class="datagrid easyui-itemdg" style="width:100%;height:100%;"></table>
 </div>
@@ -595,6 +595,19 @@
             MsgSes6: '@Resources.Content.MsgSes6', //成功退件
             MsgSes7: '@Resources.Content.MsgSes7', //成功結案
             MsgSes8: '@Resources.Content.MsgSes8', //成功刪除
+        };
+        var dlgdglang = {
+            AccNo: '@Resources.Content.AccNo',
+            AccName: '@Resources.Content.AccName',
+            Currency: '@Resources.Content.Currency'
+        }
+        var ortherlang = {
+            VoucherTypeNo: '@Resources.Content.VoucherTypeNo',
+            VoucherTypeName: '@Resources.Content.VoucherTypeName',
+            CompNo: '@Resources.Content.CompNo',
+            CompAbbr: '@Resources.Content.CompAbbr',
+            DocSubType:'@Resources.Content.BillType',
+             Currency: '@Resources.Content.Currency'
         };
         //#endregion
         //#region 資料暫存
@@ -1002,8 +1015,8 @@
                     singleSelect: true,
                     striped: true,
                     columns: [[
-                        { field: 'AccNo', title: '科目編號', type: 'string', sortable: true },
-                        { field: 'AccName', title: '科目中文名稱', type: 'string', sortable: true },
+                        { field: 'AccNo', title: dlgdglang.AccNo, type: 'string', sortable: true },
+                        { field: 'AccName', title: dlgdglang.AccName, type: 'string', sortable: true },
                         { field: 'AccNoBy', title: '科目分類編號', hidden: true, type: 'string', sortable: true },
                         { field: 'AccNoByNameC', title: '科目分類中文名稱', hidden: true, type: 'string', sortable: true },
                         { field: 'AccGroupNo', title: '科目大類編號', hidden: true, type: 'string', sortable: true },
@@ -1031,7 +1044,7 @@
                 striped: true,
                 fitColumns: true,
                 columns: [[
-                    { field: 'CurrencyNo', title: '幣別' ,type: 'string', sortable: true },
+                    { field: 'CurrencyNo', title: dlgdglang.Currency ,type: 'string', sortable: true },
                     { field: 'Rate', title: 'Rate', type: 'string',hidden:true},
                 ]],
                 fitColumns: true,
@@ -1323,7 +1336,7 @@
                                /* 'Currency2': $('.fomCurrency2').textbox('getValue'),*/
                                 /*'Rate2': $('.fomRate2').textbox('getValue'),*/
                                 'Remark': $('.fomRemark').textbox('getValue')
-                               
+
                             };
                             infodatadg = itemdg.datagrid('getRows')
                             infodata = infodatadg.map(function (row) {
@@ -2640,8 +2653,8 @@
                 mode: 'remote',
                 url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode',
                 columns: [[
-                    { field: 'DocSubType', title: '單據類別', width: 150 },
-                    { field: 'DocSubTypeName', title: '單據類別名稱', width: 180 }
+                    { field: 'DocSubType', title: ortherlang.DocSubType, width: 150 },
+                    { field: 'DocSubTypeName', title: ortherlang.DocSubTypeName, width: 180 }
                 ]],
                 onSelect: function (index, row) {
                     $('.fomDocSubTypeName').textbox('setValue', row.DocSubTypeName);
@@ -2657,8 +2670,8 @@
                 mode: 'remote',
                 url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode2',
                 columns: [[
-                    { field: 'CompNo', title: '公司編號', width: 150 },
-                    { field: 'CompAbbr', title: '公司編號名稱', width: 180 }
+                    { field: 'CompNo', title: ortherlang.CompNo, width: 150 },
+                    { field: 'CompAbbr', title: ortherlang.CompAbbr, width: 180 }
                 ]],
                 onSelect: function (index, row) {
                     $('.fomCompAbbr').textbox('setValue', row.CompAbbr);
@@ -2674,11 +2687,11 @@
                 mode: 'remote',
                 url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode3',
                 columns: [[
-                    { field: 'VoucherType', title: '傳票類別編號', width: 150 },
-                    { field: 'VoucherNameC', title: '類別中文名稱', width: 180 }
+                    { field: 'VoucherType', title: ortherlang.VoucherTypeNo, width: 150 },
+                    { field: 'VoucherName', title: ortherlang.VoucherTypeName, width: 180 }
                 ]],
                 onSelect: function (index, row) {
-                    $('.fomVoucherNameC').textbox('setValue', row.VoucherNameC);
+                    $('.fomVoucherNameC').textbox('setValue', row.VoucherName);
                 }
             });
             //下拉選單_幣別
@@ -2691,7 +2704,7 @@
                 mode: 'remote',
                 url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode4',
                 columns: [[
-                    { field: 'CurrencyNo', title: '幣別', width: 150 }
+                    { field: 'CurrencyNo', title: ortherlang.Currency, width: 150 }
                 ]],
                 onSelect: function (index, row) {
                     $('.fomRate1').textbox('setValue', row.Rate);
