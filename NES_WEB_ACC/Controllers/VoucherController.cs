@@ -625,8 +625,8 @@ namespace NES_WEB_ACC.Controllers
                     };
                     break;
             }
-                        return Json(dataList, JsonRequestBehavior.AllowGet);
-            //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
+            //return Json(dataList, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 新增_表頭資訊_公司編號
@@ -660,25 +660,25 @@ namespace NES_WEB_ACC.Controllers
                 case "zh-TW":
                     dataList = new List<object>
                     {
-                        new { VoucherType = "1", VoucherName = "轉帳傳票" }
+                        new { VoucherType = "1", VoucherName = "轉帳傳票" }                       
                     };
                     break;
                 case "es-MX":
                     dataList = new List<object>
                     {
-                        new { VoucherType = "1", VoucherName = "Transferir Citación" }
+                        new { VoucherType = "1", VoucherName = "Transferir Citación" }                       
                     };
                     break;
                 case "en":
                 default:
                     dataList = new List<object>
                     {
-                        new { VoucherType = "1", VoucherName = "Transfer Voucher" }
+                        new { VoucherType = "1", VoucherName = "Transfer Voucher" }                       
                     };
                     break;
             }
-            return Json(dataList, JsonRequestBehavior.AllowGet);
-            //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
+            //return Json(dataList, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 新增_表頭資訊_交易幣別

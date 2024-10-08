@@ -514,6 +514,7 @@
 </div>
 
 @section Scripts {
+    <script src="~/Scripts/myjs/voucher.js"></script>
     <script>
         ///-----基本參數-----///
         //#region 基本參數
@@ -590,6 +591,10 @@
             MsgSes7: '@Resources.Content.MsgSes7', //成功結案
             MsgSes8: '@Resources.Content.MsgSes8', //成功刪除
         };
+        //#endregion
+        //#region 資料暫存
+        var objVoucherType = { name: 'VoucherType', data: null };
+        var objDocSubType = { name: 'DocSubType', data: null };
         //#endregion
 
         //#region 初始化
@@ -906,9 +911,9 @@
                     $('#btnCancel').linkbutton('disable');
                     $('#btnDelete').linkbutton('enable');
                     break;
-                case 'add':                   
+                case 'add':
                     break;
-                case 'edit':                   
+                case 'edit':
                     break;
                 case 'cancel':
                     break;
@@ -923,63 +928,42 @@
             }
         }
 
+        //#region 功能函式   
+        //// 表頭、進階資料、借貸平衡填值
+        //function tableHeadData(row) {
+        //    $('.colBillDate').textbox('setValue', row.BillDate);
+        //    $('.colDocSubType').textbox('setValue', row.DocSubType);
+        //    $('.colDocSubTypeName').textbox('setValue', row.DocSubTypeName);
+        //    $('.colCompNo').textbox('setValue', row.CompNo);
+        //    $('.colCompAbbr').textbox('setValue', row.CompAbbr);
+        //    $('.colVoucherType').textbox('setValue', row.VoucherType);
+        //    $('.colVoucherNameC').textbox('setValue', row.VoucherNameC);
+        //    $('.colEmpNo').textbox('setValue', row.EmpNo);
+        //    $('.colEmpNameC').textbox('setValue', row.EmpNameC);
+        //    $('.colDeptNo').textbox('setValue', row.DeptNo);
+        //    $('.colDeptName').textbox('setValue', row.DeptName);
+        //    $('.colBillNo').textbox('setValue', row.BillNo);
+        //    $('.colCurrencyNo').textbox('setValue', row.CurrencyNo);
+        //    $('.colCurrencySt').textbox('setValue', row.CurrencySt);
+        //    $('.colRate1').textbox('setValue', row.Rate1);
+        //    /* $('.colCurrency2').textbox('setValue',row.VoucherNameC);*/
+        //    /* $('.colRate2').textbox('setValue', row.Rate2);*/
+        //    $('.colRemark').textbox('setValue', row.Remark);
+        //    //進階資料
+        //    $('.colLedger').textbox('setValue', '帳簿1');
+        //    $('.colCompNo').textbox('setValue', row.CompNo);
+        //    $('.colCompAbbr').textbox('setValue', row.CompAbbr);
+        //    $('.colAccDocType').textbox('setValue', row.AccDocType);
+        //    $('.colSourceDocSubTypeName').textbox('setValue', row.SourceDocSubTypeName);
+        //    $('.colActivityType').textbox('setValue', row.ActivityType);
+        //    $('.colSourceNo').textbox('setValue', row.SourceNo);
+        //    //借貸平衡
+        //    $('.colCurrencyD').textbox('setValue', row.CurrencySt);
+        //    $('.colCurrencyC').textbox('setValue', row.CurrencySt);
+        //    $('.colCurrency').textbox('setValue', row.CurrencySt);
+        //}
 
-
-        //#region 功能函式
-        // 自定義doajax
-        function doajax(type, url, data, successCallback, errorCallback) {
-            $.ajax({
-                type: type,
-                url: url,
-                data: data,
-                success: function (response) {
-                    if (typeof successCallback === 'function') {
-                        successCallback(response);
-                    }
-                },
-                error: function (xhr, status, errorThrown) {
-                    if (typeof errorCallback === 'function') {
-                        errorCallback(xhr, status, errorThrown);
-                    }
-                }
-            });
-        }
-
-        // 表頭、進階資料、借貸平衡填值
-        function tableHeadData(row) {
-            $('.colBillDate').textbox('setValue', row.BillDate);
-            $('.colDocSubType').textbox('setValue', row.DocSubType);
-            $('.colDocSubTypeName').textbox('setValue', row.DocSubTypeName);
-            $('.colCompNo').textbox('setValue', row.CompNo);
-            $('.colCompAbbr').textbox('setValue', row.CompAbbr);
-            $('.colVoucherType').textbox('setValue', row.VoucherType);
-            $('.colVoucherNameC').textbox('setValue', row.VoucherNameC);
-            $('.colEmpNo').textbox('setValue', row.EmpNo);
-            $('.colEmpNameC').textbox('setValue', row.EmpNameC);
-            $('.colDeptNo').textbox('setValue', row.DeptNo);
-            $('.colDeptName').textbox('setValue', row.DeptName);
-            $('.colBillNo').textbox('setValue', row.BillNo);
-            $('.colCurrencyNo').textbox('setValue', row.CurrencyNo);
-            $('.colCurrencySt').textbox('setValue', row.CurrencySt);
-            $('.colRate1').textbox('setValue', row.Rate1);
-            /* $('.colCurrency2').textbox('setValue',row.VoucherNameC);*/
-            /* $('.colRate2').textbox('setValue', row.Rate2);*/
-            $('.colRemark').textbox('setValue', row.Remark);
-            //進階資料
-            $('.colLedger').textbox('setValue', '帳簿1');
-            $('.colCompNo').textbox('setValue', row.CompNo);
-            $('.colCompAbbr').textbox('setValue', row.CompAbbr);
-            $('.colAccDocType').textbox('setValue', row.AccDocType);
-            $('.colSourceDocSubTypeName').textbox('setValue', row.SourceDocSubTypeName);
-            $('.colActivityType').textbox('setValue', row.ActivityType);
-            $('.colSourceNo').textbox('setValue', row.SourceNo);
-            //借貸平衡
-            $('.colCurrencyD').textbox('setValue', row.CurrencySt);
-            $('.colCurrencyC').textbox('setValue', row.CurrencySt);
-            $('.colCurrency').textbox('setValue', row.CurrencySt);
-        }
-
-        // 傳票借貸合計(使用記帳金額計算)
+        // 傳票借貸合計(顯示用)
         function voucherDC() {
             let totalDMoney = 0;
             let totalCMoney = 0;
@@ -999,49 +983,7 @@
             $('.colMoneyD').textbox('setValue', totalDMoney);
             $('.colMoneyC').textbox('setValue', totalCMoney);
             $('.colMoney').textbox('setValue', balance);
-        }
-
-        // PageReload
-        function pageReload(billno, msg) {
-            var url = new URL(window.location.href);
-            url.searchParams.set('billno', billno);
-            url.searchParams.set('msg', msg);
-            window.location.href = url.toString();
-        }
-        //#endregion
-
-        //#region 格式化
-        // 日期轉換
-        function formatDate(dateString) {
-            const regex = /\/Date\((\d+)\)\//;
-            const match = dateString.match(regex);
-            const timestamp = match ? parseInt(match[1], 10) : 0;
-            const date = new Date(timestamp);
-
-            const year = date.getFullYear();
-            const month = ('0' + (date.getMonth() + 1)).slice(-2);
-            const day = ('0' + date.getDate()).slice(-2);
-
-            return `${year}/${month}/${day}`;
-        }
-
-        // itemdg欄位Function
-        function formatTargetType(value) {
-            switch (String(value)) {
-                case '15':
-                    return '廠商';
-                case '14':
-                    return '客戶';
-                case '12':
-                    return '員工';
-                case '65':
-                    return '銀行';
-                default:
-                    return value; // 若不在上述範圍內，則回傳原值
-            }
-        }
-        //#endregion
-
+        }   
     </script>
     <script>
         $(document).ready(function () {
