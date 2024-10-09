@@ -279,6 +279,7 @@
     <Compile Include="ViewModels\CreateInfoViewModel.cs" />
     <Compile Include="ViewModels\ForM\ACC_AccTitleNo_MX_ViewModel.cs" />
     <Compile Include="ViewModels\ForM\ACC_VoucherDetail_ViewModel.cs" />
+    <Compile Include="ViewModels\HomeBillInfoViewModel.cs" />
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\RDLC\BalanceSheetAccReportViewModel.cs" />
     <Compile Include="ViewModels\RDLC\BalanceSheetReportViewModel.cs" />

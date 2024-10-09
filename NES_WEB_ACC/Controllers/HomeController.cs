@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dapper;
+using NES_WEB_ACC.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -30,9 +32,21 @@ namespace NES_WEB_ACC.Controllers
 
             //儀錶板資料
             string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
-            string sql = @"";
+            string sql = @"
+                select  
+	                (select count(*) from NES_WEB_ACC.dbo.ACC_VoucherInfo where EmpNo = @identityEmpNo and DocSubType = 'A') as 'Total'
+	                ,(select count(*) from NES_WEB_ACC.dbo.ACC_VoucherInfo where EmpNo = @identityEmpNo and DocSubType = 'A' and Isnull(IsChecked,0) <> 1) as 'Uncheck'
+	                ,(select count(*) from NES_WEB_ACC.dbo.ACC_VoucherInfo where EmpNo = @identityEmpNo and DocSubType = 'A' and Isnull(IsChecked,0) = 1 and ISNULL(IsState,0) <> 1) as 'UnRecheck'
+	                ,(select count(*) from NES_WEB_ACC.dbo.ACC_VoucherInfo where EmpNo = @identityEmpNo and DocSubType = 'A' and Isnull(IsChecked,0) = 1 and ISNULL(IsState,0) = 1 and ISNULL(IsClosed,0) <> 1) as 'Unclose'
+            ";
+            var param = new { identityEmpNo };
+            HomeBillInfoViewModel resultdata = new HomeBillInfoViewModel();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                resultdata = conn.QueryFirstOrDefault<HomeBillInfoViewModel>(sql,param);
+            }
 
-            return View();
+            return View(resultdata);
         }      
         /// <summary>
         /// 介面_作業流程圖

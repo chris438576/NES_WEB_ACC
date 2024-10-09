@@ -1,4 +1,5 @@
-﻿@{
+﻿@*@Model NES_WEB_ACC.ViewModels.HomeBillInfoViewModel*@
+@{
     ViewBag.Title = @Resources.Content.Instrument;
 }
 
@@ -56,8 +57,9 @@
             }
 
             .card.card4 {
-                background-color: #E0B0D5;                
+                background-color: #E0B0D5;
             }
+
         .card2 {
             margin: 5px;
             background-color: white;
@@ -72,19 +74,19 @@
     <div class="row indexpagerow1">
         <div class="col-md-3 card card1">
             <p>總筆數：</p>
-            <h2>9999</h2>
+            <h2>@Model.Total</h2>
         </div>
         <div class="col-md-3 card card2">
             <p>未覆核：</p>
-            <h2>99.99%</h2>
+            <h2>@Model.Uncheck</h2>
         </div>
         <div class="col-md-3 card card3">
             <p>已覆核，待審查：</p>
-            <h2>$ 9,999</h2>
+            <h2>@Model.UnRecheck</h2>
         </div>
         <div class="col-md-3 card card4">
             <p>已審查，待結案：</p>
-            <h2>2024/12/31</h2>
+            <h2>@Model.Unclose</h2>
         </div>
     </div>
     <div class="row indexpagerow2">
