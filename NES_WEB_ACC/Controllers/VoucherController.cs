@@ -102,17 +102,26 @@ namespace NES_WEB_ACC.Controllers
         }
         
         //------ 資料讀取 ------//
-        public ActionResult GetVoucherInfo(string type)
+        public ActionResult GetVoucherInfo(string type,bool dosearch = false, SearchString search = null)
         {
             var roles = ((GenericPrincipal)User).Identity as GenericIdentity;
-            string sql,sqlwhere;
-            object param = null;
+            string sql,sqlwhere,sqlsearch = "";
+            var param = new DynamicParameters();
 
             if (string.IsNullOrEmpty(type))
             {
                 return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
             }
-          
+            if (dosearch)
+            {                
+                sqlsearch += (!string.IsNullOrEmpty(search.SearchField1)) ? " " + search.Logical1 + " " + search.SearchField1 + " " + search.Comparison1 + " @searchdata1 " : "";
+                sqlsearch += (!string.IsNullOrEmpty(search.SearchField2)) ? " " + search.Logical2 + " " + search.SearchField2 + " " + search.Comparison2 + " @searchdata2 " : "";
+                sqlsearch += (!string.IsNullOrEmpty(search.SearchField3)) ? " " + search.Logical3 + " " + search.SearchField3 + " " + search.Comparison3 + " @searchdata3 " : "";
+
+                if (!string.IsNullOrEmpty(search.SearchField1)) param.Add("searchdata1", search.SearchData1);
+                if (!string.IsNullOrEmpty(search.SearchField2)) param.Add("searchdata2", search.SearchData2);
+                if (!string.IsNullOrEmpty(search.SearchField3)) param.Add("searchdata3", search.SearchData3);
+            }
             if (roles != null)
             {
                 var userRoles = ((GenericPrincipal)User).Claims
@@ -125,14 +134,15 @@ namespace NES_WEB_ACC.Controllers
                             where 1=1      
                                 --and CompId = @compid
                                 --and CompNo = @compno
-                                --amd CompAbbr = @compabbr
-                            
+                                --amd CompAbbr = @compabbr                            
                 ";
               
                 switch (type)
                 {
                     case "create":
-                        sqlwhere = @"                            
+                        sqlwhere = @"  
+                            and DocType = 'V1'
+                            and DocSubType = 'A'
                             and Isnull(IsClosed,0) = 0    --未結案   
                             --and BillStatus in ('0','1','2','4','5')
                         ";
@@ -141,24 +151,31 @@ namespace NES_WEB_ACC.Controllers
                         {
                             sql = sql + " and CreateBy = @craeteby ";
                             string craeteby = roles.Name;
-                            param = new { craeteby };
-                        }                                     
+                            param.Add("craeteby", craeteby);                           
+                        }
+                        sql += (dosearch) ? sqlsearch : "";
                         break;
                     case "check":
                         sqlwhere = @"
+                            and DocType = 'V1'
+                            and DocSubType = 'A'
                             and Isnull(IsChecked,0) = 1   --已覆核
                             and Isnull(IsState,0) = 0     --主管未審核
                             and Isnull(IsClosed,0) = 0    --未結案                            
                         ";
                         sql = sql + sqlwhere;
+                        sql += (dosearch) ? sqlsearch : "";
                         break;
                     case "close":
                         sqlwhere = @" 
+                            and DocType = 'V1'
+                            and DocSubType = 'A'
                             and Isnull(IsChecked,0) = 1   --已覆核
                             and Isnull(IsState,0) = 1     --主管已審核
                             --and Isnull(IsClosed,0) = 0    --未結案
                         ";
                         sql = sql + sqlwhere;
+                        sql += (dosearch) ? sqlsearch : "";
                         break;
                     case "begin":
                         sqlwhere = @"
@@ -166,9 +183,10 @@ namespace NES_WEB_ACC.Controllers
                             and DocSubType = 'B'
                         ";
                         sql = sql + sqlwhere;
+                        sql += (dosearch) ? sqlsearch : "";
                         break;
                     default:
-                        break;
+                        return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);                        
                 }
             }
             else
@@ -181,15 +199,16 @@ namespace NES_WEB_ACC.Controllers
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     List<ACC_VoucherInfo> resultdata;
-                    sql += "order by BillNo";
-                    if (param == null)
-                    {
-                        resultdata = conn.Query<ACC_VoucherInfo>(sql).ToList();
-                    }
-                    else
-                    {
-                        resultdata = conn.Query<ACC_VoucherInfo>(sql, param).ToList();
-                    }
+                    sql += " order by BillNo";
+                    //if (param == null)
+                    //{
+                    //    resultdata = conn.Query<ACC_VoucherInfo>(sql).ToList();
+                    //}
+                    //else
+                    //{
+                    //    resultdata = conn.Query<ACC_VoucherInfo>(sql, param).ToList();
+                    //}
+                    resultdata = conn.Query<ACC_VoucherInfo>(sql, param).ToList();
                     if (resultdata.Count > 0)
                     {                        
                         return Json(new { success = true, code = "OK",data = resultdata }, JsonRequestBehavior.AllowGet);
@@ -729,6 +748,44 @@ namespace NES_WEB_ACC.Controllers
             return Json(resultdata, JsonRequestBehavior.AllowGet);
             //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 查詢欄位下拉
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetSeacheField() {
+            List<object> dataList;
+            switch (currentCulture)
+            {
+                case "zh-TW":
+                    dataList = new List<object>
+                    {
+                        new { Value = "BillNo", Name = "傳票編號" },
+                        new { Value = "BillDate", Name = "傳票日期" },
+                        new { Value = "EmpNo", Name = "負責會計" },                           
+                    };
+                    break;
+                case "es-MX":
+                    dataList = new List<object>
+                    {
+                        new { Value = "BillNo", Name = "Número de citación" },
+                        new { Value = "BillDate", Name = "Fecha de citación" },
+                        new { Value = "EmpNo", Name = "No. Contadora" },
+                    };
+                    break;
+                case "en":
+                default:
+                    dataList = new List<object>
+                    {
+                        new { Value = "BillNo", Name = "Voucher No" },
+                        new { Value = "BillDate", Name = "Voucher Date" },
+                        new { Value = "EmpNo", Name = "Accountant No" },
+                    };
+                    break;
+            }
+            return Json(dataList, JsonRequestBehavior.AllowGet);
+            //return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
+        }
+
 
         //------ 資料寫入 ------//
         /// <summary>
@@ -1111,6 +1168,14 @@ namespace NES_WEB_ACC.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult _ToolBarPartial()
+        {
+            return PartialView();
+        }
+        /// <summary>
+        /// 查詢介面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _SearchPartial()
         {
             return PartialView();
         }

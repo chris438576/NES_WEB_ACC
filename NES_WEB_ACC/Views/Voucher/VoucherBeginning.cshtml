@@ -6,7 +6,8 @@
 
 @section css {
     <link rel="stylesheet" type="text/css" href="~/Scripts/mycss/body_container_erp.css" />
-    <script src="~/Scripts/myjs/voucher.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/mycss/table_search.css" />
+    @*<script src="~/Scripts/myjs/voucher.js"></script>*@
     <style>
         /*#region Body style*/
 
@@ -507,6 +508,8 @@
     <div class="menu-sep"></div>
     <div data-options="name:'adds',iconCls:'icon-reload'">新增...</div>
 </div>
+@* dialog_查詢條件視窗 *@
+@{ Html.RenderAction("_SearchPartial"); }
 
 @section Scripts {
     <script src="~/Scripts/easyui/jquery.edatagrid.js"></script>
@@ -611,7 +614,7 @@
         var objPayDept = { name: 'PayDept', data: null };
         var objTargetType = { name: 'TargetType', data: null };
         var objVoucherType = { name: 'VoucherType', data: null };
-        var objDocSubType = { name: 'DocSubType', data: null };        
+        var objDocSubType = { name: 'DocSubType', data: null };
         //#endregion
 
         //#region 初始化
@@ -1268,6 +1271,8 @@
                     maindg.datagrid('selectRow', index - 1);
                     break;
                 case 'search':
+                    $('#dlgSearch').dialog({ height: 400, width: 800, title: '@Resources.Content.QueryConditions' });
+                    $('#dlgSearch').dialog('open').dialog('center');
                     break;
                 //#endregion
 
@@ -1913,6 +1918,49 @@
                 case 'dlgdg5exit':
                     $('#dlgEditPayDept').dialog('close');
                     break;
+                case 'dlgsearchdo':
+                    let paramdata = {
+                        type: 'create',
+                        dosearch: true,
+                        'search.Logical1': $('#logops1').combobox('getValue'),
+                        'search.Logical2': $('#logops2').combobox('getValue'),
+                        'search.Logical3': $('#logops3').combobox('getValue'),
+                        'search.SearchField1': $('#field1').combobox('getValue'),
+                        'search.SearchField2': $('#field2').combobox('getValue'),
+                        'search.SearchField3': $('#field3').combobox('getValue'),
+                        'search.Comparison1': $('#compops1').combobox('getValue'),
+                        'search.Comparison2': $('#compops2').combobox('getValue'),
+                        'search.Comparison3': $('#compops3').combobox('getValue'),
+                        'search.SearchData1': $('#searchdata1').textbox('getValue'),
+                        'search.SearchData2': $('#searchdata2').textbox('getValue'),
+                        'search.SearchData3': $('#searchdata3').textbox('getValue')
+                    };
+                    console.log(paramdata);
+                    actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo';
+                    doajax("GET", actionurl, paramdata, function (result) {
+                        if (result.success) {
+                            if (Array.isArray(result.data)) {
+                                // 遍歷數據並格式化日期
+                                result.data.forEach(function (item) {
+                                    if (item.BillDate) {
+                                        item.BillDate = formatDate(item.BillDate); // 使用formatDate函數格式化日期
+                                    }
+                                });
+                            }
+                            maindg.datagrid('loadData', result.data);
+                            $('#dlgSearch').dialog('close');
+                        } else {
+                            $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                            if (result.code == 'C0004') {
+                                console.log(result.err);
+                            }
+                            $('#dlgSearch').dialog('close');
+                        }
+                    });
+                    break;
+                case 'dlgsearchexit':
+                    $('#dlgSearch').dialog('close');
+                    break;
                 //#endregion
             }
         }
@@ -1959,7 +2007,7 @@
         }
         //#endregion
 
-        //#region 功能函式    
+        //#region 功能函式
         // 明細編輯
         function updateMoney1(type, newValue) {
             var row;
@@ -2644,7 +2692,7 @@
 
         //#endregion
 
-        //#region 格式化    
+        //#region 格式化
         // 新增Form
         function addForm() {
             //日期欄位

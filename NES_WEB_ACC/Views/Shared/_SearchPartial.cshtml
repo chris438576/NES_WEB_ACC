@@ -1,0 +1,107 @@
+﻿<div id="dlgSearch" class="easyui-dialog" data-options="modal:true,closed:true">
+    <div id="toolbar5">
+        <div class="col-md-6">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgsearchdo')">@Resources.Content.Search</a>
+        </div>
+        <div class="col-md-6">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnClick('dlgsearchexit')">@Resources.Content.Leave</a>
+        </div>   
+    </div>  
+    <div >
+        <table class="tg" style="undefined;table-layout: fixed; width: 542px">
+            <colgroup>
+                <col style="width: 100px">
+                <col style="width: 120px">
+                <col style="width: 200px">
+                <col style="width: 120px">
+                <col style="width: 200px">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="tg-c1">條件</th>
+                    <th class="tg-c1">or/and</th>
+                    <th class="tg-c1">欄位</th>
+                    <th class="tg-c1">篩選</th>
+                    <th class="tg-c1">篩選資料</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tg-c2">條件一</td>
+                    <td class="tg-c2">
+                        <select id="logops1" class="easyui-combobox" style="width:100px;">
+                            <option value="and">且(and)</option>
+                            <option value="or">或(or)</option>
+                        </select>
+                    </td>
+                    <td class="tg-c2">                      
+                        <input id="field1" class="easyui-combobox" style="width:180px;" data-options="valueField:'Value',textField:'Name',url:'@Url.Action("GetSeacheField", "Voucher")'">
+                    </td>
+                    <td class="tg-c2">
+                        <select id="compops1" class="easyui-combobox" style="width:100px;">
+                            <option value="=">=</option>
+                            <option value=">">></option>
+                            <option value="<"><</option>
+                            <option value="<>"><></option>
+                            <option value=">=">>=</option>
+                            <option value="<="><=</option>
+                        </select>
+                    </td>
+                    <td class="tg-c2">
+                        <input id="searchdata1" class="easyui-textbox" style="width:180px">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-c2">條件二</td>
+                    <td class="tg-c2">
+                        <select id="logops2" class="easyui-combobox" style="width:100px;">
+                            <option value="and">且(and)</option>
+                            <option value="or">或(or)</option>
+                        </select>
+                    </td>
+                    <td class="tg-c2">                        
+                        <input id="field2" class="easyui-combobox" style="width:180px;" data-options="valueField:'Value',textField:'Name',url:'@Url.Action("GetSeacheField", "Voucher")'">
+                    </td>
+                    <td class="tg-c2">
+                        <select id="compops2" class="easyui-combobox" style="width:100px;">
+                            <option value="=">=</option>
+                            <option value=">">></option>
+                            <option value="<"><</option>
+                            <option value="<>"><></option>
+                            <option value=">=">>=</option>
+                            <option value="<="><=</option>
+                        </select>
+                    </td>
+                    <td class="tg-c2">
+                        <input id="searchdata2" class="easyui-textbox" style="width:180px">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-c3">條件三</td>
+                    <td class="tg-c3">
+                        <select id="logops3" class="easyui-combobox" style="width:100px;">
+                            <option value="and">且(and)</option>
+                            <option value="or">或(or)</option>
+                        </select>
+                    </td>
+                    <td class="tg-c3">                       
+                        <input id="field3" class="easyui-combobox" style="width:180px;" data-options="valueField:'Value',textField:'Name',url:'@Url.Action("GetSeacheField", "Voucher")'">
+                    </td>
+                    <td class="tg-c3">
+                        <select id="compops3" class="easyui-combobox" style="width:100px;">
+                            <option value="=">=</option>
+                            <option value=">">></option>
+                            <option value="<"><</option>
+                            <option value="<>"><></option>
+                            <option value=">=">>=</option>
+                            <option value="<="><=</option>
+                        </select>
+                    </td>
+                    <td class="tg-c3">
+                        <input id="searchdata3" class="easyui-textbox" style="width:180px">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

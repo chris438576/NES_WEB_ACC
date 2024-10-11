@@ -18,6 +18,24 @@ function doajax(type, url, data, successCallback, errorCallback) {
     });
 }
 
+function jsonajax(type, url, data, successCallback, errorCallback) {
+    $.ajax({
+        type: type,
+        url: url,
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function (response) {
+            if (typeof successCallback === 'function') {
+                successCallback(response);
+            }
+        },
+        error: function (xhr, status, errorThrown) {
+            if (typeof errorCallback === 'function') {
+                errorCallback(xhr, status, errorThrown);
+            }
+        }
+    });
+}
 // PageReload
 function pageReload(billno, msg) {
     var url = new URL(window.location.href);

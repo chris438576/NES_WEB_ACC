@@ -289,6 +289,7 @@
     <Compile Include="ViewModels\RDLC\VoucherMainReportViewModel.cs" />
     <Compile Include="ViewModels\RDLC\VoucherReportViewModel.cs" />
     <Compile Include="ViewModels\SearchDateViewModel.cs" />
+    <Compile Include="ViewModels\SearchString.cs" />
     <Compile Include="ViewModels\VoucherDataViewModel.cs" />
     <Compile Include="ViewModels\PersonalRolesListViewModel.cs" />
     <Compile Include="ViewModels\RolesListViewModel.cs" />
@@ -1036,6 +1037,7 @@
     <Content Include="Scripts\layui\layui.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\mycss\body_container_erp.css" />
+    <Content Include="Scripts\mycss\table_search.css" />
     <Content Include="Scripts\myjs\myMath.js" />
     <Content Include="Scripts\myjs\myDatebox.js" />
     <Content Include="Scripts\myjs\voucher.js" />
@@ -1098,6 +1100,7 @@
     <Content Include="Views\Voucher\VoucherBeginning.cshtml" />
     <Content Include="Views\ReportView\SubsidiaryLedger.cshtml" />
     <Content Include="Views\ReportView\BalanceSheetAcc.cshtml" />
+    <Content Include="Views\Shared\_SearchPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
