@@ -2764,23 +2764,23 @@
                     $('.fomVoucherNameC').textbox('setValue', row.VoucherNameC);
                 }
             });
-            //下拉選單_幣別
-            $('.fomCurrencyNo').combogrid({
-                required: true,
-                panelWidth: 157,
-                panelHeight: 150,
-                idField: 'CurrencyNo',
-                textField: 'CurrencyNo',
-                mode: 'remote',
-                url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode4',
-                columns: [[
-                    { field: 'CurrencyNo', title: '幣別', width: 150 }
-                ]],
-                onSelect: function (index, row) {
-                    $('.fomRate1').textbox('setValue', row.Rate);
-                    $('.fomRate2').textbox('setValue', row.Rate);
-                }
-            });
+            ////下拉選單_幣別   20241014_修改表頭幣別combobox選擇值帶入匯率邏輯
+            //$('.fomCurrencyNo').combogrid({
+            //    required: true,
+            //    panelWidth: 157,
+            //    panelHeight: 150,
+            //    idField: 'CurrencyNo',
+            //    textField: 'CurrencyNo',
+            //    mode: 'remote',
+            //    url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode4',
+            //    columns: [[
+            //        { field: 'CurrencyNo', title: '幣別', width: 150 }
+            //    ]],
+            //    onSelect: function (index, row) {
+            //        $('.fomRate1').textbox('setValue', row.Rate);
+            //        $('.fomRate2').textbox('setValue', row.Rate);
+            //    }
+            //});
             //預設欄位填值
             $('.fomEmpNo').textbox('setValue','@Model.EmpNo');
             $('.fomEmpNameC').textbox('setValue','@Model.EmpNameC');

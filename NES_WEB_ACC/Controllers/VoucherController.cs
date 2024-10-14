@@ -191,7 +191,7 @@ namespace NES_WEB_ACC.Controllers
             }
             else
             {
-                return Json (new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+                return Json (new { success = false, code = "C0005" }, JsonRequestBehavior.AllowGet);
             }
 
             try
@@ -700,7 +700,108 @@ namespace NES_WEB_ACC.Controllers
             return Json(new { success = true, code = "OK", data = dataList }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
-        /// 新增_表頭資訊_交易幣別
+        /// 新增_表頭資訊_交易幣別種類
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetAddInfoCode40() {
+            string sql = @"
+                select CurrencyNo as 'Id',  CurrencyNo as 'Name' 
+	            from (
+		            select distinct CurrencyNo  from NES_WEB_ACC.dbo.ACC_Rate
+	            ) as a
+            ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    List<ListViewModel> currencyNoData = conn.Query<ListViewModel>(sql).ToList();
+                    if (currencyNoData.Count > 0)
+                    {
+                        return Json(currencyNoData, JsonRequestBehavior.AllowGet);
+                        //return Json(new { success = true, code = "OK", data = currencyNoData }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, code = "C0003" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, code = "C0004", err = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult GetAddInfoCode41(string currencyno, DateTime voucherdate)
+        {
+            string currencyst = (string)Session["CurrencySt"];
+            string sql = @"
+                DECLARE @currencyno NVARCHAR(50), @currencyst NVARCHAR(50), @selectdate DATE;  
+
+                SET @currencyno = @currencynoParam ; --'MXN';
+                SET @currencyst = @currencystParam ; --'MXN';
+                SET @selectdate = @selectdateParam ; --'2024/11/12';  
+
+                IF EXISTS (SELECT * 
+                           FROM NES_WEB_ACC.dbo.ACC_Rate 
+                           WHERE currencyno = @currencyno 
+                           AND currencyst = @currencyst 
+                           AND ExchangeYear = Year(@selectdate)
+                           AND ExchangeMonth = Month(@selectdate) 
+                           AND ExchangeMonthFlag =case
+			                when DAY(@selectdate) <11 then 'B'
+			                when DAY(@selectdate)>= 11 and DAY(@selectdate) < 21 then 'M'
+			                when DAY(@selectdate) >=21 then 'E'
+			                end
+		                   )
+                BEGIN
+                    -- 找到資料，返回符合5個條件的資料
+                    SELECT * 
+                    FROM NES_WEB_ACC.dbo.ACC_Rate
+                    WHERE currencyno = @currencyno
+                    AND currencyst = @currencyst
+                    AND ExchangeYear = Year(@selectdate)
+                    AND ExchangeMonth = Month(@selectdate) 
+                    AND ExchangeMonthFlag = case
+			                when DAY(@selectdate) <11 then 'B'
+			                when DAY(@selectdate) >= 11 and DAY(@selectdate) < 21 then 'M'
+			                when DAY(@selectdate) >=21 then 'E'
+			                end;
+                END
+                ELSE
+                BEGIN    
+                    SELECT TOP 1 * 
+                    FROM (
+		                select * 
+			                ,case 
+				                when ExchangeMonthFlag = 'B' then 1
+				                when ExchangeMonthFlag = 'M' then 2
+				                when ExchangeMonthFlag = 'E' then 3
+				                end as Flagorder
+
+		                from NES_WEB_ACC.dbo.ACC_Rate
+	                ) as a
+                    WHERE currencyno = @currencyno
+                    AND currencyst = @currencyst
+                    ORDER BY ExchangeYear DESC, ExchangeMonth DESC,Flagorder Desc;
+                END;
+            ";
+
+            var parameters = new
+            {
+                currencynoParam = currencyno,
+                currencystParam = currencyst,
+                selectdateParam = voucherdate
+            };
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                var resultdata = conn.QueryFirst<ACC_Rate>(sql, parameters);
+                return Json(new { success = true, data = resultdata }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        /// <summary>
+        /// 新增_表頭資訊_交易幣別匯率
         /// </summary>
         /// <returns></returns>
         public ActionResult GetAddInfoCode4()
@@ -813,7 +914,7 @@ namespace NES_WEB_ACC.Controllers
             voucherDocType = (type == "begin") ? (data.Maindata.DocSubType == "B") ? "V2" : "false" : (data.Maindata.DocSubType == "B") ? "false" : "V1";
             if (voucherDocType == "false")
             {
-                return Json(new { success = false, code = "C0005" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, code = "C0006" }, JsonRequestBehavior.AllowGet);
             }
             try
             {

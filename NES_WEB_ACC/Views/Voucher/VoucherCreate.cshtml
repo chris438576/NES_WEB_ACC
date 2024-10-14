@@ -1346,7 +1346,7 @@
                                 'DeptNo': $('.fomDeptNo').textbox('getValue'),
                                 'DeptName': $('.fomDeptName').textbox('getValue'),
                                 'BillNo': $('.fomBillNo').textbox('getValue'),
-                                'CurrencyNo': $('.fomCurrencyNo').textbox('getValue'),
+                                'CurrencyNo': $('.fomCurrencyNo').combobox('getValue'),
                                 'CurrencySt': $('.fomCurrencySt').textbox('getValue'),
                                 'Rate1': $('.fomRate1').textbox('getValue'),
                                /* 'Currency2': $('.fomCurrency2').textbox('getValue'),*/
@@ -2075,7 +2075,7 @@
                         AccNo: '',
                         AccName: '',
                         DCTypeNo: '',
-                        CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
+                        CurrencyNo: $('.fomCurrencyNo').combobox('getValue'),
                         CurrencySt: $('.fomCurrencySt').textbox('getValue'),
                         Rate1: $('.fomRate1').textbox('getValue'),
                         Money: 0,
@@ -2126,7 +2126,7 @@
                                 AccNo: '',
                                 AccName: '',
                                 DCTypeNo: '',
-                                CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
+                                CurrencyNo: $('.fomCurrencyNo').combobox('getValue'),
                                 CurrencySt: $('.fomCurrencySt').textbox('getValue'),
                                 Rate1: $('.fomRate1').textbox('getValue'),
                                 Money: 0,
@@ -2193,7 +2193,7 @@
                                 AccNo: '',
                                 AccName: '',
                                 DCTypeNo: '',
-                                CurrencyNo: $('.fomCurrencyNo').textbox('getValue'),
+                                CurrencyNo: $('.fomCurrencyNo').combobox('getValue'),
                                 CurrencySt: $('.fomCurrencySt').textbox('getValue'),
                                 Rate1: $('.fomRate1').textbox('getValue'),
                                 Money: 0,
@@ -2418,23 +2418,23 @@
                     console.log('VoucherType Set Error');
                 }
             });
-            //下拉選單_幣別
-            $('.fomCurrencyNo').combogrid({
-                required: true,
-                panelWidth: 157,
-                panelHeight: 150,
-                idField: 'CurrencyNo',
-                textField: 'CurrencyNo',
-                mode: 'remote',
-                url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode4',
-                columns: [[
-                    { field: 'CurrencyNo', title: ortherlang.Currency, width: 150 }
-                ]],
-                onSelect: function (index, row) {
-                    $('.fomRate1').textbox('setValue', row.Rate);
-                    $('.fomRate2').textbox('setValue', row.Rate);
-                }
-            });
+            ////下拉選單_幣別  20241014_修改表頭幣別combobox選擇值帶入匯率邏輯
+            //$('.fomCurrencyNo').combogrid({
+            //    required: true,
+            //    panelWidth: 157,
+            //    panelHeight: 150,
+            //    idField: 'CurrencyNo',
+            //    textField: 'CurrencyNo',
+            //    mode: 'remote',
+            //    url: defaultUrl + controllerurl + functionurl + 'GetAddInfoCode4',
+            //    columns: [[
+            //        { field: 'CurrencyNo', title: ortherlang.Currency, width: 150 }
+            //    ]],
+            //    onSelect: function (index, row) {
+            //        $('.fomRate1').textbox('setValue', row.Rate);
+            //        $('.fomRate2').textbox('setValue', row.Rate);
+            //    }
+            //});
             //預設欄位填值
             $('.fomEmpNo').textbox('setValue','@Model.EmpNo');
             $('.fomEmpNameC').textbox('setValue','@Model.EmpNameC');
@@ -2564,7 +2564,7 @@
                                 AccNo: '',
                                 AccName: '',
                                 DCTypeNo: '',
-                                CurrencyNo: (actioncode == 'add') ? $('.fomCurrencyNo').textbox('getValue') : $('.colCurrencyNo').textbox('getValue'),
+                                CurrencyNo: (actioncode == 'add') ? $('.fomCurrencyNo').combobox('getValue') : $('.colCurrencyNo').textbox('getValue'),
                                 CurrencySt: (actioncode == 'add') ? $('.fomCurrencySt').textbox('getValue') : $('.colCurrencySt').textbox('getValue'),
                                 Rate1: (actioncode == 'add') ? $('.fomRate1').textbox('getValue') : $('.colRate1').textbox('getValue'),
                                 Money: 0,
@@ -2614,7 +2614,7 @@
                                     AccNo: '',
                                     AccName: '',
                                     DCTypeNo: '',
-                                    CurrencyNo: (actioncode == 'add') ? $('.fomCurrencyNo').textbox('getValue') : $('.colCurrencyNo').textbox('getValue'),
+                                    CurrencyNo: (actioncode == 'add') ? $('.fomCurrencyNo').combobox('getValue') : $('.colCurrencyNo').textbox('getValue'),
                                     CurrencySt: (actioncode == 'add') ? $('.fomCurrencySt').textbox('getValue') : $('.colCurrencySt').textbox('getValue'),
                                     Rate1: (actioncode == 'add') ? $('.fomRate1').textbox('getValue') : $('.colRate1').textbox('getValue'),
                                     Money: 0,
