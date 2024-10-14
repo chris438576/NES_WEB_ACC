@@ -871,6 +871,15 @@ namespace NES_WEB_ACC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   查詢類似 Reject message： 的當地語系化字串。
+        /// </summary>
+        public static string MsgReject {
+            get {
+                return ResourceManager.GetString("MsgReject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Please select the row to be edited first! 的當地語系化字串。
         /// </summary>
         public static string MsgSelectRow {

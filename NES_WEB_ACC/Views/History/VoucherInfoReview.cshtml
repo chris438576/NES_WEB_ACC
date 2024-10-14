@@ -1,0 +1,618 @@
+﻿
+@{
+    ViewBag.Title = "VoucherInfoReview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    <link rel="stylesheet" type="text/css" href="~/Scripts/mycss/body_container_erp.css" />
+    <link rel="stylesheet" type="text/css" href="~/Scripts/mycss/table_search.css" />
+    <style>
+        #body-content {
+            padding: 0px;
+            margin: 0px;
+            background: white;
+            height: 100%;
+        }
+
+        /*#region Body style*/
+
+
+        #content-tabs {
+            padding-bottom: 10px;
+        }
+
+        /*#endregion*/
+
+        /*#region easyui style*/
+        .textbox-readonly .textbox-text {
+            background: #EEEEEE;
+        }
+
+        .ischecked-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fdff47;
+            color: black;
+            cursor: default;
+        }
+
+        /*.yellow-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #a2f8f8;
+            color: black;
+            cursor: default;
+        }*/
+
+        .gray-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fa806f;
+            color: black;
+            cursor: default;
+        }
+
+        .close-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #6df757;
+            color: black;
+            cursor: default;
+        }
+
+        .cancel-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #e196fb;
+            color: black;
+            cursor: default;
+        }
+
+        .error-row:not(.datagrid-row-over,.datagrid-row-checked,.datagrid-row-selected) {
+            background-color: #fdff47;
+            color: black;
+            cursor: default;
+        }
+
+        .datagrid-row-selected div {
+            color: white;
+        }
+
+        .datagrid-row-editing td {
+            color: black;
+        }
+
+        .header-toolbar .easyui-linkbutton {
+            width: 50px;
+            height: 52px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .header-toolbar .linkbtn2 {
+            width: 60px;
+        }
+
+        .header-toolbar .linkbtn3 {
+            width: 95px;
+        }
+
+        .header-toolbar .l-btn-text {
+            font-size: 12px !important;
+            margin-top: 28px !important;
+        }
+
+        .header-toolbar .l-btn-icon {
+            width: 24px !important;
+            height: 24px !important;
+            left: 60% !important;
+        }
+
+        .separatorbar {
+            margin-right: 20px;
+        }
+
+        .tabs-wrap .tabs {
+            width: 99% !important;
+        }
+
+        .switchbtn {
+            text-decoration: none;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: middle;
+            margin: 5px 10px 0px 0px;
+            padding: 3px;
+            cursor: pointer;
+            border: 1px solid #bbb;
+            -moz-border-radius: 5px 5px 5px 5px;
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+            .switchbtn label {
+                margin-left: 3px;
+            }
+
+        .btnliktype .l-btn-text {
+            margin-left: 15px;
+            font-size: 12px !important;
+        }
+        /*#endregion*/
+        /*#region datagrid style*/
+
+        .datagrid-view tr, .datagrid-view td {
+            border: 1px solid black;
+        }
+
+        .datagrid-header-row td {
+            background-color: #d2d2d2;
+            color: #333;
+            font-weight: bold;
+            border: 1px solid black !important;
+        }
+
+        .datagrid-header, .datagrid-td-rownumber {
+            background-color: #fff !important;
+            background: none;
+            background-repeat: no-repeat;
+        }
+
+
+        .datagrid-cell-rownumber {
+            color: black !important;
+        }
+
+        .datagrid-row .datagrid-cell {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+
+        .subtd {
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0px !important;
+            padding: 1px !important;
+            border: 1px solid black !important;
+            min-height: 22px;
+        }
+        /*#endregion */
+        /*#region table style*/
+        /* 初始表格外框顏色 */
+        .datagrid {
+            border: 2px solid white; /* 默認顏色 */
+        }
+
+        .container-table {
+            width: 99%;
+            margin: 0px 20px 0px 2px;
+            padding: 0px;
+            table-layout: fixed;
+            word-break: break-all;
+        }
+
+            .container-table .table-header {
+                background-color: #95B3D7;
+                border: solid 1px black;
+            }
+
+            .container-table th, .container-table tr, .container-table tr td {
+                /*border: none;*/
+                border: solid 1px black !important;
+                text-align: center;
+            }
+
+            .container-table th, .container-table tr, .container-table td {
+                height: 32px !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+
+                .container-table tr td {
+                    font-size: 1.0em;
+                    vertical-align: middle !important;
+                    font-weight: bold;
+                }
+
+            .container-table th {
+                font-size: 1.0em;
+                vertical-align: middle !important;
+            }
+
+        tr td label {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+        /*#endregion*/
+        /*#region row style*/
+        .row-fix {
+            margin-left: 0px !important;
+        }
+
+        .row-filestyle {
+            margin-top: 5px;
+            margin-left: 3px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid black;
+            padding: 3px;
+        }
+
+        .col-fix-1, .col-fix-2, .col-fix-3 {
+            padding: 0px;
+            margin-right: 0px;
+        }
+
+            .col-fix-1 > span {
+                margin-left: 35px;
+            }
+
+            .col-fix-1 input[type="text"], .col-fix-1 .form-control,
+            .col-fix-1 .easyui-combobox,
+            .col-fix-1 .easyui-textbox:not(.col-fix-lg),
+            .col-fix-1 .easyui-datebox, .col-fix-1 .easyui-maskedbox {
+                width: 120px !important;
+            }
+
+
+            .col-fix-2 input[type="text"]:not(.textbox-text), .col-fix-2 .form-control,
+            .col-fix-2 .easyui-combobox, .col-fix-2 .easyui-textbox,
+            .col-fix-2 .easyui-datebox, .col-fix-2 .easyui-maskedbox {
+                width: 110px !important;
+            }
+
+            .col-fix-3 input[type="text"], .col-fix-3 .form-control,
+            .col-fix-3 .easyui-combobox, .col-fix-3 .easyui-textbox,
+            .col-fix-3 .easyui-datebox, .col-fix-3 .easyui-maskedbox {
+                width: 120px !important;
+            }
+
+            .col-fix-1 .col-fix-lg, .col-fix-2 .col-fix-lg, .col-fix-3 .col-fix-lg {
+                width: 300px !important;
+            }
+
+                .col-fix-1 .col-fix-lg input[type="text"], .col-fix-1 .col-fix-lg .easyui-textbox {
+                    width: 300px !important;
+                }
+        /*#endregion*/
+        /*#region dom style*/
+        #reportFrame {
+            height: auto 100%;
+        }
+
+        .dlgtabs {
+            min-height: 80%;
+            max-height: calc(100vh - 100px);
+            border: 0.5px solid #bbbaba;
+        }
+
+        .rowstyle {
+            margin-left: 8px !important;
+            margin-top: 5px;
+            padding-right: 0px;
+        }
+
+        input[type=radio] {
+            margin-right: 5px;
+            padding: 0.5em;
+            -webkit-appearance: none;
+            outline: 0.1em solid black;
+            outline-offset: 0.1em;
+        }
+
+            input[type=radio]:checked {
+                display: inline-block;
+                background-color: #000 !important;
+            }
+
+            input[type=radio]:disabled {
+                background-color: #EEEEEE;
+            }
+
+        /*#endregion*/
+
+        .progress-extended div label, .progress-txtextended div label {
+            width: 100%;
+            text-align: left;
+        }
+
+        .progress-extended .row, .progress-txtextended .row {
+            margin: 10px;
+            padding: 5px;
+            border-bottom: 0.5px solid black;
+        }
+
+            .progress-extended .row .btn, .progress-txtextended .row .btn {
+                margin-right: 15px;
+            }
+
+        .form-viewer {
+            width: 99%;
+            height: 100%;
+        }
+
+        /*#region form style*/
+        .formtext {
+            white-space: nowrap;
+            border: 1px solid black;
+        }
+
+        .formimport {
+            border: 1px solid black;
+        }
+        /*#endregion */
+        @@media (max-width: 1400px) {
+            #submenu {
+                font-size: 0.9em !important;
+            }
+
+            #body-container {
+                max-height: calc(100vh - 130px);
+                font-size: 0.9em;
+            }
+
+
+            #content-grid {
+                min-height: calc(100vh - 300px);
+            }
+
+            .panel-title, .tabs-title {
+                font-size: 0.8em;
+            }
+
+            .panel-header, .tabs, .tabs-wrap, .tabs-selected, .tabs-inner {
+                height: 23px !important;
+                padding: 1px !important;
+            }
+
+            .datagrid-cell {
+                font-size: 0.8em !important;
+            }
+
+            .datagrid-header-row {
+                font-size: 0.8em !important;
+                height: 28px !important;
+            }
+
+            .layout-panel-center .datagrid-row,
+            .layout-panel-center .datagrid-row-editing,
+            .layout-panel-center .datagrid-row-editing td,
+            .layout-panel-center .datagrid-row-editing span,
+            .layout-panel-center .datagrid-row-editing input {
+                height: 35px;
+            }
+
+            .col-fix-1 label, .col-fix-2 label, .col-fix-3 label {
+                font-size: 9px !important;
+            }
+
+            .col-fix-1 span {
+                margin-left: 10px;
+            }
+
+            .col-fix-1 input[type="text"], .col-fix-1 .form-control,
+            .col-fix-1 .easyui-combobox, .col-fix-1 .easyui-textbox,
+            .col-fix-1 .easyui-datebox, .col-fix-1 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 100px !important;
+            }
+
+            .col-fix-2 input[type="text"], .col-fix-2 .form-control,
+            .col-fix-2 .easyui-combobox, .col-fix-2 .easyui-textbox,
+            .col-fix-2 .easyui-datebox, .col-fix-2 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 90px !important;
+            }
+
+            .col-fix-3 input[type="text"], .col-fix-3 .form-control,
+            .col-fix-3 .easyui-combobox, .col-fix-3 .easyui-textbox,
+            .col-fix-3 .easyui-datebox, .col-fix-3 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 100px !important;
+            }
+
+            .col-fix-4 input[type="text"], .col-fix-4 .form-control,
+            .col-fix-4 .easyui-combobox, .col-fix-4 .easyui-textbox,
+            .col-fix-4 .easyui-datebox, .col-fix-4 .easyui-maskedbox {
+                font-size: 9px !important;
+                width: 80px !important;
+            }
+
+            .col-fix-1 .col-fix-lg, .col-fix-2 .col-fix-lg, .col-fix-3 .col-fix-lg {
+                width: 200px !important;
+            }
+
+            .textbox-button .l-btn-left {
+                margin: 0px !important;
+                padding-left: 20px;
+                height: 28px;
+                width: 28px;
+            }
+
+                .textbox-button .l-btn-left .l-btn-icon {
+                    margin-top: -8px;
+                    margin-left: 0px !important;
+                }
+
+            .textbox-button .l-btn-text {
+                font-size: 0px !important;
+            }
+
+            .btndeliverychange, .btnmanualclose, .btnstockenter {
+                width: 65px !important;
+                height: 45px !important;
+            }
+
+            .btnreportset {
+                width: 60px !important;
+                height: 45px !important;
+                font-size: 0.7em !important;
+            }
+        }
+                
+    </style>
+}
+
+
+@{ Html.RenderAction("_ToolBarPartial"); }
+
+<div id="body-container">
+    請先輸入查詢條件
+</div>
+@* dialog_查詢條件視窗 *@
+@{ Html.RenderAction("_SearchPartial"); }
+
+@section Scripts {
+    <script>
+        ///-----基本參數-----///
+        //#region 基本參數
+        var controllerurl = '/History', functionurl = "/", actionurl = "";
+       
+        //#endregion
+
+
+
+         //#region 按鈕動作&狀態
+         function btnClick(type) {
+             let nowindex, row;
+             switch (type) {
+                 //#region toolbar_maindg導覽&搜尋
+                 case 'first':
+                     maindg.datagrid('selectRow', 0);
+                     break;
+                 case 'previous':
+                     row = maindg.datagrid('getSelected');
+                     if (row) {
+                         nowindex = maindg.datagrid('getRowIndex', row);
+                     } else if (maindgindex >= 0) {
+                         nowindex = maindgindex;
+                     } else {
+                         let rows = maindg.datagrid('getRows');
+                         if (rows) {
+                             nowindex = 0;
+                         }
+                     }
+                     maindg.datagrid('selectRow', nowindex - 1);
+                     break;
+                 case 'next':
+                     row = maindg.datagrid('getSelected');
+                     if (row) {
+                         nowindex = maindg.datagrid('getRowIndex', row);
+                     } else if (maindgindex >= 0) {
+                         nowindex = maindgindex;
+                     } else {
+                         let rows = maindg.datagrid('getRows');
+                         if (rows) {
+                             nowindex = -1;
+                         }
+                     }
+                     maindg.datagrid('selectRow', nowindex + 1);
+                     break;
+                     break;
+                 case 'last':
+                     row = maindg.datagrid('getRows');
+                     if (row) {
+                         index = row.length;
+                     }
+                     maindg.datagrid('selectRow', index - 1);
+                     break;
+                 case 'search':
+                     $('#dlgSearch').dialog({ height: 400, width: 800, title: '@Resources.Content.QueryConditions' });
+                     $('#dlgSearch').dialog('open').dialog('center');
+                     break;
+                 //#endregion
+
+                 //#region toolbar_itemdg資料動作
+                 case 'check':
+                     row = maindg.datagrid('getSelected');
+                     if (row != null) {
+                         actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=check&webid='+row.WebId;
+                         doajax("POST", actionurl, null, function (result) {
+                             if (result.success) {
+                                 pageReload(result.data, 'Check');
+                             } else {
+                                 $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                 if (result.code == 'C0004') {
+                                     console.log(result.err);
+                                 }
+                                 itemdg.datagrid('loadData', '');
+                             }
+                         });
+                     } else {
+                         alert("請選擇傳票進行審核");
+                     }
+                     break;
+                 case 'reject':
+                     row = maindg.datagrid('getSelected');
+                     if (row != null) {
+                         $('#dlgReject').dialog({ height: 200, width: 500, title: '@Resources.Content.Reject' });
+                         $('#dlgReject').dialog('open').dialog('center');
+                     } else {
+                         alert("請選擇傳票進行退件");
+                     }
+                     break;
+                 case 'delete':/*測試階段使用，後續移除*/
+                     row = maindg.datagrid('getSelected');
+                     if (row != null) {
+                         $.messager.confirm('提醒', '是否刪除期初傳票?', function (r) {
+                             if (r) {
+                                 actionurl = defaultUrl + controllerurl + functionurl + 'DeleteData?webid=' + row.WebId;
+                                 doajax("Delete", actionurl, null, function (result) {
+                                     if (result.success) {
+                                         pageReload(result.data, 'Delete');
+                                     } else {
+                                         $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                                         if (result.code == 'C0004') {
+                                             console.log(result.err);
+                                         }
+                                         itemdg.datagrid('loadData', '');
+                                     }
+                                 });
+                             }
+                         });
+                     } else {
+                         alert("請選擇傳票進行編輯");
+                     }
+                     break;
+                 //#endregion
+
+                 //#region dlg_按鈕動作
+                 case 'dlgsearchdo':
+                     let paramdata = {
+                         type: 'create',
+                         dosearch: true,
+                         'search.Logical1': $('#logops1').combobox('getValue'),
+                         'search.Logical2': $('#logops2').combobox('getValue'),
+                         'search.Logical3': $('#logops3').combobox('getValue'),
+                         'search.SearchField1': $('#field1').combobox('getValue'),
+                         'search.SearchField2': $('#field2').combobox('getValue'),
+                         'search.SearchField3': $('#field3').combobox('getValue'),
+                         'search.Comparison1': $('#compops1').combobox('getValue'),
+                         'search.Comparison2': $('#compops2').combobox('getValue'),
+                         'search.Comparison3': $('#compops3').combobox('getValue'),
+                         'search.SearchData1': $('#searchdata1').textbox('getValue'),
+                         'search.SearchData2': $('#searchdata2').textbox('getValue'),
+                         'search.SearchData3': $('#searchdata3').textbox('getValue')
+                     };
+                     console.log(paramdata);
+                     actionurl = defaultUrl + controllerurl + functionurl + 'GetVoucherInfo';
+                     doajax("GET", actionurl, paramdata, function (result) {
+                         if (result.success) {
+                             if (Array.isArray(result.data)) {
+                                 // 遍歷數據並格式化日期
+                                 result.data.forEach(function (item) {
+                                     if (item.BillDate) {
+                                         item.BillDate = formatDate(item.BillDate); // 使用formatDate函數格式化日期
+                                     }
+                                 });
+                             }
+                             maindg.datagrid('loadData', result.data);
+                             $('#dlgSearch').dialog('close');
+                         } else {
+                             $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                             if (result.code == 'C0004') {
+                                 console.log(result.err);
+                             }
+                             $('#dlgSearch').dialog('close');
+                         }
+                     });
+                     break;
+                 case 'dlgsearchexit':
+                     $('#dlgSearch').dialog('close');
+                     break;                
+                 //#endregion
+             }
+         }
+    </script>
+    }

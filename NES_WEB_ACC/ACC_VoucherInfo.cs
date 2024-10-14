@@ -71,5 +71,6 @@ namespace NES_WEB_ACC
         public Nullable<int> BillStatus { get; set; }
         public Nullable<System.DateTime> SignDate { get; set; }
         public string SignBy { get; set; }
+        public string SignMsg { get; set; }
     }
 }

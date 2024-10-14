@@ -999,7 +999,7 @@ namespace NES_WEB_ACC.Controllers
         }
         [HttpPost]
         [CustomAuthorize(Roles = "Admin,AccManager,AccPm,AccUser")]
-        public ActionResult VoucherStatus(string webid, string type)
+        public ActionResult VoucherStatus(string webid, string type, string rejectmsg = null)
         {
             if (String.IsNullOrEmpty(webid))
             {
@@ -1050,10 +1050,15 @@ namespace NES_WEB_ACC.Controllers
                             }                            
                             break;
                         case "reject":
+                            if (string.IsNullOrEmpty(rejectmsg))
+                            {
+                                return Json(new { success = false, code = "C0001" }, JsonRequestBehavior.AllowGet);
+                            }
                             if (User.IsInRole("Admin") || User.IsInRole("AccManager") || User.IsInRole("AccPm"))
                             {
                                 existdata.IsChecked = false;
                                 existdata.BillStatus = 4;
+                                existdata.SignMsg = rejectmsg;
                             }
                             else
                             {
@@ -1066,6 +1071,7 @@ namespace NES_WEB_ACC.Controllers
                                 existdata.IsChecked = false;
                                 existdata.IsState = false;
                                 existdata.BillStatus = 5;
+                                existdata.SignMsg = rejectmsg;
                             }
                             else
                             {
@@ -1077,6 +1083,7 @@ namespace NES_WEB_ACC.Controllers
                             existdata.ClosedDate = System.DateTime.Now;
                             existdata.ClosedBy = Session["EmpNo"].ToString();
                             existdata.BillStatus = 9;
+                            existdata.SignMsg = rejectmsg;
                             break;
                     }
                     existdata.SignDate = System.DateTime.Now;
@@ -1179,6 +1186,14 @@ namespace NES_WEB_ACC.Controllers
         {
             return PartialView();
         }
+        /// <summary>
+        /// 退件說明介面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _RejectPartial()
+        {
+            return PartialView();
+        }
 
         /// <summary>
         /// 異動記錄
@@ -1226,5 +1241,6 @@ namespace NES_WEB_ACC.Controllers
             mndata.EditDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
             _dbContext.SYS_OperationHistory.Add(mndata);
         }
+              
     }
 }

@@ -599,6 +599,7 @@
             MsgSes6: '@Resources.Content.MsgSes6', //成功退件
             MsgSes7: '@Resources.Content.MsgSes7', //成功結案
             MsgSes8: '@Resources.Content.MsgSes8', //成功刪除
+            MsgReject:'',//退件原因
         };
         var dlgdglang = {
             AccNo: '@Resources.Content.AccNo',
@@ -668,10 +669,11 @@
                     { field: 'Remark', title: maindglang.Remark, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'CompNo', title: maindglang.CompNo, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
                     { field: 'CompAbbr', title: maindglang.CompAbbr, width: 150, editor: { type: 'text' }, styler: function (value, row, index) { return 'border:1px solid black;' } },
-                    { field: 'BillStatus', title: 'BillStatus', hidden: true  }
+                    { field: 'BillStatus', title: 'BillStatus', hidden: true },
+                    { field: 'SignMsg', title: 'SignMsg', hidden: true }
                 ]],
                 onSelect: function (index, row) {
-                    if (row.BillStatus == '1' || row.BillStatus == '2') {
+                    if (row.BillStatus == '1' || row.BillStatus == '2' || row.BillStatus == '3' || row.BillStatus == '9') {
                         $('#btnEdit').linkbutton('disable');
                         $('#btnLock').linkbutton('disable');
                         maindgIndex = index;
@@ -704,6 +706,10 @@
                             itemdgData(row.WebId);
                         }
                     }
+                    if ((row.BillStatus == '4' || row.BillStatus == '5')&& row.SignMsg != null) {
+                        $.messager.alert(msglang.Title3, '退件原因：' + row.SignMsg);
+                    }
+                    
                 },
                 rowStyler: function (index, row) {
                     if (row.BillStatus == '0') { //新建立
@@ -724,7 +730,6 @@
                     if (row.BillStatus == '5') { //結案退件
                         return 'background-color:#FF52F4;color:#000000;';
                     }
-
                 }
             });
         }

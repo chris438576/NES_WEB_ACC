@@ -515,6 +515,8 @@
 </div>
 @* dialog_查詢條件視窗 *@
 @{ Html.RenderAction("_SearchPartial"); }
+@* dialog_退件說明視窗 *@
+@{ Html.RenderAction("_RejectPartial"); }
 
 @section Scripts {
     <script src="~/Scripts/myjs/voucher.js"></script>
@@ -863,18 +865,8 @@
                 case 'reject':
                     row = maindg.datagrid('getSelected');
                     if (row != null) {
-                        actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=reject&webid=' + row.WebId;
-                        doajax("POST", actionurl, null, function (result) {
-                            if (result.success) {
-                                pageReload(result.data,'Reject');
-                            } else {
-                                $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
-                                if (result.code == 'C0004') {
-                                    console.log(result.err);
-                                }
-                                itemdg.datagrid('loadData', '');
-                            }
-                        });
+                        $('#dlgReject').dialog({ height: 200, width: 500, title: '@Resources.Content.Reject' });
+                        $('#dlgReject').dialog('open').dialog('center');                        
                     } else {
                         alert("請選擇傳票進行退件");
                     }
@@ -947,6 +939,32 @@
                     break;
                 case 'dlgsearchexit':
                     $('#dlgSearch').dialog('close');
+                    break;
+                case 'dlgrejectsend':
+                    const rejectMsg = $('#rejectmsg').val();
+                   
+                    if (!rejectMsg) {
+                       
+                        alert("退件原因是必填欄位，請輸入！");
+                        return; 
+                    }
+                    row = maindg.datagrid('getSelected');
+                    actionurl = defaultUrl + controllerurl + functionurl + 'VoucherStatus?type=reject&webid=' + row.WebId + '&rejectmsg=' + rejectMsg;
+                    doajax("POST", actionurl, null, function (result) {
+                        if (result.success) {
+                            pageReload(result.data,'Reject');
+                        } else {
+                            $.messager.alert(msglang.Title2, msglang.MsgErrCode + result.code);
+                            if (result.code == 'C0004') {
+                                console.log(result.err);
+                            }
+                            itemdg.datagrid('loadData', '');
+                        }
+                    });
+                    
+                    break;
+                case 'dlgrejectexit':
+                    $('#dlgReject').dialog('close');
                     break;
                 //#endregion
             }

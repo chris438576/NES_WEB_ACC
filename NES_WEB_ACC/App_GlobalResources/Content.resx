@@ -603,4 +603,7 @@
   <data name="VoucherTypeName" xml:space="preserve">
     <value>Voucher Type Name</value>
   </data>
+  <data name="MsgReject" xml:space="preserve">
+    <value>Reject message：</value>
+  </data>
 </root>

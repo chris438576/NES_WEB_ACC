@@ -603,4 +603,7 @@
   <data name="VoucherTypeName" xml:space="preserve">
     <value>Nombre de tipo de citación</value>
   </data>
+  <data name="MsgReject" xml:space="preserve">
+    <value>Rechazar mensaje：</value>
+  </data>
 </root>

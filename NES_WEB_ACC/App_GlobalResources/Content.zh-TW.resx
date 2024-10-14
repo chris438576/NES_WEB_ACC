@@ -603,4 +603,7 @@
   <data name="VoucherTypeName" xml:space="preserve">
     <value>傳票類別名稱</value>
   </data>
+  <data name="MsgReject" xml:space="preserve">
+    <value>退件說明：</value>
+  </data>
 </root>

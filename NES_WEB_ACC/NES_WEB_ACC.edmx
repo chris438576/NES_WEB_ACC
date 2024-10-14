@@ -426,6 +426,7 @@
           <Property Name="BillStatus" Type="int" />
           <Property Name="SignDate" Type="smalldatetime" />
           <Property Name="SignBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="SignMsg" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ACC_VoucherKind">
           <Key>
@@ -1097,6 +1098,7 @@
           <Property Name="BillStatus" Type="Int32" />
           <Property Name="SignDate" Type="DateTime" Precision="0" />
           <Property Name="SignBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SignMsg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ACC_Rate">
           <Key>
@@ -1601,6 +1603,7 @@
           <EntitySetMapping Name="ACC_VoucherInfo">
             <EntityTypeMapping TypeName="NES_WEB_ACCModel.ACC_VoucherInfo">
               <MappingFragment StoreEntitySet="ACC_VoucherInfo">
+                <ScalarProperty Name="SignMsg" ColumnName="SignMsg" />
                 <ScalarProperty Name="SignBy" ColumnName="SignBy" />
                 <ScalarProperty Name="SignDate" ColumnName="SignDate" />
                 <ScalarProperty Name="BillStatus" ColumnName="BillStatus" />
