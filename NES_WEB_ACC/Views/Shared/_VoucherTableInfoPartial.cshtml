@@ -102,7 +102,7 @@
                         <input class="easyui-combobox fomCurrencyNo" style="width:18%;" data-options="
                             valueField: 'Id',
                             textField: 'Name',
-                            url: '/Voucher/GetAddInfoCode40',
+                            url: '@Url.Action("GetAddInfoCode40", "Voucher")',
                             method: 'get',
                             panelHeight: 'auto',
                             onSelect: function(record) {   
@@ -112,7 +112,7 @@
                                         return;
                                     }
                                     $.ajax({
-                                        url: '/Voucher/GetAddInfoCode41', 
+                                        url: '@Url.Action("GetAddInfoCode41", "Voucher")', 
                                         method: 'POST',
                                         data: { 
                                             currencyno: record.Id , 

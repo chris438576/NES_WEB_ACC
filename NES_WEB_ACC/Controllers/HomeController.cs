@@ -1,10 +1,12 @@
 ﻿using Dapper;
+using Microsoft.ReportingServices.Diagnostics.Internal;
 using NES_WEB_ACC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -14,6 +16,8 @@ namespace NES_WEB_ACC.Controllers
     [Authorize]  
     public class HomeController : Controller
     {
+        public string connectionString = ConfigurationManager.ConnectionStrings["NES_WEB_ACCConnectionString"].ConnectionString;
+        private string currentCulture = Thread.CurrentThread.CurrentCulture.Name;
         /// <summary>
         /// 介面_儀錶板
         /// </summary>
@@ -152,6 +156,71 @@ namespace NES_WEB_ACC.Controllers
             Response.Cookies.Add(langCookie);
             Session["lang"] = lang;
             return RedirectToAction("Index", "Home", new { language = lang });
+        }
+
+        public JsonResult GetEchartData()
+        {
+            var sql = @"
+                IF	OBJECT_ID('tempdb..#TmpBasic') IS NOT NULL
+	                Drop Table #TmpBasic
+
+                declare @currencyst nvarchar(10);
+                set @currencyst = 'MXN'  --@currentCulture
+
+                select * into #TmpBasic from (
+	                select top(9) 
+		                ExchangeYear, ExchangeMonth, ExchangeMonthFlag
+		                ,CAST(ExchangeYear AS varchar) + '\' + CAST(ExchangeMonth AS varchar) + '\' + ExchangeMonthFlag as 'xAxisData'
+		                ,ROW_NUMBER() OVER (ORDER BY ExchangeYear DESC, ExchangeMonth DESC, FlagOrder DESC) AS 'RowNumber'
+	                from ( 
+		                select *,
+			                case 
+				                when ExchangeMonthFlag = 'B' then 1
+				                when ExchangeMonthFlag = 'M' then 2
+				                when ExchangeMonthFlag = 'E' then 3
+			                end as FlagOrder 
+		                from NES_WEB_ACC.dbo.ACC_Rate
+	                ) as a
+	                group by ExchangeYear, ExchangeMonth, ExchangeMonthFlag, FlagOrder
+	                order by ExchangeYear desc, ExchangeMonth desc, FlagOrder desc
+                ) a
+                select xAxisData from #TmpBasic order by RowNumber desc
+                select Rate as 'Series1' from NES_WEB_ACC.dbo.ACC_Rate as a
+                inner join #TmpBasic as b on a.ExchangeYear = b.ExchangeYear and a.ExchangeMonth = b.ExchangeMonth and a.ExchangeMonthFlag = b.ExchangeMonthFlag
+                where CurrencyNo = 'TWD' and CurrencySt = @currencyst
+                order by RowNumber desc
+                select Rate as 'Series2'  from NES_WEB_ACC.dbo.ACC_Rate as a
+                inner join #TmpBasic as b on a.ExchangeYear = b.ExchangeYear and a.ExchangeMonth = b.ExchangeMonth and a.ExchangeMonthFlag = b.ExchangeMonthFlag
+                where CurrencyNo = 'USD' and CurrencySt = @currencyst
+                order by RowNumber desc
+                select Rate as 'Series3'  from NES_WEB_ACC.dbo.ACC_Rate as a
+                inner join #TmpBasic as b on a.ExchangeYear = b.ExchangeYear and a.ExchangeMonth = b.ExchangeMonth and a.ExchangeMonthFlag = b.ExchangeMonthFlag
+                where CurrencyNo = 'MXN' and CurrencySt = @currencyst
+                order by RowNumber desc
+                IF	OBJECT_ID('tempdb..#TmpBasic') IS NOT NULL
+	                Drop Table #TmpBasic    
+            ";             
+            var param = new { currentCulture };
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                var result = conn.QueryMultiple(sql, param);
+
+                var xAxisData = result.Read<string>().ToList();
+                var series1 = result.Read<decimal>().ToList();
+                var series2 = result.Read<decimal>().ToList();
+                var series3 = result.Read<decimal>().ToList();
+
+                var chartData = new
+                {
+                    xAxis = xAxisData,
+                    series1 = series1,
+                    series2 = series2,
+                    series3 = series3
+                };
+
+                return Json(chartData, JsonRequestBehavior.AllowGet);
+            }            
         }
     }
 }

@@ -98,27 +98,77 @@
 </div>
 @section Scripts {
     <script>
-        var myChart = echarts.init(document.getElementById('myChart'));
-        var option = {
-            title: {
-                text: '圖表'
-            },
-            tooltip: {},
-            legend: {
-                data: ['產量']
-            },
-            xAxis: {
-                data: ["機台1", "機台2", "機台3", "機台4", "機台5", "機台6"]
-            },
-            yAxis: {},
-            series: [{
-                name: '產量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-            }]
-        };
-
-        myChart.setOption(option);
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("GetEchartData", "Home")', 
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {                   
+                    var myChart = echarts.init(document.getElementById('myChart'));
+                                       
+                    var option = {
+                        title: {
+                            text: '近3月匯率走勢圖',                           
+                            left: 'left'
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            }
+                        },
+                        legend: {
+                            data: ['TWD', 'USD', 'MXN']                            
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: data.xAxis
+                        },
+                        yAxis: [
+                            {
+                                type: 'value',  
+                                name: 'TWD & MXN',
+                                min: 0,
+                                max: 2,        
+                                position: 'left'
+                            },
+                            {
+                                type: 'value',  
+                                name: 'USD',
+                                min: 0,
+                                max: 20,       
+                                position: 'right'
+                            }
+                        ],
+                        series: [
+                            {
+                                name: 'TWD', 
+                                data: data.series1, 
+                                type: 'line',
+                                yAxisIndex: 0 
+                            },
+                            {
+                                name: 'USD', 
+                                data: data.series2, 
+                                type: 'line',
+                                yAxisIndex: 1
+                            },
+                            {
+                                name: 'MXN', 
+                                data: data.series3,
+                                type: 'line',
+                                yAxisIndex: 0 
+                            }
+                        ]
+                    };
+                                        
+                    myChart.setOption(option);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error: ' + error);
+                }
+            })
+        })       
     </script>
 
 }
